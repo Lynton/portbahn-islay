@@ -1,26 +1,99 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* PBI Colors */
+  --color-kelp-edge: #1F5E4D;
+  --color-sound-of-islay: #0F3A4A;
+  --color-harbour-stone: #2B2C2E;
+  --color-machair-sand: #F1ECE4;
+  --color-sea-spray: #FFFEFA;
+  --color-washed-timber: #CFCAC2;
+  --color-emerald-accent: #008060;
+
+  /* Typography - Font Families */
+  --font-family-serif: 'Lora', Georgia, serif;
+  --font-family-mono: 'IBM Plex Mono', 'Courier New', monospace;
+
+  /* Spacing Scale (from design docs) */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-s: 0.5rem; /* 8px */
+  --spacing-m: 1rem; /* 16px */
+  --spacing-l: 2rem; /* 32px */
+  --spacing-xl: 3rem; /* 48px */
+  --spacing-xxl: 5rem; /* 80px */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Custom color utilities for Tailwind v4 */
+@layer utilities {
+  .bg-kelp-edge { background-color: var(--color-kelp-edge); }
+  .bg-sound-of-islay { background-color: var(--color-sound-of-islay); }
+  .bg-harbour-stone { background-color: var(--color-harbour-stone); }
+  .bg-machair-sand { background-color: var(--color-machair-sand); }
+  .bg-sea-spray { background-color: var(--color-sea-spray); }
+  .bg-washed-timber { background-color: var(--color-washed-timber); }
+  .bg-emerald-accent { background-color: var(--color-emerald-accent); }
+  
+  .text-kelp-edge { color: var(--color-kelp-edge); }
+  .text-sound-of-islay { color: var(--color-sound-of-islay); }
+  .text-harbour-stone { color: var(--color-harbour-stone); }
+  .text-machair-sand { color: var(--color-machair-sand); }
+  .text-sea-spray { color: var(--color-sea-spray); }
+  .text-washed-timber { color: var(--color-washed-timber); }
+  .text-emerald-accent { color: var(--color-emerald-accent); }
+  
+  .border-kelp-edge { border-color: var(--color-kelp-edge); }
+  .border-sound-of-islay { border-color: var(--color-sound-of-islay); }
+  .border-harbour-stone { border-color: var(--color-harbour-stone); }
+  .border-machair-sand { border-color: var(--color-machair-sand); }
+  .border-sea-spray { border-color: var(--color-sea-spray); }
+  .border-washed-timber { border-color: var(--color-washed-timber); }
+  .border-emerald-accent { border-color: var(--color-emerald-accent); }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-sea-spray);
+  color: var(--color-harbour-stone);
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  line-height: 1.6;
+}
+
+/* Typography utilities */
+.font-serif {
+  font-family: 'Lora', Georgia, serif !important;
+}
+
+.font-mono {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace !important;
+}
+
+/* Typography scale - following editorial, minimal aesthetic */
+h1 {
+  font-family: 'Lora', Georgia, serif !important;
+  font-size: 3.75rem; /* 60px */
+  line-height: 1.1;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-family: 'Lora', Georgia, serif !important;
+  font-size: 2.5rem; /* 40px */
+  line-height: 1.2;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-family: 'Lora', Georgia, serif !important;
+  font-size: 1.875rem; /* 30px */
+  line-height: 1.3;
+  font-weight: 400;
+}
+
+/* Body text uses mono by default */
+p {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 65ch; /* Optimal reading width */
 }

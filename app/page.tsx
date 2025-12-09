@@ -1,65 +1,47 @@
-import Image from "next/image";
+import PropertyCard from '@/components/PropertyCard';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main className="min-h-screen bg-sea-spray">
+      <div className="mx-auto max-w-7xl px-6 py-20">
+        <h1 className="font-serif text-6xl mb-4">
+          Portbahn Islay
+        </h1>
+        <p className="font-mono text-base text-harbour-stone mb-12">
+          Self-catering accommodation on the Isle of Islay
+        </p>
+
+        {/* Properties Grid */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <PropertyCard
+            name="Portbahn House"
+            location="East coast views"
+            description="Spacious family house with stunning views across the Sound of Islay. Perfect for larger groups seeking comfort and tranquility."
+            sleeps={8}
+            bedrooms={4}
+            imageUrl="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=1200&fit=crop"
+            href="/properties/portbahn-house"
+          />
+          <PropertyCard
+            name="Shorefield House"
+            location="Port Ellen"
+            description="Coastal retreat in the heart of Port Ellen. Modern amenities meet traditional Scottish charm in this beautifully restored property."
+            sleeps={6}
+            bedrooms={3}
+            imageUrl="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=1200&fit=crop"
+            href="/properties/shorefield-house"
+          />
+          <PropertyCard
+            name="Curlew Cottage"
+            location="Village location"
+            description="Cosy cottage nestled in a quiet village setting. Ideal for couples or small families looking for a peaceful island escape."
+            sleeps={4}
+            bedrooms={2}
+            imageUrl="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=1200&fit=crop"
+            href="/properties/curlew-cottage"
+          />
+        </section>
+      </div>
+    </main>
   );
 }
