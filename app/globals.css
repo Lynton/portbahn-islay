@@ -97,3 +97,65 @@ p {
   line-height: 1.6;
   max-width: 65ch; /* Optimal reading width */
 }
+
+/* React DatePicker Custom Styles - PBI Design System */
+.react-datepicker {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace !important;
+  border: 1px solid var(--color-washed-timber) !important;
+  border-radius: 0 !important;
+}
+
+.react-datepicker__header {
+  background-color: var(--color-sea-spray) !important;
+  border-bottom: 1px solid var(--color-washed-timber) !important;
+  padding-top: 0.75rem !important;
+}
+
+.react-datepicker__current-month {
+  font-family: 'Lora', Georgia, serif !important;
+  font-size: 1rem !important;
+  color: var(--color-harbour-stone) !important;
+  font-weight: 400 !important;
+}
+
+.react-datepicker__day-name {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace !important;
+  color: var(--color-harbour-stone) !important;
+  font-size: 0.875rem !important;
+}
+
+.react-datepicker__day {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace !important;
+  color: var(--color-harbour-stone) !important;
+  border-radius: 0 !important;
+}
+
+.react-datepicker__day:hover {
+  background-color: var(--color-machair-sand) !important;
+  color: var(--color-harbour-stone) !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range {
+  background-color: var(--color-emerald-accent) !important;
+  color: var(--color-sea-spray) !important;
+}
+
+.react-datepicker__day--disabled {
+  color: var(--color-washed-timber) !important;
+  cursor: not-allowed !important;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: var(--color-emerald-accent) !important;
+  color: var(--color-sea-spray) !important;
+}
+
+.react-datepicker__navigation {
+  top: 0.75rem !important;
+}
+
+.react-datepicker__navigation-icon::before {
+  border-color: var(--color-harbour-stone) !important;
+}

@@ -1,0 +1,468 @@
+[
+  {
+    "fields": [
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "name",
+        "type": "string",
+        "title": "Property Name"
+      },
+      {
+        "options": {
+          "source": "name",
+          "maxLength": 96
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "custom"
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "slug",
+        "type": "slug"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "location",
+        "type": "string"
+      },
+      {
+        "rows": 4,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "description",
+        "type": "text"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "sleeps",
+        "type": "number"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              },
+              {
+                "flag": "min",
+                "constraint": 1
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "bedrooms",
+        "type": "number"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The property ID from Lodgify (e.g., 360238)",
+        "name": "lodgifyPropertyId",
+        "type": "number",
+        "title": "Lodgify Property ID"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The room/unit ID from Lodgify (e.g., 425830)",
+        "name": "lodgifyRoomId",
+        "type": "number",
+        "title": "Lodgify Room ID"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "uri",
+                "constraint": {
+                  "options": {
+                    "scheme": [
+                      "/^http$/",
+                      "/^https$/"
+                    ],
+                    "allowRelative": false,
+                    "relativeOnly": false,
+                    "allowCredentials": false
+                  }
+                }
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "The Lodgify ICS feed URL for availability",
+        "name": "icsUrl",
+        "type": "url",
+        "title": "ICS Calendar Feed URL"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "mainImage",
+        "type": "image"
+      },
+      {
+        "options": {
+          "layout": "grid"
+        },
+        "of": [
+          {
+            "options": {
+              "hotspot": true
+            },
+            "type": "image"
+          }
+        ],
+        "name": "images",
+        "type": "array",
+        "title": "Gallery Images"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 60
+              }
+            ],
+            "level": "warning",
+            "message": "SEO titles should be 60 characters or less for optimal display"
+          }
+        ],
+        "description": "Optimized title for search engines (max 60 characters). If empty, property name will be used.",
+        "name": "seoTitle",
+        "type": "string",
+        "title": "SEO Title"
+      },
+      {
+        "rows": 3,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 160
+              }
+            ],
+            "level": "warning",
+            "message": "Meta descriptions should be 160 characters or less for optimal display"
+          }
+        ],
+        "description": "Brief description for search engine results (max 160 characters). Should include focus keyword and compelling copy.",
+        "name": "metaDescription",
+        "type": "text"
+      },
+      {
+        "options": {
+          "hotspot": true
+        },
+        "description": "Image used when sharing on social media (Facebook, Twitter, etc.). If empty, main image will be used.",
+        "name": "ogImage",
+        "type": "image",
+        "title": "Open Graph Image"
+      },
+      {
+        "description": "Primary keyword for SEO optimization (e.g., \"holiday rental islay\", \"portbahn house islay\")",
+        "name": "focusKeyword",
+        "type": "string"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "House",
+              "value": "house"
+            },
+            {
+              "title": "Cottage",
+              "value": "cottage"
+            },
+            {
+              "title": "Apartment",
+              "value": "apartment"
+            }
+          ],
+          "layout": "radio"
+        },
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "valid",
+                "constraint": [
+                  "house",
+                  "cottage",
+                  "apartment"
+                ]
+              },
+              {
+                "flag": "presence",
+                "constraint": "required"
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "name": "propertyType",
+        "type": "string"
+      },
+      {
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "min",
+                "constraint": 1800
+              },
+              {
+                "flag": "max",
+                "constraint": 2025
+              }
+            ],
+            "level": "error"
+          }
+        ],
+        "description": "Optional: Year the property was built or renovated",
+        "name": "yearBuilt",
+        "type": "number"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "WiFi",
+              "value": "WiFi"
+            },
+            {
+              "title": "Wood-burning stove",
+              "value": "Wood-burning stove"
+            },
+            {
+              "title": "Fully equipped kitchen",
+              "value": "Fully equipped kitchen"
+            },
+            {
+              "title": "Dining area",
+              "value": "Dining area"
+            },
+            {
+              "title": "Sea views",
+              "value": "Sea views"
+            },
+            {
+              "title": "Coastal views",
+              "value": "Coastal views"
+            },
+            {
+              "title": "Private parking",
+              "value": "Private parking"
+            },
+            {
+              "title": "Garden",
+              "value": "Garden"
+            },
+            {
+              "title": "Outdoor seating",
+              "value": "Outdoor seating"
+            },
+            {
+              "title": "Washing machine",
+              "value": "Washing machine"
+            },
+            {
+              "title": "Dryer",
+              "value": "Dryer"
+            },
+            {
+              "title": "Dishwasher",
+              "value": "Dishwasher"
+            },
+            {
+              "title": "Pet friendly",
+              "value": "Pet friendly"
+            }
+          ]
+        },
+        "description": "Select amenities available at this property",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "amenities",
+        "type": "array"
+      },
+      {
+        "options": {
+          "list": [
+            {
+              "title": "Port Ellen",
+              "value": "Port Ellen"
+            },
+            {
+              "title": "Port Askaig",
+              "value": "Port Askaig"
+            },
+            {
+              "title": "Machir Bay",
+              "value": "Machir Bay"
+            },
+            {
+              "title": "Lagavulin Distillery",
+              "value": "Lagavulin Distillery"
+            },
+            {
+              "title": "Laphroaig Distillery",
+              "value": "Laphroaig Distillery"
+            },
+            {
+              "title": "Ardbeg Distillery",
+              "value": "Ardbeg Distillery"
+            },
+            {
+              "title": "Bowmore Distillery",
+              "value": "Bowmore Distillery"
+            },
+            {
+              "title": "Bruichladdich Distillery",
+              "value": "Bruichladdich Distillery"
+            },
+            {
+              "title": "Sound of Islay",
+              "value": "Sound of Islay"
+            }
+          ]
+        },
+        "description": "Local attractions, beaches, distilleries, or points of interest nearby (for GEO signals and SEO)",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "nearbyAttractions",
+        "type": "array"
+      },
+      {
+        "rows": 2,
+        "validation": [
+          {
+            "rules": [
+              {
+                "flag": "max",
+                "constraint": 200
+              }
+            ],
+            "level": "warning",
+            "message": "Excerpts should be 200 characters or less for optimal display"
+          }
+        ],
+        "description": "Short summary for property cards and previews (max 200 characters). If empty, description will be used.",
+        "name": "excerpt",
+        "type": "text"
+      },
+      {
+        "description": "Key features and amenities as bullet points (for AI extraction and structured display)",
+        "of": [
+          {
+            "type": "string"
+          }
+        ],
+        "name": "features",
+        "type": "array"
+      }
+    ],
+    "name": "property",
+    "type": "document"
+  }
+]

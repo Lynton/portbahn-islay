@@ -1,6 +1,25 @@
 import PropertyCard from '@/components/PropertyCard';
+import { client } from '@/sanity/lib/client';
+import { urlFor } from '@/sanity/lib/image';
 
-export default function Home() {
+async function getProperties() {
+  const query = `*[_type == "property"]{
+    _id,
+    name,
+    slug,
+    location,
+    description,
+    sleeps,
+    bedrooms,
+    mainImage
+  }`;
+  
+  return await client.fetch(query);
+}
+
+export default async function Home() {
+  const properties = await getProperties();
+
   return (
     <main className="min-h-screen bg-sea-spray">
       <div className="mx-auto max-w-7xl px-6 py-20">
@@ -12,35 +31,26 @@ export default function Home() {
         </p>
 
         {/* Properties Grid */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <PropertyCard
-            name="Portbahn House"
-            location="East coast views"
-            description="Spacious family house with stunning views across the Sound of Islay. Perfect for larger groups seeking comfort and tranquility."
-            sleeps={8}
-            bedrooms={4}
-            imageUrl="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&h=1200&fit=crop"
-            href="/properties/portbahn-house"
-          />
-          <PropertyCard
-            name="Shorefield House"
-            location="Port Ellen"
-            description="Coastal retreat in the heart of Port Ellen. Modern amenities meet traditional Scottish charm in this beautifully restored property."
-            sleeps={6}
-            bedrooms={3}
-            imageUrl="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&h=1200&fit=crop"
-            href="/properties/shorefield-house"
-          />
-          <PropertyCard
-            name="Curlew Cottage"
-            location="Village location"
-            description="Cosy cottage nestled in a quiet village setting. Ideal for couples or small families looking for a peaceful island escape."
-            sleeps={4}
-            bedrooms={2}
-            imageUrl="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&h=1200&fit=crop"
-            href="/properties/curlew-cottage"
-          />
-        </section>
+        {properties.length > 0 ? (
+          <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {properties.map((property: any) => (
+              <PropertyCard
+                key={property._id}
+                name={property.name}
+                location={property.location}
+                description={property.description}
+                sleeps={property.sleeps}
+                bedrooms={property.bedrooms}
+                imageUrl={urlFor(property.mainImage).width(800).height(1200).url()}
+                href={`/properties/${property.slug.current}`}
+              />
+            ))}
+          </section>
+        ) : (
+          <p className="font-mono text-base text-harbour-stone">
+            No properties available at this time.
+          </p>
+        )}
       </div>
     </main>
   );
