@@ -454,6 +454,22 @@ export default defineType({
       group: 'location',
     }),
     defineField({
+      name: 'latitude',
+      title: 'Latitude',
+      type: 'number',
+      group: 'location',
+      description: 'Geo coordinate for schema markup (e.g., 55.7857)',
+      validation: (Rule) => Rule.min(-90).max(90),
+    }),
+    defineField({
+      name: 'longitude',
+      title: 'Longitude',
+      type: 'number',
+      group: 'location',
+      description: 'Geo coordinate for schema markup (e.g., -6.3619)',
+      validation: (Rule) => Rule.min(-180).max(180),
+    }),
+    defineField({
       name: 'directions',
       title: 'Directions',
       type: 'text',

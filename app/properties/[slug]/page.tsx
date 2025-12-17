@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Metadata } from 'next';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import BookingCalendar from '@/components/BookingCalendar';
+import SchemaMarkup from '@/components/SchemaMarkup';
 
 async function getProperty(slug: string) {
   // Fetch ALL fields explicitly to ensure everything is returned
@@ -48,6 +50,8 @@ async function getProperty(slug: string) {
     whatToDoNearby[],
     gettingHereIntro,
     postcode,
+    latitude,
+    longitude,
     directions,
     ferryInfo,
     airportDistance,
@@ -135,8 +139,21 @@ export default async function PropertyPage({ params }: PageProps) {
   // Handle legacy 'amenities' field if it exists (not in current schema but may exist in data)
   const amenities = (property as any).amenities || [];
 
+  // Generate breadcrumbs
+  const breadcrumbs = [
+    { name: 'Home', url: '/' },
+    { name: 'Properties', url: '/' },
+    { name: property.name, url: `/properties/${property.slug?.current || property.slug}` },
+  ];
+
   return (
-    <main className="min-h-screen bg-sea-spray">
+    <>
+      <SchemaMarkup
+        type={['Accommodation', 'Place', 'Product']}
+        data={property}
+        breadcrumbs={breadcrumbs}
+      />
+      <main className="min-h-screen bg-sea-spray">
       {/* Hero Image */}
       {heroImage && (
         <div className="w-full h-[60vh] relative overflow-hidden">
@@ -646,5 +663,27 @@ export default async function PropertyPage({ params }: PageProps) {
         </section>
       </div>
     </main>
+    </>
   );
+}
+
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const property = await getProperty(slug);
+
+  if (!property) {
+    return {
+      title: 'Property not found',
+    };
+  }
+
+  return {
+    title: property.seoTitle || property.name,
+    description: property.seoDescription || property.description || property.overviewIntro,
+    openGraph: {
+      title: property.seoTitle || property.name,
+      description: property.seoDescription || property.description || property.overviewIntro,
+      images: property.heroImage ? [urlFor(property.heroImage).width(1200).height(630).url()] : [],
+    },
+  };
 }

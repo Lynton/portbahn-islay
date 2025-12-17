@@ -12,7 +12,32 @@ export default defineConfig({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   basePath: '/studio',
 
-  plugins: [structureTool(), visionTool(), media()],
+  plugins: [
+    structureTool({
+      structure: (S) =>
+        S.list()
+          .title('Content')
+          .items([
+            // Homepage singleton
+            S.listItem()
+              .title('Homepage')
+              .id('homepage')
+              .child(
+                S.document()
+                  .schemaType('homepage')
+                  .documentId('homepage')
+              ),
+            // Divider
+            S.divider(),
+            // Properties
+            ...S.documentTypeListItems().filter(
+              (listItem) => !['homepage'].includes(listItem.getId() || '')
+            ),
+          ]),
+    }),
+    visionTool(),
+    media(),
+  ],
 
   schema: {
     types: schemaTypes,
