@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    {
+      "source": "/properties/:slug",
+      "destination": "/accommodation/:slug",
+      "permanent": true
+    }
+  ]
+}
+

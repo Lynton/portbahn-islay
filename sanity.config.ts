@@ -29,7 +29,7 @@ export default defineConfig({
               ),
             // Divider
             S.divider(),
-            // Properties
+            // Accommodation (Properties)
             ...S.documentTypeListItems().filter(
               (listItem) => !['homepage'].includes(listItem.getId() || '')
             ),

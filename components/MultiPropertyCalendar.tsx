@@ -436,7 +436,7 @@ export default function MultiPropertyCalendar() {
               <div key={property.slug} className="flex border-b border-[#E8E7D5]">
                 <div className="w-48 min-w-[192px] flex-shrink-0 p-4 font-mono text-sm bg-[#FFFCF7]">
                   <Link 
-                    href={`/properties/${property.slug}`}
+                    href={`/accommodation/${property.slug}`}
                     className="hover:text-[#4F9EA9] transition-colors"
                   >
                     {property.name}

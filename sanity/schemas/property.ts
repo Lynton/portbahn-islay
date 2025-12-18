@@ -622,6 +622,26 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
 
+    // ========== GOOGLE BUSINESS REVIEWS ==========
+    defineField({
+      name: 'googleBusinessUrl',
+      title: 'Google Business Profile URL',
+      type: 'url',
+      group: 'seo',
+      description: 'Link to the property\'s Google Business Profile. Reviews will be fetched automatically from Google. If URL extraction fails, you can also add the place_id manually below.',
+      validation: (Rule) => Rule.uri({
+        scheme: ['http', 'https'],
+        allowRelative: false,
+      }),
+    }),
+    defineField({
+      name: 'googlePlaceId',
+      title: 'Google Place ID (Optional)',
+      type: 'string',
+      group: 'seo',
+      description: 'Manually enter the Google Place ID if URL extraction fails. Find it in the URL after "!1s" or "place_id=". Example: ChIJ...',
+    }),
+
     // ========== SEO ==========
     defineField({
       name: 'seoTitle',

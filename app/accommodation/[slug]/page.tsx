@@ -7,6 +7,8 @@ import BookingCalendar from '@/components/BookingCalendar';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PropertyCard from '@/components/PropertyCard';
+import GoogleMap from '@/components/GoogleMap';
+import GoogleReviews from '@/components/GoogleReviews';
 
 async function getProperty(slug: string) {
   // Fetch ALL fields explicitly to ensure everything is returned
@@ -77,6 +79,8 @@ async function getProperty(slug: string) {
     icsUrl,
     seoTitle,
     seoDescription,
+    googleBusinessUrl,
+    googlePlaceId,
     // Also fetch any other fields that might exist
     amenities[],
     excerpt,
@@ -243,6 +247,15 @@ export default async function PropertyPage({ params }: PageProps) {
               {property.description}
             </div>
           </section>
+        )}
+
+        {/* Google Reviews */}
+        {(property.googleBusinessUrl || property.googlePlaceId) && (
+          <GoogleReviews
+            googleBusinessUrl={property.googleBusinessUrl}
+            googlePlaceId={property.googlePlaceId}
+            propertyName={property.name}
+          />
         )}
 
         {/* Sleeping Arrangements */}
@@ -436,12 +449,28 @@ export default async function PropertyPage({ params }: PageProps) {
 
         {/* Getting Here */}
         {(property.gettingHereIntro || property.postcode || property.directions || 
-          property.ferryInfo || property.airportDistance || property.portDistance) && (
+          property.ferryInfo || property.airportDistance || property.portDistance || 
+          property.latitude || property.longitude || property.location) && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">Getting Here</h2>
             {property.gettingHereIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.gettingHereIntro}</p>
             )}
+            
+            {/* Google Map */}
+            {(property.latitude || property.longitude || property.postcode || property.location) && (
+              <div className="mb-6">
+                <GoogleMap
+                  latitude={property.latitude}
+                  longitude={property.longitude}
+                  postcode={property.postcode}
+                  location={property.location}
+                  name={property.name}
+                  height="450px"
+                />
+              </div>
+            )}
+
             {property.postcode && (
               <p className="font-mono text-base text-harbour-stone mb-2">
                 <strong>Postcode:</strong> {property.postcode}
@@ -568,10 +597,10 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* Other Properties */}
+        {/* Other Accommodation */}
         {otherProperties.length > 0 && (
           <section className="mb-12 mt-16 pt-12 border-t-2 border-[#C8C6BF]">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-8">Our Other Properties</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-8">Our Other Accommodation</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {otherProperties.map((otherProperty: any) => {
                 const imageUrl = otherProperty.heroImage 

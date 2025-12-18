@@ -185,7 +185,7 @@ function generateAccommodation(property: any, siteUrl: string) {
     '@type': 'Accommodation',
     name: property.name,
     description: property.description || property.overviewIntro,
-    url: `${siteUrl}/properties/${property.slug?.current || property.slug}`,
+    url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
     address,
     geo,
     numberOfRooms: property.bedrooms ? {
@@ -197,7 +197,7 @@ function generateAccommodation(property: any, siteUrl: string) {
       value: property.sleeps,
     } : undefined,
     amenityFeature: amenityFeatures.length > 0 ? amenityFeatures : undefined,
-    petAllowed: property.petFriendly !== undefined ? property.petFriendly : undefined,
+    petAllowed: property.petFriendly === true ? true : false,
   };
 
   // Add images
@@ -244,7 +244,7 @@ function generatePropertyPlace(property: any, siteUrl: string) {
     '@type': 'Place',
     name: property.name,
     description: property.description || property.overviewIntro,
-    url: `${siteUrl}/properties/${property.slug?.current || property.slug}`,
+    url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
     address,
     geo,
   };
@@ -266,7 +266,7 @@ function generateProductOffer(property: any, siteUrl: string) {
         unitCode: 'DAY',
       },
       availability: 'https://schema.org/InStock',
-      url: `${siteUrl}/properties/${property.slug?.current || property.slug}`,
+      url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
     });
   }
 
@@ -282,7 +282,7 @@ function generateProductOffer(property: any, siteUrl: string) {
         unitCode: 'WEE',
       },
       availability: 'https://schema.org/InStock',
-      url: `${siteUrl}/properties/${property.slug?.current || property.slug}`,
+      url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
     });
   }
 
@@ -291,7 +291,7 @@ function generateProductOffer(property: any, siteUrl: string) {
     offers.push({
       '@type': 'Offer',
       availability: 'https://schema.org/InStock',
-      url: `${siteUrl}/properties/${property.slug?.current || property.slug}`,
+      url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
     });
   }
 

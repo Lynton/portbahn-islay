@@ -65,10 +65,23 @@ export default function BookingCalendar({
         const response = await fetch(
           `/api/avail_ics?property=${propertySlug}&start=${start}&end=${end}`
         );
+        
+        if (!response.ok) {
+          throw new Error(`Failed to fetch availability: ${response.status}`);
+        }
+        
         const data = await response.json();
-        setAvailability(data);
+        
+        // Ensure data has the expected structure
+        if (data && data.dates && Array.isArray(data.dates)) {
+          setAvailability(data);
+        } else {
+          console.warn('Availability data missing dates array:', data);
+          setAvailability({ ...data, dates: [] });
+        }
       } catch (error) {
         console.error('Error fetching availability:', error);
+        setAvailability(null);
       } finally {
         setLoading(false);
       }
@@ -79,7 +92,9 @@ export default function BookingCalendar({
 
   // Get blocked dates from availability data
   const getBlockedDates = (): Date[] => {
-    if (!availability) return [];
+    if (!availability || !availability.dates || !Array.isArray(availability.dates)) {
+      return [];
+    }
     
     return availability.dates
       .filter((item) => !item.available)
@@ -88,7 +103,9 @@ export default function BookingCalendar({
 
   // Check if date is available
   const isDateAvailable = (date: Date): boolean => {
-    if (!availability) return true;
+    if (!availability || !availability.dates || !Array.isArray(availability.dates)) {
+      return true;
+    }
     
     const dateStr = format(date, 'yyyy-MM-dd');
     const dateItem = availability.dates.find((d) => d.date === dateStr);

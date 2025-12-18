@@ -3,6 +3,7 @@ import { Metadata } from 'next';
 import { PortableText } from '@portabletext/react';
 import PropertyCard from '@/components/PropertyCard';
 import SchemaMarkup from '@/components/SchemaMarkup';
+import MultiPropertyMap from '@/components/MultiPropertyMap';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 
@@ -116,11 +117,11 @@ export default async function Home() {
           </section>
         )}
 
-        {/* Properties Grid */}
+        {/* Accommodation Grid */}
         {properties.length > 0 && (
           <section className="mb-16">
-            <h2 className="font-serif text-4xl text-harbour-stone mb-8">Our Properties</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <h2 className="font-serif text-4xl text-harbour-stone mb-8">Our Accommodation</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
               {properties.map((property: any) => {
                 const imageUrl = property.heroImage 
                   ? urlFor(property.heroImage).width(800).height(1200).url() 
@@ -135,10 +136,16 @@ export default async function Home() {
                     sleeps={property.sleeps}
                     bedrooms={property.bedrooms}
                     imageUrl={imageUrl}
-                    href={`/properties/${property.slug?.current || property.slug}`}
+                    href={`/accommodation/${property.slug?.current || property.slug}`}
                   />
                 );
               })}
+            </div>
+            
+            {/* Map showing all properties */}
+            <div className="mt-12">
+              <h3 className="font-serif text-3xl text-harbour-stone mb-6">Property Locations</h3>
+              <MultiPropertyMap />
             </div>
           </section>
         )}
