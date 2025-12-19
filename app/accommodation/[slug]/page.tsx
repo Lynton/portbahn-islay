@@ -19,10 +19,10 @@ async function getProperty(slug: string) {
     slug,
     propertyType,
     heroImage,
-    mainImage,
     images[],
     overviewIntro,
     description,
+    idealFor[],
     sleeps,
     bedrooms,
     beds,
@@ -80,11 +80,7 @@ async function getProperty(slug: string) {
     seoTitle,
     seoDescription,
     googleBusinessUrl,
-    googlePlaceId,
-    // Also fetch any other fields that might exist
-    amenities[],
-    excerpt,
-    focusKeyword
+    googlePlaceId
   }`;
   
   return await client.fetch(query, { slug });
@@ -169,10 +165,7 @@ export default async function PropertyPage({ params }: PageProps) {
   }
 
   const galleryImages = property.images || [];
-  const heroImage = property.heroImage || property.mainImage;
-  
-  // Handle legacy 'amenities' field if it exists (not in current schema but may exist in data)
-  const amenities = (property as any).amenities || [];
+  const heroImage = property.heroImage;
 
   // Fetch all other properties for navigation
   const otherProperties = await getAllProperties(property.slug?.current || property.slug);
@@ -249,6 +242,18 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
+        {/* Ideal For Section */}
+        {property.idealFor && property.idealFor.length > 0 && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Ideal For</h2>
+            <ul className="list-disc list-inside space-y-2 font-mono text-base text-harbour-stone">
+              {property.idealFor.map((item: string, index: number) => (
+                <li key={index}>{item}</li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {/* Google Reviews */}
         {(property.googleBusinessUrl || property.googlePlaceId) && (
           <GoogleReviews
@@ -287,19 +292,11 @@ export default async function PropertyPage({ params }: PageProps) {
         {/* Accommodation Facilities */}
         {(property.facilitiesIntro || property.kitchenDining?.length || property.livingAreas?.length || 
           property.heatingCooling?.length || property.entertainment?.length || property.laundryFacilities?.length || 
-          property.safetyFeatures?.length || amenities.length > 0) && (
+          property.safetyFeatures?.length) && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">Facilities</h2>
             {property.facilitiesIntro && (
               <p className="font-mono text-base text-harbour-stone mb-6">{property.facilitiesIntro}</p>
-            )}
-            
-            {/* Legacy amenities field */}
-            {amenities.length > 0 && (
-              <div className="mb-6">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Amenities</h3>
-                <CheckboxArray items={amenities} />
-              </div>
             )}
             
             {property.kitchenDining && property.kitchenDining.length > 0 && (
@@ -637,7 +634,6 @@ export default async function PropertyPage({ params }: PageProps) {
                 <div><strong>slug:</strong> {property.slug?.current || <span className="text-red-500">(empty)</span>}</div>
                 <div><strong>propertyType:</strong> {property.propertyType || <span className="text-red-500">(empty)</span>}</div>
                 <div><strong>heroImage:</strong> {property.heroImage ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>mainImage:</strong> {property.mainImage ? '✓' : <span className="text-red-500">(empty)</span>}</div>
                 <div><strong>images:</strong> {property.images?.length || 0} images</div>
                 <div><strong>overviewIntro:</strong> {property.overviewIntro || <span className="text-red-500">(empty)</span>}</div>
                 <div><strong>description:</strong> {property.description ? '✓' : <span className="text-red-500">(empty)</span>}</div>
@@ -733,17 +729,6 @@ export default async function PropertyPage({ params }: PageProps) {
               </div>
             </div>
 
-            {/* Legacy/Other Fields */}
-            {(amenities.length > 0 || property.excerpt || (property as any).focusKeyword) && (
-              <div className="bg-yellow-50 p-4 rounded border border-yellow-200">
-                <h3 className="font-serif text-xl text-harbour-stone mb-3">Legacy/Other Fields (Not in Schema)</h3>
-                <div className="space-y-2 text-harbour-stone">
-                  {amenities.length > 0 && <div><strong>amenities:</strong> {amenities.length} items</div>}
-                  {(property as any).excerpt && <div><strong>excerpt:</strong> {(property as any).excerpt}</div>}
-                  {(property as any).focusKeyword && <div><strong>focusKeyword:</strong> {(property as any).focusKeyword}</div>}
-                </div>
-              </div>
-            )}
           </div>
 
           {/* Raw JSON Debug */}

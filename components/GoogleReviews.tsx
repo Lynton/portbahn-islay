@@ -30,6 +30,8 @@ export default function GoogleReviews({ googleBusinessUrl, googlePlaceId, proper
       return;
     }
 
+    let cancelled = false;
+
     async function fetchReviews() {
       try {
         setLoading(true);
@@ -46,6 +48,8 @@ export default function GoogleReviews({ googleBusinessUrl, googlePlaceId, proper
         
         const response = await fetch(`/api/google-reviews?${params.toString()}`);
         
+        if (cancelled) return;
+        
         if (!response.ok) {
           const errorData = await response.json();
           const errorMessage = errorData.error || 'Failed to fetch reviews';
@@ -57,17 +61,27 @@ export default function GoogleReviews({ googleBusinessUrl, googlePlaceId, proper
         }
         
         const data = await response.json();
-        setReviews(data.reviews || []);
+        if (!cancelled) {
+          setReviews(data.reviews || []);
+        }
       } catch (err: any) {
-        console.error('Error fetching Google reviews:', err);
-        setError(err.message || 'Failed to load reviews');
-        setReviews([]);
+        if (!cancelled) {
+          console.error('Error fetching Google reviews:', err);
+          setError(err.message || 'Failed to load reviews');
+          setReviews([]);
+        }
       } finally {
-        setLoading(false);
+        if (!cancelled) {
+          setLoading(false);
+        }
       }
     }
 
     fetchReviews();
+
+    return () => {
+      cancelled = true;
+    };
   }, [googleBusinessUrl, googlePlaceId]);
 
   // Auto-advance slideshow every 5 seconds

@@ -18,6 +18,25 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Sanity Studio
+
+This project uses Sanity CMS. You can access Sanity Studio in two ways:
+
+### Option 1: Standalone Mode (Recommended for development)
+Run the standalone Sanity dev server:
+```bash
+npm run sanity
+```
+Then open [http://localhost:3333](http://localhost:3333) in your browser.
+
+### Option 2: Integrated in Next.js
+1. Start the Next.js dev server: `npm run dev`
+2. Open [http://localhost:3000/studio](http://localhost:3000/studio) in your browser
+
+**Note:** Make sure your `.env.local` file contains:
+- `NEXT_PUBLIC_SANITY_PROJECT_ID`
+- `NEXT_PUBLIC_SANITY_DATASET`
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

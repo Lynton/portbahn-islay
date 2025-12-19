@@ -258,6 +258,8 @@ async function resolveShortUrl(shortUrl: string): Promise<string> {
     const response = await fetch(shortUrl, {
       method: 'HEAD',
       redirect: 'follow',
+      // Add timeout to prevent hanging
+      signal: AbortSignal.timeout(10000), // 10 second timeout
     });
     
     // Get the final URL after redirects
@@ -265,8 +267,12 @@ async function resolveShortUrl(shortUrl: string): Promise<string> {
     console.log('[resolveShortUrl] Resolved to:', finalUrl);
     
     return finalUrl;
-  } catch (error) {
-    console.error('[resolveShortUrl] Error resolving short URL:', error);
+  } catch (error: any) {
+    if (error.name === 'AbortError') {
+      console.error('[resolveShortUrl] Timeout resolving short URL:', shortUrl);
+    } else {
+      console.error('[resolveShortUrl] Error resolving short URL:', error);
+    }
     return shortUrl; // Return original if resolution fails
   }
 }
@@ -284,10 +290,16 @@ export async function GET(request: NextRequest) {
       );
     }
     
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY;
+    // Check for API key (try both NEXT_PUBLIC_ and non-prefixed versions)
+    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || process.env.GOOGLE_MAPS_API_KEY;
     if (!apiKey) {
+      console.error('[google-reviews] Google Maps API key not found in environment variables');
+      console.error('[google-reviews] Available env vars:', Object.keys(process.env).filter(k => k.includes('GOOGLE')));
       return NextResponse.json(
-        { error: 'Google Maps API key is not configured' },
+        { 
+          error: 'Google Maps API key is not configured',
+          hint: 'Please add NEXT_PUBLIC_GOOGLE_MAPS_API_KEY to your Vercel environment variables'
+        },
         { status: 500 }
       );
     }

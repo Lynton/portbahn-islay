@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "sanity": "sanity dev --port 3333"
+    "sanity": "dotenv -e .env.local -- sanity dev --port 3333"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.0",
@@ -15,13 +15,14 @@
     "@sanity/vision": "^4.20.3",
     "date-fns": "^4.1.0",
     "ical.js": "^2.2.1",
-    "next": "16.0.8",
+    "next": "^16.1.0",
     "next-sanity": "^11.6.10",
     "react": "19.2.1",
     "react-datepicker": "^9.0.0",
     "react-dom": "19.2.1",
     "sanity-plugin-asset-source-unsplash": "^4.0.1",
-    "sanity-plugin-media": "^4.1.0"
+    "sanity-plugin-media": "^4.1.0",
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -29,6 +30,8 @@
     "@types/react": "^19",
     "@types/react-datepicker": "^6.2.0",
     "@types/react-dom": "^19",
+    "dotenv": "^17.2.3",
+    "dotenv-cli": "^11.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.0.8",
     "sanity": "^4.20.3",

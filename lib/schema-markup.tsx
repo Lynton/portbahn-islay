@@ -180,6 +180,19 @@ function generateAccommodation(property: any, siteUrl: string) {
 
   const amenityFeatures = mapAmenitiesToSchema(property);
 
+  // Add idealFor target audience as amenity features
+  if (property.idealFor && Array.isArray(property.idealFor)) {
+    property.idealFor.forEach((audience: string) => {
+      if (audience && audience.trim()) {
+        amenityFeatures.push({
+          '@type': 'LocationFeatureSpecification',
+          name: `Ideal for ${audience}`,
+          value: true,
+        });
+      }
+    });
+  }
+
   const accommodation: any = {
     '@context': 'https://schema.org',
     '@type': 'Accommodation',
