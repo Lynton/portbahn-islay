@@ -13,12 +13,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // Fix Turbopack workspace root issue
-  experimental: {
-    turbo: {
-      root: process.cwd(),
-    },
-  },
 };
 
 export default nextConfig;
