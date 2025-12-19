@@ -23,6 +23,16 @@ async function getProperty(slug: string) {
     overviewIntro,
     description,
     idealFor[],
+    commonQuestions[] {
+      question,
+      answer
+    },
+    trustSignals {
+      ownership,
+      established,
+      guestExperience,
+      localCredentials
+    },
     sleeps,
     bedrooms,
     beds,
@@ -239,6 +249,37 @@ export default async function PropertyPage({ params }: PageProps) {
             <div className="font-mono text-base text-harbour-stone leading-relaxed whitespace-pre-line">
               {property.description}
             </div>
+            
+            {/* Trust Signals */}
+            {property.trustSignals && (property.trustSignals.established || property.trustSignals.ownership || property.trustSignals.guestExperience) && (
+              <div className="mt-6 font-mono text-sm text-harbour-stone opacity-75">
+                {property.trustSignals.established && (
+                  <span>{property.trustSignals.established}</span>
+                )}
+                {property.trustSignals.ownership && (
+                  <>
+                    {property.trustSignals.established && <span> • </span>}
+                    <span>{property.trustSignals.ownership}</span>
+                  </>
+                )}
+                {property.trustSignals.guestExperience && (
+                  <>
+                    {(property.trustSignals.established || property.trustSignals.ownership) && <span> • </span>}
+                    <span>{property.trustSignals.guestExperience}</span>
+                  </>
+                )}
+              </div>
+            )}
+
+            {property.trustSignals?.localCredentials && property.trustSignals.localCredentials.length > 0 && (
+              <div className="mt-4 flex flex-wrap gap-2">
+                {property.trustSignals.localCredentials.map((credential: string, i: number) => (
+                  <span key={i} className="px-3 py-1 bg-[#F3F1E7] rounded font-mono text-xs text-harbour-stone">
+                    {credential}
+                  </span>
+                ))}
+              </div>
+            )}
           </section>
         )}
 
@@ -265,7 +306,7 @@ export default async function PropertyPage({ params }: PageProps) {
 
         {/* Sleeping Arrangements */}
         <section className="mb-12">
-          <h2 className="font-serif text-3xl text-harbour-stone mb-4">Where Will You Sleep?</h2>
+          <h2 className="font-serif text-3xl text-harbour-stone mb-4">Sleeping Arrangements</h2>
           {property.sleepingIntro ? (
             <p className="font-mono text-base text-harbour-stone mb-4">{property.sleepingIntro}</p>
           ) : (
@@ -294,7 +335,7 @@ export default async function PropertyPage({ params }: PageProps) {
           property.heatingCooling?.length || property.entertainment?.length || property.laundryFacilities?.length || 
           property.safetyFeatures?.length) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What's Included in Your Stay?</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Facilities</h2>
             {property.facilitiesIntro && (
               <p className="font-mono text-base text-harbour-stone mb-6">{property.facilitiesIntro}</p>
             )}
@@ -355,10 +396,31 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
+        {/* Common Questions Section */}
+        {property.commonQuestions && property.commonQuestions.length > 0 && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">
+              Common Questions About {property.name}
+            </h2>
+            <div className="space-y-6">
+              {property.commonQuestions.map((qa: { question: string; answer: string }, index: number) => (
+                <div key={index} className="border-l-4 border-emerald-accent pl-6">
+                  <h3 className="font-serif text-xl text-harbour-stone mb-2">
+                    {qa.question}
+                  </h3>
+                  <p className="font-mono text-base text-harbour-stone leading-relaxed whitespace-pre-line">
+                    {qa.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Outdoor Spaces */}
         {(property.outdoorIntro || property.outdoorFeatures?.length || property.parkingInfo) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What's Outside?</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Outdoor Spaces</h2>
             {property.outdoorIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.outdoorIntro}</p>
             )}
@@ -425,7 +487,7 @@ export default async function PropertyPage({ params }: PageProps) {
         {/* Location & Nearby */}
         {(property.locationIntro || property.nearbyAttractions?.length || property.whatToDoNearby?.length) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Where is {property.name} Located?</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Location</h2>
             {property.locationIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.locationIntro}</p>
             )}
@@ -437,7 +499,7 @@ export default async function PropertyPage({ params }: PageProps) {
             )}
             {property.whatToDoNearby && property.whatToDoNearby.length > 0 && (
               <div>
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">What Can You Do Nearby?</h3>
+                <h3 className="font-serif text-xl text-harbour-stone mb-2">What To Do Nearby</h3>
                 <ArrayField items={property.whatToDoNearby} />
               </div>
             )}
@@ -449,7 +511,7 @@ export default async function PropertyPage({ params }: PageProps) {
           property.ferryInfo || property.airportDistance || property.portDistance || 
           property.latitude || property.longitude || property.location) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">How Do You Get Here?</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Getting Here</h2>
             {property.gettingHereIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.gettingHereIntro}</p>
             )}
@@ -523,7 +585,7 @@ export default async function PropertyPage({ params }: PageProps) {
           property.cancellationPolicy || property.paymentTerms || property.securityDeposit || 
           property.licensingInfo || property.importantInfo?.length) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What Are the House Rules?</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">House Rules</h2>
             {property.policiesIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.policiesIntro}</p>
             )}

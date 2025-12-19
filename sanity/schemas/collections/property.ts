@@ -124,6 +124,50 @@ export default defineType({
       validation: (Rule) => Rule.max(5).required(),
       initialValue: [],
     }),
+    defineField({
+      name: 'commonQuestions',
+      title: 'Common Questions',
+      type: 'array',
+      group: 'content',
+      description: 'Common questions visitors have about this property (4-6 recommended). These appear after Facilities section.',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'question',
+              type: 'string',
+              title: 'Question',
+              placeholder: 'e.g., Does Portbahn House have WiFi?',
+              validation: (Rule) => Rule.required(),
+              description: 'Natural language question matching how users search',
+            },
+            {
+              name: 'answer',
+              type: 'text',
+              title: 'Answer',
+              rows: 3,
+              placeholder: 'Brief answer (2-3 sentences max)',
+              validation: (Rule) => Rule.required().max(400).warning('Keep under 400 characters for best display and AI extraction'),
+              description: 'Concise answer that can stand alone if extracted',
+            },
+          ],
+          preview: {
+            select: {
+              title: 'question',
+              subtitle: 'answer',
+            },
+            prepare({ title, subtitle }) {
+              return {
+                title,
+                subtitle: subtitle ? subtitle.substring(0, 60) + '...' : '',
+              };
+            },
+          },
+        },
+      ],
+      validation: (Rule) => Rule.max(6).warning('Recommend 4-6 questions for optimal readability'),
+    }),
 
     // ========== CAPACITY & LAYOUT (AI Block 2) ==========
     defineField({
@@ -393,6 +437,50 @@ export default defineType({
       type: 'string',
       group: 'details',
       description: 'e.g., "Ample parking for several cars" or "2 dedicated parking spaces"',
+    }),
+
+    // ========== TRUST & AUTHORITY ==========
+    defineField({
+      name: 'trustSignals',
+      title: 'Trust & Authority',
+      type: 'object',
+      group: 'details',
+      description: 'Information that builds credibility with AI systems and users',
+      options: {
+        collapsible: true,
+        collapsed: false,
+      },
+      fields: [
+        {
+          name: 'ownership',
+          type: 'string',
+          title: 'Ownership Type',
+          placeholder: 'e.g., Family-owned, Locally-managed',
+          description: 'How the property is owned/managed',
+        },
+        {
+          name: 'established',
+          type: 'string',
+          title: 'Established',
+          placeholder: 'e.g., Welcoming guests since 2015',
+          description: 'When the property started welcoming guests',
+        },
+        {
+          name: 'guestExperience',
+          type: 'string',
+          title: 'Guest Experience',
+          placeholder: 'e.g., Over 500 guests welcomed, 10 years hosting',
+          description: 'Quantifiable guest/hosting experience',
+        },
+        {
+          name: 'localCredentials',
+          type: 'array',
+          of: [{ type: 'string' }],
+          title: 'Local Credentials',
+          placeholder: 'e.g., VisitScotland approved, RSPB supporter',
+          description: 'Awards, memberships, certifications',
+        },
+      ],
     }),
 
     // ========== PET POLICY (AI Block 5) ==========
