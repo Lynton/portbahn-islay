@@ -1,8 +1,8 @@
 import { MetadataRoute } from 'next';
 import { client } from '@/sanity/lib/client';
 
-// Get the base URL from environment variable or use a default
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourdomain.com';
+// Get the base URL from environment variable or use production domain
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahn-islay.vercel.app';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all properties from Sanity
@@ -13,61 +13,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   
   const properties = await client.fetch(propertiesQuery);
 
-  // Static pages
+  // Static pages - ONLY include pages that actually exist
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1.0,
-    },
-    {
-      url: `${baseUrl}/accommodation`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/about`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/getting-here`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/islay-guides`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}/faq`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}/contact`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}/privacy`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
-    },
-    {
-      url: `${baseUrl}/terms`,
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.3,
     },
   ];
 
@@ -76,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     url: `${baseUrl}/accommodation/${property.slug?.current || property.slug}`,
     lastModified: property._updatedAt ? new Date(property._updatedAt) : new Date(),
     changeFrequency: 'weekly' as const,
-    priority: 0.8,
+    priority: 0.9,
   }));
 
   // TODO: Add guide pages when they're implemented

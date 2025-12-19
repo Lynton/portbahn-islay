@@ -235,7 +235,7 @@ export default async function PropertyPage({ params }: PageProps) {
         {/* Description Section */}
         {property.description && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Overview</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What Makes {property.name} Special?</h2>
             <div className="font-mono text-base text-harbour-stone leading-relaxed whitespace-pre-line">
               {property.description}
             </div>
@@ -265,7 +265,7 @@ export default async function PropertyPage({ params }: PageProps) {
 
         {/* Sleeping Arrangements */}
         <section className="mb-12">
-          <h2 className="font-serif text-3xl text-harbour-stone mb-4">Sleeping Arrangements</h2>
+          <h2 className="font-serif text-3xl text-harbour-stone mb-4">Where Will You Sleep?</h2>
           {property.sleepingIntro ? (
             <p className="font-mono text-base text-harbour-stone mb-4">{property.sleepingIntro}</p>
           ) : (
@@ -294,7 +294,7 @@ export default async function PropertyPage({ params }: PageProps) {
           property.heatingCooling?.length || property.entertainment?.length || property.laundryFacilities?.length || 
           property.safetyFeatures?.length) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Facilities</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What's Included in Your Stay?</h2>
             {property.facilitiesIntro && (
               <p className="font-mono text-base text-harbour-stone mb-6">{property.facilitiesIntro}</p>
             )}
@@ -358,7 +358,7 @@ export default async function PropertyPage({ params }: PageProps) {
         {/* Outdoor Spaces */}
         {(property.outdoorIntro || property.outdoorFeatures?.length || property.parkingInfo) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Outdoor Spaces</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What's Outside?</h2>
             {property.outdoorIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.outdoorIntro}</p>
             )}
@@ -425,19 +425,19 @@ export default async function PropertyPage({ params }: PageProps) {
         {/* Location & Nearby */}
         {(property.locationIntro || property.nearbyAttractions?.length || property.whatToDoNearby?.length) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Location & Nearby</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Where is {property.name} Located?</h2>
             {property.locationIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.locationIntro}</p>
             )}
             {property.nearbyAttractions && property.nearbyAttractions.length > 0 && (
               <div className="mb-4">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Nearby Attractions</h3>
+                <h3 className="font-serif text-xl text-harbour-stone mb-2">What's Nearby?</h3>
                 <ArrayField items={property.nearbyAttractions} />
               </div>
             )}
             {property.whatToDoNearby && property.whatToDoNearby.length > 0 && (
               <div>
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">What To Do Nearby</h3>
+                <h3 className="font-serif text-xl text-harbour-stone mb-2">What Can You Do Nearby?</h3>
                 <ArrayField items={property.whatToDoNearby} />
               </div>
             )}
@@ -449,7 +449,7 @@ export default async function PropertyPage({ params }: PageProps) {
           property.ferryInfo || property.airportDistance || property.portDistance || 
           property.latitude || property.longitude || property.location) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Getting Here</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">How Do You Get Here?</h2>
             {property.gettingHereIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.gettingHereIntro}</p>
             )}
@@ -505,7 +505,7 @@ export default async function PropertyPage({ params }: PageProps) {
         {/* Pet Policy */}
         {(property.petFriendly !== undefined || property.petPolicyIntro || property.petPolicyDetails?.length) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Pet Policy</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Can I Bring Pets?</h2>
             <p className="font-mono text-base text-harbour-stone mb-2">
               <strong>Pet Friendly:</strong> {property.petFriendly ? 'Yes' : 'No'}
             </p>
@@ -523,7 +523,7 @@ export default async function PropertyPage({ params }: PageProps) {
           property.cancellationPolicy || property.paymentTerms || property.securityDeposit || 
           property.licensingInfo || property.importantInfo?.length) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">House Rules & Policies</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What Are the House Rules?</h2>
             {property.policiesIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.policiesIntro}</p>
             )}
