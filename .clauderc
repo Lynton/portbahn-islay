@@ -53,7 +53,52 @@ Types: feat, fix, docs, style, refactor, test, chore
 - Test files
 - Minor bug fixes (with clear description)
 
+## Token Tracking Policy - ALWAYS FOLLOW
+
+### Session Token Management
+1. **At start of each session**: Report current token count from system
+2. **Every ~25k tokens**: Provide checkpoint summary:
+   - Work completed so far
+   - Remaining tasks
+   - Estimated tokens needed
+   - Suggest commit point if approaching limits
+
+3. **At 75% usage (150k/200k)**:
+   - Commit all work completed
+   - Provide handoff summary for next session
+   - List any incomplete tasks
+
+4. **Session Handoff Format**:
+   ```markdown
+   ## Session Summary (Tokens: X/200k)
+
+   ### Completed:
+   - Task 1 with commit hash
+   - Task 2 with commit hash
+
+   ### In Progress:
+   - Task 3 (50% complete, needs: X, Y, Z)
+
+   ### Next Session Should:
+   1. Continue from commit abc123
+   2. Focus on remaining subtasks
+   3. Estimated tokens needed: ~Xk
+   ```
+
+5. **Token-Efficient Practices**:
+   - Use Task tool for large file operations (spawns sub-agents)
+   - Avoid re-reading large files unnecessarily
+   - Commit frequently to preserve work
+   - Break large tasks into sessions if needed
+
+### When To Start New Session
+- Approaching 150k tokens (75% usage)
+- Major task completed and committed
+- Natural break point in work (schema done, data ready, etc.)
+
 ## Project-Specific Notes
 - Sanity dataset: production
 - Always create data exports before schema changes
 - Keep backup exports in `data/exports/` with ISO timestamps
+- Context budget: 200k tokens per session
+- Large operations (data generation, migrations): use Task tool for efficiency
