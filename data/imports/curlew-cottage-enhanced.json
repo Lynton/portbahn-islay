@@ -1,0 +1,237 @@
+{
+  "_createdAt": "2025-12-10T11:32:46Z",
+  "_id": "0d37a3b4-a777-4999-b1d3-916c1b74744b",
+  "_rev": "Kwzv5A6He6Hj3IrpMpb37S",
+  "_system": {
+    "base": {
+      "id": "0d37a3b4-a777-4999-b1d3-916c1b74744b",
+      "rev": "Kwzv5A6He6Hj3IrpMg87sO"
+    }
+  },
+  "_type": "property",
+  "_updatedAt": "2025-12-18T13:36:02Z",
+  "airportDistance": "Islay airport is 14.5 miles, 25 minutes drive away past Bowmore on the road to Port Ellen.",
+  "bathroomDetails": [
+    "1 main bathroom downstairs with bath/shower combination, toilet, and sink",
+    "1 small ensuite to bedroom with separate stair access (small bath with shower attachment, sink, toilet)",
+    ""
+  ],
+  "bathrooms": 2,
+  "bedroomDetails": [
+    "Double bedroom",
+    "Twin bedroom",
+    "Twin bedroom with separate stair access and small ensuite bathroom"
+  ],
+  "bedrooms": 3,
+  "beds": 5,
+  "cancellationPolicy": "100% of paid prepayments refundable when canceled 60 day(s) before arrival or earlier. 50% of paid prepayments refundable when canceled 30 day(s) before arrival or earlier. 0% refundable if canceled after. \n\n** Please ensure you have adequate travel insurance as we cannot give refunds due to weather or ferry and airplane cancellations. We will always do our best to fill any cancelled dates and will refund you if we are able to do so.**",
+  "checkInTime": "16:00",
+  "checkOutTime": "10:00",
+  "description": "Curlew Cottage is a characterful holiday cottage in Bruichladdich on the Isle of Islay, sleeping 6 guests in 3 bedrooms. Situated on an elevated position between Bruichladdich and Port Charlotte, the cottage enjoys a private access road shared only with two neighboring homes, creating a very safe environment for families with children to enjoy the gardens.\n\nThe ground floor features a large dining/family room, sitting room with wood-burning stove, fully equipped kitchen with dishwasher and microwave, and laundry room with washing machine, tumble dryer, and airing pulley. The main bathroom includes both bath and shower. Upstairs, two bedrooms share the landing, while a third bedroom is accessed via a separate stair and has its own small ensuite bathroom.\n\nThe cottage has oil-fired central heating, double glazing throughout, and a cosy wood-burning stove making this an ideal year-round retreat for families visiting the Scottish Islands. Broadband wifi is available. Outside, the walled rear garden includes a greenhouse and garage, created from former farm steading buildings. Ample parking accommodates several cars.\n\nBruichladdich Distillery is a 10-minute walk along the coastal cycle path, with swimming beaches equally accessible. Port Charlotte's family-friendly restaurants, pubs, and shops are 5 minutes by car or 45 minutes via the scenic cycle path. Bruichladdich village shop serves excellent coffee and sandwiches. Perfect for families seeking a quiet, safe Isle of Islay base for exploring beaches, distilleries, and coastal walks. Please note: Curlew Cottage is not pet-friendly.",
+  "directions": "Take the coastal road to Port Charlotte. Drive past Bruichladdich Distillery, and turn right after about half a mile up a small lane on the crest with the sign, \"Coultorsay\". If you reach the War Memorial on the sea ward side of the road, you have gone too far! ",
+  "entertainment": [
+    "tv_antenna",
+    "books_games_ent",
+    "wifi_ent"
+  ],
+  "facilitiesIntro": "Cosy family cottage with wood-burning stove, full kitchen amenities, and dedicated laundry room.",
+  "ferryInfo": "Calmac run daily ferries to Kennacraig on the mainland from Port Askaig (14 miles, 25 minutes drive) and Port Ellen (17 miles, 30 minutes drive) ferry terminals.",
+  "gettingHereIntro": "Half a mile outside Bruichladdich, 30 minuted from ferry ports and airport",
+  "heatingCooling": [
+    "wood_stove",
+    "oil_heating",
+    "double_glazing_heat",
+    "well_insulated"
+  ],
+  "heatingCoolingNotes": [
+    "Cosy wood-burning stove in sitting room"
+  ],
+  "heroImage": {
+    "_sanityAsset": "image@file://./images/0bf2afb6567d84a1a4401f7000ed2f07105f65cd-1024x768.jpg",
+    "_type": "image",
+    "alt": "Curlew Cottage sits in a secluded spot with private garden and views over Loch Indaal"
+  },
+  "icsUrl": "https://www.lodgify.com/e43d9860-fa74-4044-b4b5-24281cbe5496.ics",
+  "idealFor": [
+    "Families with children seeking safe environment",
+    "Guests with pet allergies (pet-free property)",
+    "Couples seeking quiet retreat",
+    "Groups up to 6 guests exploring Islay and its whisky distilleries"
+  ],
+  "images": [
+    {
+      "_sanityAsset": "image@file://./images/1eec60d65c3d1c1cf593e11a7dec9a3bf54c9a6d-1024x768.jpg",
+      "_key": "49c8c9df15d0",
+      "_type": "image",
+      "alt": "Private secluded walled garden",
+      "caption": "Private secluded walled garden"
+    },
+    {
+      "_sanityAsset": "image@file://./images/e4b8ac02c3e61a8879639101eb376f00310838c7-1024x768.jpg",
+      "_key": "2ad24e2c08e0",
+      "_type": "image",
+      "alt": "Separate private living room with wood burning stove",
+      "caption": "Separate private living room with wood burning stove"
+    },
+    {
+      "_sanityAsset": "image@file://./images/546241eca32f67456b969b1cd352be0be5c0f95b-1024x768.jpg",
+      "_key": "ac37f73fa68d",
+      "_type": "image",
+      "alt": "Quiet coffee area in the dining room",
+      "caption": "Quiet coffee area in the dining room"
+    },
+    {
+      "_sanityAsset": "image@file://./images/fe2194a085106a9ee44a0f7d3a60547826d30d64-1024x768.jpg",
+      "_key": "50a5a86eaf2e",
+      "_type": "image",
+      "alt": "Double bedroom with en-suite shower room and sea views",
+      "caption": "Double bedroom with en-suite shower room and sea views"
+    },
+    {
+      "_sanityAsset": "image@file://./images/80c12dd0ef6a0caea5f1b53670afda442e3e5e50-1024x768.jpg",
+      "_key": "845eb912f490",
+      "_type": "image",
+      "alt": "Full fitted modern kitchen with gas hob, electric oven and fridge freezer",
+      "caption": "Full fitted modern kitchen with gas hob, electric oven and fridge freezer"
+    },
+    {
+      "_sanityAsset": "image@file://./images/fc1334040bfc031023ddffb25b9c797fb83bc58d-1024x768.jpg",
+      "_key": "0fd6349a5854",
+      "_type": "image",
+      "alt": "Downstairs family bathroom with shower and bath",
+      "caption": "Downstairs family bathroom with shower and bath"
+    }
+  ],
+  "includedIntro": "Linen, towels, and basic kitchen dry good essentials provided for your stay",
+  "kitchenDining": [
+    "dishwasher",
+    "microwave",
+    "oven",
+    "refrigerator",
+    "toaster",
+    "coffee_machine",
+    "vacuum_cleaner",
+    "kitchen_stove",
+    "dining_table_6"
+  ],
+  "kitchenDiningNotes": [
+    "Large dining/ family room with coffee area"
+  ],
+  "latitude": 55.75947609876763,
+  "laundryFacilities": [
+    "washing_machine",
+    "iron_board",
+    "airing_pulley"
+  ],
+  "licensingInfo": "AR02532F",
+  "livingAreas": [
+    "separate_sitting",
+    "separate_dining",
+    "sea_views",
+    "wifi",
+    "books_games",
+    "double_glazing"
+  ],
+  "livingAreasNotes": [
+    "Large sitting room with wood burning stove, TV and music"
+  ],
+  "location": "Bruichladdich, Isle of Islay",
+  "locationIntro": "Peaceful secluded hideaway between Bruichladdich and Port Charlotte, set back from the road with sweeping sea views",
+  "lodgifyPropertyId": 629317,
+  "lodgifyRoomId": 696265,
+  "longitude": -6.370897301775537,
+  "minimumStay": 2,
+  "name": "Curlew Cottage",
+  "nearbyAttractions": [
+    "Bruichladdich Distillery, 10 minuts walk",
+    "Port Charlotte village, 30 minutes walk along coastal path",
+    "Port Mor childrens' playground, 5 minute drive, 30 minute walk"
+  ],
+  "outdoorFeatures": [
+    "private_garden",
+    "sea_views_outdoor",
+    "walled_garden",
+    "elevated"
+  ],
+  "outdoorIntro": "Safe walled garden perfect for families with children; Garage and greenhouse converted from former farm steading buildings; Private access road shared with only 2 neighbouring homes",
+  "overviewIntro": "Curlew Cottage is a cosy family holiday cottage in Bruichladdich on the Isle of Islay, Scotland, sleeping 6 guests in 3 bedrooms with private access road, walled garden, and safe environment for children.",
+  "parkingInfo": "Ample parking for several cars at front and side of cottage",
+  "paymentTerms": "100% of the total amount is due at time of reservation. \n\nPlease do contact us if you would like to arrange an alternative payment plan and we'll do our best to help.",
+  "petFriendly": false,
+  "petPolicyDetails": [
+    "Curlew Cottage is a pet free environment suitable for guests with allergies"
+  ],
+  "petPolicyIntro": "No pets, including dogs and cats, allowed at Curlew Cottage",
+  "policiesIntro": "Check-in: 16:00; check-out: 10:00. Cancellation policy applies. Please contact us if you would like an early check in or late check out and we'll see what we can do!",
+  "portDistance": "Port Askaig ferry port: 14 miles; Port Ellen ferry port: 17 miles",
+  "postcode": "PA49 7UN",
+  "propertyType": "cottage",
+  "safetyFeatures": [
+    "co_detector",
+    "smoke_detector",
+    "fire_extinguisher",
+    "private_access"
+  ],
+  "securityDeposit": "We do not usually ask for a security deposit.",
+  "seoDescription": "Safe family holiday cottage in Bruichladdich, Isle of Islay. Private access road, walled garden perfect for children. Sleeps 6 in 3 bedrooms. Quiet elevated location. No pets - ideal for allergy sufferers.",
+  "seoTitle": "Curlew Cottage | Safe Family Holiday Home Bruichladdich, Isle Islay",
+  "sleepingIntro": "Three bedrooms accommodate 6 guests across two floors in this family-friendly cottage.",
+  "sleeps": 6,
+  "slug": {
+    "_type": "slug",
+    "current": "curlew-cottage"
+  },
+  "whatToDoNearby": [
+    "Distillery visits",
+    "Birdwatching",
+    "Children's playground at Port Mor in Port Charlotte"
+  ],
+  "propertyNickname": null,
+  "guestSuperlatives": [],
+  "magicMoments": [],
+  "perfectFor": [
+    {
+      "guestType": "Families with children seeking safe environment",
+      "why": "Walled garden, private access road shared with only 2 neighbors, elevated secluded position. Very safe for kids to play outside.",
+      "reviewEvidence": null
+    },
+    {
+      "guestType": "Guests with pet allergies",
+      "why": "Pet-free property - no dogs or cats allowed. Clean environment for allergy sufferers.",
+      "reviewEvidence": null
+    },
+    {
+      "guestType": "Couples or families seeking quiet retreat",
+      "why": "Secluded elevated position, private access road, peaceful location between Bruichladdich and Port Charlotte.",
+      "reviewEvidence": null
+    }
+  ],
+  "honestFriction": [
+    {
+      "issue": "No pets allowed",
+      "context": "Unlike Portbahn and Shorefield, Curlew is a pet-free environment. If you're traveling with dogs, consider our other properties."
+    },
+    {
+      "issue": "One bedroom has separate stair access",
+      "context": "The twin bedroom with ensuite is accessed via a separate staircase. Provides privacy but may not suit guests with mobility concerns."
+    }
+  ],
+  "ownerContext": null,
+  "reviewScores": {
+    "airbnbScore": null,
+    "airbnbCount": 0,
+    "airbnbBadges": [],
+    "bookingScore": null,
+    "bookingCount": 0,
+    "bookingCategory": null,
+    "googleScore": null,
+    "googleCount": 0
+  },
+  "totalReviewCount": 0,
+  "reviewThemes": [],
+  "reviewHighlights": [],
+  "licensingStatus": "pending-enquiries",
+  "licenseNumber": "AR02532F",
+  "licenseNotes": "License application submitted. Currently accepting enquiries. Bookings will open upon license approval.",
+  "availabilityStatus": "enquiries"
+}

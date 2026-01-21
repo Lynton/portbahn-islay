@@ -9,7 +9,10 @@ export default defineType({
     { name: 'details', title: 'Property Details' },
     { name: 'location', title: 'Location & Directions' },
     { name: 'policies', title: 'Policies & Rules' },
+    { name: 'personality', title: '👥 Personality & Guest Experience' },
+    { name: 'reviews', title: '⭐ Reviews & Social Proof' },
     { name: 'lodgify', title: 'Lodgify Integration' },
+    { name: 'ai-search', title: 'AI & Search Optimization' },
     { name: 'seo', title: 'SEO' },
   ],
   fields: [
@@ -19,7 +22,15 @@ export default defineType({
       title: 'Property Name',
       type: 'string',
       group: 'content',
+      description: `Official property name - use consistently everywhere.
+
+🔴 CRITICAL: Primary entity identifier for AI systems.
+
+✓ DO: "Portbahn House"
+✗ DON'T: Variations like "The Portbahn" or "Portbahn Holiday Home"`,
+      
       validation: (Rule) => Rule.required(),
+      placeholder: 'Portbahn House'
     }),
     defineField({
       name: 'slug',
@@ -104,7 +115,14 @@ export default defineType({
       title: 'Property Overview - Intro Sentence',
       type: 'string',
       group: 'content',
-      description: 'e.g., "Portbahn sleeps 8 guests in 3 bedrooms on the shores of Loch Indaal, Isle of Islay."',
+      description: `Opening sentence with property name + key facts.
+
+🟢 HELPFUL: Sets context for main description.
+
+✓ DO: "Portbahn sleeps 8 guests in 3 bedrooms on the shores of Loch Indaal, Isle of Islay"
+✗ DON'T: "Welcome to an amazing property"`,
+      
+      placeholder: 'Portbahn sleeps 8 guests in 3 bedrooms on the shores of Loch Indaal'
     }),
     defineField({
       name: 'description',
@@ -112,7 +130,12 @@ export default defineType({
       type: 'text',
       group: 'content',
       rows: 6,
-      description: 'Main property description (2-3 paragraphs)',
+      description: `Main property description (2-4 paragraphs).
+
+🔴 CRITICAL: Include specific features, location benefits, unique attributes.
+
+✓ DO: "Modern house with private beach access and views to Paps of Jura"
+✗ DON'T: "Stunning property in unique setting with unforgettable experiences"`,
     }),
     defineField({
       name: 'idealFor',
@@ -120,9 +143,359 @@ export default defineType({
       type: 'array',
       group: 'content',
       of: [{ type: 'string' }],
-      description: 'List of ideal guest types (max 5 items)',
-      validation: (Rule) => Rule.max(5).required(),
-      initialValue: [],
+      description: `Guest types this property suits (3-5 items).
+
+🟡 OPTIONAL: Helps match user intent queries.
+
+✓ DO: "Families with children", "Dog owners", "Remote workers"
+✗ DON'T: "People who love great places"`,
+      
+      validation: (Rule) => Rule.max(5)
+    }),
+    defineField({
+      name: 'commonQuestions',
+      title: 'Common Questions',
+      type: 'array',
+      group: 'content',
+      description: `Property-specific Q&As in natural language (3-6 recommended).
+
+🟡 OPTIONAL: Captures how users actually search.
+
+✓ DO: "Does Portbahn House have WiFi?" / "Yes, reliable WiFi throughout"
+✗ DON'T: "What facilities?" (duplicates facility list)`,
+      
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'question',
+              type: 'string',
+              title: 'Question',
+              placeholder: 'Does Portbahn House have WiFi?',
+              description: 'Natural language question matching how users search',
+              validation: (Rule) => Rule.required()
+                .min(10).error('Question too short')
+                .custom(q => {
+                  if (!q || typeof q !== 'string') return true
+                  if (!q.trim().endsWith('?')) return 'Question must end with ?'
+                  if (q.trim().split(/\s+/).length < 4) return 'Question must be at least 4 words'
+                  return true
+                })
+            },
+            {
+              name: 'answer',
+              type: 'text',
+              title: 'Answer',
+              rows: 3,
+              placeholder: 'Yes, reliable WiFi is available throughout the property',
+              description: 'Concise answer (2-3 sentences max, under 400 chars)',
+              validation: (Rule) => Rule.required()
+                .max(400).warning('Keep under 400 characters for optimal display')
+            }
+          ],
+          preview: {
+            select: {
+              title: 'question',
+              subtitle: 'answer'
+            },
+            prepare({ title, subtitle }) {
+              return {
+                title,
+                subtitle: subtitle ? subtitle.substring(0, 60) + '...' : ''
+              }
+            }
+          }
+        }
+      ],
+      validation: (Rule) => Rule
+        .min(3).warning('Recommend 3-6 questions for optimal coverage')
+        .max(6).warning('More than 6 reduces scannability')
+    }),
+
+    // ========== PERSONALITY & GUEST EXPERIENCE ==========
+    defineField({
+      name: 'propertyNickname',
+      title: 'Property Nickname',
+      type: 'string',
+      description: 'Optional internal nickname that captures property personality (e.g., "The View House", "The Character House"). Used for editorial reference and potential subtle branding.',
+      group: 'personality',
+      validation: (Rule) => Rule.max(50),
+    }),
+    defineField({
+      name: 'guestSuperlatives',
+      title: 'Guest Superlatives',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Short, powerful quotes from reviews that capture what guests say most often. Include source/date. Import from Enhanced Brief. Examples: "Better than the pictures", "One of my favorite stays in Scotland".',
+      group: 'personality',
+      validation: (Rule) => Rule.max(10),
+    }),
+    defineField({
+      name: 'magicMoments',
+      title: 'Magic Moments',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'moment',
+              title: 'Moment Description',
+              type: 'text',
+              rows: 2,
+              validation: (Rule) => Rule.required().max(200),
+            },
+            {
+              name: 'frequency',
+              title: 'Frequency Note',
+              type: 'string',
+              description: 'Optional note about how often mentioned (e.g., "15+ reviews", "Most common arrival ritual")',
+            },
+          ],
+          preview: {
+            select: {
+              title: 'moment',
+              subtitle: 'frequency',
+            },
+          },
+        },
+      ],
+      description: 'Experiential patterns mentioned 5+ times in reviews. Real moments guests repeatedly describe. Import from Enhanced Brief.',
+      group: 'personality',
+      validation: (Rule) => Rule.max(8),
+    }),
+    defineField({
+      name: 'perfectFor',
+      title: 'Perfect For',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'guestType',
+              title: 'Guest Type',
+              type: 'string',
+              description: 'e.g., "Whisky enthusiasts", "Families with young children"',
+              validation: (Rule) => Rule.required().max(100),
+            },
+            {
+              name: 'why',
+              title: 'Why Perfect For Them',
+              type: 'text',
+              rows: 3,
+              description: 'Concise explanation (2-3 sentences)',
+              validation: (Rule) => Rule.required().max(300),
+            },
+            {
+              name: 'reviewEvidence',
+              title: 'Review Evidence',
+              type: 'string',
+              description: 'Optional percentage/count (e.g., "40% of reviews mention whisky tours")',
+            },
+          ],
+          preview: {
+            select: {
+              title: 'guestType',
+              subtitle: 'reviewEvidence',
+            },
+          },
+        },
+      ],
+      description: 'Guest types that consistently love this property, backed by review evidence. Import from Enhanced Brief.',
+      group: 'personality',
+      validation: (Rule) => Rule.max(5),
+    }),
+    defineField({
+      name: 'honestFriction',
+      title: 'Honest Friction',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'issue',
+              title: 'Issue',
+              type: 'string',
+              description: 'Brief description of limitation (e.g., "Small twin bedroom")',
+              validation: (Rule) => Rule.required().max(100),
+            },
+            {
+              name: 'context',
+              title: 'Context',
+              type: 'text',
+              rows: 2,
+              description: 'Why it exists, who it matters for, why it might not matter',
+              validation: (Rule) => Rule.required().max(300),
+            },
+          ],
+          preview: {
+            select: {
+              title: 'issue',
+            },
+          },
+        },
+      ],
+      description: 'Transparent acknowledgment of repeated friction points from reviews. Builds trust through honesty. Import from Enhanced Brief.',
+      group: 'personality',
+      validation: (Rule) => Rule.max(5),
+    }),
+    defineField({
+      name: 'ownerContext',
+      title: 'Owner Context',
+      type: 'text',
+      rows: 4,
+      description: 'Optional background on property owner/history that explains the character (e.g., Shorefield: bird watchers, painters, world travelers). Only fill if adds meaningful personality dimension.',
+      group: 'personality',
+    }),
+
+    // ========== REVIEWS & SOCIAL PROOF ==========
+    defineField({
+      name: 'reviewScores',
+      title: 'Review Scores',
+      type: 'object',
+      description: 'Aggregate review data from all platforms. Import from review platform exports.',
+      group: 'reviews',
+      fields: [
+        {
+          name: 'airbnbScore',
+          title: 'Airbnb Score',
+          type: 'number',
+          validation: (Rule) => Rule.min(0).max(5).precision(2),
+        },
+        {
+          name: 'airbnbCount',
+          title: 'Airbnb Review Count',
+          type: 'number',
+          validation: (Rule) => Rule.min(0).integer(),
+        },
+        {
+          name: 'airbnbBadges',
+          title: 'Airbnb Badges',
+          type: 'array',
+          of: [{ type: 'string' }],
+          options: {
+            list: [
+              { title: 'Guest Favourite', value: 'guest-favourite' },
+              { title: 'Top 10% of Homes', value: 'top-10-percent' },
+              { title: 'Superhost', value: 'superhost' },
+            ],
+          },
+        },
+        {
+          name: 'bookingScore',
+          title: 'Booking.com Score',
+          type: 'number',
+          validation: (Rule) => Rule.min(0).max(10).precision(1),
+        },
+        {
+          name: 'bookingCount',
+          title: 'Booking.com Review Count',
+          type: 'number',
+          validation: (Rule) => Rule.min(0).integer(),
+        },
+        {
+          name: 'bookingCategory',
+          title: 'Booking.com Category',
+          type: 'string',
+          options: {
+            list: [
+              { title: 'Exceptional (9.0+)', value: 'exceptional' },
+              { title: 'Superb (8.0-8.9)', value: 'superb' },
+              { title: 'Very Good (7.0-7.9)', value: 'very-good' },
+            ],
+          },
+        },
+        {
+          name: 'googleScore',
+          title: 'Google Score',
+          type: 'number',
+          validation: (Rule) => Rule.min(0).max(5).precision(1),
+        },
+        {
+          name: 'googleCount',
+          title: 'Google Review Count',
+          type: 'number',
+          validation: (Rule) => Rule.min(0).integer(),
+        },
+      ],
+    }),
+    defineField({
+      name: 'reviewThemes',
+      title: 'Review Themes',
+      type: 'array',
+      of: [{ type: 'string' }],
+      description: 'Select 3-7 themes that appear most frequently in reviews. Helps AI understand property strengths.',
+      group: 'reviews',
+      options: {
+        list: [
+          { title: 'Stunning Views', value: 'stunning-views' },
+          { title: 'Immaculate Cleanliness', value: 'immaculate-cleanliness' },
+          { title: 'Thoughtful Amenities', value: 'thoughtful-amenities' },
+          { title: 'Perfect Location', value: 'perfect-location' },
+          { title: 'Character & Charm', value: 'character-charm' },
+          { title: 'Family Friendly', value: 'family-friendly' },
+          { title: 'Cozy Atmosphere', value: 'cozy-atmosphere' },
+          { title: 'Well Equipped', value: 'well-equipped' },
+          { title: 'Responsive Host', value: 'responsive-host' },
+          { title: 'Great for Groups', value: 'great-for-groups' },
+          { title: 'Peaceful & Quiet', value: 'peaceful-quiet' },
+          { title: 'Dog Friendly', value: 'dog-friendly' },
+        ],
+      },
+      validation: (Rule) => Rule.max(7),
+    }),
+    defineField({
+      name: 'reviewHighlights',
+      title: 'Review Highlights',
+      type: 'array',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'quote',
+              title: 'Quote',
+              type: 'text',
+              rows: 2,
+              description: 'Short excerpt (1-2 sentences max)',
+              validation: (Rule) => Rule.required().max(250),
+            },
+            {
+              name: 'source',
+              title: 'Source',
+              type: 'string',
+              description: 'Platform and date (e.g., "Airbnb, December 2024")',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'rating',
+              title: 'Rating',
+              type: 'number',
+              description: 'Optional rating from this review',
+            },
+          ],
+          preview: {
+            select: {
+              title: 'quote',
+              subtitle: 'source',
+            },
+          },
+        },
+      ],
+      description: 'Curated selection of best review quotes. Choose diverse themes. Import from review working files.',
+      group: 'reviews',
+      validation: (Rule) => Rule.max(10),
+    }),
+    defineField({
+      name: 'totalReviewCount',
+      title: 'Total Review Count',
+      type: 'number',
+      description: 'Sum of all reviews across platforms. Used for trust signals.',
+      group: 'reviews',
+      validation: (Rule) => Rule.min(0).integer(),
     }),
 
     // ========== CAPACITY & LAYOUT (AI Block 2) ==========
@@ -556,10 +929,52 @@ export default defineType({
       group: 'policies',
     }),
     defineField({
-      name: 'licensingInfo',
-      title: 'Short Term Let License Info',
+      name: 'licensingStatus',
+      title: 'Licensing Status',
       type: 'string',
+      description: 'Current STL licensing status. Affects availability status and CTA on frontend.',
       group: 'policies',
+      options: {
+        list: [
+          { title: 'Approved', value: 'approved' },
+          { title: 'Pending - Bookable', value: 'pending-bookable' },
+          { title: 'Pending - Enquiries Only', value: 'pending-enquiries' },
+          { title: 'Coming Soon', value: 'coming-soon' },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'licenseNumber',
+      title: 'License Number',
+      type: 'string',
+      description: 'STL license number (required for display on site)',
+      group: 'policies',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'licenseNotes',
+      title: 'License Notes',
+      type: 'text',
+      rows: 2,
+      description: 'Optional internal notes about licensing status, application date, etc.',
+      group: 'policies',
+    }),
+    defineField({
+      name: 'availabilityStatus',
+      title: 'Availability Status',
+      type: 'string',
+      description: 'Current booking availability. Determines CTA on frontend (Book Now vs Enquire vs Coming Soon).',
+      group: 'policies',
+      options: {
+        list: [
+          { title: 'Bookable', value: 'bookable' },
+          { title: 'Enquiries Only', value: 'enquiries' },
+          { title: 'Coming Soon', value: 'coming-soon' },
+          { title: 'Unavailable', value: 'unavailable' },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
     }),
 
     // ========== WHAT'S INCLUDED (AI Block 9) ==========
@@ -652,14 +1067,128 @@ export default defineType({
       description: 'Manually enter the Google Place ID if URL extraction fails. Find it in the URL after "!1s" or "place_id=". Example: ChIJ...',
     }),
 
+    // ========== AI & SEARCH OPTIMIZATION ==========
+    defineField({
+      name: 'entityFraming',
+      title: 'Entity Framing',
+      type: 'object',
+      group: 'ai-search',
+      description: `Define what this property IS (and is NOT) for AI systems.
+
+🔴 CRITICAL: Helps AI correctly categorize and cite this property.
+
+✓ DO: Be factual, specific, boring
+✗ DON'T: Use marketing language or vague adjectives`,
+      
+      options: {
+        collapsible: true,
+        collapsed: true
+      },
+      
+      fields: [
+        {
+          name: 'whatItIs',
+          type: 'string',
+          title: 'What It Is',
+          description: `One factual sentence: [Category] + [Location] + [Capacity]
+
+✓ DO: "A 3-bedroom self-catering holiday home in Bruichladdich, Isle of Islay, sleeping 8 guests"
+✗ DON'T: "A stunning coastal retreat"`,
+          
+          placeholder: 'A 3-bedroom self-catering holiday home in Bruichladdich, Isle of Islay, sleeping 8 guests',
+          validation: (Rule) => Rule.max(150).warning('Keep to one factual sentence')
+        },
+        {
+          name: 'whatItIsNot',
+          type: 'array',
+          of: [{ type: 'string' }],
+          title: 'What It Is NOT',
+          description: `Prevent common misconceptions (max 3).
+
+✓ DO: "Not a hotel", "Not suitable for events"
+✗ DON'T: "Not for everyone"`,
+          
+          validation: (Rule) => Rule.max(3)
+        },
+        {
+          name: 'primaryDifferentiator',
+          type: 'string',
+          title: 'Primary Differentiator',
+          description: `ONE unique factual characteristic.
+
+✓ DO: "Only Bruichladdich property with children's play equipment and 10-minute walk to distillery"
+✗ DON'T: "Truly unique property with stunning location"`,
+          
+          placeholder: 'Only Bruichladdich property with children\'s play equipment',
+          validation: (Rule) => Rule.max(150)
+        }
+      ]
+    }),
+
+    defineField({
+      name: 'trustSignals',
+      title: 'Trust Signals',
+      type: 'object',
+      group: 'ai-search',
+      description: `Credibility information for AI systems.
+
+🟡 OPTIONAL: Adds authority signals to search results.
+
+✓ DO: Use quantifiable facts ("Since 2015", "500+ guests")
+✗ DON'T: Use vague claims ("Highly experienced", "Very popular")`,
+      
+      options: {
+        collapsible: true,
+        collapsed: true
+      },
+      
+      fields: [
+        {
+          name: 'ownership',
+          type: 'string',
+          title: 'Ownership Type',
+          placeholder: 'Family-owned',
+          description: 'How property is owned/managed'
+        },
+        {
+          name: 'established',
+          type: 'string',
+          title: 'Established',
+          placeholder: 'Welcoming guests since 2015',
+          description: 'When started hosting guests'
+        },
+        {
+          name: 'guestExperience',
+          type: 'string',
+          title: 'Guest Experience',
+          placeholder: '500+ guests welcomed',
+          description: 'Quantifiable hosting experience'
+        },
+        {
+          name: 'localCredentials',
+          type: 'array',
+          of: [{ type: 'string' }],
+          title: 'Credentials',
+          description: 'Awards, memberships, certifications (e.g., VisitScotland approved)'
+        }
+      ]
+    }),
+
     // ========== SEO ==========
     defineField({
       name: 'seoTitle',
       title: 'SEO Title',
       type: 'string',
       group: 'seo',
-      description: 'Optimized title for search engines (max 60 characters). If empty, property name will be used.',
-      validation: (Rule) => Rule.max(60).warning('SEO titles should be 60 characters or less for optimal display'),
+      description: `Page title for search results (optional - auto-generated if blank).
+
+🔴 CRITICAL: Appears in search results and AI answers.
+
+✓ DO: "Portbahn House - 8-Guest Holiday Home, Bruichladdich, Islay"
+✗ DON'T: "Book Your Perfect Island Escape Today!"`,
+      
+      placeholder: 'Portbahn House - Holiday Home, Bruichladdich, Isle of Islay',
+      validation: (Rule) => Rule.max(255).warning('Optimal: 50-60 chars for Google, up to 255 for AI search')
     }),
     defineField({
       name: 'seoDescription',
@@ -667,8 +1196,15 @@ export default defineType({
       type: 'text',
       group: 'seo',
       rows: 3,
-      description: 'Brief description for search results (max 160 characters)',
-      validation: (Rule) => Rule.max(160).warning('SEO descriptions should be 160 characters or less for optimal display'),
+      description: `Meta description for search results (optional - auto-generated if blank).
+
+🔴 CRITICAL: Appears in search snippets and AI summaries.
+
+✓ DO: "3-bedroom holiday home in Bruichladdich, sleeping 8. Private beach access, sea views, dog-friendly. 10-minute walk to distillery"
+✗ DON'T: "Amazing property! Book now for unforgettable memories!"`,
+      
+      placeholder: '3-bedroom holiday home in Bruichladdich, sleeping 8. Private beach access, sea views, dog-friendly',
+      validation: (Rule) => Rule.max(320).warning('Optimal: 120-160 chars for Google, up to 320 for AI search')
     }),
   ],
   preview: {

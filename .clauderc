@@ -1,0 +1,59 @@
+# Claude Code Instructions for portbahn-islay
+
+## Version Control Policy - ALWAYS FOLLOW
+
+### Before Starting Any Work
+1. Check git status and ensure working directory is clean
+2. For significant work (>1 file or breaking changes), create a feature branch:
+   ```
+   git checkout -b feature/descriptive-name
+   ```
+
+### During Work
+1. Commit after each logical unit of work (not just at the end)
+2. Use descriptive commit messages following conventional commits format:
+   ```
+   feat: add new schema fields for personality data
+   fix: resolve TypeScript error in sanity config
+   docs: update migration strategy documentation
+   ```
+
+### After Completing Work
+1. Show user what will be committed with `git status`
+2. Stage relevant files with `git add`
+3. Create commit with clear message
+4. For feature branches: push with `git push -u origin <branch-name>`
+5. Tag major milestones: `git tag -a v1.x.x -m "description"`
+
+### Commit Message Format
+```
+<type>: <subject>
+
+<body - explain what and why, not how>
+
+Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>
+```
+
+Types: feat, fix, docs, style, refactor, test, chore
+
+### Rollback Strategy
+- Always preserve ability to rollback with `git reset --hard <commit>`
+- For Sanity data: keep exports in `data/exports/` with timestamps
+- Never force push to main branch without explicit permission
+
+### When To Ask Before Committing
+- Changes to schema files
+- Database migrations or data imports
+- Configuration files (package.json, tsconfig, etc)
+- Anything that could break production
+
+### Auto-Commit Permission
+- Documentation updates
+- New component files
+- Test files
+- Minor bug fixes (with clear description)
+
+## Project-Specific Notes
+- Sanity dataset: production
+- Always create data exports before schema changes
+- Keep backup exports in `data/exports/` with ISO timestamps

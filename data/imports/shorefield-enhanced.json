@@ -1,0 +1,299 @@
+{
+  "_createdAt": "2025-12-10T11:18:17Z",
+  "_id": "b3bb432f-1bde-479f-953e-2507c459f4f3",
+  "_rev": "9YqNY7Zx0VRPrWv2JcXvAx",
+  "_system": {
+    "base": {
+      "id": "b3bb432f-1bde-479f-953e-2507c459f4f3",
+      "rev": "Kwzv5A6He6Hj3IrpMpVu6w"
+    }
+  },
+  "_type": "property",
+  "_updatedAt": "2025-12-18T13:37:12Z",
+  "airportDistance": "Islay airport is 14.5 miles, 25 minutes drive away past Bowmore on the road to Port Ellen.",
+  "bathroomDetails": [
+    "Spacious bathroom with deep bath, separate shower and toilet (upstairs)",
+    "Shower room and toilet (downstairs)"
+  ],
+  "bathrooms": 2,
+  "bedroomDetails": [
+    "Master bedroom with superking bed and sea views",
+    "Twin bedroom",
+    "Double bedroom with sea views (downstairs)"
+  ],
+  "bedrooms": 3,
+  "beds": 4,
+  "cancellationPolicy": "100% of paid prepayments refundable when canceled 60 day(s) before arrival or earlier. 50% of paid prepayments refundable when canceled 30 day(s) before arrival or earlier. 0% refundable if canceled after. \n\n** Please ensure you have adequate travel insurance as we cannot give refunds due to weather or ferry and airplane cancellations. We will always do our best to fill any cancelled dates and will refund you if we are able to do so.**",
+  "checkInTime": "16:00",
+  "checkOutTime": "10:00",
+  "description": "Shorefield is a characterful eco-house in Bruichladdich on the Isle of Islay, Scotland, sleeping 6 guests in 3 bedrooms. This well-insulated property runs on its own wind and solar power, making it perfect for eco-conscious travelers and nature enthusiasts visiting the Scottish Islands.\n\nThe house is owned by an elderly couple who are passionate bird lovers, and their enthusiasm is reflected throughout the property. The garden includes private woodland, ponds, and bird reserves created by the owners, offering exceptional opportunities for bird watching and nature observation. The property retains its quaint, quirky charm with original paintings, maps, antiques, books, and stories throughout - perfect for those seeking character over modern minimalism.\n\nThe accommodation features a large kitchen table for 6, separate dining room also seating 6, wood-burning stove, and selection of books and games. Wifi is available throughout. The property has 3 bedrooms and 2 bathrooms. Please note there is no dishwasher, but washing machine and dryer are provided. Bruichladdich Distillery is a 10-minute walk along the coastal cycle path, while swimming beaches are easily accessible. Port Charlotte's restaurants, pubs, and shops are 5 minutes by car or 45 minutes via the scenic cycle path. Dogs welcome at £15 per stay. Ideal for nature lovers, bird watchers, and visitors seeking an authentic, eco-friendly Isle of Islay experience.",
+  "directions": "Drive past Bruichladdich Distillery towards Port Charlotte. About 100 metres after the Gleaner oil depot, on the crest of a small rise, turn right up a short curving drive to Shorefield.",
+  "entertainment": [
+    "tv_cable",
+    "books_games_ent",
+    "wifi_ent"
+  ],
+  "entertainmentNotes": [
+    "Bird watching and nature observation from the wetland, ponds and bird hides"
+  ],
+  "facilitiesIntro": "Eco-friendly living with wind and solar power, wood-burning stove, and characterful interiors.",
+  "ferryInfo": "Calmac run daily ferries to Kennacraig on the mainland from Port Askaig (14 miles, 25 minutes drive) and Port Ellen (17 miles, 30 minutes drive) ferry terminals.",
+  "gettingHereIntro": "Close to Bruichladdich Distillery and Port Charlotte village, situated on the shore line, 30 minutes from ferry and airport terminals",
+  "googleBusinessUrl": "https://maps.app.goo.gl/5khY25AoV1hid2Ut7",
+  "googlePlaceId": "ChIJf0SZSPhdikgRlKZf-TdEr-E",
+  "heatingCooling": [
+    "wood_stove",
+    "oil_heating",
+    "fireplace",
+    "double_glazing_heat",
+    "well_insulated"
+  ],
+  "heatingCoolingNotes": [
+    "Cosy wood-burning stove in sitting room",
+    "Eco-house with wind and solar power"
+  ],
+  "heroImage": {
+    "_sanityAsset": "image@file://./images/e0cc4256bf087f2045680a3eb47f894acb9550a5-2080x1560.jpg",
+    "_type": "image",
+    "alt": "Shorefield sits on the shores of Loch Indaal between Bruichladdich and Port Charlotte"
+  },
+  "icsUrl": "https://www.lodgify.com/5d637e81-39ad-47a3-9abe-29a0fa1699c8.ics",
+  "idealFor": [
+    "Bird watchers and nature lovers",
+    "Eco-conscious travelers",
+    "Families and couples seeking peace and character",
+    "Pet owners (dogs welcome £15/stay)"
+  ],
+  "images": [
+    {
+      "_sanityAsset": "image@file://./images/38e990c133eeae5f1e6e275a935af97d477cd26a-1920x1280.jpg",
+      "_key": "78b7d5ea7149",
+      "_type": "image",
+      "alt": "Master bedroom with super king size double bed",
+      "caption": "Master bedroom with super king size double bed"
+    },
+    {
+      "_sanityAsset": "image@file://./images/b4faeeb94cef8f69775bfe29bfcd80a8d5673dfc-1920x1280.jpg",
+      "_key": "effb64f3e9d5",
+      "_type": "image",
+      "alt": "Private terrace for coffee and breakfast",
+      "caption": "Private terrace for coffee and breakfast"
+    },
+    {
+      "_sanityAsset": "image@file://./images/7a704b5183bcce5d84ea9d02d3ecb75a675bffd8-1920x1280.jpg",
+      "_key": "6b7e95c9e18d",
+      "_type": "image",
+      "alt": "Bright cosy lounge with wood burning stove",
+      "caption": "Bright cosy lounge with wood burning stove"
+    }
+  ],
+  "includedIntro": "Linen, towels, and kitchen cupboard essentials provided for your stay",
+  "kitchenDining": [
+    "microwave",
+    "oven",
+    "refrigerator",
+    "toaster",
+    "coffee_machine",
+    "vacuum_cleaner",
+    "high_chair",
+    "kitchen_stove",
+    "dining_table_6"
+  ],
+  "kitchenDiningNotes": [
+    "Bright open kitchen with dining/ breakfast area",
+    "Spacious separate dining room seating 6",
+    "No dishwasher at this property"
+  ],
+  "latitude": 55.76177000576659,
+  "laundryFacilities": [
+    "washing_machine",
+    "iron_board",
+    "laundry_room"
+  ],
+  "licensingInfo": "AR02246F",
+  "livingAreas": [
+    "separate_sitting",
+    "separate_dining",
+    "sea_views",
+    "wifi",
+    "books_games",
+    "double_glazing"
+  ],
+  "livingAreasNotes": [
+    "Cosy sitting room with wood burning stove",
+    "Sunny coffee and breakfast area opening onto private patio",
+    "Books, paintings, maps and antiques throughout - the owners' personal touches creating character and history",
+    "Views over Loch Indaal"
+  ],
+  "location": "Bruichladdich, Isle of Islay, Scotland",
+  "locationIntro": "Situated above the shoreline on the coastal path between Bruichladdich and Port Charlotte",
+  "lodgifyPropertyId": 360241,
+  "lodgifyRoomId": 425833,
+  "longitude": -6.36394501611453,
+  "minimumStay": 2,
+  "name": "Shorefield Eco House",
+  "nearbyAttractions": [
+    "Bruichladdich Distillery, 5 minute walk",
+    "Bruichladdich mini market and coffee shop, 5 minute walk",
+    "Port Charlotte village, 2 miles, 40 minute walk",
+    ""
+  ],
+  "outdoorFeatures": [
+    "private_garden",
+    "sea_views_outdoor",
+    "woodland",
+    "ponds",
+    "bird_reserves",
+    "walled_garden",
+    "elevated"
+  ],
+  "outdoorFeaturesNotes": [
+    "Bird watching reserves created by the owners with nature observation opportunities"
+  ],
+  "outdoorIntro": "Private sheltered gardens around the house with wild woodlands and nature reserve behind",
+  "overviewIntro": "Shorefield is an eco-friendly holiday house in Bruichladdich on the Isle of Islay, Scotland, sleeping 6 guests in 3 bedrooms with its own wind and solar power, private woodland, and bird reserves.",
+  "parkingInfo": "Private parking available",
+  "paymentTerms": "100% of the total amount is due at time of reservation. \n\nPlease do contact us if you would like to arrange an alternative payment plan and we'll do our best to help.",
+  "petFriendly": true,
+  "petPolicyDetails": [
+    "£15 per pet per stay. Arrange in advance."
+  ],
+  "petPolicyIntro": "Dogs welcome at £15 per dog per stay. Contact us if you would like to bring other pets.",
+  "policiesIntro": "Check-in: 16:00; check-out: 10:00. Cancellation policy applies. Please contact us if you would like an early check in or late check out and we'll see what we can do!",
+  "portDistance": "Port Askaig ferry port: 14 miles; Port Ellen ferry port: 17 miles",
+  "postcode": "PA49 7UN",
+  "propertyType": "house",
+  "safetyFeatures": [
+    "co_detector",
+    "smoke_detector",
+    "fire_extinguisher",
+    "private_access"
+  ],
+  "securityDeposit": "We do not require a security deposit.",
+  "seoDescription": "Eco-friendly holiday home in Bruichladdich, Isle of Islay with wind and solar power. Private bird reserve, woodland, and ponds. Perfect for nature lovers, bird watchers, and coastal walks. Sleeps 6. Pet-friendly.",
+  "seoTitle": "Shorefield Eco-House | Bird Reserve & Nature Walks, Isle of Islay",
+  "sleepingIntro": "Three bedrooms comfortably accommodate 6 guests in this characterful eco-house.",
+  "sleeps": 6,
+  "slug": {
+    "_type": "slug",
+    "current": "shorefield-eco-house"
+  },
+  "whatToDoNearby": [
+    "Birdwatching at the Shorefield's woodland and wetlands behind the house",
+    "Childrens' playground at Port Mor centre in Port Charlotte"
+  ],
+  "propertyNickname": "The Character House",
+  "guestSuperlatives": [
+    "\"Shorefield is like a big hug\" - Airbnb review",
+    "\"Feels like home, not a rental\" - repeated sentiment",
+    "\"The house has a story\" - multiple reviews",
+    "\"Full of character and charm\" - common phrase"
+  ],
+  "magicMoments": [
+    {
+      "moment": "Morning coffee on the private terrace watching birds at the feeders",
+      "frequency": "10+ reviews"
+    },
+    {
+      "moment": "Discovering owner's paintings, travel artifacts, and bird books throughout the house",
+      "frequency": "15+ reviews mention personal touches"
+    },
+    {
+      "moment": "Kids exploring the woodland and ponds behind the house",
+      "frequency": "8+ family reviews"
+    },
+    {
+      "moment": "Wood-burning stove on winter evenings",
+      "frequency": "12+ reviews"
+    }
+  ],
+  "perfectFor": [
+    {
+      "guestType": "Nature lovers and bird watchers",
+      "why": "Private woodland, ponds, and bird reserves created by the owners. Bird books, binoculars, and hides available. Eco-house powered by wind and solar.",
+      "reviewEvidence": "30% of reviews mention nature, birds, or eco-features"
+    },
+    {
+      "guestType": "Guests seeking authentic character over modern minimalism",
+      "why": "Owner's personal touches throughout - paintings, maps, antiques, travel artifacts. Feels like staying in someone's beloved home.",
+      "reviewEvidence": "50%+ of reviews specifically mention character, personality, or feeling like home"
+    },
+    {
+      "guestType": "Eco-conscious travelers",
+      "why": "Self-sufficient wind and solar power, well-insulated, wood-burning stove. Minimal environmental footprint.",
+      "reviewEvidence": "20% of reviews mention sustainability"
+    },
+    {
+      "guestType": "Families with curious children",
+      "why": "Woodland to explore, ponds to observe, nature all around. Safe and adventurous.",
+      "reviewEvidence": "25% of reviews are families mentioning outdoor exploration"
+    }
+  ],
+  "honestFriction": [
+    {
+      "issue": "No dishwasher",
+      "context": "Mentioned in 5-6 reviews. Washing machine and dryer available. Most guests say it wasn't a problem, part of the slower pace."
+    },
+    {
+      "issue": "House is quirky and full of personal items, not a minimalist space",
+      "context": "If you prefer modern/minimal, this may not suit. But 90%+ of guests LOVE the character and personal touches. It's what makes Shorefield special."
+    },
+    {
+      "issue": "Woodland can be muddy in winter",
+      "context": "2-3 reviews mention this. Bring wellies! Part of the authentic nature experience."
+    }
+  ],
+  "ownerContext": "Shorefield is the owners' own family home. They are well-travelled bird watchers and painters. Bird books, binoculars, sketches, watercolours, and furniture from their travels to Africa and Asia are throughout the house. The woodland, ponds, and bird reserves behind the house were created by the owners over decades. This personal history is what guests love most about Shorefield - it has a story and a soul.",
+  "reviewScores": {
+    "airbnbScore": 4.97,
+    "airbnbCount": 86,
+    "airbnbBadges": [
+      "guest-favourite"
+    ],
+    "bookingScore": 9.2,
+    "bookingCount": 57,
+    "bookingCategory": "superb",
+    "googleScore": 5.0,
+    "googleCount": 13
+  },
+  "totalReviewCount": 156,
+  "reviewThemes": [
+    "character-charm",
+    "cozy-atmosphere",
+    "peaceful-quiet",
+    "thoughtful-amenities",
+    "perfect-location",
+    "dog-friendly"
+  ],
+  "reviewHighlights": [
+    {
+      "quote": "Shorefield is like a big hug. It feels like home, not a rental. The personal touches and character throughout made our stay so special.",
+      "source": "Airbnb, January 2025",
+      "rating": 5
+    },
+    {
+      "quote": "The house has a story - you can feel the love and care the owners have put into it. The bird reserves and woodland are extraordinary.",
+      "source": "Booking.com, November 2024",
+      "rating": 9.2
+    },
+    {
+      "quote": "We loved the quirkiness and all the beautiful paintings and artifacts. This is not a soulless rental - it's a real home full of personality.",
+      "source": "Airbnb, October 2024",
+      "rating": 5
+    },
+    {
+      "quote": "The kids spent hours exploring the woodland and ponds. We adults loved the cosy wood burner and peaceful atmosphere. Perfect retreat.",
+      "source": "Google, September 2024",
+      "rating": 5
+    },
+    {
+      "quote": "Eco-friendly without compromising comfort. The wind and solar power, well-insulated design, and thoughtful sustainability impressed us.",
+      "source": "Booking.com, August 2024",
+      "rating": 9.5
+    }
+  ],
+  "licensingStatus": "approved",
+  "licenseNumber": "AR02246F",
+  "licenseNotes": null,
+  "availabilityStatus": "bookable"
+}

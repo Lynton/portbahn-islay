@@ -39,6 +39,17 @@ Then open [http://localhost:3333](http://localhost:3333) in your browser.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Development Workflow with AI Assistants
+
+This project includes `.clauderc` which contains version control policies for AI-assisted development. Key points:
+
+- **Always use git**: Create commits after each logical unit of work
+- **Feature branches**: Use for significant changes (`git checkout -b feature/name`)
+- **Data backups**: Export Sanity data before schema changes to `data/exports/`
+- **Conventional commits**: Use format `type: description` (feat, fix, docs, etc.)
+
+See `.clauderc` for complete version control and rollback procedures.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
