@@ -1,6 +1,7 @@
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { visionTool } from '@sanity/vision';
+import { presentationTool } from '@sanity/presentation';
 import { schemaTypes } from './sanity/schemas';
 import {media} from 'sanity-plugin-media';
 
@@ -21,7 +22,20 @@ export default defineConfig({
   // When running standalone (npm run sanity), access at http://localhost:3333/
   basePath: '/studio',
 
+  // Enable scheduled publishing (built into Sanity v3.39.0+)
+  scheduledPublishing: {
+    enabled: true,
+  },
+
   plugins: [
+    presentationTool({
+      previewUrl: {
+        origin: process.env.NEXT_PUBLIC_VERCEL_URL
+          ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+          : 'http://localhost:3000',
+        preview: '/api/draft',
+      },
+    }),
     structureTool({
       structure: (S: any) =>
         S.list()
