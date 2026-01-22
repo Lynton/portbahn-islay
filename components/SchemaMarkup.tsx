@@ -10,3 +10,4 @@ export default function SchemaMarkup({ type, data, breadcrumbs }: SchemaMarkupPr
   return <SchemaMarkupComponent type={type} data={data} breadcrumbs={breadcrumbs} />;
 }
 
+

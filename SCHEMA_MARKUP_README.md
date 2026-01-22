@@ -136,3 +136,4 @@ https://validator.schema.org/
 - All schemas are auto-generated from Sanity data (no hardcoding)
 - Missing fields are gracefully handled (undefined fields omitted)
 
+

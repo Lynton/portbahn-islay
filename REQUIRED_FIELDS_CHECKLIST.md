@@ -67,3 +67,4 @@ Use this checklist to verify all required fields are filled before publishing.
    - **Lodgify Integration** tab
 4. The publish button will show validation errors if fields are missing
 
+

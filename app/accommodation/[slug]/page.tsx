@@ -10,6 +10,26 @@ import PropertyCard from '@/components/PropertyCard';
 import GoogleMap from '@/components/GoogleMap';
 import GoogleReviews from '@/components/GoogleReviews';
 
+// TypeScript types for AI-optimized fields
+interface EntityFraming {
+  whatItIs?: string;
+  whatItIsNot?: string[];
+  primaryDifferentiator?: string;
+  category?: string;
+}
+
+interface TrustSignals {
+  ownership?: string;
+  established?: string;
+  guestExperience?: string;
+  localCredentials?: string[];
+}
+
+interface CommonQuestion {
+  question: string;
+  answer: string;
+}
+
 async function getProperty(slug: string) {
   // Fetch ALL fields explicitly to ensure everything is returned
   // Try to get draft first, then fall back to published
@@ -23,6 +43,12 @@ async function getProperty(slug: string) {
     overviewIntro,
     description,
     idealFor[],
+    entityFraming {
+      whatItIs,
+      whatItIsNot,
+      primaryDifferentiator,
+      category
+    },
     commonQuestions[] {
       question,
       answer
@@ -235,63 +261,93 @@ export default async function PropertyPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Overview Intro */}
-        {property.overviewIntro && (
-          <p className="font-serif text-xl text-harbour-stone mb-6 italic">
-            {property.overviewIntro}
-          </p>
-        )}
+        {/* Overview Section */}
+        <section className="mb-12">
+          {/* Overview Intro */}
+          {property.overviewIntro && (
+            <p className="font-serif text-xl text-harbour-stone mb-6 italic">
+              {property.overviewIntro}
+            </p>
+          )}
 
-        {/* Description Section */}
+          {/* Main Description */}
+          {property.description && (
+            <div className="font-mono text-base text-harbour-stone leading-relaxed whitespace-pre-line mb-8">
+              {property.description}
+            </div>
+          )}
+
+          {/* Entity Definition Block - AI extraction anchor */}
+          {property.entityFraming?.whatItIs && (
+            <div className="my-8 border-l-4 border-gray-300 pl-6 py-4 bg-gray-50">
+              <p className="text-lg text-gray-900 leading-relaxed">
+                {property.entityFraming.whatItIs}
+              </p>
+              
+              {property.entityFraming.primaryDifferentiator && (
+                <p className="mt-3 text-base text-gray-700">
+                  {property.entityFraming.primaryDifferentiator}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Trust Signals - subtle credibility layer */}
+          {(property.trustSignals?.established || property.trustSignals?.ownership || property.trustSignals?.guestExperience) && (
+            <div className="mt-6 text-sm text-gray-600 flex flex-wrap gap-x-3 gap-y-1">
+              {property.trustSignals.established && (
+                <span>{property.trustSignals.established}</span>
+              )}
+              {property.trustSignals.ownership && (
+                <>
+                  {property.trustSignals.established && <span className="text-gray-400">•</span>}
+                  <span>{property.trustSignals.ownership}</span>
+                </>
+              )}
+              {property.trustSignals.guestExperience && (
+                <>
+                  {(property.trustSignals.established || property.trustSignals.ownership) && (
+                    <span className="text-gray-400">•</span>
+                  )}
+                  <span>{property.trustSignals.guestExperience}</span>
+                </>
+              )}
+            </div>
+          )}
+
+          {property.trustSignals?.localCredentials && property.trustSignals.localCredentials.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {property.trustSignals.localCredentials.map((credential: string, i: number) => (
+                <span 
+                  key={i} 
+                  className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full"
+                >
+                  {credential}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Ideal For */}
+          {property.idealFor && property.idealFor.length > 0 && (
+            <div className="mt-8">
+              <h3 className="font-serif text-2xl text-harbour-stone mb-4">Ideal For</h3>
+              <ul className="list-disc list-inside space-y-2 font-mono text-base text-harbour-stone">
+                {property.idealFor.map((item: string, index: number) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
+
+        {/* What Makes {property.name} Special? Section */}
         {property.description && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">What Makes {property.name} Special?</h2>
             <div className="font-mono text-base text-harbour-stone leading-relaxed whitespace-pre-line">
               {property.description}
             </div>
-            
-            {/* Trust Signals */}
-            {property.trustSignals && (property.trustSignals.established || property.trustSignals.ownership || property.trustSignals.guestExperience) && (
-              <div className="mt-6 font-mono text-sm text-harbour-stone opacity-75">
-                {property.trustSignals.established && (
-                  <span>{property.trustSignals.established}</span>
-                )}
-                {property.trustSignals.ownership && (
-                  <>
-                    {property.trustSignals.established && <span> • </span>}
-                    <span>{property.trustSignals.ownership}</span>
-                  </>
-                )}
-                {property.trustSignals.guestExperience && (
-                  <>
-                    {(property.trustSignals.established || property.trustSignals.ownership) && <span> • </span>}
-                    <span>{property.trustSignals.guestExperience}</span>
-                  </>
-                )}
-              </div>
-            )}
-
-            {property.trustSignals?.localCredentials && property.trustSignals.localCredentials.length > 0 && (
-              <div className="mt-4 flex flex-wrap gap-2">
-                {property.trustSignals.localCredentials.map((credential: string, i: number) => (
-                  <span key={i} className="px-3 py-1 bg-[#F3F1E7] rounded font-mono text-xs text-harbour-stone">
-                    {credential}
-                  </span>
-                ))}
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* Ideal For Section */}
-        {property.idealFor && property.idealFor.length > 0 && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Ideal For</h2>
-            <ul className="list-disc list-inside space-y-2 font-mono text-base text-harbour-stone">
-              {property.idealFor.map((item: string, index: number) => (
-                <li key={index}>{item}</li>
-              ))}
-            </ul>
           </section>
         )}
 
@@ -396,19 +452,22 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* Common Questions Section */}
+        {/* Common Questions - natural language query matching */}
         {property.commonQuestions && property.commonQuestions.length > 0 && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">
+          <section className="my-16 max-w-4xl">
+            <h2 className="text-3xl font-bold mb-8">
               Common Questions About {property.name}
             </h2>
-            <div className="space-y-6">
+            <div className="space-y-8">
               {property.commonQuestions.map((qa: { question: string; answer: string }, index: number) => (
-                <div key={index} className="border-l-4 border-emerald-accent pl-6">
-                  <h3 className="font-serif text-xl text-harbour-stone mb-2">
+                <div 
+                  key={index} 
+                  className="border-l-4 border-gray-300 pl-6 py-2"
+                >
+                  <h3 className="text-xl font-semibold mb-3 text-gray-900">
                     {qa.question}
                   </h3>
-                  <p className="font-mono text-base text-harbour-stone leading-relaxed whitespace-pre-line">
+                  <p className="text-gray-700 leading-relaxed">
                     {qa.answer}
                   </p>
                 </div>
@@ -457,30 +516,6 @@ export default async function PropertyPage({ params }: PageProps) {
                 <ArrayField items={property.notIncluded} />
               </div>
             )}
-          </section>
-        )}
-
-        {/* Image Gallery Grid */}
-        {galleryImages.length > 0 && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Gallery</h2>
-            <div className="grid grid-cols-2 gap-4">
-              {galleryImages.map((image: any, index: number) => (
-                <div key={index} className="aspect-[4/3] relative overflow-hidden">
-                  <Image
-                    src={urlFor(image).width(800).height(600).url()}
-                    alt={image.alt || `${property.name} - Image ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                  {image.caption && (
-                    <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-sea-spray font-mono text-sm px-4 py-2">
-                      {image.caption}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
           </section>
         )}
 
@@ -564,22 +599,6 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* Pet Policy */}
-        {(property.petFriendly !== undefined || property.petPolicyIntro || property.petPolicyDetails?.length) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Can I Bring Pets?</h2>
-            <p className="font-mono text-base text-harbour-stone mb-2">
-              <strong>Pet Friendly:</strong> {property.petFriendly ? 'Yes' : 'No'}
-            </p>
-            {property.petPolicyIntro && (
-              <p className="font-mono text-base text-harbour-stone mb-4">{property.petPolicyIntro}</p>
-            )}
-            {property.petPolicyDetails && property.petPolicyDetails.length > 0 && (
-              <ArrayField items={property.petPolicyDetails} />
-            )}
-          </section>
-        )}
-
         {/* House Rules & Policies */}
         {(property.policiesIntro || property.checkInTime || property.checkOutTime || property.minimumStay ||
           property.cancellationPolicy || property.paymentTerms || property.securityDeposit || 
@@ -629,6 +648,46 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
+        {/* Pet Policy */}
+        {(property.petFriendly !== undefined || property.petPolicyIntro || property.petPolicyDetails?.length) && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Can I Bring Pets?</h2>
+            <p className="font-mono text-base text-harbour-stone mb-2">
+              <strong>Pet Friendly:</strong> {property.petFriendly ? 'Yes' : 'No'}
+            </p>
+            {property.petPolicyIntro && (
+              <p className="font-mono text-base text-harbour-stone mb-4">{property.petPolicyIntro}</p>
+            )}
+            {property.petPolicyDetails && property.petPolicyDetails.length > 0 && (
+              <ArrayField items={property.petPolicyDetails} />
+            )}
+          </section>
+        )}
+
+        {/* Image Gallery Grid */}
+        {galleryImages.length > 0 && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Gallery</h2>
+            <div className="grid grid-cols-2 gap-4">
+              {galleryImages.map((image: any, index: number) => (
+                <div key={index} className="aspect-[4/3] relative overflow-hidden">
+                  <Image
+                    src={urlFor(image).width(800).height(600).url()}
+                    alt={image.alt || `${property.name} - Image ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                  {image.caption && (
+                    <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-sea-spray font-mono text-sm px-4 py-2">
+                      {image.caption}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Pricing */}
         {(property.dailyRate || property.weeklyRate) && (
           <section className="mb-12">
@@ -652,6 +711,7 @@ export default async function PropertyPage({ params }: PageProps) {
               propertySlug={property.slug.current}
               propertyId={property.lodgifyPropertyId}
               propertyName={property.name}
+              icsUrl={property.icsUrl}
             />
           </section>
         )}

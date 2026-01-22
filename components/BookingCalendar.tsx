@@ -12,6 +12,7 @@ interface BookingCalendarProps {
   propertySlug: string;
   propertyId: number;
   propertyName: string;
+  icsUrl?: string;
 }
 
 interface AvailabilityData {
@@ -46,6 +47,7 @@ export default function BookingCalendar({
   propertySlug,
   propertyId,
   propertyName,
+  icsUrl,
 }: BookingCalendarProps) {
   const [startDate, setStartDate] = useState<Date | null>(null);
   const [endDate, setEndDate] = useState<Date | null>(null);
@@ -62,9 +64,11 @@ export default function BookingCalendar({
       try {
         const start = '2026-01-01';
         const end = '2026-06-30';
-        const response = await fetch(
-          `/api/avail_ics?property=${propertySlug}&start=${start}&end=${end}`
-        );
+        // If icsUrl is provided, use it directly; otherwise use property slug lookup
+        const url = icsUrl
+          ? `/api/avail_ics?icsUrl=${encodeURIComponent(icsUrl)}&start=${start}&end=${end}`
+          : `/api/avail_ics?property=${propertySlug}&start=${start}&end=${end}`;
+        const response = await fetch(url);
         
         if (!response.ok) {
           throw new Error(`Failed to fetch availability: ${response.status}`);
@@ -88,7 +92,7 @@ export default function BookingCalendar({
     };
 
     fetchAvailability();
-  }, [propertySlug]);
+  }, [propertySlug, icsUrl]);
 
   // Get blocked dates from availability data
   const getBlockedDates = (): Date[] => {

@@ -60,3 +60,4 @@ Once the old fields are removed:
 3. Ensure all image alt texts are filled
 4. Try publishing again
 
+

@@ -33,7 +33,9 @@ export default defineConfig({
         origin: process.env.NEXT_PUBLIC_VERCEL_URL
           ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
           : 'http://localhost:3000',
-        preview: '/api/draft',
+        previewMode: {
+          enable: '/api/draft',
+        },
       },
     }),
     structureTool({

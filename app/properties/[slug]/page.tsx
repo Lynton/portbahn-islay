@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { PortableText } from '@portabletext/react';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import BookingCalendar from '@/components/BookingCalendar';
@@ -9,23 +10,105 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import PropertyCard from '@/components/PropertyCard';
 
 async function getProperty(slug: string) {
-  // Fetch ALL fields explicitly to ensure everything is returned
-  // Try to get draft first, then fall back to published
+  // Fetch ALL fields from new v1.1 schema
   const query = `*[_type == "property" && slug.current == $slug] | order(_id desc)[0]{
     _id,
     name,
     slug,
-    propertyType,
     heroImage,
-    mainImage,
     images[],
+    // Entity Framing (NEW)
+    entityFraming{
+      whatItIs,
+      whatItIsNot[],
+      primaryDifferentiator,
+      category
+    },
+    // Content
     overviewIntro,
+    overview,
     description,
+    idealFor[],
+    // Details
     sleeps,
     bedrooms,
-    beds,
     bathrooms,
     sleepingIntro,
+    sleepingArrangements,
+    facilitiesIntro,
+    facilities[],
+    outdoorIntro,
+    outdoorSpaces,
+    includedIntro,
+    includedInStay[],
+    // Common Questions (ENHANCED)
+    commonQuestions[]{
+      question,
+      answer
+    },
+    // Location (can be string or object - handle both)
+    location,
+    locationDetails{
+      address,
+      coordinates,
+      nearestTown
+    },
+    locationIntro,
+    locationDescription,
+    localArea,
+    nearbyAttractions[],
+    whatToDoNearby[],
+    gettingHereIntro,
+    gettingHere,
+    postcode,
+    latitude,
+    longitude,
+    directions,
+    ferryInfo,
+    airportDistance,
+    portDistance,
+    // Policies
+    petFriendly,
+    petPolicyIntro,
+    petPolicyDetails[],
+    petPolicy{
+      allowed,
+      fee,
+      conditions
+    },
+    policiesIntro,
+    policies,
+    checkInTime,
+    checkOutTime,
+    minimumStay,
+    cancellationPolicy,
+    paymentTerms,
+    securityDeposit,
+    licensingInfo,
+    importantInfo[],
+    dailyRate,
+    weeklyRate,
+    // Trust Signals (NEW)
+    trustSignals{
+      ownership,
+      established,
+      guestExperience,
+      localCredentials[]
+    },
+    // Booking Integration
+    lodgifyPropertyId,
+    lodgifyRoomId,
+    lodgifyRoomTypeId,
+    icsUrl,
+    // SEO
+    seoTitle,
+    seoDescription,
+    metaTitle,
+    metaDescription,
+    googleBusinessUrl,
+    googlePlaceId,
+    // Additional Details
+    beds,
     bedroomDetails[],
     bathroomDetails[],
     facilitiesIntro,
@@ -39,48 +122,12 @@ async function getProperty(slug: string) {
     entertainmentNotes[],
     laundryFacilities[],
     safetyFeatures[],
-    outdoorIntro,
     outdoorFeatures[],
     outdoorFeaturesNotes[],
     parkingInfo,
-    petFriendly,
-    petPolicyIntro,
-    petPolicyDetails[],
-    locationIntro,
-    location,
-    nearbyAttractions[],
-    whatToDoNearby[],
-    gettingHereIntro,
-    postcode,
-    latitude,
-    longitude,
-    directions,
-    ferryInfo,
-    airportDistance,
-    portDistance,
-    policiesIntro,
-    checkInTime,
-    checkOutTime,
-    minimumStay,
-    cancellationPolicy,
-    paymentTerms,
-    securityDeposit,
-    licensingInfo,
-    includedIntro,
     included[],
     notIncluded[],
-    importantInfo[],
-    dailyRate,
-    weeklyRate,
-    lodgifyPropertyId,
-    lodgifyRoomId,
-    icsUrl,
-    seoTitle,
-    seoDescription,
-    // Also fetch any other fields that might exist
-    amenities[],
-    excerpt,
-    focusKeyword
+    propertyType
   }`;
   
   return await client.fetch(query, { slug });
@@ -94,7 +141,7 @@ async function getAllProperties(excludeSlug?: string) {
         name,
         slug,
         location,
-        description,
+        overview,
         sleeps,
         bedrooms,
         heroImage
@@ -104,7 +151,7 @@ async function getAllProperties(excludeSlug?: string) {
         name,
         slug,
         location,
-        description,
+        overview,
         sleeps,
         bedrooms,
         heroImage
@@ -121,6 +168,27 @@ interface PageProps {
   }>;
 }
 
+// PortableText components for rendering block content
+const portableTextComponents = {
+  block: {
+    normal: ({ children }: any) => <p className="font-mono text-base text-harbour-stone mb-4 leading-relaxed">{children}</p>,
+    h2: ({ children }: any) => <h2 className="font-serif text-3xl text-harbour-stone mb-4 mt-8">{children}</h2>,
+    h3: ({ children }: any) => <h3 className="font-serif text-xl text-harbour-stone mb-2 mt-6">{children}</h3>,
+  },
+  marks: {
+    strong: ({ children }: any) => <strong className="font-semibold">{children}</strong>,
+    em: ({ children }: any) => <em className="italic">{children}</em>,
+  },
+  list: {
+    bullet: ({ children }: any) => <ul className="list-disc list-inside space-y-1 mb-4 font-mono text-base text-harbour-stone">{children}</ul>,
+    number: ({ children }: any) => <ol className="list-decimal list-inside space-y-1 mb-4 font-mono text-base text-harbour-stone">{children}</ol>,
+  },
+  listItem: {
+    bullet: ({ children }: any) => <li>{children}</li>,
+    number: ({ children }: any) => <li>{children}</li>,
+  },
+};
+
 // Helper component to render array fields
 function ArrayField({ items, className = '' }: { items: string[] | undefined; className?: string }) {
   if (!items || items.length === 0) return null;
@@ -133,7 +201,21 @@ function ArrayField({ items, className = '' }: { items: string[] | undefined; cl
   );
 }
 
-// Helper component to render checkbox arrays
+// Helper component to render facilities as badges
+function FacilitiesList({ items, className = '' }: { items: string[] | undefined; className?: string }) {
+  if (!items || items.length === 0) return null;
+  return (
+    <div className={`flex flex-wrap gap-2 ${className}`}>
+      {items.map((item, idx) => (
+        <span key={idx} className="px-3 py-1 bg-[#F3F1E7] rounded font-mono text-sm text-harbour-stone">
+          {item}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+// Helper component to render checkbox arrays (formats snake_case to readable text)
 function CheckboxArray({ items, className = '' }: { items: string[] | undefined; className?: string }) {
   if (!items || items.length === 0) return null;
   return (
@@ -165,10 +247,7 @@ export default async function PropertyPage({ params }: PageProps) {
   }
 
   const galleryImages = property.images || [];
-  const heroImage = property.heroImage || property.mainImage;
-  
-  // Handle legacy 'amenities' field if it exists (not in current schema but may exist in data)
-  const amenities = (property as any).amenities || [];
+  const heroImage = property.heroImage;
 
   // Fetch all other properties for navigation
   const otherProperties = await getAllProperties(property.slug?.current || property.slug);
@@ -176,8 +255,8 @@ export default async function PropertyPage({ params }: PageProps) {
   // Generate breadcrumbs
   const breadcrumbs = [
     { name: 'Home', url: '/' },
-    { name: 'Accommodation', url: '/' },
-    { name: property.name, url: `/accommodation/${property.slug?.current || property.slug}` },
+    { name: 'Properties', url: '/' },
+    { name: property.name, url: `/properties/${property.slug?.current || property.slug}` },
   ];
 
   return (
@@ -205,21 +284,26 @@ export default async function PropertyPage({ params }: PageProps) {
       <Breadcrumbs items={breadcrumbs} />
 
       <div className="mx-auto max-w-4xl px-6 py-12">
-        {/* Property Name & Type */}
+        {/* Property Name */}
         <div className="mb-4">
           <h1 className="font-serif text-5xl text-harbour-stone mb-2">
             {property.name}
           </h1>
-          {property.propertyType && (
-            <p className="font-mono text-sm text-harbour-stone opacity-60 uppercase">
-              {property.propertyType}
-            </p>
-          )}
         </div>
 
         {/* Location + Capacity Info */}
         <div className="font-mono text-sm text-harbour-stone mb-8 space-y-1">
-          {property.location && <p>{property.location}</p>}
+          {/* Handle both string (legacy) and object (new) location formats */}
+          {typeof property.location === 'string' ? (
+            <p>{property.location}</p>
+          ) : property.locationDetails ? (
+            <>
+              {property.locationDetails?.address && <p>{property.locationDetails.address}</p>}
+              {property.locationDetails?.nearestTown && !property.locationDetails?.address && (
+                <p>{property.locationDetails.nearestTown}</p>
+              )}
+            </>
+          ) : null}
           <div className="flex gap-4">
             {property.sleeps && <p>Sleeps {property.sleeps}</p>}
             {property.bedrooms && <p>• {property.bedrooms} {property.bedrooms === 1 ? 'bedroom' : 'bedrooms'}</p>}
@@ -228,67 +312,147 @@ export default async function PropertyPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Overview Intro */}
-        {property.overviewIntro && (
-          <p className="font-serif text-xl text-harbour-stone mb-6 italic">
-            {property.overviewIntro}
-          </p>
-        )}
+        {/* Overview Section */}
+        <section className="mb-12">
+          {/* Overview Intro */}
+          {property.overviewIntro && (
+            <p className="font-serif text-xl text-harbour-stone mb-6 italic">
+              {property.overviewIntro}
+            </p>
+          )}
 
-        {/* Description Section */}
-        {property.description && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Overview</h2>
-            <div className="font-mono text-base text-harbour-stone leading-relaxed whitespace-pre-line">
+          {/* Main Description */}
+          {property.description && (
+            <div className="font-mono text-base text-harbour-stone leading-relaxed whitespace-pre-line mb-8">
               {property.description}
             </div>
+          )}
+
+          {/* Entity Definition Block - AI extraction anchor */}
+          {property.entityFraming?.whatItIs && (
+            <div className="my-8 border-l-4 border-gray-300 pl-6 py-4 bg-gray-50">
+              <p className="text-lg text-gray-900 leading-relaxed">
+                {property.entityFraming.whatItIs}
+              </p>
+              
+              {property.entityFraming.primaryDifferentiator && (
+                <p className="mt-3 text-base text-gray-700">
+                  {property.entityFraming.primaryDifferentiator}
+                </p>
+              )}
+            </div>
+          )}
+
+          {/* Trust Signals - subtle credibility layer */}
+          {property.trustSignals && (property.trustSignals.established || property.trustSignals.ownership || property.trustSignals.guestExperience) && (
+            <div className="mt-6 text-sm text-gray-600 flex flex-wrap gap-x-3 gap-y-1">
+              {property.trustSignals.established && (
+                <span>{property.trustSignals.established}</span>
+              )}
+              {property.trustSignals.ownership && (
+                <>
+                  {property.trustSignals.established && <span className="text-gray-400">•</span>}
+                  <span>{property.trustSignals.ownership}</span>
+                </>
+              )}
+              {property.trustSignals.guestExperience && (
+                <>
+                  {(property.trustSignals.established || property.trustSignals.ownership) && (
+                    <span className="text-gray-400">•</span>
+                  )}
+                  <span>{property.trustSignals.guestExperience}</span>
+                </>
+              )}
+            </div>
+          )}
+
+          {property.trustSignals?.localCredentials && property.trustSignals.localCredentials.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2">
+              {property.trustSignals.localCredentials.map((credential: string, i: number) => (
+                <span 
+                  key={i} 
+                  className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full"
+                >
+                  {credential}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Ideal For */}
+          {property.idealFor && property.idealFor.length > 0 && (
+            <div className="mt-8">
+              <h3 className="font-serif text-2xl text-harbour-stone mb-4">Ideal For</h3>
+              <ul className="list-disc list-inside space-y-2 font-mono text-base text-harbour-stone">
+                {property.idealFor.map((item: string, index: number) => (
+                  <li key={index}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
+
+        {/* What Makes {property.name} Special? Section - PortableText (if overview exists) */}
+        {property.overview && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What Makes {property.name} Special?</h2>
+            <PortableText value={property.overview} components={portableTextComponents} />
+          </section>
+        )}
+
+        {/* Ideal For (NEW) */}
+        {property.idealFor && property.idealFor.length > 0 && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Ideal For</h2>
+            <ArrayField items={property.idealFor} />
           </section>
         )}
 
         {/* Sleeping Arrangements */}
-        <section className="mb-12">
-          <h2 className="font-serif text-3xl text-harbour-stone mb-4">Sleeping Arrangements</h2>
-          {property.sleepingIntro ? (
-            <p className="font-mono text-base text-harbour-stone mb-4">{property.sleepingIntro}</p>
-          ) : (
-            <p className="font-mono text-sm text-harbour-stone opacity-50 italic mb-4">[sleepingIntro not set]</p>
-          )}
-          {property.bedroomDetails && property.bedroomDetails.length > 0 ? (
-            <div className="mb-4">
-              <h3 className="font-serif text-xl text-harbour-stone mb-2">Bedrooms</h3>
-              <ArrayField items={property.bedroomDetails} />
-            </div>
-          ) : (
-            <p className="font-mono text-sm text-harbour-stone opacity-50 italic mb-4">[bedroomDetails not set]</p>
-          )}
-          {property.bathroomDetails && property.bathroomDetails.length > 0 ? (
-            <div>
-              <h3 className="font-serif text-xl text-harbour-stone mb-2">Bathrooms</h3>
-              <ArrayField items={property.bathroomDetails} />
-            </div>
-          ) : (
-            <p className="font-mono text-sm text-harbour-stone opacity-50 italic">[bathroomDetails not set]</p>
-          )}
-        </section>
-
-        {/* Accommodation Facilities */}
-        {(property.facilitiesIntro || property.kitchenDining?.length || property.livingAreas?.length || 
-          property.heatingCooling?.length || property.entertainment?.length || property.laundryFacilities?.length || 
-          property.safetyFeatures?.length || amenities.length > 0) && (
+        {(property.sleepingIntro || property.sleepingArrangements || property.bedroomDetails?.length || property.bathroomDetails?.length) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Facilities</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Sleeping Arrangements</h2>
+            {property.sleepingIntro && (
+              <p className="font-mono text-base text-harbour-stone mb-4">{property.sleepingIntro}</p>
+            )}
+            {property.sleepingArrangements && (
+              <div className="font-mono text-base text-harbour-stone whitespace-pre-line mb-4">
+                {property.sleepingArrangements}
+              </div>
+            )}
+            {property.bedroomDetails && property.bedroomDetails.length > 0 && (
+              <div className="mb-4">
+                <h3 className="font-serif text-xl text-harbour-stone mb-2">Bedrooms</h3>
+                <ArrayField items={property.bedroomDetails} />
+              </div>
+            )}
+            {property.bathroomDetails && property.bathroomDetails.length > 0 && (
+              <div>
+                <h3 className="font-serif text-xl text-harbour-stone mb-2">Bathrooms</h3>
+                <ArrayField items={property.bathroomDetails} />
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* Facilities & Amenities */}
+        {(property.facilitiesIntro || property.facilities?.length || property.kitchenDining?.length || 
+          property.livingAreas?.length || property.heatingCooling?.length || property.entertainment?.length || 
+          property.laundryFacilities?.length || property.safetyFeatures?.length) && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Facilities & Amenities</h2>
             {property.facilitiesIntro && (
               <p className="font-mono text-base text-harbour-stone mb-6">{property.facilitiesIntro}</p>
             )}
             
-            {/* Legacy amenities field */}
-            {amenities.length > 0 && (
+            {/* Simplified facilities list (v1.1) */}
+            {property.facilities && property.facilities.length > 0 && (
               <div className="mb-6">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Amenities</h3>
-                <CheckboxArray items={amenities} />
+                <FacilitiesList items={property.facilities} />
               </div>
             )}
             
+            {/* Detailed facility checkboxes (Original) */}
             {property.kitchenDining && property.kitchenDining.length > 0 && (
               <div className="mb-6">
                 <h3 className="font-serif text-xl text-harbour-stone mb-2">Kitchen & Dining</h3>
@@ -345,12 +509,32 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
+        {/* Common Questions (ENHANCED) */}
+        {property.commonQuestions && property.commonQuestions.length > 0 && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Common Questions</h2>
+            <div className="space-y-6">
+              {property.commonQuestions.map((qa: any, idx: number) => (
+                <div key={idx} className="border-b border-washed-timber pb-4 last:border-b-0">
+                  <h3 className="font-serif text-xl text-harbour-stone mb-2">{qa.question}</h3>
+                  <p className="font-mono text-base text-harbour-stone">{qa.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Outdoor Spaces */}
-        {(property.outdoorIntro || property.outdoorFeatures?.length || property.parkingInfo) && (
+        {(property.outdoorIntro || property.outdoorSpaces || property.outdoorFeatures?.length || property.parkingInfo) && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">Outdoor Spaces</h2>
             {property.outdoorIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.outdoorIntro}</p>
+            )}
+            {property.outdoorSpaces && (
+              <div className="font-mono text-base text-harbour-stone whitespace-pre-line mb-4">
+                {property.outdoorSpaces}
+              </div>
             )}
             {property.outdoorFeatures && property.outdoorFeatures.length > 0 && (
               <div className="mb-4">
@@ -367,11 +551,16 @@ export default async function PropertyPage({ params }: PageProps) {
         )}
 
         {/* What's Included */}
-        {(property.includedIntro || property.included?.length || property.notIncluded?.length) && (
+        {(property.includedIntro || property.includedInStay?.length || property.included?.length || property.notIncluded?.length) && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">What's Included</h2>
             {property.includedIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.includedIntro}</p>
+            )}
+            {property.includedInStay && property.includedInStay.length > 0 && (
+              <div className="mb-4">
+                <ArrayField items={property.includedInStay} />
+              </div>
             )}
             {property.included && property.included.length > 0 && (
               <div className="mb-4">
@@ -412,12 +601,29 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* Location & Nearby */}
-        {(property.locationIntro || property.nearbyAttractions?.length || property.whatToDoNearby?.length) && (
+        {/* Location & Surroundings */}
+        {(property.locationIntro || property.locationDescription) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Location & Nearby</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Location & Surroundings</h2>
             {property.locationIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.locationIntro}</p>
+            )}
+            {property.locationDescription && (
+              <div className="font-mono text-base text-harbour-stone whitespace-pre-line">
+                {property.locationDescription}
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* Local Area & Nearby */}
+        {(property.localArea || property.nearbyAttractions?.length || property.whatToDoNearby?.length) && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Local Area & Nearby</h2>
+            {property.localArea && (
+              <div className="font-mono text-base text-harbour-stone whitespace-pre-line mb-4">
+                {property.localArea}
+              </div>
             )}
             {property.nearbyAttractions && property.nearbyAttractions.length > 0 && (
               <div className="mb-4">
@@ -435,12 +641,17 @@ export default async function PropertyPage({ params }: PageProps) {
         )}
 
         {/* Getting Here */}
-        {(property.gettingHereIntro || property.postcode || property.directions || 
+        {(property.gettingHereIntro || property.gettingHere || property.postcode || property.directions || 
           property.ferryInfo || property.airportDistance || property.portDistance) && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">Getting Here</h2>
             {property.gettingHereIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.gettingHereIntro}</p>
+            )}
+            {property.gettingHere && (
+              <div className="font-mono text-base text-harbour-stone whitespace-pre-line mb-4">
+                {property.gettingHere}
+              </div>
             )}
             {property.postcode && (
               <p className="font-mono text-base text-harbour-stone mb-2">
@@ -477,29 +688,56 @@ export default async function PropertyPage({ params }: PageProps) {
         )}
 
         {/* Pet Policy */}
-        {(property.petFriendly !== undefined || property.petPolicyIntro || property.petPolicyDetails?.length) && (
+        {(property.petFriendly !== undefined || property.petPolicyIntro || property.petPolicyDetails?.length || property.petPolicy) && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">Pet Policy</h2>
-            <p className="font-mono text-base text-harbour-stone mb-2">
-              <strong>Pet Friendly:</strong> {property.petFriendly ? 'Yes' : 'No'}
-            </p>
+            {property.petFriendly !== undefined && (
+              <p className="font-mono text-base text-harbour-stone mb-2">
+                <strong>Pet Friendly:</strong> {property.petFriendly ? 'Yes' : 'No'}
+              </p>
+            )}
             {property.petPolicyIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.petPolicyIntro}</p>
             )}
             {property.petPolicyDetails && property.petPolicyDetails.length > 0 && (
-              <ArrayField items={property.petPolicyDetails} />
+              <div className="mb-4">
+                <ArrayField items={property.petPolicyDetails} />
+              </div>
+            )}
+            {property.petPolicy && (
+              <div className="font-mono text-base text-harbour-stone space-y-3">
+                {property.petPolicy.allowed && (
+                  <p>
+                    <strong>Pets Allowed:</strong>{' '}
+                    {property.petPolicy.allowed === 'dogs-welcome' && 'Dogs Welcome'}
+                    {property.petPolicy.allowed === 'no-pets' && 'No Pets'}
+                    {property.petPolicy.allowed === 'contact' && 'Contact to Discuss'}
+                  </p>
+                )}
+                {property.petPolicy.fee && (
+                  <p><strong>Pet Fee:</strong> {property.petPolicy.fee}</p>
+                )}
+                {property.petPolicy.conditions && (
+                  <div className="whitespace-pre-line">{property.petPolicy.conditions}</div>
+                )}
+              </div>
             )}
           </section>
         )}
 
         {/* House Rules & Policies */}
-        {(property.policiesIntro || property.checkInTime || property.checkOutTime || property.minimumStay ||
+        {(property.policiesIntro || property.policies || property.checkInTime || property.checkOutTime || property.minimumStay ||
           property.cancellationPolicy || property.paymentTerms || property.securityDeposit || 
           property.licensingInfo || property.importantInfo?.length) && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">House Rules & Policies</h2>
             {property.policiesIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.policiesIntro}</p>
+            )}
+            {property.policies && (
+              <div className="font-mono text-base text-harbour-stone whitespace-pre-line mb-4">
+                {property.policies}
+              </div>
             )}
             <div className="space-y-3 font-mono text-base text-harbour-stone">
               {property.checkInTime && (
@@ -556,14 +794,40 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
+        {/* Trust Signals (NEW) */}
+        {property.trustSignals && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">About This Property</h2>
+            <div className="font-mono text-sm text-harbour-stone space-y-2 opacity-70">
+              {property.trustSignals.ownership && (
+                <p>{property.trustSignals.ownership}</p>
+              )}
+              {property.trustSignals.established && (
+                <p>{property.trustSignals.established}</p>
+              )}
+              {property.trustSignals.guestExperience && (
+                <p>{property.trustSignals.guestExperience}</p>
+              )}
+              {property.trustSignals.localCredentials && property.trustSignals.localCredentials.length > 0 && (
+                <div>
+                  {property.trustSignals.localCredentials.map((cred: string, idx: number) => (
+                    <p key={idx}>{cred}</p>
+                  ))}
+                </div>
+              )}
+            </div>
+          </section>
+        )}
+
         {/* Booking Calendar */}
-        {property.lodgifyPropertyId && property.lodgifyRoomId && property.slug?.current && (
+        {property.lodgifyPropertyId && (property.lodgifyRoomId || property.lodgifyRoomTypeId) && property.slug?.current && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">Book Your Stay</h2>
             <BookingCalendar
               propertySlug={property.slug.current}
               propertyId={property.lodgifyPropertyId}
               propertyName={property.name}
+              icsUrl={property.icsUrl}
             />
           </section>
         )}
@@ -578,16 +842,34 @@ export default async function PropertyPage({ params }: PageProps) {
                   ? urlFor(otherProperty.heroImage).width(800).height(1200).url() 
                   : '';
                 
+                // Extract description from overview PortableText or use fallback
+                let description = '';
+                if (otherProperty.overview && Array.isArray(otherProperty.overview)) {
+                  // Extract text from first block
+                  const firstBlock = otherProperty.overview.find((block: any) => block._type === 'block');
+                  if (firstBlock && firstBlock.children) {
+                    description = firstBlock.children
+                      .map((child: any) => child.text || '')
+                      .join(' ')
+                      .substring(0, 150);
+                  }
+                }
+                
+                // Handle both string (legacy) and object (new) location formats
+                const locationText = typeof otherProperty.location === 'string' 
+                  ? otherProperty.location 
+                  : (otherProperty.locationDetails?.address || otherProperty.locationDetails?.nearestTown || otherProperty.location?.address || otherProperty.location?.nearestTown || '');
+                
                 return (
                   <PropertyCard
                     key={otherProperty._id}
                     name={otherProperty.name}
-                    location={otherProperty.location}
-                    description={otherProperty.description}
+                    location={locationText}
+                    description={description || 'Self-catering holiday home on Islay'}
                     sleeps={otherProperty.sleeps}
                     bedrooms={otherProperty.bedrooms}
                     imageUrl={imageUrl}
-                    href={`/accommodation/${otherProperty.slug?.current || otherProperty.slug}`}
+                    href={`/properties/${otherProperty.slug?.current || otherProperty.slug}`}
                   />
                 );
               })}
@@ -595,136 +877,6 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* Show ALL schema fields for preview - even if empty */}
-        <section className="mb-12 mt-12 pt-12 border-t-2 border-[#C8C6BF]">
-          <h2 className="font-serif text-3xl text-harbour-stone mb-6">All Schema Fields (Preview)</h2>
-          
-          <div className="space-y-6 font-mono text-sm">
-            {/* Content Group */}
-            <div className="bg-[#F3F1E7] p-4 rounded">
-              <h3 className="font-serif text-xl text-harbour-stone mb-3">Content Group</h3>
-              <div className="space-y-2 text-harbour-stone">
-                <div><strong>name:</strong> {property.name || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>slug:</strong> {property.slug?.current || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>propertyType:</strong> {property.propertyType || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>heroImage:</strong> {property.heroImage ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>mainImage:</strong> {property.mainImage ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>images:</strong> {property.images?.length || 0} images</div>
-                <div><strong>overviewIntro:</strong> {property.overviewIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>description:</strong> {property.description ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-              </div>
-            </div>
-
-            {/* Details Group */}
-            <div className="bg-[#F3F1E7] p-4 rounded">
-              <h3 className="font-serif text-xl text-harbour-stone mb-3">Property Details Group</h3>
-              <div className="space-y-2 text-harbour-stone">
-                <div><strong>sleeps:</strong> {property.sleeps || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>bedrooms:</strong> {property.bedrooms || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>beds:</strong> {property.beds || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>bathrooms:</strong> {property.bathrooms || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>sleepingIntro:</strong> {property.sleepingIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>bedroomDetails:</strong> {property.bedroomDetails?.length || 0} items</div>
-                <div><strong>bathroomDetails:</strong> {property.bathroomDetails?.length || 0} items</div>
-                <div><strong>facilitiesIntro:</strong> {property.facilitiesIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>kitchenDining:</strong> {property.kitchenDining?.length || 0} items</div>
-                <div><strong>kitchenDiningNotes:</strong> {property.kitchenDiningNotes?.length || 0} items</div>
-                <div><strong>livingAreas:</strong> {property.livingAreas?.length || 0} items</div>
-                <div><strong>livingAreasNotes:</strong> {property.livingAreasNotes?.length || 0} items</div>
-                <div><strong>heatingCooling:</strong> {property.heatingCooling?.length || 0} items</div>
-                <div><strong>heatingCoolingNotes:</strong> {property.heatingCoolingNotes?.length || 0} items</div>
-                <div><strong>entertainment:</strong> {property.entertainment?.length || 0} items</div>
-                <div><strong>entertainmentNotes:</strong> {property.entertainmentNotes?.length || 0} items</div>
-                <div><strong>laundryFacilities:</strong> {property.laundryFacilities?.length || 0} items</div>
-                <div><strong>safetyFeatures:</strong> {property.safetyFeatures?.length || 0} items</div>
-                <div><strong>outdoorIntro:</strong> {property.outdoorIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>outdoorFeatures:</strong> {property.outdoorFeatures?.length || 0} items</div>
-                <div><strong>outdoorFeaturesNotes:</strong> {property.outdoorFeaturesNotes?.length || 0} items</div>
-                <div><strong>parkingInfo:</strong> {property.parkingInfo || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>includedIntro:</strong> {property.includedIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>included:</strong> {property.included?.length || 0} items</div>
-                <div><strong>notIncluded:</strong> {property.notIncluded?.length || 0} items</div>
-              </div>
-            </div>
-
-            {/* Location Group */}
-            <div className="bg-[#F3F1E7] p-4 rounded">
-              <h3 className="font-serif text-xl text-harbour-stone mb-3">Location Group</h3>
-              <div className="space-y-2 text-harbour-stone">
-                <div><strong>locationIntro:</strong> {property.locationIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>location:</strong> {property.location || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>nearbyAttractions:</strong> {property.nearbyAttractions?.length || 0} items</div>
-                <div><strong>whatToDoNearby:</strong> {property.whatToDoNearby?.length || 0} items</div>
-                <div><strong>gettingHereIntro:</strong> {property.gettingHereIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>postcode:</strong> {property.postcode || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>directions:</strong> {property.directions ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>ferryInfo:</strong> {property.ferryInfo ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>airportDistance:</strong> {property.airportDistance || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>portDistance:</strong> {property.portDistance || <span className="text-red-500">(empty)</span>}</div>
-              </div>
-            </div>
-
-            {/* Policies Group */}
-            <div className="bg-[#F3F1E7] p-4 rounded">
-              <h3 className="font-serif text-xl text-harbour-stone mb-3">Policies Group</h3>
-              <div className="space-y-2 text-harbour-stone">
-                <div><strong>petFriendly:</strong> {property.petFriendly !== undefined ? String(property.petFriendly) : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>petPolicyIntro:</strong> {property.petPolicyIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>petPolicyDetails:</strong> {property.petPolicyDetails?.length || 0} items</div>
-                <div><strong>policiesIntro:</strong> {property.policiesIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>checkInTime:</strong> {property.checkInTime || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>checkOutTime:</strong> {property.checkOutTime || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>minimumStay:</strong> {property.minimumStay || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>cancellationPolicy:</strong> {property.cancellationPolicy ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>paymentTerms:</strong> {property.paymentTerms ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>securityDeposit:</strong> {property.securityDeposit || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>licensingInfo:</strong> {property.licensingInfo || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>importantInfo:</strong> {property.importantInfo?.length || 0} items</div>
-                <div><strong>dailyRate:</strong> {property.dailyRate || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>weeklyRate:</strong> {property.weeklyRate || <span className="text-red-500">(empty)</span>}</div>
-              </div>
-            </div>
-
-            {/* Lodgify Group */}
-            <div className="bg-[#F3F1E7] p-4 rounded">
-              <h3 className="font-serif text-xl text-harbour-stone mb-3">Lodgify Integration</h3>
-              <div className="space-y-2 text-harbour-stone">
-                <div><strong>lodgifyPropertyId:</strong> {property.lodgifyPropertyId || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>lodgifyRoomId:</strong> {property.lodgifyRoomId || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>icsUrl:</strong> {property.icsUrl ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-              </div>
-            </div>
-
-            {/* SEO Group */}
-            <div className="bg-[#F3F1E7] p-4 rounded">
-              <h3 className="font-serif text-xl text-harbour-stone mb-3">SEO Group</h3>
-              <div className="space-y-2 text-harbour-stone">
-                <div><strong>seoTitle:</strong> {property.seoTitle || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>seoDescription:</strong> {property.seoDescription ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-              </div>
-            </div>
-
-            {/* Legacy/Other Fields */}
-            {(amenities.length > 0 || property.excerpt || (property as any).focusKeyword) && (
-              <div className="bg-yellow-50 p-4 rounded border border-yellow-200">
-                <h3 className="font-serif text-xl text-harbour-stone mb-3">Legacy/Other Fields (Not in Schema)</h3>
-                <div className="space-y-2 text-harbour-stone">
-                  {amenities.length > 0 && <div><strong>amenities:</strong> {amenities.length} items</div>}
-                  {(property as any).excerpt && <div><strong>excerpt:</strong> {(property as any).excerpt}</div>}
-                  {(property as any).focusKeyword && <div><strong>focusKeyword:</strong> {(property as any).focusKeyword}</div>}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* Raw JSON Debug */}
-          <details className="mt-6 font-mono text-xs text-harbour-stone">
-            <summary className="cursor-pointer mb-4">Raw JSON (Click to expand)</summary>
-            <pre className="bg-[#F3F1E7] p-4 rounded overflow-auto text-xs max-h-96">
-              {JSON.stringify(property, null, 2)}
-            </pre>
-          </details>
-        </section>
       </div>
     </main>
     </>
@@ -742,11 +894,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: property.seoTitle || property.name,
-    description: property.seoDescription || property.description || property.overviewIntro,
+    title: property.metaTitle || property.seoTitle || property.name,
+    description: property.metaDescription || property.seoDescription || property.entityFraming?.whatItIs || property.overviewIntro,
     openGraph: {
-      title: property.seoTitle || property.name,
-      description: property.seoDescription || property.description || property.overviewIntro,
+      title: property.metaTitle || property.seoTitle || property.name,
+      description: property.metaDescription || property.seoDescription || property.entityFraming?.whatItIs || property.overviewIntro,
       images: property.heroImage ? [urlFor(property.heroImage).width(1200).height(630).url()] : [],
     },
   };

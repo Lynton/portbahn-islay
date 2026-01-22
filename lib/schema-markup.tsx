@@ -197,7 +197,8 @@ function generateAccommodation(property: any, siteUrl: string) {
     '@context': 'https://schema.org',
     '@type': 'Accommodation',
     name: property.name,
-    description: property.description || property.overviewIntro,
+    // Use entityFraming.whatItIs for description priority if available
+    description: property.entityFraming?.whatItIs || property.description || property.overviewIntro,
     url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
     address,
     geo,
@@ -211,6 +212,10 @@ function generateAccommodation(property: any, siteUrl: string) {
     } : undefined,
     amenityFeature: amenityFeatures.length > 0 ? amenityFeatures : undefined,
     petAllowed: property.petFriendly === true ? true : false,
+    // Add knowsAbout if primaryDifferentiator exists
+    ...(property.entityFraming?.primaryDifferentiator && {
+      knowsAbout: property.entityFraming.primaryDifferentiator
+    }),
   };
 
   // Add images
@@ -361,7 +366,7 @@ function generateArticle(article: any, siteUrl: string) {
   };
 }
 
-// Generate FAQPage schema (for future FAQ pages)
+// Generate FAQPage schema (for property common questions)
 function generateFAQPage(faqs: any[], siteUrl: string) {
   return {
     '@context': 'https://schema.org',
@@ -371,7 +376,7 @@ function generateFAQPage(faqs: any[], siteUrl: string) {
       name: faq.question,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: faq.shortAnswer || faq.fullAnswer,
+        text: faq.answer || faq.shortAnswer || faq.fullAnswer,
       },
     })),
   };
@@ -406,6 +411,10 @@ export function generateSchemaMarkup(
         break;
       case 'Accommodation':
         schemas.push(generateAccommodation(data, BASE_URL));
+        // Add FAQPage schema if 3+ common questions exist
+        if (data?.commonQuestions && Array.isArray(data.commonQuestions) && data.commonQuestions.length >= 3) {
+          schemas.push(generateFAQPage(data.commonQuestions, BASE_URL));
+        }
         break;
       case 'Product':
       case 'Offer':

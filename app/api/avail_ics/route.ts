@@ -100,21 +100,28 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const propertySlug = searchParams.get('property');
+    const icsUrlParam = searchParams.get('icsUrl');
     const startDateParam = searchParams.get('start');
     const endDateParam = searchParams.get('end');
 
-    if (!propertySlug) {
+    // If icsUrl is provided directly, use it; otherwise look up by slug
+    let icsUrl: string | undefined;
+    
+    if (icsUrlParam) {
+      icsUrl = icsUrlParam;
+    } else if (propertySlug) {
+      const property = lodgifyProperties[propertySlug];
+      if (!property) {
+        return NextResponse.json(
+          { error: `Property '${propertySlug}' not found in lodgifyProperties. Available properties: ${Object.keys(lodgifyProperties).join(', ')}` },
+          { status: 404 }
+        );
+      }
+      icsUrl = property.icsUrl;
+    } else {
       return NextResponse.json(
-        { error: 'Property slug is required' },
+        { error: 'Either property slug or icsUrl is required' },
         { status: 400 }
-      );
-    }
-
-    const property = lodgifyProperties[propertySlug];
-    if (!property) {
-      return NextResponse.json(
-        { error: 'Property not found' },
-        { status: 404 }
       );
     }
 
@@ -126,8 +133,8 @@ export async function GET(request: NextRequest) {
       ? new Date(endDateParam) 
       : new Date(Date.now() + 180 * 24 * 60 * 60 * 1000); // 6 months
 
-    // Check cache
-    const cacheKey = `${propertySlug}-${startDate.toISOString()}-${endDate.toISOString()}`;
+    // Check cache (use icsUrl as part of cache key for uniqueness)
+    const cacheKey = `${icsUrl}-${startDate.toISOString()}-${endDate.toISOString()}`;
     const cached = cache.get(cacheKey);
     
     if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
@@ -139,14 +146,14 @@ export async function GET(request: NextRequest) {
     }
 
     // Fetch and parse ICS feed
-    const icsData = await fetchICSFeed(property.icsUrl);
+    const icsData = await fetchICSFeed(icsUrl);
     const blockedDates = parseICSFeed(icsData);
     
     // Generate date grid
     const dateGrid = generateDateGrid(startDate, endDate, blockedDates);
 
     const result = {
-      property: propertySlug,
+      property: propertySlug || 'unknown',
       startDate: startDate.toISOString().split('T')[0],
       endDate: endDate.toISOString().split('T')[0],
       dates: dateGrid,

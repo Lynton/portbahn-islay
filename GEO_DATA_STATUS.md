@@ -93,3 +93,4 @@ To verify geo data is working:
 - Property-specific geo is **only included when set** in Sanity
 - Coordinates use decimal degrees format (not degrees/minutes/seconds)
 
+

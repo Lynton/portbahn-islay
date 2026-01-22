@@ -1,0 +1,130 @@
+/* Custom Sanity Studio Styles */
+
+/* Light grey background for field descriptions */
+[data-testid="field-description"],
+[data-testid="field"] [data-testid="field-description"],
+[data-testid="field"] .description,
+.sanity-field-description,
+div[data-testid="field-description"],
+span[data-testid="field-description"] {
+  background-color: #f9fafb !important;
+  padding: 8px 12px !important;
+  border-radius: 4px !important;
+  display: inline-block !important;
+  margin-top: 4px !important;
+}
+
+/* Make tabs wrap to multiple lines instead of scrolling */
+[role="tablist"] {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 4px !important;
+  border-bottom: 2px solid #e5e7eb !important;
+  margin-bottom: 0 !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+}
+
+[role="tab"] {
+  padding: 10px 16px !important;
+  border: none !important;
+  border-bottom: 3px solid transparent !important;
+  background: transparent !important;
+  color: #6b7280 !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  margin-bottom: -2px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+[role="tab"]:hover {
+  color: #111827 !important;
+  background: #f3f4f6 !important;
+}
+
+[role="tab"][aria-selected="true"] {
+  color: #111827 !important;
+  border-bottom-color: #2563eb !important;
+  background: transparent !important;
+  font-weight: 600 !important;
+}
+
+/* Alternative selectors for group tabs */
+div[data-ui="GroupTabs"],
+div[data-ui="GroupTabs"] > * {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 4px !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+}
+
+div[data-ui="GroupTabs"] button,
+div[data-ui="GroupTabs"] [role="tab"],
+button[data-ui="GroupTabButton"] {
+  padding: 10px 16px !important;
+  border: none !important;
+  border-bottom: 3px solid transparent !important;
+  background: transparent !important;
+  color: #6b7280 !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  margin-bottom: -2px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+div[data-ui="GroupTabs"] button:hover,
+div[data-ui="GroupTabs"] [role="tab"]:hover,
+button[data-ui="GroupTabButton"]:hover {
+  color: #111827 !important;
+  background: #f3f4f6 !important;
+}
+
+div[data-ui="GroupTabs"] button[data-selected="true"],
+div[data-ui="GroupTabs"] [role="tab"][aria-selected="true"],
+button[data-ui="GroupTabButton"][data-selected="true"] {
+  color: #111827 !important;
+  border-bottom-color: #2563eb !important;
+  background: transparent !important;
+  font-weight: 600 !important;
+}
+
+/* Target any button in the group tabs area */
+[data-testid="document-panel"] [role="tablist"] {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 4px !important;
+  overflow-x: visible !important;
+  overflow-y: visible !important;
+}
+
+[data-testid="document-panel"] [role="tablist"] button,
+[data-testid="document-panel"] [role="tablist"] [role="tab"] {
+  padding: 10px 16px !important;
+  border: none !important;
+  border-bottom: 3px solid transparent !important;
+  background: transparent !important;
+  color: #6b7280 !important;
+  font-weight: 500 !important;
+  transition: all 0.2s ease !important;
+  margin-bottom: -2px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+[data-testid="document-panel"] [role="tablist"] button:hover,
+[data-testid="document-panel"] [role="tablist"] [role="tab"]:hover {
+  color: #111827 !important;
+  background: #f3f4f6 !important;
+}
+
+[data-testid="document-panel"] [role="tablist"] button[data-selected="true"],
+[data-testid="document-panel"] [role="tablist"] [role="tab"][aria-selected="true"] {
+  color: #111827 !important;
+  border-bottom-color: #2563eb !important;
+  background: transparent !important;
+  font-weight: 600 !important;
+}

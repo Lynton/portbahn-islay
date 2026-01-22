@@ -31,7 +31,7 @@ async function getProperties() {
     name,
     slug,
     location,
-    description,
+    overview,
     sleeps,
     bedrooms,
     heroImage
@@ -127,16 +127,34 @@ export default async function Home() {
                   ? urlFor(property.heroImage).width(800).height(1200).url() 
                   : '';
                 
+                // Extract description from overview PortableText or use fallback
+                let description = '';
+                if (property.overview && Array.isArray(property.overview)) {
+                  // Extract text from first block
+                  const firstBlock = property.overview.find((block: any) => block._type === 'block');
+                  if (firstBlock && firstBlock.children) {
+                    description = firstBlock.children
+                      .map((child: any) => child.text || '')
+                      .join(' ')
+                      .substring(0, 150);
+                  }
+                }
+                
+                // Handle both string (legacy) and object (new) location formats
+                const locationText = typeof property.location === 'string' 
+                  ? property.location 
+                  : (property.location?.address || property.location?.nearestTown || '');
+                
                 return (
                   <PropertyCard
                     key={property._id}
                     name={property.name}
-                    location={property.location}
-                    description={property.description}
+                    location={locationText}
+                    description={description || 'Self-catering holiday home on Islay'}
                     sleeps={property.sleeps}
                     bedrooms={property.bedrooms}
                     imageUrl={imageUrl}
-                    href={`/accommodation/${property.slug?.current || property.slug}`}
+                    href={`/properties/${property.slug?.current || property.slug}`}
                   />
                 );
               })}

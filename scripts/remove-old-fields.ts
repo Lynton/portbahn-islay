@@ -142,3 +142,4 @@ async function removeOldFields() {
 console.log('🚀 Starting migration to remove old fields...\n');
 removeOldFields();
 
+
