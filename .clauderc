@@ -102,3 +102,10 @@ Types: feat, fix, docs, style, refactor, test, chore
 - Keep backup exports in `data/exports/` with ISO timestamps
 - Context budget: 200k tokens per session
 - Large operations (data generation, migrations): use Task tool for efficiency
+
+### Critical Reference Files
+**ALWAYS read these files at the start of schema or data work:**
+- `SCHEMA_FILE_REFERENCE.md` - Single source of truth for property schema location and recent changes
+  - Prevents duplicate schema files
+  - Documents all schema enhancements and field additions
+  - Lists canonical file paths and import locations
