@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import SchemaMarkup from "@/components/SchemaMarkup";
+import { VisualEditing } from "@/components/VisualEditing";
+import { draftMode } from "next/headers";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -7,11 +9,13 @@ export const metadata: Metadata = {
   description: "Holiday rental properties on Islay, Scotland",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { isEnabled: isDraftMode } = await draftMode();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -26,6 +30,7 @@ export default function RootLayout({
       </head>
       <body className="antialiased font-mono">
         {children}
+        {isDraftMode && <VisualEditing />}
       </body>
     </html>
   );
