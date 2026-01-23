@@ -1,7 +1,13 @@
 # Portbahn Islay - Documentation Structure
 
 **Project:** Portbahn Islay Self-Catering Properties
-**Updated:** 2026-01-21
+**Updated:** 2026-01-23
+
+---
+
+## Quick Start for New Sessions
+
+**READ FIRST:** [`WORKING-NOTES.md`](./WORKING-NOTES.md) - Contains current status, key decisions, pending work, and UI/UX notes for session continuity.
 
 ---
 
@@ -10,6 +16,7 @@
 ```
 docs/
 ├── README.md                    # This file
+├── WORKING-NOTES.md             # Session-to-session context (READ FIRST)
 ├── architecture/                # Schema, data, and system architecture
 │   ├── ENHANCED-SCHEMA-SPECIFICATION.md
 │   ├── DATA-MIGRATION-STRATEGY.md
@@ -193,6 +200,7 @@ Sanity CMS schemas, studio configuration, and plugins.
 All documents are living and versioned via git. Check commit history for changes.
 
 **Major Updates:**
+- 2026-01-23: Property page optimised for AI search playbook (10/10), working notes established
 - 2026-01-21: Enhanced schema specification and migration strategy created
 - Earlier: Design system and initial CMS schema
 
