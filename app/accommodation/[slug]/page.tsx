@@ -412,50 +412,28 @@ export default async function PropertyPage({ params }: PageProps) {
           )}
         </section>
 
-        {/* What Makes {property.name} Special? Section */}
-        {property.description && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What Makes {property.name} Special?</h2>
-            <div className="font-mono text-base text-harbour-stone leading-relaxed whitespace-pre-line">
-              {property.description}
-            </div>
-          </section>
-        )}
-
-        {/* Google Reviews */}
-        {(property.googleBusinessUrl || property.googlePlaceId) && (
-          <GoogleReviews
-            googleBusinessUrl={property.googleBusinessUrl}
-            googlePlaceId={property.googlePlaceId}
-            propertyName={property.name}
-          />
-        )}
 
         {/* Sleeping Arrangements */}
-        <section className="mb-12">
-          <h2 className="font-serif text-3xl text-harbour-stone mb-4">Sleeping Arrangements</h2>
-          {property.sleepingIntro ? (
-            <p className="font-mono text-base text-harbour-stone mb-4">{property.sleepingIntro}</p>
-          ) : (
-            <p className="font-mono text-sm text-harbour-stone opacity-50 italic mb-4">[sleepingIntro not set]</p>
-          )}
-          {property.bedroomDetails && property.bedroomDetails.length > 0 ? (
-            <div className="mb-4">
-              <h3 className="font-serif text-xl text-harbour-stone mb-2">Bedrooms</h3>
-              <ArrayField items={property.bedroomDetails} />
-            </div>
-          ) : (
-            <p className="font-mono text-sm text-harbour-stone opacity-50 italic mb-4">[bedroomDetails not set]</p>
-          )}
-          {property.bathroomDetails && property.bathroomDetails.length > 0 ? (
-            <div>
-              <h3 className="font-serif text-xl text-harbour-stone mb-2">Bathrooms</h3>
-              <ArrayField items={property.bathroomDetails} />
-            </div>
-          ) : (
-            <p className="font-mono text-sm text-harbour-stone opacity-50 italic">[bathroomDetails not set]</p>
-          )}
-        </section>
+        {(property.sleepingIntro || property.bedroomDetails?.length || property.bathroomDetails?.length) && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Sleeping Arrangements</h2>
+            {property.sleepingIntro && (
+              <p className="font-mono text-base text-harbour-stone mb-4">{property.sleepingIntro}</p>
+            )}
+            {property.bedroomDetails && property.bedroomDetails.length > 0 && (
+              <div className="mb-4">
+                <h3 className="font-serif text-xl text-harbour-stone mb-2">Bedrooms</h3>
+                <ArrayField items={property.bedroomDetails} />
+              </div>
+            )}
+            {property.bathroomDetails && property.bathroomDetails.length > 0 && (
+              <div>
+                <h3 className="font-serif text-xl text-harbour-stone mb-2">Bathrooms</h3>
+                <ArrayField items={property.bathroomDetails} />
+              </div>
+            )}
+          </section>
+        )}
 
         {/* Accommodation Facilities */}
         {(property.facilitiesIntro || property.kitchenDining?.length || property.livingAreas?.length || 
@@ -523,6 +501,49 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
+        {/* Outdoor Spaces */}
+        {(property.outdoorIntro || property.outdoorFeatures?.length || property.parkingInfo) && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Outdoor Spaces</h2>
+            {property.outdoorIntro && (
+              <p className="font-mono text-base text-harbour-stone mb-4">{property.outdoorIntro}</p>
+            )}
+            {property.outdoorFeatures && property.outdoorFeatures.length > 0 && (
+              <div className="mb-4">
+                <CheckboxArray items={property.outdoorFeatures} />
+                {property.outdoorFeaturesNotes && property.outdoorFeaturesNotes.length > 0 && (
+                  <ArrayField items={property.outdoorFeaturesNotes} className="mt-3" />
+                )}
+              </div>
+            )}
+            {property.parkingInfo && (
+              <p className="font-mono text-base text-harbour-stone mt-4">{property.parkingInfo}</p>
+            )}
+          </section>
+        )}
+
+        {/* What's Included */}
+        {(property.includedIntro || property.included?.length || property.notIncluded?.length) && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What's Included</h2>
+            {property.includedIntro && (
+              <p className="font-mono text-base text-harbour-stone mb-4">{property.includedIntro}</p>
+            )}
+            {property.included && property.included.length > 0 && (
+              <div className="mb-4">
+                <h3 className="font-serif text-xl text-harbour-stone mb-2">Included</h3>
+                <ArrayField items={property.included} />
+              </div>
+            )}
+            {property.notIncluded && property.notIncluded.length > 0 && (
+              <div>
+                <h3 className="font-serif text-xl text-harbour-stone mb-2">Not Included</h3>
+                <ArrayField items={property.notIncluded} />
+              </div>
+            )}
+          </section>
+        )}
+
         {/* Common Questions - natural language query matching */}
         {property.commonQuestions && property.commonQuestions.length > 0 && (
           <section className="my-16 max-w-4xl">
@@ -531,8 +552,8 @@ export default async function PropertyPage({ params }: PageProps) {
             </h2>
             <div className="space-y-8">
               {property.commonQuestions.map((qa: { question: string; answer: string }, index: number) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="border-l-4 border-gray-300 pl-6 py-2"
                 >
                   <h3 className="text-xl font-semibold mb-3 text-gray-900">
@@ -756,47 +777,13 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* Outdoor Spaces */}
-        {(property.outdoorIntro || property.outdoorFeatures?.length || property.parkingInfo) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Outdoor Spaces</h2>
-            {property.outdoorIntro && (
-              <p className="font-mono text-base text-harbour-stone mb-4">{property.outdoorIntro}</p>
-            )}
-            {property.outdoorFeatures && property.outdoorFeatures.length > 0 && (
-              <div className="mb-4">
-                <CheckboxArray items={property.outdoorFeatures} />
-                {property.outdoorFeaturesNotes && property.outdoorFeaturesNotes.length > 0 && (
-                  <ArrayField items={property.outdoorFeaturesNotes} className="mt-3" />
-                )}
-              </div>
-            )}
-            {property.parkingInfo && (
-              <p className="font-mono text-base text-harbour-stone mt-4">{property.parkingInfo}</p>
-            )}
-          </section>
-        )}
-
-        {/* What's Included */}
-        {(property.includedIntro || property.included?.length || property.notIncluded?.length) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What's Included</h2>
-            {property.includedIntro && (
-              <p className="font-mono text-base text-harbour-stone mb-4">{property.includedIntro}</p>
-            )}
-            {property.included && property.included.length > 0 && (
-              <div className="mb-4">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Included</h3>
-                <ArrayField items={property.included} />
-              </div>
-            )}
-            {property.notIncluded && property.notIncluded.length > 0 && (
-              <div>
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Not Included</h3>
-                <ArrayField items={property.notIncluded} />
-              </div>
-            )}
-          </section>
+        {/* Google Reviews */}
+        {(property.googleBusinessUrl || property.googlePlaceId) && (
+          <GoogleReviews
+            googleBusinessUrl={property.googleBusinessUrl}
+            googlePlaceId={property.googlePlaceId}
+            propertyName={property.name}
+          />
         )}
 
         {/* Location & Nearby */}
@@ -822,15 +809,15 @@ export default async function PropertyPage({ params }: PageProps) {
         )}
 
         {/* Getting Here */}
-        {(property.gettingHereIntro || property.postcode || property.directions || 
-          property.ferryInfo || property.airportDistance || property.portDistance || 
+        {(property.gettingHereIntro || property.postcode || property.directions ||
+          property.ferryInfo || property.airportDistance || property.portDistance ||
           property.latitude || property.longitude || property.location) && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">Getting Here</h2>
             {property.gettingHereIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.gettingHereIntro}</p>
             )}
-            
+
             {/* Google Map */}
             {(property.latitude || property.longitude || property.postcode || property.location) && (
               <div className="mb-6">
@@ -879,9 +866,25 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
+        {/* Pet Policy */}
+        {(property.petFriendly !== undefined || property.petPolicyIntro || property.petPolicyDetails?.length) && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Can I Bring Pets?</h2>
+            <p className="font-mono text-base text-harbour-stone mb-2">
+              <strong>Pet Friendly:</strong> {property.petFriendly ? 'Yes' : 'No'}
+            </p>
+            {property.petPolicyIntro && (
+              <p className="font-mono text-base text-harbour-stone mb-4">{property.petPolicyIntro}</p>
+            )}
+            {property.petPolicyDetails && property.petPolicyDetails.length > 0 && (
+              <ArrayField items={property.petPolicyDetails} />
+            )}
+          </section>
+        )}
+
         {/* House Rules & Policies */}
         {(property.policiesIntro || property.checkInTime || property.checkOutTime || property.minimumStay ||
-          property.cancellationPolicy || property.paymentTerms || property.securityDeposit || 
+          property.cancellationPolicy || property.paymentTerms || property.securityDeposit ||
           property.licensingStatus || property.licenseNumber || property.licenseNotes || property.availabilityStatus || property.importantInfo?.length) && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">House Rules</h2>
@@ -958,46 +961,6 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* Pet Policy */}
-        {(property.petFriendly !== undefined || property.petPolicyIntro || property.petPolicyDetails?.length) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Can I Bring Pets?</h2>
-            <p className="font-mono text-base text-harbour-stone mb-2">
-              <strong>Pet Friendly:</strong> {property.petFriendly ? 'Yes' : 'No'}
-            </p>
-            {property.petPolicyIntro && (
-              <p className="font-mono text-base text-harbour-stone mb-4">{property.petPolicyIntro}</p>
-            )}
-            {property.petPolicyDetails && property.petPolicyDetails.length > 0 && (
-              <ArrayField items={property.petPolicyDetails} />
-            )}
-          </section>
-        )}
-
-        {/* Image Gallery Grid */}
-        {galleryImages.length > 0 && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Gallery</h2>
-            <div className="grid grid-cols-2 gap-4">
-              {galleryImages.map((image: any, index: number) => (
-                <div key={index} className="aspect-[4/3] relative overflow-hidden">
-                  <Image
-                    src={urlFor(image).width(800).height(600).url()}
-                    alt={image.alt || `${property.name} - Image ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                  {image.caption && (
-                    <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-sea-spray font-mono text-sm px-4 py-2">
-                      {image.caption}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
-
         {/* Pricing */}
         {(property.dailyRate || property.weeklyRate) && (
           <section className="mb-12">
@@ -1026,16 +989,40 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
+        {/* Image Gallery Grid */}
+        {galleryImages.length > 0 && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Gallery</h2>
+            <div className="grid grid-cols-2 gap-4">
+              {galleryImages.map((image: any, index: number) => (
+                <div key={index} className="aspect-[4/3] relative overflow-hidden">
+                  <Image
+                    src={urlFor(image).width(800).height(600).url()}
+                    alt={image.alt || `${property.name} - Image ${index + 1}`}
+                    fill
+                    className="object-cover"
+                  />
+                  {image.caption && (
+                    <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-sea-spray font-mono text-sm px-4 py-2">
+                      {image.caption}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Other Accommodation */}
         {otherProperties.length > 0 && (
           <section className="mb-12 mt-16 pt-12 border-t-2 border-[#C8C6BF]">
             <h2 className="font-serif text-3xl text-harbour-stone mb-8">Our Other Accommodation</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {otherProperties.map((otherProperty: any) => {
-                const imageUrl = otherProperty.heroImage 
-                  ? urlFor(otherProperty.heroImage).width(800).height(1200).url() 
+                const imageUrl = otherProperty.heroImage
+                  ? urlFor(otherProperty.heroImage).width(800).height(1200).url()
                   : '';
-                
+
                 return (
                   <PropertyCard
                     key={otherProperty._id}
@@ -1053,126 +1040,6 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* Show ALL schema fields for preview - even if empty */}
-        <section className="mb-12 mt-12 pt-12 border-t-2 border-[#C8C6BF]">
-          <h2 className="font-serif text-3xl text-harbour-stone mb-6">All Schema Fields (Preview)</h2>
-          
-          <div className="space-y-6 font-mono text-sm">
-            {/* Content Group */}
-            <div className="bg-[#F3F1E7] p-4 rounded">
-              <h3 className="font-serif text-xl text-harbour-stone mb-3">Content Group</h3>
-              <div className="space-y-2 text-harbour-stone">
-                <div><strong>name:</strong> {property.name || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>slug:</strong> {property.slug?.current || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>propertyType:</strong> {property.propertyType || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>heroImage:</strong> {property.heroImage ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>images:</strong> {property.images?.length || 0} images</div>
-                <div><strong>overviewIntro:</strong> {property.overviewIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>description:</strong> {property.description ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-              </div>
-            </div>
-
-            {/* Details Group */}
-            <div className="bg-[#F3F1E7] p-4 rounded">
-              <h3 className="font-serif text-xl text-harbour-stone mb-3">Property Details Group</h3>
-              <div className="space-y-2 text-harbour-stone">
-                <div><strong>sleeps:</strong> {property.sleeps || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>bedrooms:</strong> {property.bedrooms || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>beds:</strong> {property.beds || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>bathrooms:</strong> {property.bathrooms || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>sleepingIntro:</strong> {property.sleepingIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>bedroomDetails:</strong> {property.bedroomDetails?.length || 0} items</div>
-                <div><strong>bathroomDetails:</strong> {property.bathroomDetails?.length || 0} items</div>
-                <div><strong>facilitiesIntro:</strong> {property.facilitiesIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>kitchenDining:</strong> {property.kitchenDining?.length || 0} items</div>
-                <div><strong>kitchenDiningNotes:</strong> {property.kitchenDiningNotes?.length || 0} items</div>
-                <div><strong>livingAreas:</strong> {property.livingAreas?.length || 0} items</div>
-                <div><strong>livingAreasNotes:</strong> {property.livingAreasNotes?.length || 0} items</div>
-                <div><strong>heatingCooling:</strong> {property.heatingCooling?.length || 0} items</div>
-                <div><strong>heatingCoolingNotes:</strong> {property.heatingCoolingNotes?.length || 0} items</div>
-                <div><strong>entertainment:</strong> {property.entertainment?.length || 0} items</div>
-                <div><strong>entertainmentNotes:</strong> {property.entertainmentNotes?.length || 0} items</div>
-                <div><strong>laundryFacilities:</strong> {property.laundryFacilities?.length || 0} items</div>
-                <div><strong>safetyFeatures:</strong> {property.safetyFeatures?.length || 0} items</div>
-                <div><strong>outdoorIntro:</strong> {property.outdoorIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>outdoorFeatures:</strong> {property.outdoorFeatures?.length || 0} items</div>
-                <div><strong>outdoorFeaturesNotes:</strong> {property.outdoorFeaturesNotes?.length || 0} items</div>
-                <div><strong>parkingInfo:</strong> {property.parkingInfo || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>includedIntro:</strong> {property.includedIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>included:</strong> {property.included?.length || 0} items</div>
-                <div><strong>notIncluded:</strong> {property.notIncluded?.length || 0} items</div>
-              </div>
-            </div>
-
-            {/* Location Group */}
-            <div className="bg-[#F3F1E7] p-4 rounded">
-              <h3 className="font-serif text-xl text-harbour-stone mb-3">Location Group</h3>
-              <div className="space-y-2 text-harbour-stone">
-                <div><strong>locationIntro:</strong> {property.locationIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>location:</strong> {property.location || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>nearbyAttractions:</strong> {property.nearbyAttractions?.length || 0} items</div>
-                <div><strong>whatToDoNearby:</strong> {property.whatToDoNearby?.length || 0} items</div>
-                <div><strong>gettingHereIntro:</strong> {property.gettingHereIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>postcode:</strong> {property.postcode || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>directions:</strong> {property.directions ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>ferryInfo:</strong> {property.ferryInfo ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>airportDistance:</strong> {property.airportDistance || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>portDistance:</strong> {property.portDistance || <span className="text-red-500">(empty)</span>}</div>
-              </div>
-            </div>
-
-            {/* Policies Group */}
-            <div className="bg-[#F3F1E7] p-4 rounded">
-              <h3 className="font-serif text-xl text-harbour-stone mb-3">Policies Group</h3>
-              <div className="space-y-2 text-harbour-stone">
-                <div><strong>petFriendly:</strong> {property.petFriendly !== undefined ? String(property.petFriendly) : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>petPolicyIntro:</strong> {property.petPolicyIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>petPolicyDetails:</strong> {property.petPolicyDetails?.length || 0} items</div>
-                <div><strong>policiesIntro:</strong> {property.policiesIntro || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>checkInTime:</strong> {property.checkInTime || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>checkOutTime:</strong> {property.checkOutTime || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>minimumStay:</strong> {property.minimumStay || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>cancellationPolicy:</strong> {property.cancellationPolicy ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>paymentTerms:</strong> {property.paymentTerms ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>securityDeposit:</strong> {property.securityDeposit || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>licensingStatus:</strong> {property.licensingStatus || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>licenseNumber:</strong> {property.licenseNumber || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>availabilityStatus:</strong> {property.availabilityStatus || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>importantInfo:</strong> {property.importantInfo?.length || 0} items</div>
-                <div><strong>dailyRate:</strong> {property.dailyRate || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>weeklyRate:</strong> {property.weeklyRate || <span className="text-red-500">(empty)</span>}</div>
-              </div>
-            </div>
-
-            {/* Lodgify Group */}
-            <div className="bg-[#F3F1E7] p-4 rounded">
-              <h3 className="font-serif text-xl text-harbour-stone mb-3">Lodgify Integration</h3>
-              <div className="space-y-2 text-harbour-stone">
-                <div><strong>lodgifyPropertyId:</strong> {property.lodgifyPropertyId || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>lodgifyRoomId:</strong> {property.lodgifyRoomId || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>icsUrl:</strong> {property.icsUrl ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-              </div>
-            </div>
-
-            {/* SEO Group */}
-            <div className="bg-[#F3F1E7] p-4 rounded">
-              <h3 className="font-serif text-xl text-harbour-stone mb-3">SEO Group</h3>
-              <div className="space-y-2 text-harbour-stone">
-                <div><strong>seoTitle:</strong> {property.seoTitle || <span className="text-red-500">(empty)</span>}</div>
-                <div><strong>seoDescription:</strong> {property.seoDescription ? '✓' : <span className="text-red-500">(empty)</span>}</div>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Raw JSON Debug */}
-          <details className="mt-6 font-mono text-xs text-harbour-stone">
-            <summary className="cursor-pointer mb-4">Raw JSON (Click to expand)</summary>
-            <pre className="bg-[#F3F1E7] p-4 rounded overflow-auto text-xs max-h-96">
-              {JSON.stringify(property, null, 2)}
-            </pre>
-          </details>
-        </section>
       </div>
     </main>
     </>
