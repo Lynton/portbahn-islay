@@ -973,13 +973,13 @@ export default defineType({
       name: 'licenseNumber',
       title: 'License Number',
       type: 'string',
-      description: 'STL license number (required for display on site). Format: YYMMDD-NNNNNN (e.g., 230916-000028)',
+      description: 'STL license number (required for display on site). Format: AR#####F (e.g., AR01981F)',
       group: 'policies',
-      placeholder: '230916-000028',
+      placeholder: 'AR01981F',
       validation: (Rule) => Rule.required().regex(
-        /^\d{6}-\d{6}$/,
+        /^AR\d{5}F$/,
         { name: 'license-format', invert: false }
-      ).error('License number must be in format: YYMMDD-NNNNNN (e.g., 230916-000028)'),
+      ).error('License number must be in Argyll & Bute format: AR#####F (e.g., AR01981F)'),
     }),
     defineField({
       name: 'licenseNotes',

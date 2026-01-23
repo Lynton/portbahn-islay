@@ -1,0 +1,51 @@
+{
+  "properties": [
+    {
+      "name": "Portbahn",
+      "licenseNumber": "AR01981F",
+      "validFrom": "13/02/2025",
+      "expires": "12/02/2028",
+      "formattedLicenseNumber": ""
+    },
+    {
+      "name": "Shorefield",
+      "licenseNumber": "AR02246F",
+      "validFrom": "13/03/2025",
+      "expires": "12/03/2028",
+      "formattedLicenseNumber": ""
+    },
+    {
+      "name": "Curlew Cottage",
+      "licenseNumber": "AR02532F",
+      "validFrom": "24/11/2025",
+      "expires": "23/11/2028",
+      "formattedLicenseNumber": ""
+    },
+    {
+      "name": "Mrs Leonard's Cottage",
+      "licenseNumber": "AR02248F",
+      "validFrom": "13/03/2025",
+      "expires": "12/03/2028",
+      "formattedLicenseNumber": ""
+    },
+    {
+      "name": "Black & Rusty Hut",
+      "licenseNumber": "AR01506F",
+      "validFrom": "07/11/2024",
+      "expires": "06/11/2027",
+      "formattedLicenseNumber": ""
+    },
+    {
+      "name": "Shepherd's Hut",
+      "licenseNumber": "AR02659F",
+      "validFrom": "22/05/2025",
+      "expires": "21/05/2028",
+      "formattedLicenseNumber": ""
+    }
+  ],
+  "notes": {
+    "requiredFormat": "YYMMDD-NNNNNN (e.g., 230916-000028)",
+    "actualFormat": "AR#####F",
+    "formatMismatch": "The field requires a different format than what the actual license numbers use. The system expects a date-based format but the actual Scottish STL licenses use the Argyll & Bute Council reference format."
+  }
+}

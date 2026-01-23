@@ -159,6 +159,65 @@ function generateIslayPlace() {
   };
 }
 
+// Generate AggregateRating from review scores
+function generateAggregateRating(reviewScores: any): any {
+  if (!reviewScores) return undefined;
+
+  let totalWeightedRating = 0;
+  let totalReviews = 0;
+
+  // Collect all ratings and counts, calculate weighted average
+  if (reviewScores.airbnbScore && reviewScores.airbnbCount) {
+    // Airbnb uses 5-point scale
+    totalWeightedRating += reviewScores.airbnbScore * reviewScores.airbnbCount;
+    totalReviews += reviewScores.airbnbCount;
+  }
+  if (reviewScores.bookingScore && reviewScores.bookingCount) {
+    // Booking.com uses 10-point scale, convert to 5-point (divide by 2)
+    const normalizedScore = reviewScores.bookingScore / 2;
+    totalWeightedRating += normalizedScore * reviewScores.bookingCount;
+    totalReviews += reviewScores.bookingCount;
+  }
+  if (reviewScores.googleScore && reviewScores.googleCount) {
+    // Google uses 5-point scale
+    totalWeightedRating += reviewScores.googleScore * reviewScores.googleCount;
+    totalReviews += reviewScores.googleCount;
+  }
+
+  if (totalReviews === 0) return undefined;
+
+  // Calculate weighted average
+  const averageRating = totalWeightedRating / totalReviews;
+
+  return {
+    '@type': 'AggregateRating',
+    ratingValue: parseFloat(averageRating.toFixed(1)),
+    bestRating: 5,
+    worstRating: 1,
+    ratingCount: totalReviews,
+  };
+}
+
+// Generate Review schema from review highlights
+function generateReviews(reviewHighlights: any[]): any[] {
+  if (!reviewHighlights || reviewHighlights.length === 0) return [];
+
+  return reviewHighlights.map((highlight) => ({
+    '@type': 'Review',
+    author: {
+      '@type': 'Person',
+      name: highlight.source || 'Guest',
+    },
+    reviewRating: highlight.rating ? {
+      '@type': 'Rating',
+      ratingValue: highlight.rating,
+      bestRating: 5,
+      worstRating: 1,
+    } : undefined,
+    reviewBody: highlight.quote,
+  }));
+}
+
 // Generate Accommodation schema for property pages
 function generateAccommodation(property: any, siteUrl: string) {
   const geo = property.latitude && property.longitude ? {
@@ -193,6 +252,31 @@ function generateAccommodation(property: any, siteUrl: string) {
     });
   }
 
+  // Determine availability based on availabilityStatus
+  let availability: string = 'https://schema.org/InStock';
+  if (property.availabilityStatus) {
+    switch (property.availabilityStatus) {
+      case 'bookable':
+        availability = 'https://schema.org/InStock';
+        break;
+      case 'enquiries':
+        availability = 'https://schema.org/PreOrder';
+        break;
+      case 'coming-soon':
+        availability = 'https://schema.org/PreOrder';
+        break;
+      case 'unavailable':
+        availability = 'https://schema.org/OutOfStock';
+        break;
+    }
+  }
+
+  // Generate aggregate rating from review scores
+  const aggregateRating = generateAggregateRating(property.reviewScores);
+
+  // Generate individual reviews from review highlights
+  const reviews = generateReviews(property.reviewHighlights || []);
+
   const accommodation: any = {
     '@context': 'https://schema.org',
     '@type': 'Accommodation',
@@ -215,6 +299,21 @@ function generateAccommodation(property: any, siteUrl: string) {
     // Add knowsAbout if primaryDifferentiator exists
     ...(property.entityFraming?.primaryDifferentiator && {
       knowsAbout: property.entityFraming.primaryDifferentiator
+    }),
+    // Add aggregate rating if available
+    ...(aggregateRating && { aggregateRating }),
+    // Add individual reviews if available
+    ...(reviews.length > 0 && { review: reviews }),
+    // Add license information if available
+    ...(property.licenseNumber && {
+      license: {
+        '@type': 'CreativeWork',
+        name: 'Short Term Let License',
+        identifier: property.licenseNumber,
+        ...(property.licensingStatus && {
+          licenseStatus: property.licensingStatus === 'approved' ? 'Valid' : 'Pending'
+        }),
+      },
     }),
   };
 
@@ -272,6 +371,25 @@ function generatePropertyPlace(property: any, siteUrl: string) {
 function generateProductOffer(property: any, siteUrl: string) {
   const offers: any[] = [];
 
+  // Determine availability based on availabilityStatus
+  let availability: string = 'https://schema.org/InStock';
+  if (property.availabilityStatus) {
+    switch (property.availabilityStatus) {
+      case 'bookable':
+        availability = 'https://schema.org/InStock';
+        break;
+      case 'enquiries':
+        availability = 'https://schema.org/PreOrder';
+        break;
+      case 'coming-soon':
+        availability = 'https://schema.org/PreOrder';
+        break;
+      case 'unavailable':
+        availability = 'https://schema.org/OutOfStock';
+        break;
+    }
+  }
+
   if (property.dailyRate) {
     offers.push({
       '@type': 'Offer',
@@ -283,7 +401,7 @@ function generateProductOffer(property: any, siteUrl: string) {
         priceCurrency: 'GBP',
         unitCode: 'DAY',
       },
-      availability: 'https://schema.org/InStock',
+      availability,
       url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
     });
   }
@@ -299,7 +417,7 @@ function generateProductOffer(property: any, siteUrl: string) {
         priceCurrency: 'GBP',
         unitCode: 'WEE',
       },
-      availability: 'https://schema.org/InStock',
+      availability,
       url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
     });
   }
@@ -308,10 +426,13 @@ function generateProductOffer(property: any, siteUrl: string) {
     // Default offer if no pricing
     offers.push({
       '@type': 'Offer',
-      availability: 'https://schema.org/InStock',
+      availability,
       url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
     });
   }
+
+  // Generate aggregate rating from review scores
+  const aggregateRating = generateAggregateRating(property.reviewScores);
 
   return {
     '@context': 'https://schema.org',
@@ -320,6 +441,7 @@ function generateProductOffer(property: any, siteUrl: string) {
     description: property.description || property.overviewIntro,
     image: property.heroImage ? urlFor(property.heroImage).width(1200).height(630).url() : undefined,
     offers: offers.length === 1 ? offers[0] : offers,
+    ...(aggregateRating && { aggregateRating }),
   };
 }
 

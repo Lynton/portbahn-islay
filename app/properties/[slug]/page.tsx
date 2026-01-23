@@ -9,6 +9,40 @@ import SchemaMarkup from '@/components/SchemaMarkup';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PropertyCard from '@/components/PropertyCard';
 
+// TypeScript types for new fields
+interface MagicMoment {
+  moment: string;
+  frequency?: string;
+}
+
+interface PerfectFor {
+  guestType: string;
+  why: string;
+  reviewEvidence?: string;
+}
+
+interface HonestFriction {
+  issue: string;
+  context: string;
+}
+
+interface ReviewScores {
+  airbnbScore?: number;
+  airbnbCount?: number;
+  airbnbBadges?: string[];
+  bookingScore?: number;
+  bookingCount?: number;
+  bookingCategory?: string;
+  googleScore?: number;
+  googleCount?: number;
+}
+
+interface ReviewHighlight {
+  quote: string;
+  source: string;
+  rating?: number;
+}
+
 async function getProperty(slug: string) {
   // Fetch ALL fields from new v1.1 schema
   const query = `*[_type == "property" && slug.current == $slug] | order(_id desc)[0]{
@@ -29,6 +63,41 @@ async function getProperty(slug: string) {
     overview,
     description,
     idealFor[],
+    // Personality & Guest Experience
+    propertyNickname,
+    guestSuperlatives[],
+    magicMoments[] {
+      moment,
+      frequency
+    },
+    perfectFor[] {
+      guestType,
+      why,
+      reviewEvidence
+    },
+    honestFriction[] {
+      issue,
+      context
+    },
+    ownerContext,
+    // Reviews & Social Proof
+    reviewScores {
+      airbnbScore,
+      airbnbCount,
+      airbnbBadges[],
+      bookingScore,
+      bookingCount,
+      bookingCategory,
+      googleScore,
+      googleCount
+    },
+    reviewThemes[],
+    reviewHighlights[] {
+      quote,
+      source,
+      rating
+    },
+    totalReviewCount,
     // Details
     sleeps,
     bedrooms,
@@ -84,7 +153,10 @@ async function getProperty(slug: string) {
     cancellationPolicy,
     paymentTerms,
     securityDeposit,
-    licensingInfo,
+    licensingStatus,
+    licenseNumber,
+    licenseNotes,
+    availabilityStatus,
     importantInfo[],
     dailyRate,
     weeklyRate,
@@ -400,11 +472,92 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* Ideal For (NEW) */}
-        {property.idealFor && property.idealFor.length > 0 && (
+        {/* Personality & Guest Experience */}
+        {(property.propertyNickname || property.guestSuperlatives?.length || property.magicMoments?.length || 
+          property.perfectFor?.length || property.honestFriction?.length || property.ownerContext) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Ideal For</h2>
-            <ArrayField items={property.idealFor} />
+            <h2 className="font-serif text-3xl text-harbour-stone mb-6">Guest Experience</h2>
+            
+            {/* Property Nickname */}
+            {property.propertyNickname && (
+              <p className="font-serif text-xl text-harbour-stone italic mb-6">
+                {property.propertyNickname}
+              </p>
+            )}
+
+            {/* Guest Superlatives */}
+            {property.guestSuperlatives && property.guestSuperlatives.length > 0 && (
+              <div className="mb-8">
+                <h3 className="font-serif text-xl text-harbour-stone mb-4">What Guests Say</h3>
+                <div className="space-y-3">
+                  {property.guestSuperlatives.map((quote: string, i: number) => (
+                    <p key={i} className="font-mono text-base text-harbour-stone italic border-l-4 border-emerald-accent pl-4 py-2">
+                      "{quote}"
+                    </p>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Magic Moments */}
+            {property.magicMoments && property.magicMoments.length > 0 && (
+              <div className="mb-8">
+                <h3 className="font-serif text-xl text-harbour-stone mb-4">Magic Moments</h3>
+                <div className="space-y-4">
+                  {property.magicMoments.map((moment: MagicMoment, i: number) => (
+                    <div key={i} className="border-l-4 border-gray-300 pl-6 py-2">
+                      <p className="font-mono text-base text-harbour-stone">{moment.moment}</p>
+                      {moment.frequency && (
+                        <p className="font-mono text-sm text-harbour-stone opacity-60 mt-1">{moment.frequency}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Perfect For */}
+            {property.perfectFor && property.perfectFor.length > 0 && (
+              <div className="mb-8">
+                <h3 className="font-serif text-xl text-harbour-stone mb-4">Perfect For</h3>
+                <div className="space-y-6">
+                  {property.perfectFor.map((item: PerfectFor, i: number) => (
+                    <div key={i} className="border-l-4 border-emerald-accent pl-6 py-3">
+                      <h4 className="font-serif text-lg text-harbour-stone mb-2">{item.guestType}</h4>
+                      <p className="font-mono text-base text-harbour-stone mb-2">{item.why}</p>
+                      {item.reviewEvidence && (
+                        <p className="font-mono text-sm text-harbour-stone opacity-60">{item.reviewEvidence}</p>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Honest Friction */}
+            {property.honestFriction && property.honestFriction.length > 0 && (
+              <div className="mb-8">
+                <h3 className="font-serif text-xl text-harbour-stone mb-4">Things to Know</h3>
+                <div className="space-y-4">
+                  {property.honestFriction.map((friction: HonestFriction, i: number) => (
+                    <div key={i} className="border-l-4 border-gray-400 pl-6 py-3 bg-gray-50">
+                      <h4 className="font-serif text-lg text-harbour-stone mb-2">{friction.issue}</h4>
+                      <p className="font-mono text-base text-harbour-stone">{friction.context}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Owner Context */}
+            {property.ownerContext && (
+              <div className="mb-8">
+                <h3 className="font-serif text-xl text-harbour-stone mb-4">About the Property</h3>
+                <p className="font-mono text-base text-harbour-stone leading-relaxed whitespace-pre-line">
+                  {property.ownerContext}
+                </p>
+              </div>
+            )}
           </section>
         )}
 
@@ -521,6 +674,126 @@ export default async function PropertyPage({ params }: PageProps) {
                 </div>
               ))}
             </div>
+          </section>
+        )}
+
+        {/* Reviews & Social Proof */}
+        {(property.reviewScores || property.reviewThemes?.length || property.reviewHighlights?.length || property.totalReviewCount) && (
+          <section className="mb-12">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-6">Guest Reviews</h2>
+            
+            {/* Review Scores */}
+            {property.reviewScores && (
+              <div className="mb-8 p-6 bg-gray-50 rounded-lg">
+                <h3 className="font-serif text-xl text-harbour-stone mb-4">Review Scores</h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {property.reviewScores.airbnbScore && (
+                    <div>
+                      <p className="font-mono text-sm text-harbour-stone opacity-60 mb-1">Airbnb</p>
+                      <p className="font-serif text-3xl text-harbour-stone">
+                        {property.reviewScores.airbnbScore.toFixed(1)}
+                        <span className="text-lg">/5</span>
+                      </p>
+                      {property.reviewScores.airbnbCount && (
+                        <p className="font-mono text-sm text-harbour-stone opacity-60 mt-1">
+                          {property.reviewScores.airbnbCount} reviews
+                        </p>
+                      )}
+                      {property.reviewScores.airbnbBadges && property.reviewScores.airbnbBadges.length > 0 && (
+                        <div className="mt-2 flex flex-wrap gap-2">
+                          {property.reviewScores.airbnbBadges.map((badge: string, i: number) => (
+                            <span key={i} className="text-xs bg-emerald-accent text-white px-2 py-1 rounded">
+                              {badge.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                  {property.reviewScores.bookingScore && (
+                    <div>
+                      <p className="font-mono text-sm text-harbour-stone opacity-60 mb-1">Booking.com</p>
+                      <p className="font-serif text-3xl text-harbour-stone">
+                        {property.reviewScores.bookingScore.toFixed(1)}
+                        <span className="text-lg">/10</span>
+                      </p>
+                      {property.reviewScores.bookingCount && (
+                        <p className="font-mono text-sm text-harbour-stone opacity-60 mt-1">
+                          {property.reviewScores.bookingCount} reviews
+                        </p>
+                      )}
+                      {property.reviewScores.bookingCategory && (
+                        <p className="font-mono text-sm text-emerald-accent mt-1 capitalize">
+                          {property.reviewScores.bookingCategory.replace(/-/g, ' ')}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                  {property.reviewScores.googleScore && (
+                    <div>
+                      <p className="font-mono text-sm text-harbour-stone opacity-60 mb-1">Google</p>
+                      <p className="font-serif text-3xl text-harbour-stone">
+                        {property.reviewScores.googleScore.toFixed(1)}
+                        <span className="text-lg">/5</span>
+                      </p>
+                      {property.reviewScores.googleCount && (
+                        <p className="font-mono text-sm text-harbour-stone opacity-60 mt-1">
+                          {property.reviewScores.googleCount} reviews
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </div>
+                {property.totalReviewCount && (
+                  <p className="font-mono text-base text-harbour-stone mt-4 pt-4 border-t border-gray-300">
+                    <strong>Total Reviews:</strong> {property.totalReviewCount} across all platforms
+                  </p>
+                )}
+              </div>
+            )}
+
+            {/* Review Themes */}
+            {property.reviewThemes && property.reviewThemes.length > 0 && (
+              <div className="mb-8">
+                <h3 className="font-serif text-xl text-harbour-stone mb-4">What Guests Love</h3>
+                <div className="flex flex-wrap gap-2">
+                  {property.reviewThemes.map((theme: string, i: number) => (
+                    <span 
+                      key={i} 
+                      className="px-4 py-2 bg-emerald-accent text-white rounded-full font-mono text-sm"
+                    >
+                      {theme.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Review Highlights */}
+            {property.reviewHighlights && property.reviewHighlights.length > 0 && (
+              <div className="mb-8">
+                <h3 className="font-serif text-xl text-harbour-stone mb-4">Review Highlights</h3>
+                <div className="space-y-6">
+                  {property.reviewHighlights.map((highlight: ReviewHighlight, i: number) => (
+                    <div key={i} className="border-l-4 border-emerald-accent pl-6 py-3">
+                      <p className="font-mono text-base text-harbour-stone italic mb-2">
+                        "{highlight.quote}"
+                      </p>
+                      <div className="flex items-center gap-3">
+                        <p className="font-mono text-sm text-harbour-stone opacity-60">
+                          — {highlight.source}
+                        </p>
+                        {highlight.rating && (
+                          <span className="font-mono text-sm text-emerald-accent">
+                            {highlight.rating}/5
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </section>
         )}
 
@@ -728,7 +1001,7 @@ export default async function PropertyPage({ params }: PageProps) {
         {/* House Rules & Policies */}
         {(property.policiesIntro || property.policies || property.checkInTime || property.checkOutTime || property.minimumStay ||
           property.cancellationPolicy || property.paymentTerms || property.securityDeposit || 
-          property.licensingInfo || property.importantInfo?.length) && (
+          property.licensingStatus || property.licenseNumber || property.licenseNotes || property.availabilityStatus || property.importantInfo?.length) && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">House Rules & Policies</h2>
             {property.policiesIntro && (
@@ -749,6 +1022,17 @@ export default async function PropertyPage({ params }: PageProps) {
               {property.minimumStay && (
                 <p><strong>Minimum Stay:</strong> {property.minimumStay} {property.minimumStay === 1 ? 'night' : 'nights'}</p>
               )}
+              {property.availabilityStatus && (
+                <p className="mt-4">
+                  <strong>Availability:</strong>{' '}
+                  <span className={property.availabilityStatus === 'bookable' ? 'text-emerald-accent' : 'text-gray-600'}>
+                    {property.availabilityStatus === 'bookable' && 'Bookable'}
+                    {property.availabilityStatus === 'enquiries' && 'Enquiries Only'}
+                    {property.availabilityStatus === 'coming-soon' && 'Coming Soon'}
+                    {property.availabilityStatus === 'unavailable' && 'Unavailable'}
+                  </span>
+                </p>
+              )}
               {property.cancellationPolicy && (
                 <div className="mt-4">
                   <h3 className="font-serif text-xl text-harbour-stone mb-2">Cancellation Policy</h3>
@@ -764,8 +1048,27 @@ export default async function PropertyPage({ params }: PageProps) {
               {property.securityDeposit && (
                 <p className="mt-4"><strong>Security Deposit:</strong> {property.securityDeposit}</p>
               )}
-              {property.licensingInfo && (
-                <p className="mt-4"><strong>Short Term Let License:</strong> {property.licensingInfo}</p>
+              {(property.licensingStatus || property.licenseNumber) && (
+                <div className="mt-4">
+                  <h3 className="font-serif text-xl text-harbour-stone mb-2">Short Term Let License</h3>
+                  {property.licensingStatus && (
+                    <p>
+                      <strong>Status:</strong>{' '}
+                      {property.licensingStatus === 'approved' && 'Approved'}
+                      {property.licensingStatus === 'pending-bookable' && 'Pending - Bookable'}
+                      {property.licensingStatus === 'pending-enquiries' && 'Pending - Enquiries Only'}
+                      {property.licensingStatus === 'coming-soon' && 'Coming Soon'}
+                    </p>
+                  )}
+                  {property.licenseNumber && (
+                    <p className="mt-2"><strong>License Number:</strong> {property.licenseNumber}</p>
+                  )}
+                  {property.licenseNotes && (
+                    <p className="mt-2 font-mono text-sm text-harbour-stone opacity-75 whitespace-pre-line">
+                      {property.licenseNotes}
+                    </p>
+                  )}
+                </div>
               )}
               {property.importantInfo && property.importantInfo.length > 0 && (
                 <div className="mt-4">
