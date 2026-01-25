@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { PortableText } from '@portabletext/react';
@@ -6,8 +7,10 @@ import SchemaMarkup from '@/components/SchemaMarkup';
 import MultiPropertyMap from '@/components/MultiPropertyMap';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
+import { portableTextComponents } from '@/lib/portable-text';
 
-async function getHomepage() {
+// Cached fetches - dedupe calls within same request
+const getHomepage = cache(async () => {
   const query = `*[_type == "homepage"][0]{
     _id,
     heroImage,
@@ -21,11 +24,10 @@ async function getHomepage() {
     seoTitle,
     seoDescription
   }`;
-  
   return await client.fetch(query);
-}
+});
 
-async function getProperties() {
+const getProperties = cache(async () => {
   const query = `*[_type == "property"]{
     _id,
     name,
@@ -36,34 +38,12 @@ async function getProperties() {
     bedrooms,
     heroImage
   }`;
-  
   return await client.fetch(query);
-}
-
-// PortableText components for rendering block content
-const portableTextComponents = {
-  block: {
-    normal: ({ children }: any) => <p className="font-mono text-base text-harbour-stone mb-4 leading-relaxed">{children}</p>,
-    h2: ({ children }: any) => <h2 className="font-serif text-3xl text-harbour-stone mb-4 mt-8">{children}</h2>,
-    h3: ({ children }: any) => <h3 className="font-serif text-xl text-harbour-stone mb-2 mt-6">{children}</h3>,
-  },
-  marks: {
-    strong: ({ children }: any) => <strong className="font-semibold">{children}</strong>,
-    em: ({ children }: any) => <em className="italic">{children}</em>,
-  },
-  list: {
-    bullet: ({ children }: any) => <ul className="list-disc list-inside space-y-1 mb-4 font-mono text-base text-harbour-stone">{children}</ul>,
-    number: ({ children }: any) => <ol className="list-decimal list-inside space-y-1 mb-4 font-mono text-base text-harbour-stone">{children}</ol>,
-  },
-  listItem: {
-    bullet: ({ children }: any) => <li>{children}</li>,
-    number: ({ children }: any) => <li>{children}</li>,
-  },
-};
+});
 
 export async function generateMetadata(): Promise<Metadata> {
   const homepage = await getHomepage();
-  
+
   return {
     title: homepage?.seoTitle || homepage?.title || 'Portbahn Islay',
     description: homepage?.seoDescription || homepage?.tagline || 'Holiday rental properties on Islay, Scotland',
@@ -154,7 +134,7 @@ export default async function Home() {
                     sleeps={property.sleeps}
                     bedrooms={property.bedrooms}
                     imageUrl={imageUrl}
-                    href={`/properties/${property.slug?.current || property.slug}`}
+                    href={`/accommodation/${property.slug?.current || property.slug}`}
                   />
                 );
               })}

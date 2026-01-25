@@ -10,7 +10,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Properties Column */}
           <div>
-            <h3 className="font-serif text-lg mb-4">Our Properties</h3>
+            <h3 className="font-serif text-lg mb-4">Our Accommodation</h3>
             <ul className="space-y-2 font-mono text-sm">
               <li>
                 <Link href="/accommodation/portbahn-house" className="text-washed-timber hover:text-emerald-accent transition-colors">
@@ -18,13 +18,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/accommodation/the-bothy" className="text-washed-timber hover:text-emerald-accent transition-colors">
-                  The Bothy
-                </Link>
-              </li>
-              <li>
-                <Link href="/accommodation/shorefield" className="text-washed-timber hover:text-emerald-accent transition-colors">
-                  Shorefield
+                <Link href="/accommodation/shorefield-eco-house" className="text-washed-timber hover:text-emerald-accent transition-colors">
+                  Shorefield Eco House
                 </Link>
               </li>
               <li>
@@ -41,7 +36,7 @@ export default function Footer() {
             <ul className="space-y-2 font-mono text-sm">
               <li>
                 <Link href="/getting-here" className="text-washed-timber hover:text-emerald-accent transition-colors">
-                  Getting Here
+                  Travel to Islay
                 </Link>
               </li>
               <li>
