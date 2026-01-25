@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import SchemaMarkup from "@/components/SchemaMarkup";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -24,8 +26,12 @@ export default async function RootLayout({
         {/* Site-wide Organization schema */}
         <SchemaMarkup type="Organization" data={null} />
       </head>
-      <body className="antialiased font-mono">
-        {children}
+      <body className="antialiased font-mono flex flex-col min-h-screen">
+        <Header />
+        <div className="flex-grow">
+          {children}
+        </div>
+        <Footer />
       </body>
     </html>
   );
