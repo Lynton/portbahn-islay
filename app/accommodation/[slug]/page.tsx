@@ -9,6 +9,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import PropertyCard from '@/components/PropertyCard';
 import GoogleMap from '@/components/GoogleMap';
 import GoogleReviews from '@/components/GoogleReviews';
+import PropertyHostTrustTransfer from '@/components/PropertyHostTrustTransfer';
 
 // TypeScript types for AI-optimized fields
 interface EntityFraming {
@@ -543,6 +544,12 @@ export default async function PropertyPage({ params }: PageProps) {
             )}
           </section>
         )}
+
+        {/* Trust Transfer - only shows for zero-review properties */}
+        <PropertyHostTrustTransfer
+          reviews={property.reviewHighlights || []}
+          totalReviewCount={property.totalReviewCount || 0}
+        />
 
         {/* Common Questions - natural language query matching */}
         {property.commonQuestions && property.commonQuestions.length > 0 && (
