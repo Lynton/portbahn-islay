@@ -215,6 +215,44 @@ export default defineType({
         .min(3).warning('Recommend 3-6 questions for optimal coverage')
         .max(6).warning('More than 6 reduces scannability')
     }),
+    defineField({
+      name: 'faqCrossLinks',
+      title: 'FAQ Cross-Links',
+      type: 'array',
+      group: 'content',
+      description: 'Links to related property FAQs (e.g., "See logistics questions at Portbahn House")',
+      of: [
+        {
+          type: 'object',
+          fields: [
+            {
+              name: 'text',
+              type: 'string',
+              title: 'Link Text',
+              description: 'e.g., "Questions about check-in times, bedding options, or general policies?"',
+            },
+            {
+              name: 'property',
+              type: 'reference',
+              title: 'Link to Property',
+              to: [{ type: 'property' }],
+            },
+          ],
+          preview: {
+            select: {
+              title: 'text',
+              propertyName: 'property.name',
+            },
+            prepare({ title, propertyName }) {
+              return {
+                title: title || 'Cross-link',
+                subtitle: propertyName ? `→ ${propertyName}` : '',
+              };
+            },
+          },
+        },
+      ],
+    }),
 
     // ========== PERSONALITY & GUEST EXPERIENCE ==========
     defineField({
