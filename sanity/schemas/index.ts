@@ -17,6 +17,7 @@ import distilleriesHubPage from './singletons/distilleriesHubPage';
 import walksHubPage from './singletons/walksHubPage';
 import villagesHubPage from './singletons/villagesHubPage';
 import islayGuidesIndexPage from './singletons/islayGuidesIndexPage';
+import exploreIslayPage from './singletons/exploreIslayPage';
 import privacyPage from './singletons/privacyPage';
 import termsPage from './singletons/termsPage';
 
@@ -44,6 +45,7 @@ export const schemaTypes = [
   walksHubPage,
   villagesHubPage,
   islayGuidesIndexPage,
+  exploreIslayPage,
   privacyPage,
   termsPage,
   

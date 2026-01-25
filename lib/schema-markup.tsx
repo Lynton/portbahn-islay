@@ -4,7 +4,7 @@ import { urlFor } from '@/sanity/lib/image';
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahnislay.com';
 
 // Schema type definitions
-export type SchemaType = 
+export type SchemaType =
   | 'Organization'
   | 'LocalBusiness'
   | 'VacationRental'
@@ -14,7 +14,9 @@ export type SchemaType =
   | 'Offer'
   | 'Article'
   | 'FAQPage'
-  | 'BreadcrumbList';
+  | 'BreadcrumbList'
+  | 'TouristAttraction'
+  | 'HowTo';
 
 export interface BreadcrumbItem {
   name: string;
@@ -504,6 +506,60 @@ function generateFAQPage(faqs: any[], siteUrl: string) {
   };
 }
 
+// Generate TouristAttraction schema (for Explore Islay page)
+function generateTouristAttraction(data: any) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'TouristAttraction',
+    name: data?.name || 'Isle of Islay',
+    description: data?.description || 'Scottish island renowned for nine whisky distilleries, pristine beaches, abundant wildlife, and dramatic coastal landscapes',
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 55.7,
+      longitude: -6.2,
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressRegion: 'Argyll and Bute',
+      addressCountry: 'GB',
+    },
+  };
+}
+
+// Generate HowTo schema (for Getting Here page)
+function generateHowTo(data: any) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    name: data?.name || 'How to Get to the Isle of Islay',
+    description: data?.description || 'Complete guide to reaching Islay by CalMac ferry or Loganair flight',
+    totalTime: 'PT6H',
+    step: [
+      {
+        '@type': 'HowToStep',
+        name: 'Book CalMac Ferry',
+        text: 'Book ferry from Kennacraig to Port Ellen or Port Askaig 12 weeks in advance',
+        url: 'https://www.calmac.co.uk',
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Drive to Kennacraig',
+        text: 'Drive 3 hours from Glasgow to Kennacraig ferry terminal on Kintyre Peninsula',
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Take Ferry Crossing',
+        text: 'Board CalMac ferry for 2 hour 20 minute crossing to Islay',
+      },
+      {
+        '@type': 'HowToStep',
+        name: 'Drive to Bruichladdich',
+        text: 'Drive 35-40 minutes from ferry port to Bruichladdich',
+      },
+    ],
+  };
+}
+
 // Main schema generator function
 export function generateSchemaMarkup(
   type: SchemaType | SchemaType[],
@@ -552,6 +608,12 @@ export function generateSchemaMarkup(
         break;
       case 'FAQPage':
         schemas.push(generateFAQPage(data, BASE_URL));
+        break;
+      case 'TouristAttraction':
+        schemas.push(generateTouristAttraction(data));
+        break;
+      case 'HowTo':
+        schemas.push(generateHowTo(data));
         break;
     }
   });
