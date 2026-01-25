@@ -6,6 +6,9 @@ import SchemaMarkup from '@/components/SchemaMarkup';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 
+// Revalidate every 60 seconds to pick up Sanity changes
+export const revalidate = 60;
+
 async function getExploreIslayPage() {
   const query = `*[_type == "exploreIslayPage"][0]{
     _id,
