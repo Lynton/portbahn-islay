@@ -589,10 +589,9 @@ export function generateSchemaMarkup(
         break;
       case 'Accommodation':
         schemas.push(generateAccommodation(data, BASE_URL));
-        // Add FAQPage schema if 3+ common questions exist
-        if (data?.commonQuestions && Array.isArray(data.commonQuestions) && data.commonQuestions.length >= 3) {
-          schemas.push(generateFAQPage(data.commonQuestions, BASE_URL));
-        }
+        // NOTE: Per playbook v1.3.1, we do NOT add FAQPage schema.
+        // Q&A blocks on entity pages enhance the page but don't warrant FAQPage schema.
+        // Common questions are part of the Accommodation entity, not a separate FAQ entity.
         break;
       case 'Product':
       case 'Offer':
