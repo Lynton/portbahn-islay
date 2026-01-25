@@ -1,6 +1,6 @@
 'use client'
 
-import { VisualEditing as SanityVisualEditing } from '@sanity/visual-editing/next-app-router'
+import { VisualEditing as SanityVisualEditing } from '@sanity/visual-editing/react'
 import { useEffect } from 'react'
 
 export function VisualEditing() {
@@ -39,5 +39,5 @@ export function VisualEditing() {
     }
   }, [])
 
-  return <SanityVisualEditing zaiusToken={process.env.NEXT_PUBLIC_SANITY_ZAIUS_TOKEN} />
+  return <SanityVisualEditing portal={false} />
 }
