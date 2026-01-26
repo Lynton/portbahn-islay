@@ -13,7 +13,6 @@ export type SchemaType =
   | 'Product'
   | 'Offer'
   | 'Article'
-  | 'FAQPage'
   | 'BreadcrumbList'
   | 'TouristAttraction'
   | 'HowTo';
@@ -490,22 +489,6 @@ function generateArticle(article: any, siteUrl: string) {
   };
 }
 
-// Generate FAQPage schema (for property common questions)
-function generateFAQPage(faqs: any[], siteUrl: string) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer || faq.shortAnswer || faq.fullAnswer,
-      },
-    })),
-  };
-}
-
 // Generate TouristAttraction schema (for Explore Islay page)
 function generateTouristAttraction(data: any) {
   return {
@@ -604,9 +587,6 @@ export function generateSchemaMarkup(
         break;
       case 'Article':
         schemas.push(generateArticle(data, BASE_URL));
-        break;
-      case 'FAQPage':
-        schemas.push(generateFAQPage(data, BASE_URL));
         break;
       case 'TouristAttraction':
         schemas.push(generateTouristAttraction(data));

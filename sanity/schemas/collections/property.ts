@@ -192,9 +192,9 @@ export default defineType({
               title: 'Answer',
               rows: 3,
               placeholder: 'Yes, reliable WiFi is available throughout the property',
-              description: 'Concise answer (2-3 sentences max, under 400 chars)',
+              description: 'Concise answer (2-5 sentences, under 600 chars)',
               validation: (Rule) => Rule.required()
-                .max(400).warning('Keep under 400 characters for optimal display')
+                .max(600).warning('Keep under 600 characters for optimal display')
             }
           ],
           preview: {

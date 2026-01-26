@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
@@ -64,7 +65,8 @@ interface ReviewHighlight {
   rating?: number;
 }
 
-async function getProperty(slug: string) {
+// Cached fetches - dedupe calls between generateMetadata and page component
+const getProperty = cache(async (slug: string) => {
   // Fetch ALL fields explicitly to ensure everything is returned
   // Try to get draft first, then fall back to published
   const query = `*[_type == "property" && slug.current == $slug] | order(_id desc)[0]{
@@ -192,9 +194,9 @@ async function getProperty(slug: string) {
   }`;
   
   return await client.fetch(query, { slug });
-}
+});
 
-async function getAllProperties(excludeSlug?: string) {
+const getAllProperties = cache(async (excludeSlug?: string) => {
   // Build query conditionally to exclude current property
   const query = excludeSlug
     ? `*[_type == "property" && slug.current != $excludeSlug] | order(name asc){
@@ -218,10 +220,10 @@ async function getAllProperties(excludeSlug?: string) {
         heroImage
       }`;
   
-  return excludeSlug 
+  return excludeSlug
     ? await client.fetch(query, { excludeSlug })
     : await client.fetch(query);
-}
+});
 
 interface PageProps {
   params: Promise<{
@@ -553,25 +555,44 @@ export default async function PropertyPage({ params }: PageProps) {
 
         {/* Common Questions - natural language query matching */}
         {property.commonQuestions && property.commonQuestions.length > 0 && (
-          <section className="my-16 max-w-4xl">
-            <h2 className="text-3xl font-bold mb-8">
+          <section id="common-questions" className="my-16 max-w-4xl">
+            <h2 className="font-serif text-3xl text-harbour-stone mb-8">
               Common Questions About {property.name}
             </h2>
             <div className="space-y-8">
               {property.commonQuestions.map((qa: { question: string; answer: string }, index: number) => (
                 <div
                   key={index}
-                  className="border-l-4 border-gray-300 pl-6 py-2"
+                  className="border-l-4 border-emerald-accent pl-6 py-2"
                 >
-                  <h3 className="text-xl font-semibold mb-3 text-gray-900">
+                  <h3 className="font-serif text-xl text-harbour-stone mb-3">
                     {qa.question}
                   </h3>
-                  <p className="text-gray-700 leading-relaxed">
+                  <p className="font-mono text-base text-harbour-stone leading-relaxed">
                     {qa.answer}
                   </p>
                 </div>
               ))}
             </div>
+
+            {/* Cross-links to other property FAQs */}
+            {property.faqCrossLinks && property.faqCrossLinks.length > 0 && (
+              <div className="mt-8 pt-6 border-t border-washed-timber">
+                <p className="font-mono text-sm text-harbour-stone/70">
+                  {property.faqCrossLinks.map((link: { text: string; property: { slug: { current: string } } }, i: number) => (
+                    <span key={i}>
+                      {i > 0 && ' · '}
+                      <Link
+                        href={`/accommodation/${link.property?.slug?.current}#common-questions`}
+                        className="text-emerald-accent hover:underline"
+                      >
+                        {link.text}
+                      </Link>
+                    </span>
+                  ))}
+                </p>
+              </div>
+            )}
           </section>
         )}
 
