@@ -253,6 +253,14 @@ export default defineType({
         },
       ],
     }),
+    defineField({
+      name: 'faqBlocks',
+      title: 'FAQ Canonical Blocks',
+      type: 'array',
+      group: 'content',
+      description: 'Add FAQ canonical blocks to this property. Use property-specific or property-general categories.',
+      of: [{ type: 'faqBlockReference' }],
+    }),
 
     // ========== PERSONALITY & GUEST EXPERIENCE ==========
     defineField({

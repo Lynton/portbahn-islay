@@ -101,6 +101,14 @@ export default defineType({
       of: [{ type: 'blockReference' }],
       description: 'Canonical content blocks for this page. Each block can be displayed as full or teaser version.',
     }),
+    defineField({
+      name: 'faqBlocks',
+      title: 'FAQ Blocks',
+      type: 'array',
+      group: 'content',
+      of: [{ type: 'faqBlockReference' }],
+      description: 'FAQ canonical blocks for homepage. Consider using property-general, travel, booking categories.',
+    }),
 
     // AI & SEARCH OPTIMIZATION
     defineField({

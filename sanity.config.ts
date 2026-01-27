@@ -189,6 +189,12 @@ export default defineConfig({
                 S.documentTypeList('canonicalBlock')
                   .title('Canonical Content Blocks')
               ),
+            S.listItem()
+              .title('FAQ Canonical Blocks')
+              .child(
+                S.documentTypeList('faqCanonicalBlock')
+                  .title('FAQ Canonical Blocks')
+              ),
             // Divider
             S.divider(),
             // Settings

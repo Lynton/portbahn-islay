@@ -64,6 +64,14 @@ export const baseSingletonFields = [
     of: [{ type: 'blockReference' }],
     description: 'Canonical content blocks for this page. Each block can be displayed as full or teaser version.',
   }),
+  defineField({
+    name: 'faqBlocks',
+    title: 'FAQ Blocks',
+    type: 'array',
+    group: 'content',
+    of: [{ type: 'faqBlockReference' }],
+    description: 'FAQ canonical blocks for this page. Filter by category to show relevant FAQs.',
+  }),
 
   // AI & SEARCH OPTIMIZATION
   defineField({

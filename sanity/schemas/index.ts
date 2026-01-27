@@ -1,8 +1,10 @@
 // Documents
 import canonicalBlock from './documents/canonicalBlock';
+import faqCanonicalBlock from './documents/faqCanonicalBlock';
 
 // Objects
 import blockReference from './objects/blockReference';
+import faqBlockReference from './objects/faqBlockReference';
 
 // Collections
 import property from './collections/property';
@@ -34,9 +36,11 @@ import navigationSettings from './settings/navigationSettings';
 export const schemaTypes = [
   // Documents
   canonicalBlock,
+  faqCanonicalBlock,
 
   // Objects
   blockReference,
+  faqBlockReference,
 
   // Collections
   property,
