@@ -5,6 +5,7 @@ import { PortableText } from '@portabletext/react';
 import PropertyCard from '@/components/PropertyCard';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import MultiPropertyMap from '@/components/MultiPropertyMap';
+import BlockRenderer from '@/components/BlockRenderer';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import { portableTextComponents } from '@/lib/portable-text';
@@ -21,6 +22,21 @@ const getHomepage = cache(async () => {
     whyStayText,
     gettingHereTitle,
     gettingHereText,
+    contentBlocks[]{
+      version,
+      showKeyFacts,
+      customHeading,
+      block->{
+        _id,
+        blockId,
+        title,
+        entityType,
+        canonicalHome,
+        fullContent,
+        teaserContent,
+        keyFacts
+      }
+    },
     seoTitle,
     seoDescription
   }`;
@@ -145,6 +161,13 @@ export default async function Home() {
               <h3 className="font-serif text-3xl text-harbour-stone mb-6">Property Locations</h3>
               <MultiPropertyMap />
             </div>
+          </section>
+        )}
+
+        {/* Canonical Content Blocks */}
+        {homepage?.contentBlocks && homepage.contentBlocks.length > 0 && (
+          <section className="mb-16">
+            <BlockRenderer blocks={homepage.contentBlocks} />
           </section>
         )}
 

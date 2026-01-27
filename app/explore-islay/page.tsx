@@ -2,11 +2,10 @@ import { cache } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { PortableText } from '@portabletext/react';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
-import { portableTextComponents } from '@/lib/portable-text';
+import BlockRenderer from '@/components/BlockRenderer';
 
 // Revalidate every 60 seconds to pick up Sanity changes
 export const revalidate = 60;
@@ -17,7 +16,21 @@ const getExploreIslayPage = cache(async () => {
     _id,
     title,
     heroImage,
-    content,
+    contentBlocks[]{
+      version,
+      showKeyFacts,
+      customHeading,
+      block->{
+        _id,
+        blockId,
+        title,
+        entityType,
+        canonicalHome,
+        fullContent,
+        teaserContent,
+        keyFacts
+      }
+    },
     seoTitle,
     seoDescription
   }`;
@@ -70,19 +83,14 @@ export default async function ExploreIslayPage() {
             </h1>
           )}
 
-          {page?.content && page.content.length > 0 && (
-            <article className="prose-portbahn">
-              <PortableText value={page.content} components={portableTextComponents} />
-            </article>
+          {page?.contentBlocks && page.contentBlocks.length > 0 && (
+            <BlockRenderer blocks={page.contentBlocks} />
           )}
 
-          {(!page || !page.content || page.content.length === 0) && (
+          {(!page || !page.contentBlocks || page.contentBlocks.length === 0) && (
             <div className="text-center py-12">
-              <h1 className="font-serif text-5xl mb-4 text-harbour-stone">
-                Explore the Isle of Islay
-              </h1>
               <p className="font-mono text-base text-harbour-stone mb-8">
-                Content coming soon. Please check back shortly.
+                Content coming soon. Add canonical blocks to this page in Sanity Studio.
               </p>
               <Link
                 href="/"
@@ -93,7 +101,7 @@ export default async function ExploreIslayPage() {
             </div>
           )}
 
-          {page?.content && page.content.length > 0 && (
+          {page?.contentBlocks && page.contentBlocks.length > 0 && (
             <div className="mt-12 pt-8 border-t border-washed-timber">
               <Link href="/" className="font-mono text-emerald-accent hover:underline">
                 ← Back to Our Properties

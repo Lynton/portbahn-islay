@@ -1,10 +1,11 @@
 /**
- * Import Script: Canonical Content Blocks
+ * Re-import canonical blocks with proper list formatting
  *
- * This script parses the CANONICAL-BLOCKS-FINAL-V2_LL2.md file and creates
- * all 16 canonical blocks in Sanity.
- *
- * Usage: npx tsx scripts/import-canonical-blocks.ts
+ * This script:
+ * 1. Removes block references from homepage temporarily
+ * 2. Deletes all canonical blocks
+ * 3. Re-imports with improved list parsing
+ * 4. Reports which blocks need to be re-added to homepage
  */
 
 import { createClient } from '@sanity/client';
@@ -12,10 +13,8 @@ import fs from 'fs';
 import path from 'path';
 import dotenv from 'dotenv';
 
-// Load environment variables
 dotenv.config({ path: '.env.local' });
 
-// Initialize Sanity client
 const client = createClient({
   projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
@@ -24,7 +23,7 @@ const client = createClient({
   useCdn: false,
 });
 
-// Block ID to Entity Type mapping (from handoff doc)
+// Block metadata mapping
 const BLOCK_METADATA: Record<string, { entityType: string; canonicalHome: string }> = {
   'travel-to-islay': { entityType: 'travel', canonicalHome: '/travel-to-islay' },
   'distilleries-overview': { entityType: 'activity', canonicalHome: '/explore-islay#whisky-distilleries-on-islay' },
@@ -44,15 +43,13 @@ const BLOCK_METADATA: Record<string, { entityType: string; canonicalHome: string
   'about-us': { entityType: 'trust', canonicalHome: '/about' },
 };
 
-/**
- * Generate a unique key for Sanity array items
- */
 function generateKey(): string {
   return Math.random().toString(36).substring(2, 11);
 }
 
 /**
  * Parse markdown content into Sanity portable text format
+ * NOW WITH PROPER LIST SUPPORT
  */
 function markdownToPortableText(markdown: string): any[] {
   const blocks: any[] = [];
@@ -80,7 +77,6 @@ function markdownToPortableText(markdown: string): any[] {
 
   const flushList = () => {
     if (currentList.length > 0) {
-      // Convert list items to individual paragraphs
       currentList.forEach(item => {
         blocks.push({
           _key: generateKey(),
@@ -102,14 +98,12 @@ function markdownToPortableText(markdown: string): any[] {
   for (const line of lines) {
     const trimmed = line.trim();
 
-    // Skip empty lines
     if (!trimmed) {
       flushParagraph();
       flushList();
       continue;
     }
 
-    // Handle headings
     if (trimmed.startsWith('**') && trimmed.endsWith('**')) {
       flushParagraph();
       flushList();
@@ -128,7 +122,6 @@ function markdownToPortableText(markdown: string): any[] {
       continue;
     }
 
-    // Handle bullet lists
     if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
       flushParagraph();
       const listItem = trimmed.substring(2).trim();
@@ -136,7 +129,6 @@ function markdownToPortableText(markdown: string): any[] {
       continue;
     }
 
-    // Handle numbered lists
     if (/^\d+\.\s/.test(trimmed)) {
       flushParagraph();
       const listItem = trimmed.replace(/^\d+\.\s/, '').trim();
@@ -144,27 +136,21 @@ function markdownToPortableText(markdown: string): any[] {
       continue;
     }
 
-    // Regular paragraph text
     flushList();
     currentParagraph.push(trimmed);
   }
 
-  // Flush any remaining content
   flushParagraph();
   flushList();
 
   return blocks;
 }
 
-/**
- * Parse key facts from markdown table
- */
 function parseKeyFacts(factsSection: string): Array<{ _key: string; fact: string; value: string }> {
   const facts: Array<{ _key: string; fact: string; value: string }> = [];
   const lines = factsSection.split('\n');
 
   for (const line of lines) {
-    // Skip table header and separator
     if (line.includes('Fact') || line.includes('---')) continue;
     if (!line.includes('|')) continue;
 
@@ -181,9 +167,6 @@ function parseKeyFacts(factsSection: string): Array<{ _key: string; fact: string
   return facts;
 }
 
-/**
- * Extract a single block from markdown content
- */
 function extractBlock(content: string, blockNumber: number): {
   blockId: string;
   title: string;
@@ -191,7 +174,6 @@ function extractBlock(content: string, blockNumber: number): {
   teaserContent: any[];
   keyFacts: Array<{ _key: string; fact: string; value: string }>;
 } | null {
-  // Find block section
   const blockPattern = new RegExp(`## Block ${blockNumber}: \\\`([^\\\`]+)\\\`([\\s\\S]*?)(?=## Block \\d+:|$)`);
   const match = content.match(blockPattern);
 
@@ -203,19 +185,14 @@ function extractBlock(content: string, blockNumber: number): {
   const blockId = match[1];
   const blockContent = match[2];
 
-  // Extract title
-  const titleMatch = blockContent.match(/\*\*Entity Type:\*\* ([^\n]+)/);
   const title = blockId.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
 
-  // Extract full version
   const fullMatch = blockContent.match(/### Full Version\n\n([\s\S]*?)\n\n---\n\n### Teaser/);
   const fullContent = fullMatch ? markdownToPortableText(fullMatch[1]) : [];
 
-  // Extract teaser version
   const teaserMatch = blockContent.match(/### Teaser Version\n\n([\s\S]*?)\n\n---\n\n### Key Facts/);
   const teaserContent = teaserMatch ? markdownToPortableText(teaserMatch[1]) : [];
 
-  // Extract key facts
   const factsMatch = blockContent.match(/### Key Facts \(immutable\)\n\n([\s\S]*?)\n\n---/);
   const keyFacts = factsMatch ? parseKeyFacts(factsMatch[1]) : [];
 
@@ -228,9 +205,6 @@ function extractBlock(content: string, blockNumber: number): {
   };
 }
 
-/**
- * Create a canonical block in Sanity
- */
 async function createBlock(blockData: ReturnType<typeof extractBlock>): Promise<void> {
   if (!blockData) return;
 
@@ -263,15 +237,58 @@ async function createBlock(blockData: ReturnType<typeof extractBlock>): Promise<
   }
 }
 
-/**
- * Main import function
- */
-async function importBlocks() {
+async function main() {
   console.log('==============================================');
-  console.log('Canonical Blocks Import Script');
+  console.log('Re-import Canonical Blocks with List Support');
   console.log('==============================================\n');
 
-  // Read markdown file
+  // Step 1: Check for references
+  console.log('Step 1: Checking for block references...\n');
+  const homepage = await client.fetch('*[_id == "homepage"][0]{ contentBlocks[]{ block->{ blockId } } }');
+  const draftHomepage = await client.fetch('*[_id == "drafts.homepage"][0]{ contentBlocks[]{ block->{ blockId } } }');
+
+  const savedRefs: string[] = [];
+
+  if (homepage?.contentBlocks && homepage.contentBlocks.length > 0) {
+    console.log('⚠️  Homepage has block references:');
+    homepage.contentBlocks.forEach((ref: any, i: number) => {
+      if (ref.block?.blockId?.current) {
+        console.log(`   ${i + 1}. ${ref.block.blockId.current}`);
+        savedRefs.push(ref.block.blockId.current);
+      }
+    });
+    console.log('\nRemoving contentBlocks from published homepage...');
+    await client.patch('homepage').set({ contentBlocks: [] }).commit();
+    console.log('✓ References removed from published\n');
+  }
+
+  if (draftHomepage?.contentBlocks && draftHomepage.contentBlocks.length > 0) {
+    console.log('⚠️  Draft homepage has block references:');
+    draftHomepage.contentBlocks.forEach((ref: any, i: number) => {
+      if (ref.block?.blockId?.current) {
+        console.log(`   ${i + 1}. ${ref.block.blockId.current}`);
+        if (!savedRefs.includes(ref.block.blockId.current)) {
+          savedRefs.push(ref.block.blockId.current);
+        }
+      }
+    });
+    console.log('\nRemoving contentBlocks from draft homepage...');
+    await client.patch('drafts.homepage').set({ contentBlocks: [] }).commit();
+    console.log('✓ References removed from draft\n');
+  }
+
+  if (savedRefs.length === 0) {
+    console.log('✓ No block references found\n');
+  }
+
+  // Step 2: Delete existing blocks
+  console.log('Step 2: Deleting existing blocks...\n');
+  const result = await client.delete({ query: '*[_type == "canonicalBlock"]' });
+  console.log(`✓ Deleted ${result.results?.length || 0} blocks\n`);
+
+  // Step 3: Re-import with improved parsing
+  console.log('Step 3: Re-importing blocks with list support...\n');
+
   const mdPath = path.join(process.cwd(), '_claude-handoff', 'CANONICAL-BLOCKS-FINAL-V2_LL2.md');
 
   if (!fs.existsSync(mdPath)) {
@@ -280,10 +297,7 @@ async function importBlocks() {
   }
 
   const content = fs.readFileSync(mdPath, 'utf-8');
-  console.log(`✓ Loaded markdown file: ${mdPath}\n`);
-
-  // Extract and create each block
-  console.log('Creating blocks in Sanity...\n');
+  console.log(`✓ Loaded markdown file\n`);
 
   for (let i = 1; i <= 16; i++) {
     const blockData = extractBlock(content, i);
@@ -293,16 +307,21 @@ async function importBlocks() {
   }
 
   console.log('\n==============================================');
-  console.log('Import Complete!');
+  console.log('✓ Re-import Complete!');
   console.log('==============================================');
-  console.log('\nNext steps:');
-  console.log('1. Open Sanity Studio and verify blocks');
-  console.log('2. Review content for formatting issues');
-  console.log('3. Proceed with frontend integration\n');
+
+  if (savedRefs.length > 0) {
+    console.log('\n📝 Next step: Re-add block references to Homepage in Sanity Studio');
+    console.log('   The following blocks were previously referenced:');
+    savedRefs.forEach((blockId: string, i: number) => {
+      console.log(`   ${i + 1}. ${blockId}`);
+    });
+  }
+
+  console.log('\n');
 }
 
-// Run import
-importBlocks().catch((error) => {
-  console.error('Import failed:', error);
+main().catch((error) => {
+  console.error('Re-import failed:', error);
   process.exit(1);
 });

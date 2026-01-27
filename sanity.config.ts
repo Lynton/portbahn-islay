@@ -183,6 +183,12 @@ export default defineConfig({
                 S.documentTypeList('faqItem')
                   .title('FAQ Items')
               ),
+            S.listItem()
+              .title('Canonical Content Blocks')
+              .child(
+                S.documentTypeList('canonicalBlock')
+                  .title('Canonical Content Blocks')
+              ),
             // Divider
             S.divider(),
             // Settings
