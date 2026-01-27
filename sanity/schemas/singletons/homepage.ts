@@ -6,6 +6,7 @@ export default defineType({
   type: 'document',
   groups: [
     { name: 'content', title: 'Content', default: true },
+    { name: 'ai-search', title: 'AI & Search Optimization' },
     { name: 'seo', title: 'SEO' },
   ],
   fields: [
