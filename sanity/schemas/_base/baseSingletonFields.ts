@@ -54,6 +54,17 @@ export const baseSingletonFields = [
     ],
     description: 'Main page content',
   }),
+
+  // Canonical Content Blocks
+  defineField({
+    name: 'contentBlocks',
+    title: 'Content Blocks',
+    type: 'array',
+    group: 'content',
+    of: [{ type: 'blockReference' }],
+    description: 'Canonical content blocks for this page. Each block can be displayed as full or teaser version.',
+  }),
+
   // SEO Fields
   defineField({
     name: 'seoTitle',

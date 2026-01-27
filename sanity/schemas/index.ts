@@ -1,3 +1,9 @@
+// Documents
+import canonicalBlock from './documents/canonicalBlock';
+
+// Objects
+import blockReference from './objects/blockReference';
+
 // Collections
 import property from './collections/property';
 import beach from './collections/beach';
@@ -26,6 +32,12 @@ import siteSettings from './settings/siteSettings';
 import navigationSettings from './settings/navigationSettings';
 
 export const schemaTypes = [
+  // Documents
+  canonicalBlock,
+
+  // Objects
+  blockReference,
+
   // Collections
   property,
   beach,
@@ -33,7 +45,7 @@ export const schemaTypes = [
   walk,
   village,
   faqItem,
-  
+
   // Singletons
   homepage,
   aboutPage,
@@ -48,7 +60,7 @@ export const schemaTypes = [
   exploreIslayPage,
   privacyPage,
   termsPage,
-  
+
   // Settings
   siteSettings,
   navigationSettings,
