@@ -65,15 +65,19 @@ function textToPortableText(text: string): any[] {
 interface PropertyFAQ {
   propertyId: string;
   propertyName: string;
+  propertySlug: string;
   question: string;
   answer: string;
 }
 
+type CategoryType = 'property-general' | 'property-portbahn' | 'property-shorefield' | 'property-curlew';
+
 async function categorizeQuestion(
   question: string,
   answer: string,
-  propertyName: string
-): Promise<'property-general' | 'property-specific'> {
+  propertyName: string,
+  propertySlug: string
+): Promise<CategoryType> {
   // Check if question mentions specific property
   const lowerQuestion = question.toLowerCase();
   const lowerAnswer = answer.toLowerCase();
@@ -98,6 +102,9 @@ async function categorizeQuestion(
     'parking',
     'bedroom',
     'bathroom',
+    'bird hide',
+    'walled garden',
+    'distillery',
   ];
 
   const hasSpecificKeyword = specificKeywords.some(
@@ -118,25 +125,32 @@ async function categorizeQuestion(
     'towels',
     'linen',
     'heating',
+    'dishwasher',
   ];
 
   const hasGeneralKeyword = generalKeywords.some(
     (keyword) => lowerQuestion.includes(keyword) || lowerAnswer.includes(keyword)
   );
 
-  // Decision logic
-  if (mentionsProperty) return 'property-specific';
-  if (hasSpecificKeyword && !hasGeneralKeyword) return 'property-specific';
+  // Decision logic - if property-specific, map to specific category
+  if (mentionsProperty || (hasSpecificKeyword && !hasGeneralKeyword)) {
+    // Map property slug to category
+    if (propertySlug.includes('portbahn')) return 'property-portbahn';
+    if (propertySlug.includes('shorefield')) return 'property-shorefield';
+    if (propertySlug.includes('curlew')) return 'property-curlew';
+  }
+
   return 'property-general';
 }
 
 async function createFAQBlock(
   faq: PropertyFAQ,
-  category: 'property-general' | 'property-specific'
+  category: CategoryType
 ): Promise<void> {
+  const isPropertySpecific = category !== 'property-general';
   const slug = generateSlug(
     faq.question,
-    category === 'property-specific' ? faq.propertyName : undefined
+    isPropertySpecific ? faq.propertyName : undefined
   );
 
   const document = {
@@ -146,10 +160,6 @@ async function createFAQBlock(
     answer: textToPortableText(faq.answer),
     category,
     secondaryCategories: [],
-    propertySpecific: category === 'property-specific' ? {
-      _type: 'reference',
-      _ref: faq.propertyId,
-    } : undefined,
     keywords: [], // To be added later during SEO research
     searchVolume: 'unknown',
     relatedQuestions: [],
@@ -159,10 +169,7 @@ async function createFAQBlock(
 
   try {
     const result = await client.createOrReplace(document);
-    const categoryLabel = category === 'property-specific'
-      ? `${category} (${faq.propertyName})`
-      : category;
-    console.log(`  ✓ Created: "${faq.question.substring(0, 60)}..." [${categoryLabel}]`);
+    console.log(`  ✓ Created: "${faq.question.substring(0, 60)}..." [${category}]`);
   } catch (error) {
     console.error(`  ✗ Failed: "${faq.question.substring(0, 60)}..."`, error);
   }
@@ -197,8 +204,12 @@ async function main() {
 
   // Step 2: Process each property
   let totalFAQs = 0;
-  let generalCount = 0;
-  let specificCount = 0;
+  const categoryCounts: Record<string, number> = {
+    'property-general': 0,
+    'property-portbahn': 0,
+    'property-shorefield': 0,
+    'property-curlew': 0,
+  };
 
   for (const property of properties) {
     console.log(`\n📦 Processing: ${property.name}`);
@@ -208,17 +219,17 @@ async function main() {
       const faq: PropertyFAQ = {
         propertyId: property._id,
         propertyName: property.name,
+        propertySlug: property.slug,
         question: qa.question,
         answer: qa.answer,
       };
 
-      const category = await categorizeQuestion(qa.question, qa.answer, property.name);
+      const category = await categorizeQuestion(qa.question, qa.answer, property.name, property.slug);
 
       await createFAQBlock(faq, category);
 
       totalFAQs++;
-      if (category === 'property-general') generalCount++;
-      if (category === 'property-specific') specificCount++;
+      categoryCounts[category]++;
     }
   }
 
@@ -227,8 +238,10 @@ async function main() {
   console.log('✓ Migration Complete!');
   console.log('==============================================');
   console.log(`\nTotal FAQs migrated: ${totalFAQs}`);
-  console.log(`  - Property General: ${generalCount}`);
-  console.log(`  - Property Specific: ${specificCount}`);
+  console.log(`  - Property General: ${categoryCounts['property-general']}`);
+  console.log(`  - Portbahn House: ${categoryCounts['property-portbahn']}`);
+  console.log(`  - Shorefield: ${categoryCounts['property-shorefield']}`);
+  console.log(`  - Curlew: ${categoryCounts['property-curlew']}`);
 
   console.log('\n📝 Next Steps:');
   console.log('1. Review FAQ blocks in Sanity Studio');

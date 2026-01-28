@@ -111,10 +111,9 @@ export default defineType({
       options: {
         list: [
           { title: 'Property (General)', value: 'property-general' },
-          { title: 'Property (Specific)', value: 'property-specific' },
-          { title: 'Portbahn House', value: 'portbahn-house' },
-          { title: 'Shorefield', value: 'shorefield' },
-          { title: 'Curlew', value: 'curlew' },
+          { title: 'Portbahn House', value: 'property-portbahn' },
+          { title: 'Shorefield', value: 'property-shorefield' },
+          { title: 'Curlew', value: 'property-curlew' },
           { title: 'Travel', value: 'travel' },
           { title: 'Distilleries', value: 'distilleries' },
           { title: 'Wildlife', value: 'wildlife' },
@@ -140,9 +139,9 @@ export default defineType({
       options: {
         list: [
           { title: 'Property (General)', value: 'property-general' },
-          { title: 'Portbahn House', value: 'portbahn-house' },
-          { title: 'Shorefield', value: 'shorefield' },
-          { title: 'Curlew', value: 'curlew' },
+          { title: 'Portbahn House', value: 'property-portbahn' },
+          { title: 'Shorefield', value: 'property-shorefield' },
+          { title: 'Curlew', value: 'property-curlew' },
           { title: 'Travel', value: 'travel' },
           { title: 'Distilleries', value: 'distilleries' },
           { title: 'Wildlife', value: 'wildlife' },
@@ -156,15 +155,6 @@ export default defineType({
         ],
       },
       description: 'Optional: Additional categories if FAQ applies to multiple contexts',
-      group: 'categorization',
-    }),
-    defineField({
-      name: 'propertySpecific',
-      title: 'Property-Specific',
-      type: 'reference',
-      to: [{ type: 'property' }],
-      description: 'If category is "property-specific", which property does this FAQ apply to?',
-      hidden: ({ document }) => document?.category !== 'property-specific',
       group: 'categorization',
     }),
     defineField({
