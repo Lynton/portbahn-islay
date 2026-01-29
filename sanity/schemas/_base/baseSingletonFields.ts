@@ -26,36 +26,7 @@ export const baseSingletonFields = [
       },
     ],
   }),
-  defineField({
-    name: 'content',
-    title: 'Content',
-    type: 'array',
-    group: 'content',
-    of: [
-      {
-        type: 'block',
-      },
-      {
-        type: 'image',
-        fields: [
-          {
-            name: 'alt',
-            type: 'string',
-            title: 'Alt Text',
-            validation: (Rule) => Rule.required(),
-          },
-          {
-            name: 'caption',
-            type: 'string',
-            title: 'Caption',
-          },
-        ],
-      },
-    ],
-    description: 'Main page content',
-  }),
-
-  // Canonical Content Blocks
+  // Canonical Content Blocks (single source of truth for all page content)
   defineField({
     name: 'contentBlocks',
     title: 'Content Blocks',

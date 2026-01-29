@@ -6,6 +6,7 @@ export const client = createClient({
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2025-02-19',
   useCdn: false, // Disable CDN to ensure fresh data (especially important for newly added properties)
   perspective: 'published', // Explicitly use published perspective
+  token: process.env.SANITY_API_TOKEN, // Required for server-side rendering to resolve references
   stega: {
     enabled: false, // Disable stega for better performance
   },

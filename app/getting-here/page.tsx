@@ -22,7 +22,6 @@ const getGettingHerePage = cache(async () => {
     _id,
     title,
     heroImage,
-    content,
     contentBlocks[]{
       _key,
       version,
@@ -108,14 +107,7 @@ export default async function TravelToIslayPage() {
             </h1>
           )}
 
-          {/* Main Content (if any intro text) */}
-          {page?.content && (
-            <div className="prose prose-lg prose-emerald max-w-none mb-12">
-              <PortableText value={page.content} />
-            </div>
-          )}
-
-          {/* Content Blocks */}
+          {/* Content Blocks - single source of truth */}
           {page?.contentBlocks && page.contentBlocks.length > 0 && (
             <div className="space-y-12 mb-16">
               <BlockRenderer blocks={page.contentBlocks} />

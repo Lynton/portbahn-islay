@@ -146,7 +146,22 @@ export default defineConfig({
                           .schemaType('termsPage')
                           .documentId('termsPage')
                       ),
+                    S.listItem()
+                      .title('Explore Islay (Hub)')
+                      .id('exploreIslayPage')
+                      .child(
+                        S.document()
+                          .schemaType('exploreIslayPage')
+                          .documentId('exploreIslayPage')
+                      ),
                   ])
+              ),
+            // Guide Pages (spoke pages for hub-and-spoke architecture)
+            S.listItem()
+              .title('Guide Pages')
+              .child(
+                S.documentTypeList('guidePage')
+                  .title('Guide Pages')
               ),
             // Divider
             S.divider(),

@@ -6,52 +6,46 @@ import { PortableText } from '@portabletext/react';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
-import BlockRenderer from '@/components/BlockRenderer';
 
 // Revalidate every 60 seconds
 export const revalidate = 60;
 
 /**
- * Explore Islay Page - Simplified flat structure
+ * Explore Islay Hub Page
  *
- * Content blocks and FAQ blocks are fetched directly at page level,
- * not nested within sections. The frontend decides rendering order.
+ * Hub page in hub-and-spoke architecture. Shows teaser cards
+ * linking to focused guide pages (spokes).
+ *
+ * Playbook alignment:
+ * - Hub pages show teasers, not full content
+ * - Each spoke page = one retrievable entity for AI
+ * - Clear navigation to detailed content
  */
+
 const getExploreIslayPage = cache(async () => {
   const query = `*[_type == "exploreIslayPage" && !(_id in path("drafts.**"))][0]{
     _id,
     title,
     heroImage,
-    content,
-    contentBlocks[]{
-      _key,
-      version,
-      showKeyFacts,
-      customHeading,
-      block->{
-        _id,
-        blockId,
-        title,
-        entityType,
-        canonicalHome,
-        fullContent,
-        teaserContent,
-        keyFacts
-      }
-    },
-    faqBlocks[]{
-      _key,
-      overrideQuestion,
-      faqBlock->{
-        _id,
-        question,
-        answer,
-        category,
-        priority
-      }
-    },
     seoTitle,
     seoDescription
+  }`;
+
+  return await client.fetch(query, {}, {
+    next: { revalidate: 60 },
+  });
+});
+
+// Get all guide pages for the hub
+const getGuidePages = cache(async () => {
+  const query = `*[_type == "guidePage" && !(_id in path("drafts.**"))] | order(title asc) {
+    _id,
+    title,
+    slug,
+    introduction,
+    heroImage,
+    "contentBlockCount": count(contentBlocks),
+    "faqCount": count(faqBlocks)
   }`;
 
   return await client.fetch(query, {}, {
@@ -69,15 +63,15 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ExploreIslayPage() {
-  const page = await getExploreIslayPage();
+  const [page, guidePages] = await Promise.all([
+    getExploreIslayPage(),
+    getGuidePages(),
+  ]);
 
   const schemaData = {
     name: 'Isle of Islay',
     description: page?.seoDescription || 'Scottish island renowned for ten whisky distilleries, pristine beaches, and abundant wildlife.',
   };
-
-  // Filter to only resolved FAQs
-  const resolvedFaqs = page?.faqBlocks?.filter((fb: any) => fb?.faqBlock) || [];
 
   return (
     <>
@@ -102,64 +96,76 @@ export default async function ExploreIslayPage() {
             <span>Explore Islay</span>
           </nav>
 
-          {page?.title && (
-            <h1 className="font-serif text-5xl mb-8 text-harbour-stone">
-              {page.title}
-            </h1>
-          )}
+          <h1 className="font-serif text-5xl mb-4 text-harbour-stone">
+            {page?.title || 'Explore the Isle of Islay'}
+          </h1>
 
-          {/* Main Content (if any intro text) */}
-          {page?.content && (
-            <div className="prose prose-lg prose-emerald max-w-none mb-12">
-              <PortableText value={page.content} />
-            </div>
-          )}
+          <p className="font-mono text-lg text-harbour-stone/80 mb-12 leading-relaxed max-w-2xl">
+            Islay is one of the Inner Hebrides islands of Scotland, renowned for its ten working whisky
+            distilleries, dramatic Atlantic coastline, and abundant wildlife. From our Bruichladdich
+            properties, you&apos;re perfectly positioned to explore everything the island offers.
+          </p>
 
-          {/* Content Blocks */}
-          {page?.contentBlocks && page.contentBlocks.length > 0 && (
-            <div className="space-y-12 mb-16">
-              <BlockRenderer blocks={page.contentBlocks} />
-            </div>
-          )}
-
-          {/* FAQ Section - Fully visible per playbook (no accordions) */}
-          {resolvedFaqs.length > 0 && (
-            <section className="mt-16 pt-8 border-t border-washed-timber">
-              <h2 className="font-serif text-3xl mb-8 text-harbour-stone">
-                Common Questions About Islay
-              </h2>
-              <div className="space-y-8">
-                {resolvedFaqs.map((faqBlock: any) => (
-                  <div
-                    key={faqBlock._key}
-                    className="bg-white rounded-lg p-6 shadow-sm border border-washed-timber"
-                  >
-                    <h3 className="font-mono text-lg font-semibold text-harbour-stone mb-3">
-                      {faqBlock.overrideQuestion || faqBlock.faqBlock.question}
-                    </h3>
-                    <div className="font-mono text-base text-harbour-stone/80 prose prose-emerald max-w-none">
-                      {faqBlock.faqBlock.answer && (
-                        <PortableText value={faqBlock.faqBlock.answer} />
-                      )}
+          {/* Guide Cards Grid */}
+          {guidePages && guidePages.length > 0 && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+              {guidePages.map((guide: any) => (
+                <Link
+                  key={guide._id}
+                  href={`/guides/${guide.slug?.current}`}
+                  className="group bg-white rounded-lg overflow-hidden shadow-sm border border-washed-timber hover:shadow-md transition-shadow"
+                >
+                  {guide.heroImage && (
+                    <div className="relative h-48 overflow-hidden">
+                      <Image
+                        src={urlFor(guide.heroImage).width(600).height(300).url()}
+                        alt={guide.heroImage.alt || guide.title}
+                        fill
+                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
                     </div>
+                  )}
+                  <div className="p-6">
+                    <h2 className="font-serif text-2xl text-harbour-stone mb-2 group-hover:text-emerald-accent transition-colors">
+                      {guide.title}
+                    </h2>
+                    {guide.introduction && (
+                      <p className="font-mono text-sm text-harbour-stone/70 mb-4 line-clamp-2">
+                        {guide.introduction}
+                      </p>
+                    )}
+                    <span className="font-mono text-sm text-emerald-accent group-hover:underline">
+                      Read more →
+                    </span>
                   </div>
-                ))}
-              </div>
-            </section>
+                </Link>
+              ))}
+            </div>
           )}
 
-          {/* Empty state */}
-          {(!page?.contentBlocks || page.contentBlocks.length === 0) && resolvedFaqs.length === 0 && (
+          {/* Jura Link - separate from guide pages */}
+          <div className="bg-harbour-stone/5 rounded-lg p-8 mb-12">
+            <h2 className="font-serif text-2xl text-harbour-stone mb-4">
+              Day Trip to Jura
+            </h2>
+            <p className="font-mono text-base text-harbour-stone/80 mb-4">
+              Just a 5-minute ferry hop from Islay, the Isle of Jura offers a wilder,
+              quieter experience with one road, one distillery, and more deer than people.
+            </p>
+            <Link
+              href="/jura"
+              className="inline-block font-mono text-emerald-accent hover:underline"
+            >
+              Plan your Jura day trip →
+            </Link>
+          </div>
+
+          {/* Empty state if no guide pages */}
+          {(!guidePages || guidePages.length === 0) && (
             <div className="text-center py-12">
               <p className="font-mono text-base text-harbour-stone mb-8">
-                Content coming soon. Add canonical blocks to this page in Sanity Studio.
+                Guide pages coming soon.
               </p>
-              <Link
-                href="/"
-                className="inline-block bg-emerald-accent text-white px-6 py-3 rounded hover:bg-emerald-accent/90 transition"
-              >
-                Return to Homepage
-              </Link>
             </div>
           )}
 

@@ -1,6 +1,7 @@
 // Documents
 import canonicalBlock from './documents/canonicalBlock';
 import faqCanonicalBlock from './documents/faqCanonicalBlock';
+import guidePage from './documents/guidePage';
 
 // Objects
 import blockReference from './objects/blockReference';
@@ -38,6 +39,7 @@ export const schemaTypes = [
   // Documents
   canonicalBlock,
   faqCanonicalBlock,
+  guidePage,
 
   // Objects
   blockReference,
