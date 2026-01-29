@@ -2,21 +2,29 @@ import { cache } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { PortableText } from '@portabletext/react';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import BlockRenderer from '@/components/BlockRenderer';
 
-// Revalidate every 60 seconds to pick up Sanity changes
+// Revalidate every 60 seconds
 export const revalidate = 60;
 
-// Cached fetch - dedupes calls within same request
+/**
+ * Explore Islay Page - Simplified flat structure
+ *
+ * Content blocks and FAQ blocks are fetched directly at page level,
+ * not nested within sections. The frontend decides rendering order.
+ */
 const getExploreIslayPage = cache(async () => {
-  const query = `*[_type == "exploreIslayPage"][0]{
+  const query = `*[_type == "exploreIslayPage" && !(_id in path("drafts.**"))][0]{
     _id,
     title,
     heroImage,
+    content,
     contentBlocks[]{
+      _key,
       version,
       showKeyFacts,
       customHeading,
@@ -31,10 +39,24 @@ const getExploreIslayPage = cache(async () => {
         keyFacts
       }
     },
+    faqBlocks[]{
+      _key,
+      overrideQuestion,
+      faqBlock->{
+        _id,
+        question,
+        answer,
+        category,
+        priority
+      }
+    },
     seoTitle,
     seoDescription
   }`;
-  return await client.fetch(query);
+
+  return await client.fetch(query, {}, {
+    next: { revalidate: 60 },
+  });
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -42,7 +64,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: page?.seoTitle || page?.title || 'Explore Islay | Portbahn Islay',
-    description: page?.seoDescription || "Discover Islay's nine whisky distilleries, stunning beaches, abundant wildlife, and local restaurants.",
+    description: page?.seoDescription || "Discover Islay's ten whisky distilleries, stunning beaches, abundant wildlife, and local restaurants.",
   };
 }
 
@@ -51,8 +73,11 @@ export default async function ExploreIslayPage() {
 
   const schemaData = {
     name: 'Isle of Islay',
-    description: page?.seoDescription || 'Scottish island renowned for nine whisky distilleries, pristine beaches, and abundant wildlife.',
+    description: page?.seoDescription || 'Scottish island renowned for ten whisky distilleries, pristine beaches, and abundant wildlife.',
   };
+
+  // Filter to only resolved FAQs
+  const resolvedFaqs = page?.faqBlocks?.filter((fb: any) => fb?.faqBlock) || [];
 
   return (
     <>
@@ -83,11 +108,48 @@ export default async function ExploreIslayPage() {
             </h1>
           )}
 
-          {page?.contentBlocks && page.contentBlocks.length > 0 && (
-            <BlockRenderer blocks={page.contentBlocks} />
+          {/* Main Content (if any intro text) */}
+          {page?.content && (
+            <div className="prose prose-lg prose-emerald max-w-none mb-12">
+              <PortableText value={page.content} />
+            </div>
           )}
 
-          {(!page || !page.contentBlocks || page.contentBlocks.length === 0) && (
+          {/* Content Blocks */}
+          {page?.contentBlocks && page.contentBlocks.length > 0 && (
+            <div className="space-y-12 mb-16">
+              <BlockRenderer blocks={page.contentBlocks} />
+            </div>
+          )}
+
+          {/* FAQ Section - Fully visible per playbook (no accordions) */}
+          {resolvedFaqs.length > 0 && (
+            <section className="mt-16 pt-8 border-t border-washed-timber">
+              <h2 className="font-serif text-3xl mb-8 text-harbour-stone">
+                Common Questions About Islay
+              </h2>
+              <div className="space-y-8">
+                {resolvedFaqs.map((faqBlock: any) => (
+                  <div
+                    key={faqBlock._key}
+                    className="bg-white rounded-lg p-6 shadow-sm border border-washed-timber"
+                  >
+                    <h3 className="font-mono text-lg font-semibold text-harbour-stone mb-3">
+                      {faqBlock.overrideQuestion || faqBlock.faqBlock.question}
+                    </h3>
+                    <div className="font-mono text-base text-harbour-stone/80 prose prose-emerald max-w-none">
+                      {faqBlock.faqBlock.answer && (
+                        <PortableText value={faqBlock.faqBlock.answer} />
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Empty state */}
+          {(!page?.contentBlocks || page.contentBlocks.length === 0) && resolvedFaqs.length === 0 && (
             <div className="text-center py-12">
               <p className="font-mono text-base text-harbour-stone mb-8">
                 Content coming soon. Add canonical blocks to this page in Sanity Studio.
@@ -101,13 +163,11 @@ export default async function ExploreIslayPage() {
             </div>
           )}
 
-          {page?.contentBlocks && page.contentBlocks.length > 0 && (
-            <div className="mt-12 pt-8 border-t border-washed-timber">
-              <Link href="/" className="font-mono text-emerald-accent hover:underline">
-                ← Back to Our Properties
-              </Link>
-            </div>
-          )}
+          <div className="mt-12 pt-8 border-t border-washed-timber">
+            <Link href="/" className="font-mono text-emerald-accent hover:underline">
+              ← Back to Our Properties
+            </Link>
+          </div>
         </div>
       </main>
     </>

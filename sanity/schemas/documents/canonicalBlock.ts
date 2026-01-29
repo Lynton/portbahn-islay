@@ -159,7 +159,6 @@ export default defineType({
       group: 'meta',
       of: [{ type: 'string' }],
       description: 'Pages that reference this block (for tracking). Examples: "Homepage (teaser)", "Getting Here (full)"',
-      placeholder: 'Homepage (teaser), Getting Here (full)',
     }),
     defineField({
       name: 'notes',

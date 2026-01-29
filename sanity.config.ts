@@ -194,6 +194,10 @@ export default defineConfig({
               .child(
                 S.documentTypeList('faqCanonicalBlock')
                   .title('FAQ Canonical Blocks')
+                  .defaultOrdering([{ field: 'question', direction: 'asc' }])
+                  // Batch operations are available by default in Sanity Studio v3
+                  // Users can select items by clicking the checkbox area on the left of each item
+                  // Or use Cmd/Ctrl+A to select all, then use the bulk actions menu
               ),
             // Divider
             S.divider(),

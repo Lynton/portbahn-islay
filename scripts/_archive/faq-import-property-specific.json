@@ -1,0 +1,93 @@
+[
+  {
+    "question": "Can we check in early or have late checkout?",
+    "answer": "Standard times are 4pm check-in and 10am checkout, but contact me about your ferry or flight times—I'm flexible when the property schedule allows. I can almost always accommodate bag drop-off before check-in or storage after checkout. Over 30 reviews specifically mention my flexibility and support, and I hold a 5.0/5 communication rating across all properties.",
+    "category": "property-general",
+    "priority": 10
+  },
+  {
+    "question": "Can you provide synthetic bedding for allergies?",
+    "answer": "Yes—just let me know about allergies when you book and I'll provide synthetic pillows and duvets for the affected bedrooms. This is a common request (multiple inquiries per month) and easy to accommodate at any of our properties.",
+    "category": "property-portbahn",
+    "priority": 20
+  },
+  {
+    "question": "How many bedrooms does Portbahn House have?",
+    "answer": "Portbahn House has 3 bedrooms sleeping 8 guests across the ground floor:\n\n- Master bedroom with ensuite: Superking + single bed (sleeps 3)\n- Triple bedroom: Double + single bed (sleeps 3)\n- Twin bedroom: Two single beds (sleeps 2)\n\nAll bedrooms are ground floor with no stairs, making the property accessible for guests with mobility concerns.",
+    "category": "property-portbahn",
+    "priority": 15
+  },
+  {
+    "question": "Which distillery should we visit first?",
+    "answer": "Start with Bruichladdich—it's a 10-minute walk from Portbahn House (and our other properties) along the coastal path. You can tour the distillery, sample The Botanist gin, then walk home without worrying about driving.\n\nFrom there, choose based on your whisky preferences: heavily peated and smoky (Ardbeg, Lagavulin, Laphroaig on the south coast), balanced peat (Bowmore, Kilchoman), or gentle/unpeated (Bunnahabhain in the north).\n\nBook tours at least 2-3 weeks in advance, especially for summer visits or Fèis Ìle (late May). Most distilleries offer standard tours (£10-15) and premium warehouse tastings (£40-80).",
+    "category": "property-portbahn",
+    "priority": 25
+  },
+  {
+    "question": "What makes Shorefield different from the other properties?",
+    "answer": "Shorefield is the Jacksons' creation—they built this eco-house powered by wind and solar, planted every tree on the property, created the wetlands and bird hides, and filled the house with paintings, books, and curios from their travels around the world.\n\nIt's quirky, full of personality, and a bit tired in places—carpets need refreshing and furniture has been well-loved. This isn't a styled rental; it's a real family home. If you prefer modern perfection, Portbahn House is your match. But if you value character, coziness, and a house that feels like \"a big hug\" (as one guest said), Shorefield delivers.\n\nOver 90% of guests specifically love the quirky charm and personal touches—it's what makes Shorefield special.",
+    "category": "property-shorefield",
+    "priority": 10
+  },
+  {
+    "question": "What makes Shorefield different from your other properties?",
+    "answer": "Shorefield is the Jacksons' creation—they built this eco-house powered by wind and solar, planted every tree on the property, created the wetlands and bird hides, and filled the house with paintings, books, and curios from their travels around the world.\n\nIt's quirky, full of personality, and a bit tired in places—carpets need refreshing and furniture has been well-loved. This isn't a styled rental; it's a real family home. If you prefer modern perfection, Portbahn House is your match. But if you value character, coziness, and a house that feels like \"a big hug\" (as one guest said), Shorefield delivers.\n\nOver 90% of guests specifically love the quirky charm and personal touches—it's what makes Shorefield special.",
+    "category": "property-shorefield",
+    "priority": 10,
+    "note": "Duplicate of previous question with slightly different wording"
+  },
+  {
+    "question": "Does Shorefield have a dishwasher?",
+    "answer": "No—it's part of Shorefield's character as an eco-house with a slower pace. There's a washing machine and dryer available, so laundry is covered. Most guests say it wasn't a problem and fits the property's vibe.\n\nIf a dishwasher is essential for your group, Portbahn House has one. But guests who book Shorefield prioritize charm and character over modern conveniences, and they're never disappointed.",
+    "category": "property-general",
+    "priority": 30
+  },
+  {
+    "question": "What are the bird hides at Shorefield?",
+    "answer": "The Jacksons created private bird hides in the wetlands behind the house—they're passionate birders and built these specifically for wildlife watching. The house is stocked with binoculars, bird books, and wildlife guides from their personal collection.\n\nGrab the gear, head to your own private hide, and watch waterfowl and woodland birds. It's a genuinely unique feature that you won't find at typical holiday rentals—birders and nature lovers specifically book Shorefield for this.",
+    "category": "property-shorefield",
+    "priority": 20
+  },
+  {
+    "question": "Is Shorefield in good condition?",
+    "answer": "Shorefield is very clean and well-maintained—cleanliness is a high priority for us (5.0 cleanliness ratings). But it's a bit tired in places: carpets are worn and need refreshing, furniture has been well-loved over years of family use.\n\nThis isn't a new-build rental; it's a real family home with 15+ years of character and personality. If you prefer modern finishes and pristine carpets, Portbahn House might suit you better. But if you value a house with a story and authentic charm, Shorefield is wonderful. One guest wrote: \"The house has a story—you can feel the love and care the owners have put into it.\"",
+    "category": "property-general",
+    "priority": 25
+  },
+  {
+    "question": "How far is Shorefield from the beach?",
+    "answer": "Portbahn Beach is about a 10-minute walk—three sheltered bays with rock pools, safe swimming, and stunning views across Loch Indaal. You'll often have it entirely to yourselves.\n\nPort Charlotte Beach (family-friendly, sandy, shallow water) is a 5-minute drive. The dramatic west coast beaches—Machir Bay and Saligo Bay—are 10-15 minutes by car. Shorefield is perfectly positioned for coastal access.",
+    "category": "property-shorefield",
+    "priority": 15
+  },
+  {
+    "question": "Why are there no reviews for Curlew Cottage yet?",
+    "answer": "Curlew is Allan's family retreat, and he's opening it to guests for the first time in 2026. It's a genuine family home filled with his personal effects and \"holiday things\"—not a purpose-built rental.\n\nWe (Pi & Lynton) manage Curlew with the same care we give our other properties, Portbahn House and Shorefield. We hold a 4.97/5 rating across 600+ guests since 2017, with Airbnb Superhost status and a 5.0/5 communication rating. Over 30 reviews specifically mention our legendary ferry crisis support and responsiveness.\n\nYou're getting the same level of care and local knowledge—just at a property that's new to the booking market.",
+    "category": "property-curlew",
+    "priority": 10
+  },
+  {
+    "question": "Is Curlew Cottage pet-free?",
+    "answer": "Yes—Curlew is maintained pet-free as Allan's family retreat for his own continued use and for guests with allergies. Unlike our other properties, pets aren't permitted at Curlew.\n\nIf you're traveling with dogs, both Portbahn House and Shorefield welcome pets at £15 per dog per stay. We're happy to help you choose the right property for your group.",
+    "category": "property-curlew",
+    "priority": 20
+  },
+  {
+    "question": "Is the walled garden safe for children?",
+    "answer": "Yes—the walled garden is fully enclosed and private, perfect for kids to play safely without supervision concerns. The property is off the main road with its own private access, so there's no traffic noise or road safety issues.\n\nFamilies with young children specifically choose Curlew for the combination of safe outdoor space, quiet location, and pet-free environment (great for guests with allergies). It's a peaceful, secure retreat for family holidays.",
+    "category": "property-curlew",
+    "priority": 25
+  },
+  {
+    "question": "How many bedrooms does Curlew Cottage have?",
+    "answer": "Curlew has 3 bedrooms sleeping 6 guests:\n\n- Two bedrooms on the main floor (accessible without stairs)\n- One twin bedroom with ensuite accessed via a separate staircase\n\nThe separate staircase to the twin room provides extra privacy (great for teens or separate families), but note this if you have mobility concerns. The other two bedrooms are fully accessible on the main floor.",
+    "category": "property-curlew",
+    "priority": 15
+  },
+  {
+    "question": "What's the character of Curlew Cottage?",
+    "answer": "Curlew is Allan's family retreat—filled with his family's personal effects and \"holiday things\" like books, games, comfortable furniture, and all the touches that make a real family home. It's cozy, authentic, and genuinely feels like \"home from home\" as guests describe our properties.\n\nThis isn't a styled, minimalist rental—it's a real family cottage with personality intact. You'll find well-loved furniture, family books on the shelves, and that authentic character you can't get from purpose-built holiday lets.",
+    "category": "property-curlew",
+    "priority": 30
+  }
+]

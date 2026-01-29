@@ -7,7 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "sanity": "dotenv -e .env.local -- sanity dev --port 3333"
+    "sanity": "dotenv -e .env.local -- sanity dev --port 3333",
+    "publish-faqs": "tsx scripts/batch-publish-faqs.ts",
+    "check-faq-refs": "tsx scripts/find-and-fix-broken-faq-refs.ts",
+    "count-faqs": "tsx scripts/count-all-faqs.ts",
+    "check-duplicate-faqs": "tsx scripts/check-duplicate-faq-ids.ts",
+    "check-faq-status": "tsx scripts/check-faq-status-simple.ts"
   },
   "dependencies": {
     "@portabletext/react": "^6.0.0",

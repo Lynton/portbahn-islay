@@ -19,9 +19,10 @@ interface BlockReferenceData {
 interface Props {
   blocks?: BlockReferenceData[];
   className?: string;
+  hideBlockTitles?: boolean;
 }
 
-export default function BlockRenderer({ blocks, className = '' }: Props) {
+export default function BlockRenderer({ blocks, className = '', hideBlockTitles = false }: Props) {
   if (!blocks || blocks.length === 0) {
     return null;
   }
@@ -32,6 +33,7 @@ export default function BlockRenderer({ blocks, className = '' }: Props) {
         <CanonicalBlock
           key={blockRef.block._id || index}
           data={blockRef}
+          hideTitle={hideBlockTitles}
         />
       ))}
     </div>

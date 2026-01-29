@@ -5,6 +5,7 @@ import faqCanonicalBlock from './documents/faqCanonicalBlock';
 // Objects
 import blockReference from './objects/blockReference';
 import faqBlockReference from './objects/faqBlockReference';
+// Note: contentSection removed - using flat contentBlocks + faqBlocks structure
 
 // Collections
 import property from './collections/property';

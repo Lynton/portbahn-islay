@@ -5,5 +5,9 @@ export const client = createClient({
   dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
   apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2025-02-19',
   useCdn: false, // Disable CDN to ensure fresh data (especially important for newly added properties)
+  perspective: 'published', // Explicitly use published perspective
+  stega: {
+    enabled: false, // Disable stega for better performance
+  },
 });
 

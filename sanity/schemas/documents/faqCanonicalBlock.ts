@@ -14,16 +14,21 @@ import { defineType, defineField } from 'sanity';
  * - Related questions for user journey mapping
  *
  * Categories:
- * - property-general: Accommodation questions (any property)
- * - property-specific: Questions about specific properties
- * - travel: Getting to Islay (ferry, flights, driving)
- * - distillery: Whisky distillery visits
+ * - property-general: Accommodation policies, where to stay advice (any property)
+ * - property-portbahn: Portbahn House specific questions
+ * - property-shorefield: Shorefield specific questions
+ * - property-curlew: Curlew Cottage specific questions
+ * - travel-planning: Trip duration, best time to visit, planning
+ * - travel-ferries: CalMac ferry specifics (routes, booking, disruptions)
+ * - travel-flights: Loganair flights, airport information
+ * - distilleries: Whisky distillery visits
  * - wildlife: Birds, seals, nature watching
  * - family: Family-friendly activities
- * - food: Restaurants, dining, local produce
+ * - food-drink: Restaurants, dining, local produce
  * - beaches: Beach access, activities
- * - ferry: CalMac ferry specific
- * - booking: Reservations, policies, payments
+ * - jura: Jura island information
+ * - booking: Reservations, payments
+ * - policies: Cancellation, rules
  */
 export default defineType({
   name: 'faqCanonicalBlock',
@@ -114,14 +119,15 @@ export default defineType({
           { title: 'Portbahn House', value: 'property-portbahn' },
           { title: 'Shorefield', value: 'property-shorefield' },
           { title: 'Curlew', value: 'property-curlew' },
-          { title: 'Travel', value: 'travel' },
+          { title: 'Travel: Planning', value: 'travel-planning' },
+          { title: 'Travel: Ferries', value: 'travel-ferries' },
+          { title: 'Travel: Flights', value: 'travel-flights' },
           { title: 'Distilleries', value: 'distilleries' },
           { title: 'Wildlife', value: 'wildlife' },
           { title: 'Family', value: 'family' },
           { title: 'Food & Drink', value: 'food-drink' },
           { title: 'Beaches', value: 'beaches' },
-          { title: 'Ferry', value: 'ferry' },
-          { title: 'Flights', value: 'flights' },
+          { title: 'Jura', value: 'jura' },
           { title: 'Booking', value: 'booking' },
           { title: 'Policies', value: 'policies' },
         ],
@@ -142,14 +148,15 @@ export default defineType({
           { title: 'Portbahn House', value: 'property-portbahn' },
           { title: 'Shorefield', value: 'property-shorefield' },
           { title: 'Curlew', value: 'property-curlew' },
-          { title: 'Travel', value: 'travel' },
+          { title: 'Travel: Planning', value: 'travel-planning' },
+          { title: 'Travel: Ferries', value: 'travel-ferries' },
+          { title: 'Travel: Flights', value: 'travel-flights' },
           { title: 'Distilleries', value: 'distilleries' },
           { title: 'Wildlife', value: 'wildlife' },
           { title: 'Family', value: 'family' },
           { title: 'Food & Drink', value: 'food-drink' },
           { title: 'Beaches', value: 'beaches' },
-          { title: 'Ferry', value: 'ferry' },
-          { title: 'Flights', value: 'flights' },
+          { title: 'Jura', value: 'jura' },
           { title: 'Booking', value: 'booking' },
           { title: 'Policies', value: 'policies' },
         ],

@@ -28,9 +28,10 @@ interface BlockReferenceData {
 interface Props {
   data: BlockReferenceData;
   className?: string;
+  hideTitle?: boolean;
 }
 
-export default function CanonicalBlock({ data, className = '' }: Props) {
+export default function CanonicalBlock({ data, className = '', hideTitle = false }: Props) {
   const { block, version, showKeyFacts, customHeading } = data;
 
   if (!block) {
@@ -48,7 +49,7 @@ export default function CanonicalBlock({ data, className = '' }: Props) {
       data-entity-type={block.entityType}
     >
       {/* Section Heading */}
-      {heading && (
+      {!hideTitle && heading && (
         <h2 className="font-serif text-3xl text-harbour-stone mb-6">
           {heading}
         </h2>

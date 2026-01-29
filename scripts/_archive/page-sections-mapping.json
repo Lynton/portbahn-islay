@@ -1,0 +1,139 @@
+{
+  "travelToIslayPage": {
+    "pageId": "gettingHerePage",
+    "sections": [
+      {
+        "sectionTitle": "Ferry to Islay",
+        "sectionId": "ferry-to-islay",
+        "contentBlocks": [
+          {
+            "blockId": "content-travel-to-islay",
+            "renderAs": "full"
+          },
+          {
+            "blockId": "content-ferry-support",
+            "renderAs": "full"
+          }
+        ],
+        "faqQuestions": [
+          "How long is the ferry to Islay?",
+          "Do you help with ferry disruptions?"
+        ]
+      },
+      {
+        "sectionTitle": "Flights to Islay",
+        "sectionId": "flights-to-islay",
+        "contentBlocks": [],
+        "faqQuestions": [
+          "Can you fly to Islay from Glasgow?"
+        ]
+      },
+      {
+        "sectionTitle": "Planning Your Journey to Islay",
+        "sectionId": "planning-your-journey",
+        "contentBlocks": [],
+        "faqQuestions": [
+          "How do I pronounce Islay?",
+          "Where is Islay located?",
+          "Is Islay worth visiting?",
+          "How big is Islay?",
+          "Can you get around Islay without a car?",
+          "How many days do I need on Islay?",
+          "When is the best time to visit Islay?",
+          "What's the weather like on Islay?",
+          "Where should I stay on Islay?"
+        ]
+      }
+    ]
+  },
+  "exploreIslayPage": {
+    "pageId": "exploreIslayPage",
+    "sections": [
+      {
+        "sectionTitle": "Whisky Distilleries on Islay",
+        "sectionId": "whisky-distilleries",
+        "contentBlocks": [
+          {
+            "blockId": "content-distilleries-overview",
+            "renderAs": "full"
+          }
+        ],
+        "faqQuestions": [
+          "What is Islay famous for?",
+          "What is Islay whisky?",
+          "How many distilleries are on Islay?"
+        ]
+      },
+      {
+        "sectionTitle": "Beaches and Swimming on Islay",
+        "sectionId": "beaches-swimming",
+        "contentBlocks": [
+          {
+            "blockId": "content-beaches-overview",
+            "renderAs": "full"
+          },
+          {
+            "blockId": "content-portbahn-beach",
+            "renderAs": "teaser"
+          }
+        ],
+        "faqQuestions": [
+          "How close is Portbahn House to the beach?",
+          "How close is Shorefield to the beach?",
+          "How close is Curlew Cottage to the beach?"
+        ]
+      },
+      {
+        "sectionTitle": "Wildlife and Nature on Islay",
+        "sectionId": "wildlife-nature",
+        "contentBlocks": [
+          {
+            "blockId": "content-wildlife-geese",
+            "renderAs": "full"
+          }
+        ],
+        "faqQuestions": []
+      },
+      {
+        "sectionTitle": "Family Activities on Islay",
+        "sectionId": "family-activities",
+        "contentBlocks": [
+          {
+            "blockId": "content-families-children",
+            "renderAs": "full"
+          }
+        ],
+        "faqQuestions": [
+          "Is Islay good for families?"
+        ]
+      },
+      {
+        "sectionTitle": "Food and Drink on Islay",
+        "sectionId": "food-drink",
+        "contentBlocks": [
+          {
+            "blockId": "content-food-drink-islay",
+            "renderAs": "full"
+          }
+        ],
+        "faqQuestions": []
+      },
+      {
+        "sectionTitle": "Visiting Jura from Islay",
+        "sectionId": "visiting-jura",
+        "contentBlocks": [
+          {
+            "blockId": "content-jura-day-trip",
+            "renderAs": "full"
+          }
+        ],
+        "faqQuestions": [
+          "How do I get from Islay to Jura?",
+          "Is Jura worth visiting?",
+          "Is Jura worth a day trip from Islay?",
+          "Can I stay on Jura?"
+        ]
+      }
+    ]
+  }
+}
