@@ -7,6 +7,7 @@ import { PortableText } from '@portabletext/react';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import BlockRenderer from '@/components/BlockRenderer';
+import SchemaMarkup from '@/components/SchemaMarkup';
 
 // Revalidate every 60 seconds
 export const revalidate = 60;
@@ -121,8 +122,21 @@ export default async function GuidePage({ params }: PageProps) {
   // Filter to only resolved FAQs
   const resolvedFaqs = page?.faqBlocks?.filter((fb: FaqBlockRef) => fb?.faqBlock) || [];
 
+  // Determine schema type based on slug (user Q6: D - mix HowTo and Article)
+  // Travel guides (ferry, flights, planning) = HowTo
+  // Attraction/experience guides = Article
+  const travelGuideSlugs = ['ferry-to-islay', 'flights-to-islay', 'planning-your-trip'];
+  const schemaType = travelGuideSlugs.includes(slug) ? 'HowTo' : 'Article';
+
+  const schemaData = {
+    name: page.title,
+    description: page.seoDescription || page.introduction || `Guide to ${page.title} on the Isle of Islay.`,
+  };
+
   return (
-    <main className="min-h-screen bg-sea-spray">
+    <>
+      <SchemaMarkup type={schemaType} data={schemaData} />
+      <main className="min-h-screen bg-sea-spray">
       {page.heroImage && (
         <div className="w-full h-[40vh] relative overflow-hidden">
           <Image
@@ -195,5 +209,6 @@ export default async function GuidePage({ params }: PageProps) {
         </div>
       </div>
     </main>
+    </>
   );
 }

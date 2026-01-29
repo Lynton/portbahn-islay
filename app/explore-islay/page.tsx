@@ -53,9 +53,7 @@ const getGuidePages = cache(async () => {
     title,
     slug,
     introduction,
-    heroImage,
-    "contentBlockCount": count(contentBlocks),
-    "faqCount": count(faqBlocks)
+    heroImage
   }`;
 
   return await client.fetch(query, {}, {
@@ -79,13 +77,17 @@ export default async function ExploreIslayPage() {
   ]);
 
   const schemaData = {
-    name: 'Isle of Islay',
-    description: page?.seoDescription || 'Scottish island renowned for ten whisky distilleries, pristine beaches, and abundant wildlife.',
+    name: 'What to See and Do on Islay',
+    description: page?.seoDescription || 'Guide to activities, attractions and experiences on the Isle of Islay - from whisky distilleries to hidden beaches.',
+    about: {
+      '@type': 'Place',
+      name: 'Isle of Islay'
+    }
   };
 
   return (
     <>
-      <SchemaMarkup type={['TouristAttraction', 'Place']} data={schemaData} />
+      <SchemaMarkup type="CollectionPage" data={schemaData} />
       <main className="min-h-screen bg-sea-spray">
         {page?.heroImage && (
           <div className="w-full h-[40vh] relative overflow-hidden">
@@ -111,15 +113,17 @@ export default async function ExploreIslayPage() {
           </h1>
 
           <p className="font-mono text-lg text-harbour-stone/80 mb-12 leading-relaxed max-w-2xl">
-            Islay is one of the Inner Hebrides islands of Scotland, renowned for its ten working whisky
-            distilleries, dramatic Atlantic coastline, and abundant wildlife. From our Bruichladdich
-            properties, you&apos;re perfectly positioned to explore everything the island offers.
+            Having lived and worked on Islay for a number of years, we know the island well. This guide covers activities, attractions and experiences across Islay - from whisky distilleries to hidden beaches. Islay is one of the Inner Hebrides islands of Scotland, renowned for its ten working whisky distilleries, dramatic Atlantic coastline and abundant wildlife.
           </p>
 
           {/* Guide Cards Grid */}
           {guidePages && guidePages.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-              {guidePages.map((guide: GuidePage) => (
+            <>
+              <h2 className="font-serif text-3xl text-harbour-stone mb-8">
+                What to See and Do on Islay
+              </h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                {guidePages.map((guide: GuidePage) => (
                 <Link
                   key={guide._id}
                   href={`/guides/${guide.slug?.current}`}
@@ -150,7 +154,8 @@ export default async function ExploreIslayPage() {
                   </div>
                 </Link>
               ))}
-            </div>
+              </div>
+            </>
           )}
 
           {/* Jura Link - separate from guide pages */}

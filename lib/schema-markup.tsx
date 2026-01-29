@@ -15,7 +15,9 @@ export type SchemaType =
   | 'Article'
   | 'BreadcrumbList'
   | 'TouristAttraction'
-  | 'HowTo';
+  | 'HowTo'
+  | 'WebPage'
+  | 'CollectionPage';
 
 export interface BreadcrumbItem {
   name: string;
@@ -543,6 +545,59 @@ function generateHowTo(data: any) {
   };
 }
 
+// Generate WebPage schema (for general pages)
+function generateWebPage(data: any, siteUrl: string) {
+  const schema: any = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': siteUrl,
+    name: data.name,
+    description: data.description,
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': BASE_URL
+    }
+  };
+
+  // Add about entity if provided
+  if (data.about) {
+    schema.about = data.about;
+  }
+
+  return schema;
+}
+
+// Generate CollectionPage schema (for hub pages)
+function generateCollectionPage(data: any, siteUrl: string) {
+  const schema: any = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': siteUrl,
+    name: data.name,
+    description: data.description,
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': BASE_URL
+    }
+  };
+
+  // Add about entity if provided
+  if (data.about) {
+    schema.about = data.about;
+  }
+
+  // Add child pages if provided
+  if (data.hasPart && data.hasPart.length > 0) {
+    schema.hasPart = data.hasPart.map((page: any) => ({
+      '@type': page.type || 'WebPage',
+      '@id': `${BASE_URL}${page.url}`,
+      name: page.name
+    }));
+  }
+
+  return schema;
+}
+
 // Main schema generator function
 export function generateSchemaMarkup(
   type: SchemaType | SchemaType[],
@@ -593,6 +648,12 @@ export function generateSchemaMarkup(
         break;
       case 'HowTo':
         schemas.push(generateHowTo(data));
+        break;
+      case 'WebPage':
+        schemas.push(generateWebPage(data, BASE_URL));
+        break;
+      case 'CollectionPage':
+        schemas.push(generateCollectionPage(data, BASE_URL));
         break;
     }
   });

@@ -1,10 +1,7 @@
 import { cache } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { Metadata } from 'next';
-import SchemaMarkup from '@/components/SchemaMarkup';
+import HubPage from '@/app/_components/HubPage';
 import { client } from '@/sanity/lib/client';
-import { urlFor } from '@/sanity/lib/image';
 
 interface Property {
   _id: string;
@@ -76,97 +73,31 @@ export default async function AccommodationPage() {
     getProperties(),
   ]);
 
-  const schemaData = {
-    name: 'Portbahn Islay Accommodation',
-    description: page?.seoDescription || 'Three unique holiday properties in Bruichladdich on the Isle of Islay.',
+  const config = {
+    breadcrumbs: [
+      { label: 'Home', href: '/' },
+      { label: 'Accommodation' },
+    ],
+    introText: 'We offer three unique self-catering holiday properties in Bruichladdich. Portbahn House is our family home. Shorefield is the Jacksons\' creation - they built it, planted every tree, created the bird hides. Curlew Cottage is Alan\'s family retreat. These aren\'t purpose-built rentals - they\'re real family homes with personality.',
+    sectionHeading: 'Self-Catering Family Holiday Homes in Bruichladdich',
+    cardLinkPrefix: '/accommodation/',
+    cardLinkSuffix: 'View property →',
+    emptyStateMessage: 'Properties coming soon.',
+    backLink: {
+      href: '/',
+      label: 'Back to Homepage',
+    },
+    schemaType: 'CollectionPage' as const,
+    schemaData: {
+      name: 'Self-Catering Family Holiday Homes in Bruichladdich',
+      description: page?.seoDescription || 'Three unique self-catering holiday properties in Bruichladdich, Islay - real family homes with personality.',
+      hasPart: properties.map((p: Property) => ({
+        type: 'Accommodation',
+        url: `/accommodation/${p.slug.current}`,
+        name: p.name
+      }))
+    },
   };
 
-  return (
-    <>
-      <SchemaMarkup type="Accommodation" data={schemaData} />
-      <main className="min-h-screen bg-sea-spray">
-        {page?.heroImage && (
-          <div className="w-full h-[40vh] relative overflow-hidden">
-            <Image
-              src={urlFor(page.heroImage).width(1600).height(640).url()}
-              alt={page.heroImage.alt || page?.title || 'Accommodation'}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-        )}
-
-        <div className="mx-auto max-w-4xl px-6 py-12">
-          <nav className="mb-6 font-mono text-sm text-harbour-stone/70">
-            <Link href="/" className="hover:text-emerald-accent">Home</Link>
-            <span className="mx-2">→</span>
-            <span>Accommodation</span>
-          </nav>
-
-          <h1 className="font-serif text-5xl mb-4 text-harbour-stone">
-            {page?.title || 'Our Properties'}
-          </h1>
-
-          <p className="font-mono text-lg text-harbour-stone/80 mb-12 leading-relaxed max-w-2xl">
-            We offer three unique holiday properties in Bruichladdich, each with its own character
-            and charm. All are perfectly positioned to explore Islay&apos;s distilleries, beaches,
-            and wildlife.
-          </p>
-
-          {/* Property Cards Grid */}
-          {properties && properties.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-              {properties.map((property: Property) => (
-                <Link
-                  key={property._id}
-                  href={`/accommodation/${property.slug?.current}`}
-                  className="group bg-white rounded-lg overflow-hidden shadow-sm border border-washed-timber hover:shadow-md transition-shadow"
-                >
-                  {property.heroImage && (
-                    <div className="relative h-64 overflow-hidden">
-                      <Image
-                        src={urlFor(property.heroImage).width(600).height(400).url()}
-                        alt={property.heroImage.alt || property.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  )}
-                  <div className="p-6">
-                    <h2 className="font-serif text-2xl text-harbour-stone mb-2 group-hover:text-emerald-accent transition-colors">
-                      {property.name}
-                    </h2>
-                    {property.headline && (
-                      <p className="font-mono text-sm text-harbour-stone/70 mb-4 line-clamp-2">
-                        {property.headline}
-                      </p>
-                    )}
-                    <span className="font-mono text-sm text-emerald-accent group-hover:underline">
-                      View property →
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-
-          {/* Empty state if no properties */}
-          {(!properties || properties.length === 0) && (
-            <div className="text-center py-12">
-              <p className="font-mono text-base text-harbour-stone mb-8">
-                Properties coming soon.
-              </p>
-            </div>
-          )}
-
-          <div className="mt-12 pt-8 border-t border-washed-timber">
-            <Link href="/" className="font-mono text-emerald-accent hover:underline">
-              ← Back to Homepage
-            </Link>
-          </div>
-        </div>
-      </main>
-    </>
-  );
+  return <HubPage page={page} cards={properties} config={config} />;
 }

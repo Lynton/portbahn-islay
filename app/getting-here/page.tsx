@@ -1,21 +1,7 @@
 import { cache } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { Metadata } from 'next';
-import SchemaMarkup from '@/components/SchemaMarkup';
+import HubPage from '@/app/_components/HubPage';
 import { client } from '@/sanity/lib/client';
-import { urlFor } from '@/sanity/lib/image';
-
-interface GuidePage {
-  _id: string;
-  title: string;
-  slug: { current: string };
-  introduction?: string;
-  heroImage?: {
-    alt?: string;
-    asset: { _ref: string };
-  };
-}
 
 // Revalidate every 60 seconds
 export const revalidate = 60;
@@ -53,9 +39,7 @@ const getTravelGuidePages = cache(async () => {
     title,
     slug,
     introduction,
-    heroImage,
-    "contentBlockCount": count(contentBlocks),
-    "faqCount": count(faqBlocks)
+    heroImage
   }`;
 
   return await client.fetch(query, {}, {
@@ -78,97 +62,29 @@ export default async function TravelToIslayPage() {
     getTravelGuidePages(),
   ]);
 
-  const schemaData = {
-    name: page?.title || 'Getting to the Isle of Islay',
-    description: page?.seoDescription || 'Complete guide to reaching the Isle of Islay by CalMac ferry or Loganair flight.',
+  const config = {
+    breadcrumbs: [
+      { label: 'Home', href: '/' },
+      { label: 'Travel to Islay' },
+    ],
+    introText: 'Travel to Islay is not straightforward - you don\'t come to the Scottish islands if you want easy. This guide covers all your travel options for reaching Islay by ferry or flight. Whether you choose the scenic CalMac ferry crossing or a quick Loganair flight from Glasgow, we\'re here to help make your journey smooth.',
+    sectionHeading: 'Ways to Reach Islay',
+    cardLinkPrefix: '/guides/',
+    emptyStateMessage: 'Travel guide pages coming soon.',
+    backLink: {
+      href: '/',
+      label: 'Back to Our Properties',
+    },
+    schemaType: 'CollectionPage' as const,
+    schemaData: {
+      name: 'Ways to Reach Islay',
+      description: page?.seoDescription || 'Complete guide to travel options for reaching the Isle of Islay by CalMac ferry, Loganair flight, car, and bus.',
+      about: {
+        '@type': 'Trip',
+        name: 'Travel to Isle of Islay'
+      }
+    },
   };
 
-  return (
-    <>
-      <SchemaMarkup type={['HowTo', 'Place']} data={schemaData} />
-      <main className="min-h-screen bg-sea-spray">
-        {page?.heroImage && (
-          <div className="w-full h-[40vh] relative overflow-hidden">
-            <Image
-              src={urlFor(page.heroImage).width(1600).height(640).url()}
-              alt={page.heroImage.alt || page?.title || 'Travel to Islay'}
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-        )}
-
-        <div className="mx-auto max-w-4xl px-6 py-12">
-          <nav className="mb-6 font-mono text-sm text-harbour-stone/70">
-            <Link href="/" className="hover:text-emerald-accent">Home</Link>
-            <span className="mx-2">→</span>
-            <span>Travel to Islay</span>
-          </nav>
-
-          <h1 className="font-serif text-5xl mb-4 text-harbour-stone">
-            {page?.title || 'Getting to Islay'}
-          </h1>
-
-          <p className="font-mono text-lg text-harbour-stone/80 mb-12 leading-relaxed max-w-2xl">
-            Reaching Islay is part of the adventure. Whether you choose the scenic ferry crossing
-            or a quick flight from Glasgow, we&apos;re here to help make your journey smooth.
-            Our comprehensive ferry support service ensures you never miss a sailing.
-          </p>
-
-          {/* Travel Guide Cards Grid */}
-          {travelGuides && travelGuides.length > 0 && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-              {travelGuides.map((guide: GuidePage) => (
-                <Link
-                  key={guide._id}
-                  href={`/guides/${guide.slug?.current}`}
-                  className="group bg-white rounded-lg overflow-hidden shadow-sm border border-washed-timber hover:shadow-md transition-shadow"
-                >
-                  {guide.heroImage && (
-                    <div className="relative h-48 overflow-hidden">
-                      <Image
-                        src={urlFor(guide.heroImage).width(600).height(300).url()}
-                        alt={guide.heroImage.alt || guide.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  )}
-                  <div className="p-6">
-                    <h2 className="font-serif text-2xl text-harbour-stone mb-2 group-hover:text-emerald-accent transition-colors">
-                      {guide.title}
-                    </h2>
-                    {guide.introduction && (
-                      <p className="font-mono text-sm text-harbour-stone/70 mb-4 line-clamp-2">
-                        {guide.introduction}
-                      </p>
-                    )}
-                    <span className="font-mono text-sm text-emerald-accent group-hover:underline">
-                      Read more →
-                    </span>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-
-          {/* Empty state if no guide pages */}
-          {(!travelGuides || travelGuides.length === 0) && (
-            <div className="text-center py-12">
-              <p className="font-mono text-base text-harbour-stone mb-8">
-                Travel guide pages coming soon.
-              </p>
-            </div>
-          )}
-
-          <div className="mt-12 pt-8 border-t border-washed-timber">
-            <Link href="/" className="font-mono text-emerald-accent hover:underline">
-              ← Back to Our Properties
-            </Link>
-          </div>
-        </div>
-      </main>
-    </>
-  );
+  return <HubPage page={page} cards={travelGuides} config={config} />;
 }
