@@ -19,6 +19,7 @@ import faqItem from './collections/faqItem';
 // Singletons
 import homepage from './singletons/homepage';
 import aboutPage from './singletons/aboutPage';
+import accommodationPage from './singletons/accommodationPage';
 import gettingHerePage from './singletons/gettingHerePage';
 import contactPage from './singletons/contactPage';
 import faqPage from './singletons/faqPage';
@@ -56,6 +57,7 @@ export const schemaTypes = [
   // Singletons
   homepage,
   aboutPage,
+  accommodationPage,
   gettingHerePage,
   contactPage,
   faqPage,

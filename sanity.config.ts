@@ -67,6 +67,14 @@ export default defineConfig({
                           .documentId('aboutPage')
                       ),
                     S.listItem()
+                      .title('Accommodation (Hub)')
+                      .id('accommodationPage')
+                      .child(
+                        S.document()
+                          .schemaType('accommodationPage')
+                          .documentId('accommodationPage')
+                      ),
+                    S.listItem()
                       .title('Getting Here')
                       .id('gettingHerePage')
                       .child(
