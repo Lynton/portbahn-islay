@@ -2,10 +2,20 @@ import { cache } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
-import { PortableText } from '@portabletext/react';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
+
+interface GuidePage {
+  _id: string;
+  title: string;
+  slug: { current: string };
+  introduction?: string;
+  heroImage?: {
+    alt?: string;
+    asset: { _ref: string };
+  };
+}
 
 // Revalidate every 60 seconds
 export const revalidate = 60;
@@ -109,7 +119,7 @@ export default async function ExploreIslayPage() {
           {/* Guide Cards Grid */}
           {guidePages && guidePages.length > 0 && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-              {guidePages.map((guide: any) => (
+              {guidePages.map((guide: GuidePage) => (
                 <Link
                   key={guide._id}
                   href={`/guides/${guide.slug?.current}`}

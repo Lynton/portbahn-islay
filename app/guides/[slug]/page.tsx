@@ -27,6 +27,19 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+interface FaqBlockRef {
+  _key: string;
+  overrideQuestion?: string;
+  faqBlock?: {
+    _id: string;
+    question: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    answer: any[];
+    category: string;
+    priority: number;
+  };
+}
+
 const getGuidePage = cache(async (slug: string) => {
   const query = `*[_type == "guidePage" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
     _id,
@@ -106,7 +119,7 @@ export default async function GuidePage({ params }: PageProps) {
   }
 
   // Filter to only resolved FAQs
-  const resolvedFaqs = page?.faqBlocks?.filter((fb: any) => fb?.faqBlock) || [];
+  const resolvedFaqs = page?.faqBlocks?.filter((fb: FaqBlockRef) => fb?.faqBlock) || [];
 
   return (
     <main className="min-h-screen bg-sea-spray">
@@ -156,16 +169,16 @@ export default async function GuidePage({ params }: PageProps) {
               Common Questions
             </h2>
             <div className="space-y-8">
-              {resolvedFaqs.map((faqBlock: any) => (
+              {resolvedFaqs.map((faqBlock: FaqBlockRef) => (
                 <div
                   key={faqBlock._key}
                   className="bg-white rounded-lg p-6 shadow-sm border border-washed-timber"
                 >
                   <h3 className="font-mono text-lg font-semibold text-harbour-stone mb-3">
-                    {faqBlock.overrideQuestion || faqBlock.faqBlock.question}
+                    {faqBlock.overrideQuestion || faqBlock.faqBlock?.question}
                   </h3>
                   <div className="font-mono text-base text-harbour-stone/80 prose prose-emerald max-w-none">
-                    {faqBlock.faqBlock.answer && (
+                    {faqBlock.faqBlock?.answer && (
                       <PortableText value={faqBlock.faqBlock.answer} />
                     )}
                   </div>
