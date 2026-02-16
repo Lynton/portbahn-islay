@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 
 interface TrustTransferProps {
   reviews: Array<{
@@ -30,7 +31,7 @@ export default function PropertyHostTrustTransfer({
           they bring years of hospitality experience to this property.
         </p>
         <p className="font-mono text-base text-harbour-stone leading-relaxed">
-          This is the owner's personal retreat, carefully maintained and now being
+          This is the owner&apos;s personal retreat, carefully maintained and now being
           shared with guests for the first time in 2026. You can expect the same high
           standards of cleanliness, thoughtful equipment, and responsive hosting that
           have earned Pi and Lynton consistently outstanding reviews.
@@ -62,18 +63,18 @@ export default function PropertyHostTrustTransfer({
       </div>
 
       <div className="mt-8 flex gap-4 flex-wrap">
-        <a
+        <Link
           href="/accommodation/portbahn-house"
           className="text-emerald-accent hover:underline font-mono text-sm"
         >
           Read more reviews from Portbahn House →
-        </a>
-        <a
+        </Link>
+        <Link
           href="/accommodation/shorefield"
           className="text-emerald-accent hover:underline font-mono text-sm"
         >
           Read more reviews from Shorefield →
-        </a>
+        </Link>
       </div>
     </section>
   );

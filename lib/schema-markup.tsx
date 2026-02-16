@@ -3,6 +3,13 @@ import { urlFor } from '@/sanity/lib/image';
 // Base URL for the site
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahnislay.com';
 
+function getCanonicalUrl(pathOrUrl?: string): string {
+  if (!pathOrUrl) return BASE_URL;
+  if (pathOrUrl.startsWith('http://') || pathOrUrl.startsWith('https://')) return pathOrUrl;
+  const path = pathOrUrl.startsWith('/') ? pathOrUrl : `/${pathOrUrl}`;
+  return `${BASE_URL}${path}`;
+}
+
 // Schema type definitions
 export type SchemaType =
   | 'Organization'
@@ -26,12 +33,15 @@ export interface BreadcrumbItem {
 
 export interface SchemaMarkupProps {
   type: SchemaType | SchemaType[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
   breadcrumbs?: BreadcrumbItem[];
 }
 
 // Helper to map Sanity amenities to schema.org amenityFeature
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapAmenitiesToSchema(property: any): any[] {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const amenities: any[] = [];
   
   // Schema.org amenity types
@@ -91,6 +101,7 @@ function mapAmenitiesToSchema(property: any): any[] {
 
 // Generate Organization schema
 function generateOrganization(data?: any) {
+  void data;
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -112,6 +123,7 @@ function generateOrganization(data?: any) {
 }
 
 // Generate LocalBusiness/VacationRental schema
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function generateVacationRental(data: any) {
   const geo = data.latitude && data.longitude ? {
     '@type': 'GeoCoordinates',
@@ -163,6 +175,7 @@ function generateIslayPlace() {
 }
 
 // Generate AggregateRating from review scores
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function generateAggregateRating(reviewScores: any): any {
   if (!reviewScores) return undefined;
 
@@ -202,6 +215,7 @@ function generateAggregateRating(reviewScores: any): any {
 }
 
 // Generate Review schema from review highlights
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function generateReviews(reviewHighlights: any[]): any[] {
   if (!reviewHighlights || reviewHighlights.length === 0) return [];
 
@@ -222,7 +236,8 @@ function generateReviews(reviewHighlights: any[]): any[] {
 }
 
 // Generate Accommodation schema for property pages
-function generateAccommodation(property: any, siteUrl: string) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function generateAccommodation(property: any) {
   const geo = property.latitude && property.longitude ? {
     '@type': 'GeoCoordinates',
     latitude: property.latitude,
@@ -255,25 +270,6 @@ function generateAccommodation(property: any, siteUrl: string) {
     });
   }
 
-  // Determine availability based on availabilityStatus
-  let availability: string = 'https://schema.org/InStock';
-  if (property.availabilityStatus) {
-    switch (property.availabilityStatus) {
-      case 'bookable':
-        availability = 'https://schema.org/InStock';
-        break;
-      case 'enquiries':
-        availability = 'https://schema.org/PreOrder';
-        break;
-      case 'coming-soon':
-        availability = 'https://schema.org/PreOrder';
-        break;
-      case 'unavailable':
-        availability = 'https://schema.org/OutOfStock';
-        break;
-    }
-  }
-
   // Generate aggregate rating from review scores
   const aggregateRating = generateAggregateRating(property.reviewScores);
 
@@ -283,10 +279,15 @@ function generateAccommodation(property: any, siteUrl: string) {
   const accommodation: any = {
     '@context': 'https://schema.org',
     '@type': 'Accommodation',
+    '@id': getCanonicalUrl(`/accommodation/${property.slug?.current || property.slug}`),
     name: property.name,
     // Use entityFraming.whatItIs for description priority if available
     description: property.entityFraming?.whatItIs || property.description || property.overviewIntro,
-    url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
+    url: getCanonicalUrl(`/accommodation/${property.slug?.current || property.slug}`),
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': BASE_URL,
+    },
     address,
     geo,
     numberOfRooms: property.bedrooms ? {
@@ -341,7 +342,8 @@ function generateAccommodation(property: any, siteUrl: string) {
 }
 
 // Generate Place schema for specific property
-function generatePropertyPlace(property: any, siteUrl: string) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function generatePropertyPlace(property: any) {
   const geo = property.latitude && property.longitude ? {
     '@type': 'GeoCoordinates',
     latitude: property.latitude,
@@ -362,16 +364,23 @@ function generatePropertyPlace(property: any, siteUrl: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Place',
+    '@id': getCanonicalUrl(`/accommodation/${property.slug?.current || property.slug}#place`),
     name: property.name,
     description: property.description || property.overviewIntro,
-    url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
+    url: getCanonicalUrl(`/accommodation/${property.slug?.current || property.slug}`),
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': BASE_URL,
+    },
     address,
     geo,
   };
 }
 
 // Generate Product/Offer schema for booking
-function generateProductOffer(property: any, siteUrl: string) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function generateProductOffer(property: any) {
+  const canonicalUrl = getCanonicalUrl(`/accommodation/${property.slug?.current || property.slug}`);
   const offers: any[] = [];
 
   // Determine availability based on availabilityStatus
@@ -405,7 +414,7 @@ function generateProductOffer(property: any, siteUrl: string) {
         unitCode: 'DAY',
       },
       availability,
-      url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
+      url: canonicalUrl,
     });
   }
 
@@ -421,7 +430,7 @@ function generateProductOffer(property: any, siteUrl: string) {
         unitCode: 'WEE',
       },
       availability,
-      url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
+      url: canonicalUrl,
     });
   }
 
@@ -430,7 +439,7 @@ function generateProductOffer(property: any, siteUrl: string) {
     offers.push({
       '@type': 'Offer',
       availability,
-      url: `${siteUrl}/accommodation/${property.slug?.current || property.slug}`,
+      url: canonicalUrl,
     });
   }
 
@@ -440,10 +449,16 @@ function generateProductOffer(property: any, siteUrl: string) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
+    '@id': getCanonicalUrl(`/accommodation/${property.slug?.current || property.slug}#product`),
     name: property.name,
     description: property.description || property.overviewIntro,
     image: property.heroImage ? urlFor(property.heroImage).width(1200).height(630).url() : undefined,
     offers: offers.length === 1 ? offers[0] : offers,
+    url: getCanonicalUrl(`/accommodation/${property.slug?.current || property.slug}`),
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': BASE_URL,
+    },
     ...(aggregateRating && { aggregateRating }),
   };
 }
@@ -453,20 +468,28 @@ function generateBreadcrumbList(breadcrumbs: BreadcrumbItem[]) {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
+    '@id': getCanonicalUrl('#breadcrumbs'),
     itemListElement: breadcrumbs.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: item.url,
+      item: getCanonicalUrl(item.url),
     })),
   };
 }
 
 // Generate Article schema (for future guide pages)
-function generateArticle(article: any, siteUrl: string) {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function generateArticle(article: any) {
+  const path = article.slug?.current
+    ? `/guides/${article.slug.current}`
+    : (typeof article.slug === 'string' ? article.slug : undefined);
+  const canonicalUrl = getCanonicalUrl(path);
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Article',
+    '@id': canonicalUrl,
     headline: article.title,
     description: article.seoDescription || article.summary,
     author: {
@@ -486,16 +509,22 @@ function generateArticle(article: any, siteUrl: string) {
     image: article.heroImage ? urlFor(article.heroImage).width(1200).height(630).url() : undefined,
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `${siteUrl}${article.slug?.current || article.slug}`,
+      '@id': canonicalUrl,
+    },
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': BASE_URL,
     },
   };
 }
 
 // Generate TouristAttraction schema (for Explore Islay page)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function generateTouristAttraction(data: any) {
   return {
     '@context': 'https://schema.org',
     '@type': 'TouristAttraction',
+    '@id': data?.url ? getCanonicalUrl(data.url) : getCanonicalUrl('/explore-islay'),
     name: data?.name || 'Isle of Islay',
     description: data?.description || 'Scottish island renowned for nine whisky distilleries, pristine beaches, abundant wildlife, and dramatic coastal landscapes',
     geo: {
@@ -512,10 +541,13 @@ function generateTouristAttraction(data: any) {
 }
 
 // Generate HowTo schema (for Getting Here page)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function generateHowTo(data: any) {
+  const canonicalUrl = getCanonicalUrl(data?.url || '/getting-here');
   return {
     '@context': 'https://schema.org',
     '@type': 'HowTo',
+    '@id': canonicalUrl,
     name: data?.name || 'How to Get to the Isle of Islay',
     description: data?.description || 'Complete guide to reaching Islay by CalMac ferry or Loganair flight',
     totalTime: 'PT6H',
@@ -542,15 +574,20 @@ function generateHowTo(data: any) {
         text: 'Drive 35-40 minutes from ferry port to Bruichladdich',
       },
     ],
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': BASE_URL,
+    },
   };
 }
 
 // Generate WebPage schema (for general pages)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function generateWebPage(data: any, siteUrl: string) {
   const schema: any = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    '@id': siteUrl,
+    '@id': getCanonicalUrl(data?.url || siteUrl),
     name: data.name,
     description: data.description,
     isPartOf: {
@@ -568,11 +605,12 @@ function generateWebPage(data: any, siteUrl: string) {
 }
 
 // Generate CollectionPage schema (for hub pages)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function generateCollectionPage(data: any, siteUrl: string) {
   const schema: any = {
     '@context': 'https://schema.org',
     '@type': 'CollectionPage',
-    '@id': siteUrl,
+    '@id': getCanonicalUrl(data?.url || siteUrl),
     name: data.name,
     description: data.description,
     isPartOf: {
@@ -590,7 +628,7 @@ function generateCollectionPage(data: any, siteUrl: string) {
   if (data.hasPart && data.hasPart.length > 0) {
     schema.hasPart = data.hasPart.map((page: any) => ({
       '@type': page.type || 'WebPage',
-      '@id': `${BASE_URL}${page.url}`,
+      '@id': getCanonicalUrl(page.url),
       name: page.name
     }));
   }
@@ -601,6 +639,7 @@ function generateCollectionPage(data: any, siteUrl: string) {
 // Main schema generator function
 export function generateSchemaMarkup(
   type: SchemaType | SchemaType[],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any,
   breadcrumbs?: BreadcrumbItem[]
 ): object[] {
@@ -619,21 +658,21 @@ export function generateSchemaMarkup(
       case 'Place':
         if (data?.name && data?.location) {
           // Property-specific place
-          schemas.push(generatePropertyPlace(data, BASE_URL));
+          schemas.push(generatePropertyPlace(data));
         } else {
           // Isle of Islay place
           schemas.push(generateIslayPlace());
         }
         break;
       case 'Accommodation':
-        schemas.push(generateAccommodation(data, BASE_URL));
+        schemas.push(generateAccommodation(data));
         // NOTE: Per playbook v1.3.1, we do NOT add FAQPage schema.
         // Q&A blocks on entity pages enhance the page but don't warrant FAQPage schema.
         // Common questions are part of the Accommodation entity, not a separate FAQ entity.
         break;
       case 'Product':
       case 'Offer':
-        schemas.push(generateProductOffer(data, BASE_URL));
+        schemas.push(generateProductOffer(data));
         break;
       case 'BreadcrumbList':
         if (breadcrumbs && breadcrumbs.length > 0) {
@@ -641,7 +680,7 @@ export function generateSchemaMarkup(
         }
         break;
       case 'Article':
-        schemas.push(generateArticle(data, BASE_URL));
+        schemas.push(generateArticle(data));
         break;
       case 'TouristAttraction':
         schemas.push(generateTouristAttraction(data));

@@ -76,6 +76,14 @@ export default function Header() {
               </div>
             </div>
 
+            {/* Availability Link */}
+            <Link
+              href="/availability"
+              className="font-mono text-sm text-harbour-stone hover:text-emerald-accent transition-colors"
+            >
+              Availability
+            </Link>
+
             {/* Explore Islay Dropdown */}
             <div className="relative group">
               <Link

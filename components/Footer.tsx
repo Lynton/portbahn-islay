@@ -35,6 +35,11 @@ export default function Footer() {
             <h3 className="font-serif text-lg mb-4">Islay Guides</h3>
             <ul className="space-y-2 font-mono text-sm">
               <li>
+                <Link href="/availability" className="text-washed-timber hover:text-emerald-accent transition-colors">
+                  Check Availability
+                </Link>
+              </li>
+              <li>
                 <Link href="/getting-here" className="text-washed-timber hover:text-emerald-accent transition-colors">
                   Travel to Islay
                 </Link>

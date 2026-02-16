@@ -21,24 +21,6 @@ export default async function MultiPropertyMap() {
     return null;
   }
 
-  // Build query for multiple locations
-  // Google Maps embed can show multiple markers using the query parameter
-  const locations = properties
-    .map((prop: any) => {
-      if (prop.latitude && prop.longitude) {
-        return `${prop.latitude},${prop.longitude}`;
-      }
-      const addressParts = [
-        prop.name,
-        prop.postcode,
-        prop.location,
-        'Isle of Islay',
-        'Scotland',
-      ].filter(Boolean);
-      return encodeURIComponent(addressParts.join(', '));
-    })
-    .join('|');
-
   // For multiple locations, we can use a search query or create a custom map
   // Using a simple approach: show the area with all properties
   const query = encodeURIComponent('Portbahn Islay accommodation, Bruichladdich, Isle of Islay, Scotland');

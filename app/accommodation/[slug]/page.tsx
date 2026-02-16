@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Metadata } from 'next';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
-import BookingCalendar from '@/components/BookingCalendar';
+import PropertyCalendar from '@/components/PropertyCalendar';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PropertyCard from '@/components/PropertyCard';
@@ -13,24 +13,7 @@ import GoogleReviews from '@/components/GoogleReviews';
 import PropertyHostTrustTransfer from '@/components/PropertyHostTrustTransfer';
 
 // TypeScript types for AI-optimized fields
-interface EntityFraming {
-  whatItIs?: string;
-  whatItIsNot?: string[];
-  primaryDifferentiator?: string;
-  category?: string;
-}
-
-interface TrustSignals {
-  ownership?: string;
-  established?: string;
-  guestExperience?: string;
-  localCredentials?: string[];
-}
-
-interface CommonQuestion {
-  question: string;
-  answer: string;
-}
+// (Types kept inline where used)
 
 interface MagicMoment {
   moment: string;
@@ -48,16 +31,7 @@ interface HonestFriction {
   context: string;
 }
 
-interface ReviewScores {
-  airbnbScore?: number;
-  airbnbCount?: number;
-  airbnbBadges?: string[];
-  bookingScore?: number;
-  bookingCount?: number;
-  bookingCategory?: string;
-  googleScore?: number;
-  googleCount?: number;
-}
+// (Types kept inline where used)
 
 interface ReviewHighlight {
   quote: string;
@@ -290,7 +264,7 @@ export default async function PropertyPage({ params }: PageProps) {
   return (
     <>
       <SchemaMarkup
-        type={['Accommodation', 'Place', 'Product']}
+        type={['Accommodation', 'Place', 'Product', 'BreadcrumbList']}
         data={property}
         breadcrumbs={breadcrumbs}
       />
@@ -311,7 +285,11 @@ export default async function PropertyPage({ params }: PageProps) {
       {/* Breadcrumbs */}
       <Breadcrumbs items={breadcrumbs} />
 
-      <div className="mx-auto max-w-4xl px-6 py-12">
+      {/* Two-column layout: main content + sticky calendar */}
+      <div className="mx-auto max-w-7xl px-6 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main content column */}
+          <div className="lg:col-span-2">
         {/* Property Name & Type */}
         <div className="mb-4">
           <h1 className="font-serif text-5xl text-harbour-stone mb-2">
@@ -528,7 +506,7 @@ export default async function PropertyPage({ params }: PageProps) {
         {/* What's Included */}
         {(property.includedIntro || property.included?.length || property.notIncluded?.length) && (
           <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What's Included</h2>
+            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What&apos;s Included</h2>
             {property.includedIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.includedIntro}</p>
             )}
@@ -616,7 +594,7 @@ export default async function PropertyPage({ params }: PageProps) {
                 <div className="space-y-3">
                   {property.guestSuperlatives.map((quote: string, i: number) => (
                     <p key={i} className="font-mono text-base text-harbour-stone italic border-l-4 border-emerald-accent pl-4 py-2">
-                      "{quote}"
+                      &quot;{quote}&quot;
                     </p>
                   ))}
                 </div>
@@ -785,7 +763,7 @@ export default async function PropertyPage({ params }: PageProps) {
                   {property.reviewHighlights.map((highlight: ReviewHighlight, i: number) => (
                     <div key={i} className="border-l-4 border-emerald-accent pl-6 py-3">
                       <p className="font-mono text-base text-harbour-stone italic mb-2">
-                        "{highlight.quote}"
+                        &quot;{highlight.quote}&quot;
                       </p>
                       <div className="flex items-center gap-3">
                         <p className="font-mono text-sm text-harbour-stone opacity-60">
@@ -823,7 +801,7 @@ export default async function PropertyPage({ params }: PageProps) {
             )}
             {property.nearbyAttractions && property.nearbyAttractions.length > 0 && (
               <div className="mb-4">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">What's Nearby?</h3>
+                <h3 className="font-serif text-xl text-harbour-stone mb-2">What&apos;s Nearby?</h3>
                 <ArrayField items={property.nearbyAttractions} />
               </div>
             )}
@@ -1004,35 +982,23 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* Booking Calendar */}
-        {property.lodgifyPropertyId && property.lodgifyRoomId && property.slug?.current && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Book Your Stay</h2>
-            <BookingCalendar
-              propertySlug={property.slug.current}
-              propertyId={property.lodgifyPropertyId}
-              propertyName={property.name}
-              icsUrl={property.icsUrl}
-            />
-          </section>
-        )}
 
         {/* Image Gallery Grid */}
         {galleryImages.length > 0 && (
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">Gallery</h2>
             <div className="grid grid-cols-2 gap-4">
-              {galleryImages.map((image: any, index: number) => (
+              {galleryImages.map((image: unknown, index: number) => (
                 <div key={index} className="aspect-[4/3] relative overflow-hidden">
                   <Image
-                    src={urlFor(image).width(800).height(600).url()}
-                    alt={image.alt || `${property.name} - Image ${index + 1}`}
+                    src={urlFor(image as any).width(800).height(600).url()}
+                    alt={(image as any)?.alt || `${property.name} - Image ${index + 1}`}
                     fill
                     className="object-cover"
                   />
-                  {image.caption && (
+                  {(image as any)?.caption && (
                     <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-sea-spray font-mono text-sm px-4 py-2">
-                      {image.caption}
+                      {(image as any).caption}
                     </div>
                   )}
                 </div>
@@ -1045,30 +1011,48 @@ export default async function PropertyPage({ params }: PageProps) {
         {otherProperties.length > 0 && (
           <section className="mb-12 mt-16 pt-12 border-t-2 border-[#C8C6BF]">
             <h2 className="font-serif text-3xl text-harbour-stone mb-8">Our Other Accommodation</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {otherProperties.map((otherProperty: any) => {
-                const imageUrl = otherProperty.heroImage
-                  ? urlFor(otherProperty.heroImage).width(800).height(1200).url()
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {otherProperties.map((otherProperty: unknown) => {
+                const p = otherProperty as any;
+                const imageUrl = p.heroImage
+                  ? urlFor(p.heroImage).width(800).height(1200).url()
                   : '';
 
                 return (
                   <PropertyCard
-                    key={otherProperty._id}
-                    name={otherProperty.name}
-                    location={otherProperty.location}
-                    description={otherProperty.description}
-                    sleeps={otherProperty.sleeps}
-                    bedrooms={otherProperty.bedrooms}
+                    key={p._id}
+                    name={p.name}
+                    location={p.location}
+                    description={p.description}
+                    sleeps={p.sleeps}
+                    bedrooms={p.bedrooms}
                     imageUrl={imageUrl}
-                    href={`/accommodation/${otherProperty.slug?.current || otherProperty.slug}`}
+                    href={`/accommodation/${p.slug?.current || p.slug}`}
                   />
                 );
               })}
             </div>
           </section>
         )}
+        </div>
+        {/* End main content column */}
 
+        {/* Sticky calendar sidebar */}
+        <div className="lg:col-span-1">
+          {property.lodgifyPropertyId && property.lodgifyRoomId && property.slug?.current && (
+            <PropertyCalendar
+              propertySlug={property.slug.current}
+              propertyId={property.lodgifyPropertyId}
+              propertyName={property.name}
+              sleeps={property.sleeps}
+            />
+          )}
+        </div>
+        {/* End calendar sidebar */}
       </div>
+      {/* End grid */}
+      </div>
+      {/* End container */}
     </main>
     </>
   );

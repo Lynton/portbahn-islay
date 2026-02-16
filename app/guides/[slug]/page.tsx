@@ -48,6 +48,7 @@ const getGuidePage = cache(async (slug: string) => {
     slug,
     heroImage,
     introduction,
+    schemaType,
     contentBlocks[]{
       _key,
       version,
@@ -122,20 +123,29 @@ export default async function GuidePage({ params }: PageProps) {
   // Filter to only resolved FAQs
   const resolvedFaqs = page?.faqBlocks?.filter((fb: FaqBlockRef) => fb?.faqBlock) || [];
 
-  // Determine schema type based on slug (user Q6: D - mix HowTo and Article)
-  // Travel guides (ferry, flights, planning) = HowTo
-  // Attraction/experience guides = Article
-  const travelGuideSlugs = ['ferry-to-islay', 'flights-to-islay', 'planning-your-trip'];
-  const schemaType = travelGuideSlugs.includes(slug) ? 'HowTo' : 'Article';
+  const schemaType = page.schemaType || 'Article';
 
   const schemaData = {
     name: page.title,
     description: page.seoDescription || page.introduction || `Guide to ${page.title} on the Isle of Islay.`,
+    url: `/guides/${slug}`,
+    slug: { current: slug },
+    title: page.title,
+    seoDescription: page.seoDescription,
+    heroImage: page.heroImage,
   };
 
   return (
     <>
-      <SchemaMarkup type={schemaType} data={schemaData} />
+      <SchemaMarkup
+        type={[schemaType, 'BreadcrumbList']}
+        data={schemaData}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Explore Islay', url: '/explore-islay' },
+          { name: page.title, url: `/guides/${slug}` },
+        ]}
+      />
       <main className="min-h-screen bg-sea-spray">
       {page.heroImage && (
         <div className="w-full h-[40vh] relative overflow-hidden">

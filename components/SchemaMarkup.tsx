@@ -2,6 +2,7 @@ import SchemaMarkupComponent, { SchemaType, BreadcrumbItem } from '@/lib/schema-
 
 interface SchemaMarkupProps {
   type: SchemaType | SchemaType[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
   breadcrumbs?: BreadcrumbItem[];
 }

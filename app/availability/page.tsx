@@ -1,6 +1,22 @@
-import MultiPropertyCalendar from '@/components/MultiPropertyCalendar';
+'use client';
+
+import dynamic from 'next/dynamic';
 import Breadcrumbs from '@/components/Breadcrumbs';
-import MultiPropertyMap from '@/components/MultiPropertyMap';
+import SchemaMarkup from '@/components/SchemaMarkup';
+
+// Dynamic import for large calendar component (753 lines, 30-50KB)
+// Improves initial page load by deferring calendar bundle
+const MultiPropertyCalendar = dynamic(
+  () => import('@/components/MultiPropertyCalendar'),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="p-12 text-center font-mono text-harbour-stone/60">
+        Loading calendar...
+      </div>
+    )
+  }
+);
 
 export default function AvailabilityPage() {
   const breadcrumbs = [
@@ -9,9 +25,19 @@ export default function AvailabilityPage() {
   ];
 
   return (
-    <main className="min-h-screen bg-[#FFFCF7]">
-      {/* Breadcrumbs */}
-      <Breadcrumbs items={breadcrumbs} />
+    <>
+      <SchemaMarkup
+        type={['WebPage', 'BreadcrumbList']}
+        data={{
+          name: 'Availability',
+          description: 'View availability across all Portbahn Islay properties and select dates to check pricing.',
+          url: '/availability',
+        }}
+        breadcrumbs={breadcrumbs}
+      />
+      <main className="min-h-screen bg-[#FFFCF7]">
+        {/* Breadcrumbs */}
+        <Breadcrumbs items={breadcrumbs} />
 
       {/* Page header */}
       <div className="bg-white border-b border-[#E8E7D5]">
@@ -27,14 +53,6 @@ export default function AvailabilityPage() {
 
       {/* Calendar */}
       <MultiPropertyCalendar />
-
-      {/* Map showing all properties */}
-      <div className="bg-white border-t border-[#E8E7D5]">
-        <div className="max-w-7xl mx-auto px-4 py-12">
-          <h2 className="font-serif text-3xl text-[#312F32] mb-6">Property Locations</h2>
-          <MultiPropertyMap />
-        </div>
-      </div>
 
       {/* Property info section */}
       <div className="bg-white border-t border-[#E8E7D5]">
@@ -55,6 +73,7 @@ export default function AvailabilityPage() {
           </div>
         </div>
       </div>
-    </main>
+      </main>
+    </>
   );
 }

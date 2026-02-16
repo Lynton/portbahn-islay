@@ -22,6 +22,7 @@ const getGettingHerePage = cache(async () => {
   const query = `*[_type == "gettingHerePage" && !(_id in path("drafts.**"))][0]{
     _id,
     title,
+    scopeIntro,
     heroImage,
     seoTitle,
     seoDescription
@@ -67,8 +68,8 @@ export default async function TravelToIslayPage() {
       { label: 'Home', href: '/' },
       { label: 'Travel to Islay' },
     ],
-    introText: 'Travel to Islay is not straightforward - you don\'t come to the Scottish islands if you want easy. This guide covers all your travel options for reaching Islay by ferry or flight. Whether you choose the scenic CalMac ferry crossing or a quick Loganair flight from Glasgow, we\'re here to help make your journey smooth.',
-    sectionHeading: 'Ways to Reach Islay',
+    introText: page?.scopeIntro || 'Travel to Islay is not straightforward - you don\'t come to the Scottish islands if you want easy. This guide covers all your travel options for reaching Islay by ferry or flight. Whether you choose the scenic CalMac ferry crossing or a quick Loganair flight from Glasgow, we\'re here to help make your journey smooth.',
+    sectionHeading: 'Our guide on getting to and from Islay',
     cardLinkPrefix: '/guides/',
     emptyStateMessage: 'Travel guide pages coming soon.',
     backLink: {
@@ -79,6 +80,7 @@ export default async function TravelToIslayPage() {
     schemaData: {
       name: 'Ways to Reach Islay',
       description: page?.seoDescription || 'Complete guide to travel options for reaching the Isle of Islay by CalMac ferry, Loganair flight, car, and bus.',
+      url: '/getting-here',
       about: {
         '@type': 'Trip',
         name: 'Travel to Isle of Islay'

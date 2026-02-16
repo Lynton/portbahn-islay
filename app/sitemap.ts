@@ -36,8 +36,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // Dynamic property pages
-  const propertyPages: MetadataRoute.Sitemap = properties.map((property: any) => ({
-    url: `${baseUrl}/accommodation/${property.slug?.current || property.slug}`,
+  const propertyPages: MetadataRoute.Sitemap = properties.map((property: { slug?: { current?: string } | string; _updatedAt?: string }) => ({
+    url: `${baseUrl}/accommodation/${(property.slug as any)?.current || property.slug}`,
     lastModified: property._updatedAt ? new Date(property._updatedAt) : new Date(),
     changeFrequency: 'weekly' as const,
     priority: 0.9,

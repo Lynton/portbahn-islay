@@ -16,7 +16,7 @@ interface GoogleReviewsProps {
   propertyName: string;
 }
 
-export default function GoogleReviews({ googleBusinessUrl, googlePlaceId, propertyName }: GoogleReviewsProps) {
+export default function GoogleReviews({ googleBusinessUrl, googlePlaceId }: GoogleReviewsProps) {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -207,7 +207,7 @@ export default function GoogleReviews({ googleBusinessUrl, googlePlaceId, proper
         <blockquote className="border-l-4 border-emerald-accent pl-6 py-4">
           {renderStars(currentReview.rating)}
           <p className="font-serif text-xl text-harbour-stone mb-4 italic">
-            "{currentReview.text}"
+            &ldquo;{currentReview.text}&rdquo;
           </p>
           <footer className="font-mono text-base text-harbour-stone">
             <cite className="not-italic font-semibold">{currentReview.author}</cite>

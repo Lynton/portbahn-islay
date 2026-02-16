@@ -10,6 +10,15 @@ export const baseSingletonFields = [
     validation: (Rule) => Rule.required(),
   }),
   defineField({
+    name: 'scopeIntro',
+    title: 'Scope Intro (page definition)',
+    type: 'text',
+    group: 'content',
+    rows: 3,
+    description: 'First visible paragraph on the page. Start with an explicit scope sentence like: “This page covers …” then add 1–2 factual supporting sentences.',
+    validation: (Rule) => Rule.required().max(500).warning('Keep under ~500 characters for scannability and passage extraction'),
+  }),
+  defineField({
     name: 'heroImage',
     title: 'Hero Image',
     type: 'image',

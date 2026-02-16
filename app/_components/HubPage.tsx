@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ReactNode } from 'react';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import { urlFor } from '@/sanity/lib/image';
 
@@ -38,6 +37,7 @@ interface HubPageProps {
     schemaData: {
       name: string;
       description: string;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       about?: any;
       hasPart?: Array<{ type: string; url: string; name: string }>;
     };
@@ -53,7 +53,13 @@ interface HubPageProps {
 export default function HubPage({ page, cards, config }: HubPageProps) {
   return (
     <>
-      <SchemaMarkup type={config.schemaType} data={config.schemaData} />
+      <SchemaMarkup
+        type={[config.schemaType, 'BreadcrumbList']}
+        data={config.schemaData}
+        breadcrumbs={config.breadcrumbs
+          .filter((c) => !!c.href)
+          .map((c) => ({ name: c.label, url: c.href! }))}
+      />
       <main className="min-h-screen bg-sea-spray">
         {page?.heroImage && (
           <div className="w-full h-[40vh] relative overflow-hidden">

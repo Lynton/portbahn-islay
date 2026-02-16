@@ -33,6 +33,7 @@ const getAccommodationPage = cache(async () => {
   const query = `*[_type == "accommodationPage" && !(_id in path("drafts.**"))][0]{
     _id,
     title,
+    scopeIntro,
     heroImage,
     seoTitle,
     seoDescription
@@ -78,7 +79,7 @@ export default async function AccommodationPage() {
       { label: 'Home', href: '/' },
       { label: 'Accommodation' },
     ],
-    introText: 'We offer three unique self-catering holiday properties in Bruichladdich. Portbahn House is our family home. Shorefield is the Jacksons\' creation - they built it, planted every tree, created the bird hides. Curlew Cottage is Alan\'s family retreat. These aren\'t purpose-built rentals - they\'re real family homes with personality.',
+    introText: page?.scopeIntro || 'We offer three unique self-catering holiday properties in Bruichladdich. Portbahn House is our family home. Shorefield is the Jacksons\' creation - they built it, planted every tree, created the bird hides. Curlew Cottage is Alan\'s family retreat. These aren\'t purpose-built rentals - they\'re real family homes with personality.',
     sectionHeading: 'Self-Catering Family Holiday Homes in Bruichladdich',
     cardLinkPrefix: '/accommodation/',
     cardLinkSuffix: 'View property →',
@@ -91,6 +92,7 @@ export default async function AccommodationPage() {
     schemaData: {
       name: 'Self-Catering Family Holiday Homes in Bruichladdich',
       description: page?.seoDescription || 'Three unique self-catering holiday properties in Bruichladdich, Islay - real family homes with personality.',
+      url: '/accommodation',
       hasPart: properties.map((p: Property) => ({
         type: 'Accommodation',
         url: `/accommodation/${p.slug.current}`,

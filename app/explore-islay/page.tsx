@@ -36,6 +36,7 @@ const getExploreIslayPage = cache(async () => {
   const query = `*[_type == "exploreIslayPage" && !(_id in path("drafts.**"))][0]{
     _id,
     title,
+    scopeIntro,
     heroImage,
     seoTitle,
     seoDescription
@@ -79,6 +80,7 @@ export default async function ExploreIslayPage() {
   const schemaData = {
     name: 'What to See and Do on Islay',
     description: page?.seoDescription || 'Guide to activities, attractions and experiences on the Isle of Islay - from whisky distilleries to hidden beaches.',
+    url: '/explore-islay',
     about: {
       '@type': 'Place',
       name: 'Isle of Islay'
@@ -87,7 +89,14 @@ export default async function ExploreIslayPage() {
 
   return (
     <>
-      <SchemaMarkup type="CollectionPage" data={schemaData} />
+      <SchemaMarkup
+        type={['CollectionPage', 'BreadcrumbList']}
+        data={schemaData}
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Explore Islay', url: '/explore-islay' },
+        ]}
+      />
       <main className="min-h-screen bg-sea-spray">
         {page?.heroImage && (
           <div className="w-full h-[40vh] relative overflow-hidden">
@@ -113,14 +122,14 @@ export default async function ExploreIslayPage() {
           </h1>
 
           <p className="font-mono text-lg text-harbour-stone/80 mb-12 leading-relaxed max-w-2xl">
-            Having lived and worked on Islay for a number of years, we know the island well. This guide covers activities, attractions and experiences across Islay - from whisky distilleries to hidden beaches. Islay is one of the Inner Hebrides islands of Scotland, renowned for its ten working whisky distilleries, dramatic Atlantic coastline and abundant wildlife.
+            {page?.scopeIntro || 'Having lived and worked on Islay for a number of years, we know the island well. This guide covers activities, attractions and experiences across Islay - from whisky distilleries to hidden beaches. Islay is one of the Inner Hebrides islands of Scotland, renowned for its ten working whisky distilleries, dramatic Atlantic coastline and abundant wildlife.'}
           </p>
 
           {/* Guide Cards Grid */}
           {guidePages && guidePages.length > 0 && (
             <>
               <h2 className="font-serif text-3xl text-harbour-stone mb-8">
-                What to See and Do on Islay
+                A local family&apos;s guide to things to do on Islay
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
                 {guidePages.map((guide: GuidePage) => (

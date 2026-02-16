@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { format, addMonths, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isBefore, startOfDay, isToday } from 'date-fns';
 
@@ -80,21 +80,7 @@ export default function MultiPropertyCalendar() {
     fetchProperties();
   }, []);
 
-  // Fetch availability data
-  useEffect(() => {
-    console.log('MultiPropertyCalendar useEffect triggered', {
-      currentMonth: format(currentMonth, 'yyyy-MM-dd'),
-      monthsToShow,
-      timestamp: new Date().toISOString(),
-    });
-    fetchAvailability();
-  }, [currentMonth, monthsToShow]);
-
-  const fetchAvailability = async () => {
-    console.log('fetchAvailability called', {
-      currentMonth: format(currentMonth, 'yyyy-MM-dd'),
-      monthsToShow,
-    });
+  const fetchAvailability = useCallback(async () => {
     setLoading(true);
     const availData: AvailabilityData = {};
 
@@ -102,23 +88,10 @@ export default function MultiPropertyCalendar() {
       const start = format(currentMonth, 'yyyy-MM-dd');
       const end = format(addMonths(currentMonth, monthsToShow), 'yyyy-MM-dd');
 
-      console.log(`Fetching availability for ${property.name}`, {
-        slug: property.slug,
-        start,
-        end,
-        url: `/api/avail_ics?property=${property.slug}&start=${start}&end=${end}`,
-      });
-
       try {
         const res = await fetch(
           `/api/avail_ics?property=${property.slug}&start=${start}&end=${end}`
         );
-        
-        console.log(`Response for ${property.name}:`, {
-          status: res.status,
-          statusText: res.statusText,
-          ok: res.ok,
-        });
 
         if (!res.ok) {
           const errorText = await res.text();
@@ -130,11 +103,6 @@ export default function MultiPropertyCalendar() {
         }
 
         const data = await res.json();
-        console.log(`Data received for ${property.name}:`, {
-          property: data.property,
-          datesCount: data.dates?.length || 0,
-          sampleDates: data.dates?.slice(0, 5) || [],
-        });
 
         // Transform dates array into availability object
         if (data.dates && Array.isArray(data.dates)) {
@@ -143,11 +111,6 @@ export default function MultiPropertyCalendar() {
             propertyAvailability[item.date] = item.available ? 'available' : 'booked';
           });
           availData[property.slug] = propertyAvailability;
-          console.log(`Processed availability for ${property.name}:`, {
-            totalDates: Object.keys(propertyAvailability).length,
-            availableCount: Object.values(propertyAvailability).filter(v => v === 'available').length,
-            bookedCount: Object.values(propertyAvailability).filter(v => v === 'booked').length,
-          });
         } else {
           console.warn(`No dates array found in response for ${property.name}`, data);
         }
@@ -156,14 +119,14 @@ export default function MultiPropertyCalendar() {
       }
     }
 
-    console.log('Final availability data:', {
-      properties: Object.keys(availData),
-      totalDates: Object.values(availData).reduce((sum, prop) => sum + Object.keys(prop).length, 0),
-    });
-
     setAvailability(availData);
     setLoading(false);
-  };
+  }, [currentMonth, monthsToShow, properties]);
+
+  // Fetch availability data
+  useEffect(() => {
+    fetchAvailability();
+  }, [fetchAvailability]);
 
   const handleDateClick = async (date: Date, property: Property, isAvailable: boolean) => {
     if (!isAvailable) return;

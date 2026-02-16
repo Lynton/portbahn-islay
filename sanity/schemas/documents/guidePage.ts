@@ -85,6 +85,22 @@ export default defineType({
       of: [{ type: 'faqBlockReference' }],
       description: 'Related FAQs for this topic. These appear after the content.',
     }),
+    defineField({
+      name: 'schemaType',
+      title: 'Schema Type',
+      type: 'string',
+      group: 'seo',
+      initialValue: 'Article',
+      options: {
+        list: [
+          { title: 'Article', value: 'Article' },
+          { title: 'HowTo', value: 'HowTo' },
+        ],
+        layout: 'radio',
+      },
+      validation: (Rule) => Rule.required(),
+      description: 'Choose the schema type for this guide. Default is Article; use HowTo for step-by-step travel/process guides.',
+    }),
     // SEO Fields
     defineField({
       name: 'seoTitle',

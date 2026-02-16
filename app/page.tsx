@@ -73,8 +73,17 @@ export default async function Home() {
   return (
     <>
       <SchemaMarkup
-        type={['Organization', 'LocalBusiness', 'Place']}
-        data={homepage}
+        type={['WebPage', 'Organization', 'LocalBusiness', 'Place', 'BreadcrumbList']}
+        data={{
+          ...homepage,
+          url: '/',
+          name: homepage?.seoTitle || homepage?.title || 'Portbahn Islay',
+          description:
+            homepage?.seoDescription ||
+            homepage?.tagline ||
+            'Holiday rental properties on Islay, Scotland',
+        }}
+        breadcrumbs={[{ name: 'Home', url: '/' }]}
       />
       <main className="min-h-screen bg-sea-spray">
       {/* Hero Image */}
@@ -118,16 +127,17 @@ export default async function Home() {
           <section className="mb-16">
             <h2 className="font-serif text-4xl text-harbour-stone mb-8">Our Accommodation</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {properties.map((property: any) => {
-                const imageUrl = property.heroImage 
-                  ? urlFor(property.heroImage).width(800).height(1200).url() 
+              {properties.map((property: unknown) => {
+                const p = property as any;
+                const imageUrl = p.heroImage 
+                  ? urlFor(p.heroImage).width(800).height(1200).url() 
                   : '';
                 
                 // Extract description from overview PortableText or use fallback
                 let description = '';
-                if (property.overview && Array.isArray(property.overview)) {
+                if (p.overview && Array.isArray(p.overview)) {
                   // Extract text from first block
-                  const firstBlock = property.overview.find((block: any) => block._type === 'block');
+                  const firstBlock = p.overview.find((block: any) => block._type === 'block');
                   if (firstBlock && firstBlock.children) {
                     description = firstBlock.children
                       .map((child: any) => child.text || '')
@@ -137,20 +147,20 @@ export default async function Home() {
                 }
                 
                 // Handle both string (legacy) and object (new) location formats
-                const locationText = typeof property.location === 'string' 
-                  ? property.location 
-                  : (property.location?.address || property.location?.nearestTown || '');
+                const locationText = typeof p.location === 'string' 
+                  ? p.location 
+                  : (p.location?.address || p.location?.nearestTown || '');
                 
                 return (
                   <PropertyCard
-                    key={property._id}
-                    name={property.name}
+                    key={p._id}
+                    name={p.name}
                     location={locationText}
                     description={description || 'Self-catering holiday home on Islay'}
-                    sleeps={property.sleeps}
-                    bedrooms={property.bedrooms}
+                    sleeps={p.sleeps}
+                    bedrooms={p.bedrooms}
                     imageUrl={imageUrl}
-                    href={`/accommodation/${property.slug?.current || property.slug}`}
+                    href={`/accommodation/${p.slug?.current || p.slug}`}
                   />
                 );
               })}
