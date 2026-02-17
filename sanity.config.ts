@@ -255,8 +255,62 @@ export default defineConfig({
     media(),
   ],
 
+  // Add an explicit "Duplicate" action for canonical blocks, since Studio's default
+  // duplicate action isn't available in this build.
+  document: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    actions: (prev: any[], context: any) => {
+      if (context?.schemaType !== 'canonicalBlock') return prev;
+      const hasAction = prev.some((a) => a?.action === 'duplicateCanonicalBlock');
+      if (hasAction) return prev;
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      return [...prev, duplicateCanonicalBlockAction];
+    },
+  },
+
   schema: {
     types: schemaTypes,
   },
 });
+
+function duplicateCanonicalBlockAction(props: any) {
+  const { draft, published, onComplete } = props;
+  const source = draft || published;
+
+  return {
+    label: 'Duplicate',
+    action: 'duplicateCanonicalBlock',
+    onHandle: async () => {
+      if (!source) {
+        onComplete();
+        return;
+      }
+
+      // Sanity document actions are not React components, so we avoid hooks here.
+      const { createClient } = await import('@sanity/client');
+      const client = createClient({
+        projectId: process.env.SANITY_STUDIO_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '',
+        dataset: process.env.SANITY_STUDIO_DATASET || process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
+        apiVersion: '2025-02-19',
+        useCdn: false,
+        token: process.env.SANITY_API_TOKEN,
+      });
+
+      const newDoc: any = {
+        ...source,
+        _id: undefined,
+        _rev: undefined,
+        _createdAt: undefined,
+        _updatedAt: undefined,
+      };
+
+      // Ensure blockId uniqueness by clearing it; editor can set a new one.
+      if (newDoc.blockId) newDoc.blockId = `${newDoc.blockId}-copy`;
+      if (newDoc.title) newDoc.title = `${newDoc.title} (Copy)`;
+
+      await client.create(newDoc);
+      onComplete();
+    },
+  };
+}
 
