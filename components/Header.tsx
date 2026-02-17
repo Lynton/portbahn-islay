@@ -47,7 +47,7 @@ export default function Header() {
             {/* Travel to Islay Dropdown */}
             <div className="relative group">
               <Link
-                href="/getting-here"
+                href="/travel-to-islay"
                 className="font-mono text-sm text-harbour-stone group-hover:text-emerald-accent transition-colors"
               >
                 Travel to Islay
