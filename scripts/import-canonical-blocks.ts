@@ -316,10 +316,10 @@ async function upsertBlock(blockData: NonNullable<ReturnType<typeof extractBlock
  */
 async function importBlocks() {
   console.log('\n======================================================');
-  console.log('  Canonical Blocks Import — V3 (CANONICAL-BLOCKS-FINAL.md)');
+  console.log('  Canonical Blocks Import — V3.1 Merged (CANONICAL-BLOCKS-MERGED.md)');
   console.log('======================================================\n');
 
-  const mdPath = path.join(process.cwd(), 'docs', 'content', 'CANONICAL-BLOCKS-FINAL.md');
+  const mdPath = path.join(process.cwd(), 'docs', 'content', 'CANONICAL-BLOCKS-MERGED.md');
 
   if (!fs.existsSync(mdPath)) {
     console.error(`Error: File not found: ${mdPath}`);
