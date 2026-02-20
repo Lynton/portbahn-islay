@@ -21,11 +21,6 @@ import aboutPage from './singletons/aboutPage';
 import accommodationPage from './singletons/accommodationPage';
 import gettingHerePage from './singletons/gettingHerePage';
 import contactPage from './singletons/contactPage';
-import faqPage from './singletons/faqPage';
-import beachesHubPage from './singletons/beachesHubPage';
-import distilleriesHubPage from './singletons/distilleriesHubPage';
-import walksHubPage from './singletons/walksHubPage';
-import villagesHubPage from './singletons/villagesHubPage';
 import exploreIslayPage from './singletons/exploreIslayPage';
 import privacyPage from './singletons/privacyPage';
 import termsPage from './singletons/termsPage';
@@ -56,11 +51,6 @@ export const schemaTypes = [
   accommodationPage,
   gettingHerePage,
   contactPage,
-  faqPage,
-  beachesHubPage,
-  distilleriesHubPage,
-  walksHubPage,
-  villagesHubPage,
   exploreIslayPage,
   privacyPage,
   termsPage,

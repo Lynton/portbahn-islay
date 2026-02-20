@@ -85,46 +85,6 @@ export default defineConfig({
                           .documentId('contactPage')
                       ),
                     S.listItem()
-                      .title('FAQ')
-                      .id('faqPage')
-                      .child(
-                        S.document()
-                          .schemaType('faqPage')
-                          .documentId('faqPage')
-                      ),
-                    S.listItem()
-                      .title('Beaches Hub')
-                      .id('beachesHubPage')
-                      .child(
-                        S.document()
-                          .schemaType('beachesHubPage')
-                          .documentId('beachesHubPage')
-                      ),
-                    S.listItem()
-                      .title('Distilleries Hub')
-                      .id('distilleriesHubPage')
-                      .child(
-                        S.document()
-                          .schemaType('distilleriesHubPage')
-                          .documentId('distilleriesHubPage')
-                      ),
-                    S.listItem()
-                      .title('Walks Hub')
-                      .id('walksHubPage')
-                      .child(
-                        S.document()
-                          .schemaType('walksHubPage')
-                          .documentId('walksHubPage')
-                      ),
-                    S.listItem()
-                      .title('Villages Hub')
-                      .id('villagesHubPage')
-                      .child(
-                        S.document()
-                          .schemaType('villagesHubPage')
-                          .documentId('villagesHubPage')
-                      ),
-                    S.listItem()
                       .title('Privacy')
                       .id('privacyPage')
                       .child(
