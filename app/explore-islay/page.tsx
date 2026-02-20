@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import SchemaMarkup from '@/components/SchemaMarkup';
+import BlockRenderer from '@/components/BlockRenderer';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 
@@ -32,6 +33,22 @@ export const revalidate = 60;
  * - Clear navigation to detailed content
  */
 
+const BLOCK_FIELDS = `
+  block->{
+    _id,
+    blockId,
+    title,
+    entityType,
+    canonicalHome,
+    fullContent,
+    teaserContent,
+    keyFacts
+  },
+  version,
+  showKeyFacts,
+  customHeading
+`;
+
 const getExploreIslayPage = cache(async () => {
   const query = `*[_type == "exploreIslayPage" && !(_id in path("drafts.**"))][0]{
     _id,
@@ -39,7 +56,10 @@ const getExploreIslayPage = cache(async () => {
     scopeIntro,
     heroImage,
     seoTitle,
-    seoDescription
+    seoDescription,
+    contentBlocks[]{
+      ${BLOCK_FIELDS}
+    }
   }`;
 
   return await client.fetch(query, {}, {
@@ -124,6 +144,11 @@ export default async function ExploreIslayPage() {
           <p className="font-mono text-lg text-harbour-stone/80 mb-12 leading-relaxed max-w-2xl">
             {page?.scopeIntro || 'Having lived and worked on Islay for a number of years, we know the island well. This guide covers activities, attractions and experiences across Islay - from whisky distilleries to hidden beaches. Islay is one of the Inner Hebrides islands of Scotland, renowned for its ten working whisky distilleries, dramatic Atlantic coastline and abundant wildlife.'}
           </p>
+
+          {/* Canonical Content Blocks */}
+          {page?.contentBlocks && page.contentBlocks.length > 0 && (
+            <BlockRenderer blocks={page.contentBlocks} className="mb-16" />
+          )}
 
           {/* Guide Cards Grid */}
           {guidePages && guidePages.length > 0 && (

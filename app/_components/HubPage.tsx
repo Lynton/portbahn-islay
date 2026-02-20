@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import SchemaMarkup from '@/components/SchemaMarkup';
+import BlockRenderer from '@/components/BlockRenderer';
 import { urlFor } from '@/sanity/lib/image';
 
 interface HubPageProps {
@@ -12,6 +13,7 @@ interface HubPageProps {
       asset: { _ref: string };
     };
     seoDescription?: string;
+    contentBlocks?: any[];
   } | null;
   cards: Array<{
     _id: string;
@@ -101,6 +103,11 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
           <p className="font-mono text-lg text-harbour-stone/80 mb-12 leading-relaxed max-w-2xl">
             {config.introText}
           </p>
+
+          {/* Canonical Content Blocks */}
+          {page?.contentBlocks && page.contentBlocks.length > 0 && (
+            <BlockRenderer blocks={page.contentBlocks} className="mb-16" />
+          )}
 
           {/* Cards Grid */}
           {cards && cards.length > 0 && (
