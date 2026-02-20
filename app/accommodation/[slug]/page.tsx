@@ -1,6 +1,7 @@
 import { cache } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { Metadata } from 'next';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
@@ -9,8 +10,14 @@ import SchemaMarkup from '@/components/SchemaMarkup';
 import Breadcrumbs from '@/components/Breadcrumbs';
 import PropertyCard from '@/components/PropertyCard';
 import GoogleMap from '@/components/GoogleMap';
-import GoogleReviews from '@/components/GoogleReviews';
 import PropertyHostTrustTransfer from '@/components/PropertyHostTrustTransfer';
+
+// GoogleReviews fetches client-side — keep ssr:false so crawlers don't wait on it.
+// Phase 2: migrate to server-side fetch when property page is redesigned.
+const GoogleReviews = dynamic(() => import('@/components/GoogleReviews'), {
+  ssr: false,
+  loading: () => null,
+});
 
 // TypeScript types for AI-optimized fields
 // (Types kept inline where used)
