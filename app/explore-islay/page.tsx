@@ -167,23 +167,6 @@ export default async function ExploreIslayPage() {
             </>
           )}
 
-          {/* Jura Link - separate from guide pages */}
-          <div className="bg-harbour-stone/5 rounded-lg p-8 mb-12">
-            <h2 className="font-serif text-2xl text-harbour-stone mb-4">
-              Day Trip to Jura
-            </h2>
-            <p className="font-mono text-base text-harbour-stone/80 mb-4">
-              Just a 5-minute ferry hop from Islay, the Isle of Jura offers a wilder,
-              quieter experience with one road, one distillery, and more deer than people.
-            </p>
-            <Link
-              href="/jura"
-              className="inline-block font-mono text-emerald-accent hover:underline"
-            >
-              Plan your Jura day trip →
-            </Link>
-          </div>
-
           {/* Empty state if no guide pages */}
           {(!guidePages || guidePages.length === 0) && (
             <div className="text-center py-12">
