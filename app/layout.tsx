@@ -4,9 +4,18 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
+// Only index on the production domain. Vercel preview deployments (*.vercel.app) stay
+// noindex to avoid competing with the live site at portbahnislay.co.uk.
+// To go live: set NEXT_PUBLIC_SITE_URL=https://portbahnislay.co.uk in Vercel env vars
+// (Production environment only). VERCEL_ENV=production is set automatically by Vercel.
+const isProduction =
+  process.env.NEXT_PUBLIC_SITE_URL === 'https://portbahnislay.co.uk' &&
+  process.env.VERCEL_ENV === 'production';
+
 export const metadata: Metadata = {
   title: "Portbahn Islay",
   description: "Holiday rental properties on Islay, Scotland",
+  robots: isProduction ? undefined : { index: false, follow: false },
 };
 
 export default async function RootLayout({
