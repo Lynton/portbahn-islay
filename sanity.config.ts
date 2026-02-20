@@ -127,26 +127,6 @@ export default defineConfig({
                   .title('Properties')
               ),
             S.listItem()
-              .title('Guides')
-              .child(
-                S.list()
-                  .title('Guides')
-                  .items([
-                    S.listItem()
-                      .title('Beaches')
-                      .child(S.documentTypeList('beach').title('Beaches')),
-                    S.listItem()
-                      .title('Distilleries')
-                      .child(S.documentTypeList('distillery').title('Distilleries')),
-                    S.listItem()
-                      .title('Walks')
-                      .child(S.documentTypeList('walk').title('Walks')),
-                    S.listItem()
-                      .title('Villages')
-                      .child(S.documentTypeList('village').title('Villages')),
-                  ])
-              ),
-            S.listItem()
               .title('Canonical Content Blocks')
               .child(
                 S.documentTypeList('canonicalBlock')

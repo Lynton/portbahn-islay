@@ -10,10 +10,6 @@ import faqBlockReference from './objects/faqBlockReference';
 
 // Collections
 import property from './collections/property';
-import beach from './collections/beach';
-import distillery from './collections/distillery';
-import walk from './collections/walk';
-import village from './collections/village';
 
 // Singletons
 import homepage from './singletons/homepage';
@@ -40,10 +36,6 @@ export const schemaTypes = [
 
   // Collections
   property,
-  beach,
-  distillery,
-  walk,
-  village,
 
   // Singletons
   homepage,
