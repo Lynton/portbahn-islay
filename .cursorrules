@@ -1,0 +1,82 @@
+# Portbahn Islay — Cursor Rules
+# Updated: 2026-02-20
+
+## Project
+
+Holiday rental website for three properties on the Isle of Islay, Scotland.
+Managed by Pi & Lynton. Next.js (App Router) + Sanity CMS v3 + Tailwind CSS + Vercel.
+
+Properties: Portbahn House (sleeps 8), Shorefield Eco House (sleeps 6), Curlew Cottage (sleeps 6).
+
+## Tech Stack
+
+- Next.js 14+ with App Router (TypeScript throughout)
+- Sanity CMS v3 — dataset: production
+- Tailwind CSS (utility-first, no custom CSS unless necessary)
+- Vercel deployment (main branch = production)
+
+## Key Architecture: Canonical Block System
+
+The site uses a canonical content block pattern. Reusable content lives in Sanity as `canonicalBlock` documents with `fullContent` and `teaserContent` fields. Pages reference blocks via `blockReference` with a `renderAs` field (`'full' | 'teaser'`).
+
+- Never hardcode repeated content in page components — it should come from a canonical block
+- Block rendering logic lives in `components/CanonicalBlock.tsx`
+- GROQ queries resolve block references in `lib/queries.ts`
+- Schema definitions in `sanity/schemas/`
+- Block content spec: `docs/content/CANONICAL-BLOCKS-FINAL.md`
+- Schema spec: `docs/schemas/SANITY-SCHEMA-FINAL.md`
+
+## File Structure
+
+```
+app/                    # Next.js App Router pages
+components/             # Shared React components
+lib/                    # GROQ queries, utilities, config
+sanity/schemas/         # Sanity schema TypeScript files
+  documents/            # canonicalBlock.ts, page.ts, property.ts
+  objects/              # blockReference.ts, pageSection.ts, faqItem.ts
+docs/
+  content/              # Page specs and content briefs (from Cowork)
+  schemas/              # Schema reference docs (from Cowork)
+_claude-handoff/        # Implementation briefs and session handoffs
+```
+
+## Naming Conventions
+
+Properties (always full names):
+- Portbahn House (NOT "Portbahn")
+- Shorefield Eco House (titles) / Shorefield (running copy)
+- Curlew Cottage (NOT "Curlew")
+
+Routes:
+- /accommodation/portbahn-house
+- /accommodation/shorefield-eco-house
+- /accommodation/curlew-cottage
+
+blockIds: lowercase-with-hyphens (e.g. ferry-basics, trust-signals, about-us)
+
+## Critical Facts (must be consistent)
+
+- Walk to Bruichladdich Distillery: 5 minutes
+- Ferry to Port Askaig: 2 hours
+- Ferry to Port Ellen: 2 hours 20 minutes
+- Guests hosted: 600+
+- Average rating: 4.97/5
+- Distilleries on Islay: 10
+- Owner name: Alan (not Allan)
+
+## Patterns to Follow
+
+- Use TypeScript strictly — no `any` without comment explaining why
+- Server components by default; client components only when necessary (add 'use client' at top)
+- Tailwind utility classes only — no inline styles
+- GROQ queries centralised in `lib/queries.ts`
+- Sanity schema types in `sanity/schemas/` — import all in `sanity/schemas/index.ts`
+
+## Do Not
+
+- Do not create new pages without checking `docs/content/CONTENT-ARCHITECTURE-MVP.md`
+- Do not hardcode content that should come from Sanity
+- Do not modify `sanity/schemas/` without reading `docs/schemas/SANITY-SCHEMA-FINAL.md` first
+- Do not push directly to `main` — use `dev` branch or feature branches
+- Do not install packages without checking if equivalent already exists in the project
