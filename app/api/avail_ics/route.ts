@@ -34,12 +34,6 @@ async function fetchICSFeed(url: string): Promise<string> {
     }
 
     const icsData = await response.text();
-    console.log('ICS feed fetched successfully:', {
-      url,
-      contentLength: icsData.length,
-      firstChars: icsData.substring(0, 100),
-    });
-
     return icsData;
   } catch (error: any) {
     console.error('Error in fetchICSFeed:', {

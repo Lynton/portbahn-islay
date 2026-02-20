@@ -10,7 +10,6 @@ async function fetchLodgifyMaxGuests(propertyId: number, roomTypeId: number): Pr
       return null;
     }
 
-    console.log(`[fetchLodgifyMaxGuests] Fetching for propertyId: ${propertyId}, roomTypeId: ${roomTypeId}`);
     const url = `https://api.lodgify.com/v1/properties/${propertyId}`;
     const response = await fetch(url, {
       method: 'GET',
@@ -30,44 +29,18 @@ async function fetchLodgifyMaxGuests(propertyId: number, roomTypeId: number): Pr
     }
 
     const data = await response.json();
-    console.log(`[fetchLodgifyMaxGuests] Lodgify property data for ${propertyId}:`, {
-      propertyName: data.name,
-      hasRoomTypes: !!(data.roomTypes || data.room_types),
-      roomTypesCount: (data.roomTypes || data.room_types || []).length,
-      propertyMaxGuests: data.maxGuests || data.max_guests || data.capacity || data.maxCapacity || data.max_occupancy,
-      propertyFields: Object.keys(data).filter(k => k.toLowerCase().includes('guest') || k.toLowerCase().includes('capacity') || k.toLowerCase().includes('occupancy')),
-      fullRoomTypes: data.roomTypes || data.room_types || [],
-    });
-    
+
     // Check roomTypes array for the specific room type
     const roomTypes = data.roomTypes || data.room_types || [];
-    console.log(`[fetchLodgifyMaxGuests] Looking for roomTypeId ${roomTypeId} in ${roomTypes.length} room types`);
     
-    const roomType = roomTypes.find((rt: any) => {
-      const matches = rt.id === roomTypeId || rt.roomTypeId === roomTypeId || rt.room_type_id === roomTypeId;
-      if (matches) {
-        console.log(`[fetchLodgifyMaxGuests] Found matching room type:`, {
-          id: rt.id,
-          roomTypeId: rt.roomTypeId,
-          room_type_id: rt.room_type_id,
-          allFields: Object.keys(rt),
-          maxGuests: rt.maxGuests,
-          max_guests: rt.max_guests,
-          capacity: rt.capacity,
-          maxCapacity: rt.maxCapacity,
-          max_occupancy: rt.max_occupancy,
-          occupancy: rt.occupancy,
-          maxOccupancy: rt.maxOccupancy,
-        });
-      }
-      return matches;
-    });
+    const roomType = roomTypes.find((rt: any) =>
+      rt.id === roomTypeId || rt.roomTypeId === roomTypeId || rt.room_type_id === roomTypeId
+    );
     
     if (roomType) {
       // Try various possible fields for max guests
       const maxGuests = roomType.maxGuests || roomType.max_guests || roomType.capacity || roomType.maxCapacity || roomType.max_occupancy || roomType.occupancy || roomType.maxOccupancy || null;
       if (maxGuests) {
-        console.log(`[fetchLodgifyMaxGuests] ✅ Using maxGuests from Lodgify room type: ${maxGuests}`);
         return maxGuests;
       } else {
         console.warn(`[fetchLodgifyMaxGuests] Room type found but no maxGuests field available. Room type data:`, JSON.stringify(roomType, null, 2));
@@ -84,7 +57,6 @@ async function fetchLodgifyMaxGuests(propertyId: number, roomTypeId: number): Pr
     // Fallback to property-level capacity
     const propertyMaxGuests = data.maxGuests || data.max_guests || data.capacity || data.maxCapacity || data.max_occupancy || data.occupancy || data.maxOccupancy || null;
     if (propertyMaxGuests) {
-      console.log(`[fetchLodgifyMaxGuests] ✅ Using maxGuests from Lodgify property level: ${propertyMaxGuests}`);
       return propertyMaxGuests;
     }
     
@@ -134,18 +106,8 @@ export async function GET(request: NextRequest) {
     } else if (propertyId) {
       // Fetch single property by lodgifyPropertyId
       const propertyIdNum = parseInt(propertyId, 10);
-      console.log('Searching Sanity for propertyId:', propertyIdNum);
-      
-      // Fetch ALL fields from Sanity
       const query = `*[_type == "property" && lodgifyPropertyId == $propertyId][0]`;
-      
       const property = await client.fetch(query, { propertyId: propertyIdNum });
-      
-      console.log('Full property from Sanity:', JSON.stringify(property, null, 2));
-      console.log('All field names:', property ? Object.keys(property) : 'null');
-      console.log('sleeps value:', property?.sleeps);
-      console.log('sleeps type:', typeof property?.sleeps);
-      console.log('sleeps exists:', property?.sleeps !== undefined && property?.sleeps !== null);
       
       if (!property) {
         console.warn('Property not found in Sanity for propertyId:', propertyIdNum);

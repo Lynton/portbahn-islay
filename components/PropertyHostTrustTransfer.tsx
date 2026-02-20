@@ -70,7 +70,7 @@ export default function PropertyHostTrustTransfer({
           Read more reviews from Portbahn House →
         </Link>
         <Link
-          href="/accommodation/shorefield"
+          href="/accommodation/shorefield-eco-house"
           className="text-emerald-accent hover:underline font-mono text-sm"
         >
           Read more reviews from Shorefield →

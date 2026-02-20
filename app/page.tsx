@@ -2,6 +2,17 @@ import { cache } from 'react';
 import Image from 'next/image';
 import { Metadata } from 'next';
 import { PortableText } from '@portabletext/react';
+
+interface Property {
+  _id: string;
+  name: string;
+  slug: { current: string } | string;
+  location?: string | { address?: string; nearestTown?: string };
+  overview?: Array<{ _type: string; children?: Array<{ text?: string }> }>;
+  sleeps?: number;
+  bedrooms?: number;
+  heroImage?: { alt?: string; asset: { _ref: string } };
+}
 import PropertyCard from '@/components/PropertyCard';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import MultiPropertyMap from '@/components/MultiPropertyMap';
@@ -127,40 +138,40 @@ export default async function Home() {
           <section className="mb-16">
             <h2 className="font-serif text-4xl text-harbour-stone mb-8">Our Accommodation</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-              {properties.map((property: unknown) => {
-                const p = property as any;
-                const imageUrl = p.heroImage 
-                  ? urlFor(p.heroImage).width(800).height(1200).url() 
+              {(properties as Property[]).map((p) => {
+                const imageUrl = p.heroImage
+                  ? urlFor(p.heroImage).width(800).height(1200).url()
                   : '';
-                
+
                 // Extract description from overview PortableText or use fallback
                 let description = '';
-                if (p.overview && Array.isArray(p.overview)) {
-                  // Extract text from first block
-                  const firstBlock = p.overview.find((block: any) => block._type === 'block');
-                  if (firstBlock && firstBlock.children) {
+                if (Array.isArray(p.overview)) {
+                  const firstBlock = p.overview.find((block) => block._type === 'block');
+                  if (firstBlock?.children) {
                     description = firstBlock.children
-                      .map((child: any) => child.text || '')
+                      .map((child) => child.text || '')
                       .join(' ')
                       .substring(0, 150);
                   }
                 }
-                
+
                 // Handle both string (legacy) and object (new) location formats
-                const locationText = typeof p.location === 'string' 
-                  ? p.location 
+                const locationText = typeof p.location === 'string'
+                  ? p.location
                   : (p.location?.address || p.location?.nearestTown || '');
-                
+
+                const slug = typeof p.slug === 'string' ? p.slug : p.slug?.current;
+
                 return (
                   <PropertyCard
                     key={p._id}
                     name={p.name}
                     location={locationText}
                     description={description || 'Self-catering holiday home on Islay'}
-                    sleeps={p.sleeps}
-                    bedrooms={p.bedrooms}
+                    sleeps={p.sleeps ?? 0}
+                    bedrooms={p.bedrooms ?? 0}
                     imageUrl={imageUrl}
-                    href={`/accommodation/${p.slug?.current || p.slug}`}
+                    href={`/accommodation/${slug}`}
                   />
                 );
               })}

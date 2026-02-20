@@ -59,8 +59,6 @@ async function fetchRates(
   url.searchParams.set('StartDate', checkIn);
   url.searchParams.set('EndDate', checkOut);
   
-  console.log('Fetching rates from:', url.toString());
-  
   const response = await fetch(url.toString(), {
     method: 'GET',
     headers: {
@@ -110,7 +108,6 @@ export async function POST(request: NextRequest) {
       }`;
       const propertyData = await client.fetch(query, { propertyId: property.propertyId });
       maxSleeps = propertyData?.sleeps || null;
-      console.log('[quote_preview] Fetched sleeps from Sanity:', { propertyId: property.propertyId, sleeps: maxSleeps });
     } catch (error) {
       console.error('[quote_preview] Error fetching sleeps from Sanity:', error);
       // Continue without max guests validation if fetch fails
@@ -255,12 +252,12 @@ export async function POST(request: NextRequest) {
       }
 
       // Filter items between checkIn and checkOut (excluding checkOut date)
-      const checkInDate = new Date(checkIn);
-      const checkOutDate = new Date(checkOut);
-      
+      const rateCheckIn = new Date(checkIn);
+      const rateCheckOut = new Date(checkOut);
+
       const relevantItems = calendarItems.filter((item: any) => {
         const itemDate = new Date(item.date);
-        return itemDate >= checkInDate && itemDate < checkOutDate;
+        return itemDate >= rateCheckIn && itemDate < rateCheckOut;
       });
 
       if (relevantItems.length === 0) {

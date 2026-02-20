@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+const isDev = process.env.NODE_ENV === 'development';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const devLog = (...args: any[]) => { if (isDev) console.log(...args); };
+
 interface GoogleReview {
   author: string;
   rating: number;
@@ -10,7 +14,7 @@ interface GoogleReview {
 // Extract place_id from Google Business URL
 function extractPlaceId(url: string): string | null {
   try {
-    console.log('[extractPlaceId] Attempting to extract place_id from URL:', url);
+    devLog('[extractPlaceId] Attempting to extract place_id from URL:', url);
     
     // Google Business URLs can be in various formats:
     // 1. https://www.google.com/maps/place/Name/@lat,lng,zoom/data=!3m1!4b1!4m6!3m5!1sPLACE_ID...
@@ -22,7 +26,7 @@ function extractPlaceId(url: string): string | null {
     // Method 1: Extract place_id from place_id= query parameter (newer format)
     const placeIdParamMatch = url.match(/[?&]place_id=([A-Za-z0-9_-]{27,})/);
     if (placeIdParamMatch && placeIdParamMatch[1]) {
-      console.log('[extractPlaceId] Found place_id via place_id= parameter:', placeIdParamMatch[1]);
+      devLog('[extractPlaceId] Found place_id via place_id= parameter:', placeIdParamMatch[1]);
       return placeIdParamMatch[1];
     }
     
@@ -38,7 +42,7 @@ function extractPlaceId(url: string): string | null {
     for (const pattern of patterns) {
       const match = url.match(pattern);
       if (match && match[1] && match[1].length >= 20) {
-        console.log('[extractPlaceId] Found place_id via pattern:', pattern, '=', match[1]);
+        devLog('[extractPlaceId] Found place_id via pattern:', pattern, '=', match[1]);
         return match[1];
       }
     }
@@ -60,13 +64,13 @@ function extractPlaceId(url: string): string | null {
           // Fully decoded now
         }
         
-        console.log('[extractPlaceId] Decoded data parameter, length:', decoded.length);
+        devLog('[extractPlaceId] Decoded data parameter, length:', decoded.length);
         
         // Look for place_id pattern: !1s followed by alphanumeric string
         for (const pattern of patterns) {
           const match = decoded.match(pattern);
           if (match && match[1] && match[1].length >= 20) {
-            console.log('[extractPlaceId] Found place_id in decoded data:', match[1]);
+            devLog('[extractPlaceId] Found place_id in decoded data:', match[1]);
             return match[1];
           }
         }
@@ -74,14 +78,14 @@ function extractPlaceId(url: string): string | null {
         // Also try ChIJ... format (Google's place_id format)
         const chijMatch = decoded.match(/(ChIJ[A-Za-z0-9_-]{27,})/);
         if (chijMatch && chijMatch[1]) {
-          console.log('[extractPlaceId] Found place_id in ChIJ format:', chijMatch[1]);
+          devLog('[extractPlaceId] Found place_id in ChIJ format:', chijMatch[1]);
           return chijMatch[1];
         }
         
         // Try legacy 0x...:0x... format (needs conversion via API, but we can extract it)
         const legacyMatch = decoded.match(/!1s(0x[a-f0-9]+:0x[a-f0-9]+)/i);
         if (legacyMatch && legacyMatch[1]) {
-          console.log('[extractPlaceId] Found legacy format (0x...:0x...), will need API conversion:', legacyMatch[1]);
+          devLog('[extractPlaceId] Found legacy format (0x...:0x...), will need API conversion:', legacyMatch[1]);
           // This format needs to be converted via API, return null to trigger API search
           return null;
         }
@@ -94,14 +98,14 @@ function extractPlaceId(url: string): string | null {
     // Format: /place/PLACE_ID or /place/Name/@lat,lng/PLACE_ID
     const pathMatch = url.match(/\/place\/[^/@]+\/([A-Za-z0-9_-]{27,})/);
     if (pathMatch && pathMatch[1]) {
-      console.log('[extractPlaceId] Found place_id in URL path:', pathMatch[1]);
+      devLog('[extractPlaceId] Found place_id in URL path:', pathMatch[1]);
       return pathMatch[1];
     }
     
     // Method 5: Extract from CID (will need conversion via API)
     const cidMatch = url.match(/[?&]cid=([0-9]+)/);
     if (cidMatch) {
-      console.log('[extractPlaceId] Found CID, will need API conversion:', cidMatch[1]);
+      devLog('[extractPlaceId] Found CID, will need API conversion:', cidMatch[1]);
       // CID can be converted to place_id, but requires additional API call
       // We'll handle this in findPlaceIdByUrl
       return null;
@@ -110,11 +114,11 @@ function extractPlaceId(url: string): string | null {
     // Method 6: Try to find place_id after /place/ in the path
     const placePathMatch = url.match(/\/place\/([A-Za-z0-9_-]{27,})(?:\/|$|\?|@)/);
     if (placePathMatch && placePathMatch[1]) {
-      console.log('[extractPlaceId] Found place_id after /place/ path:', placePathMatch[1]);
+      devLog('[extractPlaceId] Found place_id after /place/ path:', placePathMatch[1]);
       return placePathMatch[1];
     }
     
-    console.log('[extractPlaceId] Could not extract place_id from URL');
+    devLog('[extractPlaceId] Could not extract place_id from URL');
     return null;
   } catch (error) {
     console.error('[extractPlaceId] Error extracting place_id:', error);
@@ -125,7 +129,7 @@ function extractPlaceId(url: string): string | null {
 // Fetch place_id using Google Places Text Search or Find Place API
 async function findPlaceIdByUrl(businessUrl: string, apiKey: string): Promise<string | null> {
   try {
-    console.log('[findPlaceIdByUrl] Attempting to find place_id via API for URL:', businessUrl);
+    devLog('[findPlaceIdByUrl] Attempting to find place_id via API for URL:', businessUrl);
     
     const urlObj = new URL(businessUrl);
     const pathParts = urlObj.pathname.split('/').filter(Boolean);
@@ -136,7 +140,7 @@ async function findPlaceIdByUrl(businessUrl: string, apiKey: string): Promise<st
     // For g.page URLs: https://g.page/business-name
     if (urlObj.hostname.includes('g.page')) {
       searchQuery = pathParts[pathParts.length - 1] || '';
-      console.log('[findPlaceIdByUrl] Extracted from g.page:', searchQuery);
+      devLog('[findPlaceIdByUrl] Extracted from g.page:', searchQuery);
     } else if (urlObj.hostname.includes('google.com') || urlObj.hostname.includes('maps.google.com')) {
       // For maps URLs, try to extract business name from path
       const placeIndex = pathParts.indexOf('place');
@@ -144,17 +148,17 @@ async function findPlaceIdByUrl(businessUrl: string, apiKey: string): Promise<st
         // Extract business name (before @ symbol if present)
         const placeName = pathParts[placeIndex + 1];
         searchQuery = decodeURIComponent(placeName.split('@')[0].replace(/\+/g, ' '));
-        console.log('[findPlaceIdByUrl] Extracted business name from /place/ path:', searchQuery);
+        devLog('[findPlaceIdByUrl] Extracted business name from /place/ path:', searchQuery);
       } else {
         // Try to extract from query parameters
         const qParam = urlObj.searchParams.get('q');
         if (qParam) {
           searchQuery = qParam;
-          console.log('[findPlaceIdByUrl] Extracted from q parameter:', searchQuery);
+          devLog('[findPlaceIdByUrl] Extracted from q parameter:', searchQuery);
         } else {
           // Fallback: use the full URL as search query
           searchQuery = businessUrl;
-          console.log('[findPlaceIdByUrl] Using full URL as search query');
+          devLog('[findPlaceIdByUrl] Using full URL as search query');
         }
       }
     } else {
@@ -163,7 +167,7 @@ async function findPlaceIdByUrl(businessUrl: string, apiKey: string): Promise<st
     }
     
     if (!searchQuery) {
-      console.log('[findPlaceIdByUrl] No search query extracted');
+      devLog('[findPlaceIdByUrl] No search query extracted');
       return null;
     }
     
@@ -174,14 +178,14 @@ async function findPlaceIdByUrl(businessUrl: string, apiKey: string): Promise<st
     // Use Find Place API (more accurate)
     const findUrl = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=${encodeURIComponent(enhancedQuery)}&inputtype=textquery&fields=place_id&key=${apiKey}`;
     
-    console.log('[findPlaceIdByUrl] Calling Find Place API...');
+    devLog('[findPlaceIdByUrl] Calling Find Place API...');
     const findResponse = await fetch(findUrl);
     if (findResponse.ok) {
       const findData = await findResponse.json();
-      console.log('[findPlaceIdByUrl] Find Place API response:', JSON.stringify(findData, null, 2));
+      devLog('[findPlaceIdByUrl] Find Place API response:', JSON.stringify(findData, null, 2));
       
       if (findData.candidates && findData.candidates.length > 0) {
-        console.log('[findPlaceIdByUrl] Found place_id via Find Place API:', findData.candidates[0].place_id);
+        devLog('[findPlaceIdByUrl] Found place_id via Find Place API:', findData.candidates[0].place_id);
         return findData.candidates[0].place_id;
       }
     } else {
@@ -190,7 +194,7 @@ async function findPlaceIdByUrl(businessUrl: string, apiKey: string): Promise<st
     }
     
     // Fallback to Text Search API
-    console.log('[findPlaceIdByUrl] Trying Text Search API...');
+    devLog('[findPlaceIdByUrl] Trying Text Search API...');
     const textSearchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${encodeURIComponent(enhancedQuery)}&key=${apiKey}`;
     
     const response = await fetch(textSearchUrl);
@@ -201,14 +205,14 @@ async function findPlaceIdByUrl(businessUrl: string, apiKey: string): Promise<st
     }
     
     const data = await response.json();
-    console.log('[findPlaceIdByUrl] Text Search API response:', JSON.stringify(data, null, 2));
+    devLog('[findPlaceIdByUrl] Text Search API response:', JSON.stringify(data, null, 2));
     
     if (data.results && data.results.length > 0) {
-      console.log('[findPlaceIdByUrl] Found place_id via Text Search API:', data.results[0].place_id);
+      devLog('[findPlaceIdByUrl] Found place_id via Text Search API:', data.results[0].place_id);
       return data.results[0].place_id;
     }
     
-    console.log('[findPlaceIdByUrl] No place_id found via API');
+    devLog('[findPlaceIdByUrl] No place_id found via API');
     return null;
   } catch (error) {
     console.error('[findPlaceIdByUrl] Error finding place_id:', error);
@@ -252,7 +256,7 @@ async function fetchGoogleReviews(placeId: string, apiKey: string): Promise<Goog
 // Resolve shortened Google Maps URLs (maps.app.goo.gl)
 async function resolveShortUrl(shortUrl: string): Promise<string> {
   try {
-    console.log('[resolveShortUrl] Resolving short URL:', shortUrl);
+    devLog('[resolveShortUrl] Resolving short URL:', shortUrl);
     
     // Follow redirects to get the full URL
     const response = await fetch(shortUrl, {
@@ -264,7 +268,7 @@ async function resolveShortUrl(shortUrl: string): Promise<string> {
     
     // Get the final URL after redirects
     const finalUrl = response.url;
-    console.log('[resolveShortUrl] Resolved to:', finalUrl);
+    devLog('[resolveShortUrl] Resolved to:', finalUrl);
     
     return finalUrl;
   } catch (error: any) {
@@ -306,21 +310,21 @@ export async function GET(request: NextRequest) {
     
     // If it's a short URL, resolve it first
     if (businessUrl && (businessUrl.includes('maps.app.goo.gl') || businessUrl.includes('goo.gl'))) {
-      console.log('[google-reviews] Detected short URL, resolving...');
+      devLog('[google-reviews] Detected short URL, resolving...');
       businessUrl = await resolveShortUrl(businessUrl);
-      console.log('[google-reviews] Resolved URL:', businessUrl);
+      devLog('[google-reviews] Resolved URL:', businessUrl);
     }
     
     let placeId = manualPlaceId;
     
     // If no manual place_id, try to extract from URL
     if (!placeId && businessUrl) {
-      console.log('[google-reviews] Processing URL:', businessUrl);
+      devLog('[google-reviews] Processing URL:', businessUrl);
       placeId = extractPlaceId(businessUrl);
       
       // If we couldn't extract it, try API search
       if (!placeId) {
-        console.log('[google-reviews] Could not extract place_id, trying API search...');
+        devLog('[google-reviews] Could not extract place_id, trying API search...');
         placeId = await findPlaceIdByUrl(businessUrl, apiKey);
       }
     }
@@ -351,7 +355,7 @@ export async function GET(request: NextRequest) {
       );
     }
     
-    console.log('[google-reviews] Using place_id:', placeId);
+    devLog('[google-reviews] Using place_id:', placeId);
     
     // Fetch reviews
     const reviews = await fetchGoogleReviews(placeId, apiKey);
