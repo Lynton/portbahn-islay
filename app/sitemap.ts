@@ -1,19 +1,30 @@
 import { MetadataRoute } from 'next';
 import { client } from '@/sanity/lib/client';
 
-// Get the base URL from environment variable or use production domain
+// Use production domain when set; fall back to Vercel preview URL.
+// Note: sitemap is only linked from robots.txt on production, so preview
+// deployments will serve this but it won't be submitted to search engines.
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahn-islay.vercel.app';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all properties from Sanity
-  const propertiesQuery = `*[_type == "property"]{
+  const propertiesQuery = `*[_type == "property" && defined(slug.current)]{
     slug,
     _updatedAt
   }`;
-  
-  const properties = await client.fetch(propertiesQuery);
 
-  // Static pages - ONLY include pages that actually exist
+  // Fetch all published guide pages from Sanity
+  const guidePagesQuery = `*[_type == "guidePage" && defined(slug.current) && !(_id in path("drafts.**"))]{
+    slug,
+    _updatedAt
+  }`;
+
+  const [properties, guidePages] = await Promise.all([
+    client.fetch(propertiesQuery),
+    client.fetch(guidePagesQuery),
+  ]);
+
+  // Static hub pages
   const staticPages: MetadataRoute.Sitemap = [
     {
       url: baseUrl,
@@ -22,7 +33,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/getting-here`,
+      url: `${baseUrl}/accommodation`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/travel-to-islay`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.8,
@@ -33,29 +50,34 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/availability`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.6,
+    },
   ];
 
   // Dynamic property pages
-  const propertyPages: MetadataRoute.Sitemap = properties.map((property: { slug?: { current?: string } | string; _updatedAt?: string }) => ({
-    url: `${baseUrl}/accommodation/${(property.slug as any)?.current || property.slug}`,
-    lastModified: property._updatedAt ? new Date(property._updatedAt) : new Date(),
-    changeFrequency: 'weekly' as const,
-    priority: 0.9,
-  }));
+  const propertyPages: MetadataRoute.Sitemap = properties.map(
+    (property: { slug: { current: string }; _updatedAt?: string }) => ({
+      url: `${baseUrl}/accommodation/${property.slug.current}`,
+      lastModified: property._updatedAt ? new Date(property._updatedAt) : new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.9,
+    })
+  );
 
-  // TODO: Add guide pages when they're implemented
-  // const guidesQuery = `*[_type == "beach" || _type == "walk" || _type == "distillery" || _type == "village"]{
-  //   slug,
-  //   _updatedAt
-  // }`;
-  // const guides = await client.fetch(guidesQuery);
-  // const guidePages: MetadataRoute.Sitemap = guides.map((guide: any) => ({
-  //   url: `${baseUrl}/islay-guides/${guide.slug?.current || guide.slug}`,
-  //   lastModified: guide._updatedAt ? new Date(guide._updatedAt) : new Date(),
-  //   changeFrequency: 'monthly' as const,
-  //   priority: 0.7,
-  // }));
+  // Dynamic guide pages (spokes in hub-and-spoke architecture)
+  const guidePageEntries: MetadataRoute.Sitemap = guidePages.map(
+    (guide: { slug: { current: string }; _updatedAt?: string }) => ({
+      url: `${baseUrl}/guides/${guide.slug.current}`,
+      lastModified: guide._updatedAt ? new Date(guide._updatedAt) : new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })
+  );
 
-  return [...staticPages, ...propertyPages];
+  return [...staticPages, ...propertyPages, ...guidePageEntries];
 }
 
