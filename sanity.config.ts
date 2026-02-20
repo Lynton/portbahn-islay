@@ -5,12 +5,6 @@ import { presentationTool } from 'sanity/presentation';
 import { schemaTypes } from './sanity/schemas';
 import {media} from 'sanity-plugin-media';
 
-// Debug: Log environment variables (remove after confirming it works)
-if (typeof process !== 'undefined' && process.env) {
-  console.log('Sanity Config - PROJECT_ID:', process.env.SANITY_STUDIO_PROJECT_ID || process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || 'NOT FOUND');
-  console.log('Sanity Config - DATASET:', process.env.SANITY_STUDIO_DATASET || process.env.NEXT_PUBLIC_SANITY_DATASET || 'NOT FOUND');
-}
-
 export default defineConfig({
   name: 'default',
   title: 'Portbahn Islay',
@@ -97,14 +91,6 @@ export default defineConfig({
                         S.document()
                           .schemaType('faqPage')
                           .documentId('faqPage')
-                      ),
-                    S.listItem()
-                      .title('Islay Guides Index')
-                      .id('islayGuidesIndexPage')
-                      .child(
-                        S.document()
-                          .schemaType('islayGuidesIndexPage')
-                          .documentId('islayGuidesIndexPage')
                       ),
                     S.listItem()
                       .title('Beaches Hub')
@@ -201,12 +187,6 @@ export default defineConfig({
                   ])
               ),
             S.listItem()
-              .title('FAQ Items')
-              .child(
-                S.documentTypeList('faqItem')
-                  .title('FAQ Items')
-              ),
-            S.listItem()
               .title('Canonical Content Blocks')
               .child(
                 S.documentTypeList('canonicalBlock')
@@ -238,14 +218,6 @@ export default defineConfig({
                         S.document()
                           .schemaType('siteSettings')
                           .documentId('siteSettings')
-                      ),
-                    S.listItem()
-                      .title('Navigation')
-                      .id('navigationSettings')
-                      .child(
-                        S.document()
-                          .schemaType('navigationSettings')
-                          .documentId('navigationSettings')
                       ),
                   ])
               ),

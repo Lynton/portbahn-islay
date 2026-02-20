@@ -14,7 +14,6 @@ import beach from './collections/beach';
 import distillery from './collections/distillery';
 import walk from './collections/walk';
 import village from './collections/village';
-import faqItem from './collections/faqItem';
 
 // Singletons
 import homepage from './singletons/homepage';
@@ -27,14 +26,12 @@ import beachesHubPage from './singletons/beachesHubPage';
 import distilleriesHubPage from './singletons/distilleriesHubPage';
 import walksHubPage from './singletons/walksHubPage';
 import villagesHubPage from './singletons/villagesHubPage';
-import islayGuidesIndexPage from './singletons/islayGuidesIndexPage';
 import exploreIslayPage from './singletons/exploreIslayPage';
 import privacyPage from './singletons/privacyPage';
 import termsPage from './singletons/termsPage';
 
 // Settings
 import siteSettings from './settings/siteSettings';
-import navigationSettings from './settings/navigationSettings';
 
 export const schemaTypes = [
   // Documents
@@ -52,7 +49,6 @@ export const schemaTypes = [
   distillery,
   walk,
   village,
-  faqItem,
 
   // Singletons
   homepage,
@@ -65,12 +61,10 @@ export const schemaTypes = [
   distilleriesHubPage,
   walksHubPage,
   villagesHubPage,
-  islayGuidesIndexPage,
   exploreIslayPage,
   privacyPage,
   termsPage,
 
   // Settings
   siteSettings,
-  navigationSettings,
 ];
