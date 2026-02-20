@@ -1,7 +1,7 @@
 import { urlFor } from '@/sanity/lib/image';
 
 // Base URL for the site
-const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahnislay.com';
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahnislay.co.uk';
 
 function getCanonicalUrl(pathOrUrl?: string): string {
   if (!pathOrUrl) return BASE_URL;
