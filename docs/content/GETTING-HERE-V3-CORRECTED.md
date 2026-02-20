@@ -1,8 +1,9 @@
 # Getting Here Page — V3 CORRECTED (10/10)
-**Date:** 2026-01-26
+**Date:** 2026-02-20
 **Page:** `/getting-here`
-**Status:** ✅ 10/10 — All issues fixed
+**Status:** ✅ Ready for Claude Code — block references annotated
 **Changes from V2:** Typos fixed, ferry times clarified, Section 1 split, entity definition added
+**Changes from V3:** Block 13 Jura day trip teaser added (Section 7), internal link to /explore-islay added (Section 8), schema.org markup added (HowTo + TouristInformation)
 
 ---
 
@@ -39,11 +40,7 @@ Your Route Options
 
 #### By Ferry (H3)
 
-The Isle of Islay is a Scottish island in the Inner Hebrides, accessible by CalMac ferry from Kennacraig on the Kintyre Peninsula. Ferries run to two ports on Islay — Port Ellen (2 hours 20 minutes crossing) and Port Askaig (2 hours crossing). Both ports are approximately 30-40 minutes' drive from our Bruichladdich properties.
-
-You have to book a ferry to a specific port rather than just to "Islay", so which port will depend on what time you are travelling. The crossing offers beautiful views across the Sound of Jura.
-
-Vehicle reservations are absolutely essential and should be booked up to 12 weeks in advance, especially during peak season and whisky festival periods in late May. We can't emphasise this enough. Book your ferry as soon as you book your accommodation if you can.
+> **BLOCK REF:** `ferry-basics` — `renderAs: full`
 
 #### By Air (H3)
 
@@ -123,18 +120,9 @@ Weather is the main culprit — wind gusts above 40-45mph can prevent safe board
 
 Be prepared: call ahead, keep an eye on the weather, and sign up for CalMac travel alerts.
 
-#### Our Ferry Chaos Track Record (H3)
+#### Our Ferry Chaos Track Record & What to Do (H3)
 
-**Don't panic — here's the reality:** Because we live here we know the ropes. We've helped dozens of guests navigate CalMac disruptions over the years. We hold a 5.0/5 communication rating on Airbnb, and 30+ reviews specifically mention our ferry crisis support! One guest wrote: *"Pi looked after us like family during the ferry chaos."* We've got you!
-
-If your crossing is disrupted, you're not alone! But plan ahead and stay in touch!
-
-#### What to Do If Your Ferry is Cancelled (H3)
-
-1. **CalMac will contact you** via text or email if they cancel your sailing
-2. **Call CalMac immediately** on 0800 066 5000 to rebook onto the next available sailing
-3. **Contact me** — I can offer advice or flexible check-in arrangements and possibly additional accommodation if needed
-4. **Sign up for live updates** by texting "calmac subscribe 09" to 60030 for ferry status alerts
+> **BLOCK REF:** `ferry-support` — `renderAs: full`
 
 #### Flexible Tickets (H3)
 
@@ -222,6 +210,12 @@ Scotland's drink-drive limit is effectively zero. If you're touring distilleries
 
 ---
 
+#### Day Trip to Jura from Port Askaig (H3)
+
+> **BLOCK REF:** `jura-day-trip` — `renderAs: teaser`
+
+---
+
 ### Section 8: Planning Your Journey
 
 #### Heading (H2)
@@ -250,6 +244,8 @@ Remember your first and last days are mostly travel. A week-long stay gives you 
 - Binoculars for wildlife (optional but recommended)
 - Sunglasses and sunscreen (surprising amounts of sun between showers)
 - Your own beach towels or dog towels if bringing pets (we provide bath towels only)
+
+Once you're on the island, our full guide to distilleries, beaches, wildlife, restaurants, and family activities has everything you need to plan your days. [Explore Islay →](/explore-islay)
 
 ---
 
@@ -285,6 +281,65 @@ The ferry crossing from Kennacraig takes 2 hours to Port Askaig or 2 hours 20 mi
 
 ---
 
+## Schema.org Markup
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to get to the Isle of Islay by ferry",
+  "description": "Step-by-step guide to travelling to the Isle of Islay by CalMac ferry from Kennacraig on the Kintyre Peninsula",
+  "step": [
+    {
+      "@type": "HowToStep",
+      "position": 1,
+      "name": "Book your ferry vehicle space",
+      "text": "Book a vehicle space on the CalMac ferry from Kennacraig to Islay at least 12 weeks in advance via calmac.co.uk. Ferries serve two ports: Port Askaig (2-hour crossing) and Port Ellen (2 hours 20 minutes)."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 2,
+      "name": "Drive to Kennacraig ferry terminal",
+      "text": "Drive approximately 3 hours from Glasgow to Kennacraig ferry terminal on the Kintyre Peninsula. Arrive at least 30-45 minutes before departure. Allow a full travel day."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 3,
+      "name": "Board the CalMac ferry",
+      "text": "Drive onto the ferry and leave your vehicle below decks. Head upstairs to the passenger lounge. The crossing offers views of the Paps of Jura and Kintyre coastline."
+    },
+    {
+      "@type": "HowToStep",
+      "position": 4,
+      "name": "Drive to your accommodation",
+      "text": "Port Askaig is 25 minutes' drive from Bruichladdich. Port Ellen is 35 minutes. Both routes work well — choose based on your sailing timetable."
+    }
+  ]
+}
+```
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "TouristInformation",
+  "name": "Getting to the Isle of Islay — Travel Guide",
+  "description": "Complete guide to reaching the Isle of Islay by CalMac ferry from Kennacraig or Loganair flight from Glasgow",
+  "url": "https://portbahnislay.co.uk/getting-here",
+  "about": {
+    "@type": "Place",
+    "name": "Isle of Islay",
+    "description": "Scottish island in the Inner Hebrides, accessible by CalMac ferry from Kennacraig or Loganair flight from Glasgow",
+    "address": {
+      "@type": "PostalAddress",
+      "addressRegion": "Argyll and Bute",
+      "addressCountry": "GB"
+    }
+  }
+}
+```
+
+---
+
 ## Changes Made (V2 → V3)
 
 | Issue | V2 | V3 |
@@ -304,5 +359,5 @@ The ferry crossing from Kennacraig takes 2 hours to Port Askaig or 2 hours 20 mi
 
 ---
 
-**Status:** ✅ 10/10 READY FOR IMPLEMENTATION
-**Word count:** ~2,200 words
+**Status:** ✅ READY FOR IMPLEMENTATION
+**Word count:** ~2,500 words

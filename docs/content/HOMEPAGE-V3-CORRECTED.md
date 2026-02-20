@@ -1,8 +1,9 @@
 # Homepage — V3 CORRECTED (10/10)
-**Date:** 2026-01-26
+**Date:** 2026-02-20
 **Page:** `/` (homepage)
-**Status:** ✅ 10/10 — All issues fixed
+**Status:** ✅ Ready for Claude Code — block references annotated
 **Changes from V2:** Typos fixed, links aligned, naming standardized, AirBnB framing softened
+**Changes from V3:** Block 15 Bothan Jura teaser added (Section 4), schema.org markup added (LodgingBusiness + ItemList)
 
 ---
 
@@ -83,13 +84,7 @@ Our Track Record
 
 #### Our Numbers (H3)
 
-- **600+ guests** since 2017
-- **4.97/5** average rating across platforms
-- **Airbnb Superhost** status
-- **5.0/5** communication rating
-- **30+ reviews** specifically mention our ferry crisis support
-
-We've never had a booking collapse due to CalMac disruptions. Guests say we're legendary at helping them navigate Islay travel challenges, and we're genuinely proud of that track record.
+> **BLOCK REF:** `trust-signals` — `renderAs: full`
 
 ---
 
@@ -128,13 +123,11 @@ Why We Love Bruichladdich
 
 #### Perfect Location (H3)
 
-Bruichladdich is a village on the Isle of Islay, sitting on the western shore of Loch Indaal on the Rhinns of Islay, perfectly positioned for exploring everything the island offers. You're a scenic 5-minute walk to Bruichladdich Distillery along the coastal cycle path — tour the distillery, sample world-renowned whisky and The Botanist gin, then walk home.
-
-The coastal location of the houses gives immediate access to Portbahn Beach just down from the war memorial — one of Islay's hidden gems with three sheltered bays perfect for wild swimming, rock pooling, and coastal ambling.
+> **BLOCK REF:** `bruichladdich-proximity` — `renderAs: full`
 
 #### Port Charlotte Village (H3)
 
-It's just a 5-minute drive or 40-minute walk from Port Charlotte village, perhaps Islay's prettiest. You'll find two outstanding pubs/hotels with excellent local food and extensive whisky selections — The Port Charlotte Hotel and Lochindaal. There's also the fascinating Islay Museum about the history of the island, a local shop, post office and petrol station, and the children's playground at Port Mor.
+> **BLOCK REF:** `port-charlotte-village` — `renderAs: full`
 
 ---
 
@@ -148,6 +141,12 @@ Bruichladdich's central west coast location on the Rhinns makes it an ideal base
 
 ---
 
+#### Also on Jura (H3)
+
+> **BLOCK REF:** `bothan-jura-teaser` — `renderAs: teaser`
+
+---
+
 ### Section 5: Getting to Islay
 
 #### Heading (H2)
@@ -155,9 +154,9 @@ How to Get Here
 
 #### Content
 
-The Isle of Islay is accessible by **CalMac ferry** from Kennacraig on the Kintyre Peninsula (2-hour crossing to Port Askaig, 2 hours 20 minutes to Port Ellen) or by **Loganair flight** from Glasgow (25-minute flight to Islay Airport, twice daily). Vehicle ferry reservations are essential and should be booked 12 weeks in advance — seriously, they fill fast!
+> **BLOCK REF:** `ferry-basics` — `renderAs: teaser`
 
-Ferry cancellations happen due to weather or mechanical issues, especially in winter. When they do, contact me immediately. I've helped dozens of guests navigate CalMac disruptions over the years, and we hold a 5.0/5 communication rating. There's always a solution, even if it's not quite the obvious one!
+> **BLOCK REF:** `ferry-support` — `renderAs: teaser`
 
 [Full Getting Here Guide →](/getting-here) — including ferry booking strategies, what to expect on the crossing, and exactly what to do if your ferry is cancelled.
 
@@ -187,6 +186,79 @@ Pi, Lynton and Amba
 
 ---
 
+## Schema.org Markup
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": ["Organization", "LodgingBusiness"],
+  "@id": "https://portbahnislay.co.uk/#organization",
+  "name": "Portbahn Islay",
+  "description": "Three self-catering family holiday homes in Bruichladdich, Isle of Islay, Scotland, managed by Pi and Lynton since 2017.",
+  "url": "https://portbahnislay.co.uk",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Bruichladdich",
+    "addressRegion": "Isle of Islay, Argyll and Bute",
+    "addressCountry": "GB"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.97",
+    "reviewCount": "600",
+    "bestRating": "5"
+  },
+  "foundingDate": "2017",
+  "knowsAbout": ["Isle of Islay", "self-catering accommodation", "Bruichladdich", "whisky tourism", "Islay distilleries"]
+}
+```
+
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": "Portbahn Islay Holiday Properties",
+  "description": "Three self-catering holiday homes in Bruichladdich, Isle of Islay",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "item": {
+        "@type": "LodgingBusiness",
+        "name": "Portbahn House",
+        "description": "Modern self-catering family holiday home sleeping 8 guests in Bruichladdich, Isle of Islay",
+        "numberOfRooms": 3,
+        "url": "https://portbahnislay.co.uk/accommodation/portbahn-house"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "item": {
+        "@type": "LodgingBusiness",
+        "name": "Shorefield",
+        "description": "Eco-house with bird hides, sleeping 6 guests in Bruichladdich, Isle of Islay",
+        "numberOfRooms": 3,
+        "url": "https://portbahnislay.co.uk/accommodation/shorefield-eco-house"
+      }
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "item": {
+        "@type": "LodgingBusiness",
+        "name": "Curlew Cottage",
+        "description": "Cosy self-catering family cottage sleeping 6 guests in Bruichladdich, Isle of Islay",
+        "numberOfRooms": 3,
+        "url": "https://portbahnislay.co.uk/accommodation/curlew-cottage"
+      }
+    }
+  ]
+}
+```
+
+---
+
 ## Changes Made (V2 → V3)
 
 | Issue | V2 | V3 |
@@ -203,5 +275,5 @@ Pi, Lynton and Amba
 
 ---
 
-**Status:** ✅ 10/10 READY FOR IMPLEMENTATION
-**Word count:** ~1,100 words
+**Status:** ✅ READY FOR IMPLEMENTATION
+**Word count:** ~1,350 words

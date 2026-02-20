@@ -1,8 +1,9 @@
 # Explore Islay Page — V3 CORRECTED (10/10)
-**Date:** 2026-01-26
+**Date:** 2026-02-20
 **Page:** `/explore-islay`
-**Status:** ✅ 10/10 — All issues fixed
+**Status:** ✅ Ready for Claude Code — block references annotated
 **Changes from V2:** Incomplete sentence fixed, typos fixed, distillery count aligned, schema updated
+**Changes from V3:** Hidden Gems beaches added (Section 3), distillery cafés added to food section, Block 12 families-children section added as Section 6, families FAQ added. Former Section 6 renumbered to Section 7.
 
 ---
 
@@ -43,26 +44,9 @@ We really hope you enjoy your stay with us and we'd love to help you make the mo
 #### Heading (H2)
 Whisky Distilleries on Islay
 
-#### Intro Paragraph
-Islay has ten working whisky distilleries, and you're a 5-minute walk from one of the world's best and certainly most innovative. A quick guide to help you plan your visits:
+#### Distilleries Overview (H3)
 
----
-
-#### The Ten Whisky Distilleries (H3)
-
-The island produces some of the world's most celebrated single malts, particularly the intensely peated, smoky whiskies that reflect Islay's maritime character. Many visitors plan entire trips around distillery tours and tastings — we've hosted whisky groups dozens of times, and I can help you plan your distillery days.
-
-**The ten distilleries:**
-1. **Ardbeg** — Intensely peated, cult following, stunning coastal location, wonderful café
-2. **Lagavulin** — Classic Islay style, 16-year flagship, accessible from Port Ellen
-3. **Laphroaig** — Medicinal, iodine notes, right on the shore, love it or hate it!
-4. **Bowmore** — Claims to be Islay's oldest (1779), balanced peat, town centre location
-5. **Bruichladdich** — Innovative and radical; world's most heavily peated as well as unpeated expressions + The Botanist gin, **5-minute walk from our properties**
-6. **Kilchoman** — Farm distillery, barley to bottle on-site, very visitor-friendly, great café for lunch
-7. **Bunnahabhain** — Gentle, mostly unpeated, remote northern location with stunning views of Paps of Jura
-8. **Caol Ila** — Largest Islay producer, used in Johnnie Walker, Port Askaig, dramatic setting
-9. **Ardnahoe** — Recent (opened 2018), Port Askaig, new releases, still maturing their stock, great café
-10. **Port Ellen** — Newest (closed 1983, reopened 2024), Port Ellen, limited releases of old stock, maturing new
+> **BLOCK REF:** `distilleries-overview` — `renderAs: full`
 
 ---
 
@@ -124,11 +108,7 @@ Islay's coastline offers dozens of beaches, and you'll often have miles of sand 
 
 #### Portbahn Beach: Our Hidden Gem (H3)
 
-Portbahn Beach is our hidden gem — literally 5 minutes from our door via the war memorial path. It's three small, sheltered bays tucked into the coastline with stunning views across Loch Indaal. Safe for swimming, perfect for rock pooling with kids, and never ever crowded.
-
-You'll nearly always have it entirely to yourselves. Kids love the rock pools at low tide. The water around Islay is cold (10-14°C typical), but it's sheltered enough for a quick dip if you're brave. One guest wrote: *"Better than the pictures — we had breakfast on Portbahn Beach every morning and saw seals."*
-
-This is genuinely one of Islay's best kept secrets, and it's our local spot so yours to explore from the moment you arrive.
+> **BLOCK REF:** `portbahn-beach` — `renderAs: full`
 
 ---
 
@@ -159,6 +139,14 @@ Either embrace the cold water (it really is good for you!), or bring a wetsuit i
 
 ---
 
+#### Hidden Gem Beaches (H3)
+
+- **Singing Sands** — Beautiful remote beach, worth the walk. The sand squeaks underfoot — kids love it.
+- **Claggain Bay** — Secluded, with a lovely coastal walk to reach it. Rarely visited.
+- **Port Ellen town beach** — Convenient if you're arriving by the southern ferry or combining with a south coast distillery day.
+
+---
+
 ### Section 4: Wildlife & Bird Watching
 
 #### Heading (H2)
@@ -171,9 +159,7 @@ Islay is exceptional for wildlife, particularly birds. Let me share what you'll 
 
 #### Barnacle Geese (H3)
 
-Over 30,000 barnacle geese arrive from Greenland each October, spending winter on Islay before returning north in April. RSPB Loch Gruinart reserve is the best viewing location — the morning flights as thousands of geese lift from the loch are spectacular. The sound is unforgettable.
-
-If you're visiting between October and April, witnessing the geese is a highlight. Arrive at Loch Gruinart at dawn for the best show. Guests who've experienced this consistently describe it as one of their trip highlights.
+> **BLOCK REF:** `wildlife-geese` — `renderAs: full`
 
 ---
 
@@ -219,50 +205,24 @@ Both reserves are free to visit with hides, trails, and visitor information. Bri
 #### Heading (H2)
 Where to Eat on Islay
 
-#### Intro Paragraph
-Islay's food scene emphasises local seafood, lamb, and whisky. Dining out isn't cheap, but quality is high. Most guests cook several meals in our well-equipped kitchens and eat out selectively. Here's where we recommend.
+#### Food & Restaurants (H3)
+
+> **BLOCK REF:** `food-drink-islay` — `renderAs: full`
 
 ---
 
-#### Our Top Recommendations (H3)
+### Section 6: Islay with Families & Children
 
-**Lochindaal Seafood Kitchen, Port Charlotte**
-This is truly exceptional, run with huge heart by Jack and his father Iain — seafood platters from the local fishermen's catch, featuring local oysters, langoustines, crab, and mussels among others. You do need to order the full platter 24 hours ahead, but it's really worth planning around. Small, cozy venue in Port Charlotte with two bars. Book ahead — it fills fast. Our guests consistently rave about this place. Also a great whisky selection if you just want to drop in for a pint or a dram.
+#### Heading (H2)
+Families & Children on Islay
 
-**Port Charlotte Hotel**
-Scottish fare and an outstanding whisky bar with 300+ bottles on their single malt menu. The restaurant takes bookings (advised), but the bar is walk-in. Good Sunday roasts. Graeme and his wife run it beautifully. We send guests here regularly, and they're never disappointed. Traditional Scottish live music on Wednesdays and Sundays is popular and a lovely way to spend an evening by a roaring log fire, dram in hand.
+#### Families & Children (H3)
 
-**An Tigh Seinnse, Portnahaven**
-Traditional little village pub at the end of the Rhinns, with home-cooked food and local charm in possibly Islay's most remote coastal village. Small, authentic, popular with locals and visitors. Book ahead — it's worth the 20-minute drive from Bruichladdich. You can nearly always spot seals in Portnahaven harbour, just outside the pub.
+> **BLOCK REF:** `families-children` — `renderAs: full`
 
 ---
 
-#### Other Options (H3)
-
-**Peatzeria, Bowmore**
-Creative wood-fired pizzas with Islay twists — toppings include local lobster, scallops, and whisky-infused sauces. Casual, family-friendly, good for a relaxed dinner.
-
-**Bowmore (town centre)**
-Chinese and Indian takeaways, fish and chips, bakery, butcher. Useful for stocking up or grabbing quick meals when you don't want to cook or book ahead.
-
----
-
-#### Groceries & Self-Catering (H3)
-
-**Aileen's Mini-Market, Bruichladdich** (5-minute walk from our properties)
-Coffee, bacon rolls, newspapers, basic groceries, post office. We love Aileen and our guests absolutely rave about this place — start your morning here with a coffee and bacon roll, particularly after a heavy day of distillery visits! Aileen's (known locally as Debbie's!) is a Bruichladdich institution.
-
-**Bowmore Co-op** (15-minute drive)
-The biggest "supermarket" on Islay, small but sufficient, with fresh produce, meat, alcohol, household supplies. This is your main grocery stop for stocking the kitchen.
-
-**Jean's Fresh Fish Van**
-Visits villages weekly — check local schedules. Fresh local fish and seafood delivered to your door essentially.
-
-Most guests cook several meals during their stay. Our kitchens are fully equipped with everything you need, and Bowmore Co-op stocks all the essentials. Dining out every night adds up quickly on Islay — expect £40-60 per person for dinner with drinks.
-
----
-
-### Section 6: Practical Information
+### Section 7: Practical Information
 
 #### Heading (H2)
 Planning Your Islay Days
@@ -307,9 +267,9 @@ Mobile signal is generally pretty good, but can be patchy across the island. EE 
 
 #### Day Trip to Jura (H3)
 
-A short 5-minute ferry from Port Askaig connects Islay to the neighbouring Isle of Jura, although it genuinely feels like a world away. It makes a perfect day trip to see the dramatic Paps of Jura mountains, visit Jura Distillery, have lunch at the Antlers or Jura Hotel, hire bikes and cycle Small Isles Bay. For longer stays there are breathtaking remote coastal walks, Barnhill where Orwell wrote 1984 and a trip to the very northern tip overlooking the Corryvreckan whirlpool.
+> **BLOCK REF:** `jura-day-trip` — `renderAs: teaser`
 
-We also own and manage Bothan Jura Retreat on Jura — a passion project we built from scratch as the kind of place we'd want to escape to ourselves. It has an old renovated stone cotters' cottage, a lodge, cabin and shepherd's hut, each sleeping two. If Islay fills up or you're looking for even more remoteness, consider splitting your trip between both islands. See our [Visit Jura](/jura) page for details.
+> **BLOCK REF:** `bothan-jura-teaser` — `renderAs: teaser`
 
 ---
 
@@ -352,6 +312,12 @@ Yes — advance booking is essential. Summer dates and Fèis Ìle (late May) fil
 ### What wildlife can I see on Islay?
 
 **October-April:** 30,000+ barnacle geese from Greenland at RSPB Loch Gruinart. **Year-round:** Golden eagles, white-tailed sea eagles (8-foot wingspan), seals, otters. **Occasional:** Dolphins in Loch Indaal, minke whales offshore. Shorefield has bird hides created by the owners — grab binoculars and watch from your own hide. Bring binoculars for any wildlife watching.
+
+---
+
+### Is Islay good for families with children?
+
+Yes — Islay is excellent for families. Portbahn Beach is 5 minutes' walk from our properties: three sheltered bays, rock pools at low tide, safe swimming, and you'll almost always have it to yourselves. Port Charlotte Beach and Kilnaughton Bay are also shallow, sandy, and safe for young children. For rainy days, Mactaggart Leisure Centre in Bowmore has a swimming pool. Persabus Pottery does pottery sessions for all ages. Port Charlotte has a playground at Port Mor. Our properties have family-specific features: Portbahn House has a sunken trampoline and swings; Curlew Cottage has a fully enclosed walled garden; Shorefield has bird hides. Let me know your group ages and I can suggest the right itinerary.
 
 ---
 
@@ -419,5 +385,5 @@ Yes — advance booking is essential. Summer dates and Fèis Ìle (late May) fil
 
 ---
 
-**Status:** ✅ 10/10 READY FOR IMPLEMENTATION
-**Word count:** ~2,500 words
+**Status:** ✅ READY FOR IMPLEMENTATION
+**Word count:** ~3,100 words

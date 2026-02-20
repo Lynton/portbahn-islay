@@ -1,7 +1,7 @@
 # Canonical Content Blocks — Final Implementation Document
-**Date:** 2026-01-26
+**Date:** 2026-02-20
 **Status:** Ready for Sanity implementation
-**Version:** 1.0
+**Version:** 1.1 — Block 10 updated to match EXPLORE-ISLAY-V3-CORRECTED (Peatzeria, Bowmore town centre, Aileen's, closing sentence)
 
 ---
 
@@ -322,16 +322,16 @@ Scottish fare and an outstanding whisky bar with 300+ bottles on their single ma
 Traditional little village pub at the end of the Rhinns, with home-cooked food and local charm in possibly Islay's most remote coastal village. Small, authentic, popular with locals and visitors. Book ahead — it's worth the 20-minute drive from Bruichladdich. You can nearly always spot seals in Portnahaven harbour, just outside the pub.
 
 **Other Options:**
-- **Peatzeria, Bowmore** — Creative wood-fired pizzas with Islay twists, casual, family-friendly
-- **Bowmore town centre** — Chinese and Indian takeaways, fish and chips, bakery, butcher
+- **Peatzeria, Bowmore** — Creative wood-fired pizzas with Islay twists — toppings include local lobster, scallops, and whisky-infused sauces. Casual, family-friendly, good for a relaxed dinner.
+- **Bowmore town centre** — Chinese and Indian takeaways, fish and chips, bakery, butcher. Useful for stocking up or grabbing quick meals when you don't want to cook or book ahead.
 - **Distillery cafés** — Ardbeg (great café, good lunch stop), Ardnahoe (visitor centre, food & drink), Kilchoman (café, farm distillery)
 
 **Groceries & Self-Catering:**
-- **Aileen's Mini-Market, Bruichladdich** (5-minute walk) — Coffee, bacon rolls, newspapers, basic groceries, post office. A Bruichladdich institution, known locally as "Debbie's". Start your morning here after a heavy day of distillery visits!
+- **Aileen's Mini-Market, Bruichladdich** (5-minute walk) — Coffee, bacon rolls, newspapers, basic groceries, post office. We love Aileen and our guests absolutely rave about this place — start your morning here with a coffee and bacon roll, particularly after a heavy day of distillery visits! Aileen's (known locally as Debbie's!) is a Bruichladdich institution.
 - **Bowmore Co-op** (15-minute drive) — The biggest "supermarket" on Islay. Fresh produce, meat, alcohol, household supplies.
 - **Jean's Fresh Fish Van** — Visits villages weekly with fresh local fish and seafood.
 
-Most guests cook several meals during their stay. Dining out every night adds up quickly — expect £40-60 per person for dinner with drinks.
+Most guests cook several meals during their stay. Our kitchens are fully equipped with everything you need, and Bowmore Co-op stocks all the essentials. Dining out every night adds up quickly on Islay — expect £40-60 per person for dinner with drinks.
 
 #### Teaser Version
 
