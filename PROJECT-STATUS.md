@@ -1,94 +1,105 @@
 # Project Status
-**Updated:** 2026-02-20 (end of session 2)
+**Updated:** 2026-02-21 (session 3)
 
 ---
 
 ## Current Phase
-**PBI (Portbahn Islay) — Sanity foundation complete. Ready for content review + UI phase.**
+**PBI (Portbahn Islay) — All pages built. Content wired. Ready for images + UI phase.**
 
-Full codebase audit done. Screaming Frog issues resolved. Canonical block system implemented.
-All 16 canonical blocks imported to Sanity production. Schema cleaned up. Git is clean on `main`.
+All 12 pages implemented. All 16 canonical blocks live and rendering via BlockRenderer.
+Property data at 96-100% completeness across all three properties. Canonical block system
+working end-to-end (Sanity → GROQ → BlockRenderer → CanonicalBlock → PortableText).
 
-Next: review imported blocks in Studio, populate hub page singletons, then move to UI with v0.
+Next: Add hero images in Studio, then UI redesign with v0 (property pages first).
 
 ---
 
 ## Active Sites
 
-- **PBI (Portbahn Islay):** ✅ Sanity schema done, ✅ 16 canonical blocks imported, ✅ structural/SEO fixes complete. Awaiting: Studio content review, hub page wiring, UI redesign with v0.
+- **PBI (Portbahn Islay):** ✅ All pages built, ✅ canonical blocks rendering, ✅ property data complete, ✅ trust transfer for Curlew wired. Awaiting: hero images (user action), UI redesign with v0.
 - **BJR (Bothan Jura Retreat):** Design system documented. Content not started. Build priority TBD.
-- **IoJ (Isle of Jura / isleofjura.scot):** Placeholder only.
+- **IoJ (Isle of Jura / isleofjura.scot):** Placeholder only. Jura content lives as guide pages on PBI (`/guides/visit-jura`).
 
 ---
 
-## Last 10 Commits (this session)
+## Last 10 Commits
 
 | Hash | Description |
 |------|-------------|
-| `a40af1a` | chore: update import-canonical-blocks script to V3 source file |
-| `0aaafd6` | docs: draft hub page scopeIntro content for travel-to-islay and explore-islay |
-| `8726826` | chore: remove retired hub page and faqPage singletons from schema and Studio |
-| `86766fc` | docs: commit V3 content specs and SANITY-BUILD-SPEC from Cowork |
-| `1a375e3` | fix: wrap GoogleReviews in dynamic(ssr:false) via client wrapper component |
-| `f326d14` | chore: remove debug API endpoints |
-| `2ffe630` | chore: remove unused Sanity schemas and clean up Studio structure |
-| `0645955` | fix: rebuild sitemap with correct routes and dynamic guide pages |
-| `7a1f23c` | fix: structural route fixes — redirects, phantom 200, dead Jura link |
-| `9eb621b` | fix: block search indexing on vercel.app staging environment |
+| `7a4c3b4` | feat: add guest quotes section to about page + Sanity population script |
+| `587eaef` | feat: add about-us, contact pages + fix accommodation hub contentBlocks query |
+| `d5d14c7` | fix: remove legacy homepage fields, delete old schema, add page-wiring script |
+| `260422c` | docs: update Jura and About routes to /visit-jura and /about-us |
+| `bb48770` | docs: make teaser link text entity-specific and fix broken Shorefield URL |
+| `442f28b` | fix: correct BASE_URL domain (.co.uk), add availability metadata, split calendar into client wrapper |
+| `ea1eea8` | fix: code review — broken link, shadowed vars, production console.logs, any casts |
+| `e2d6bb5` | chore: reimport canonical blocks from merged V2+V3 source (v3.1) |
+| `f18d3a1` | docs: add merged canonical blocks + next-session handoff |
+| `838cdb4` | docs: add Cowork handoff for canonical blocks editorial merge |
 
 ---
 
-## What Was Completed This Session
+## What Was Completed This Session (Session 3)
 
-### Structural / SEO fixes
-- ✅ noindex/disallow-all on all non-production environments (`app/robots.ts` + layout metadata)
-- ✅ 301 redirect: `/accommodation/shorefield` → `/accommodation/shorefield-eco-house`
-- ✅ 301 redirect: `/properties/:slug` → `/accommodation/:slug` (moved to next.config.ts)
-- ✅ Deleted `app/properties/[slug]/page.tsx` (redirect now in next.config.ts)
-- ✅ Removed dead `/jura` link from explore-islay page
-- ✅ Sitemap rebuilt: added `/accommodation`, `/travel-to-islay`, `/availability`, dynamic `guidePage` entries; removed stale `/getting-here`
-- ✅ Removed debug API routes (`/api/lodgify-debug`, `/api/test-lodgify`)
-- ✅ GoogleReviews wrapped in `dynamic(ssr:false)` via `GoogleReviewsClient` wrapper
+### New Pages
+- ✅ **About Us page** (`/about-us`) — canonical home for `about-us` block, trust-signals teaser, bothan-jura-teaser teaser, guest quotes from property reviews, property cards grid, contact CTA
+- ✅ **Contact page** (`/contact`) — email/phone/address from Sanity, "We're here to help" panel, content block support, 5.0/5 communication rating
+- ✅ **`/about` redirect** to `/about-us` (backward compatibility)
 
-### Sanity schema cleanup
-- ✅ Deleted: `faqItem`, `navigationSettings`, `islayGuidesIndexPage` (superseded)
-- ✅ Deleted: `beachesHubPage`, `distilleriesHubPage`, `walksHubPage`, `villagesHubPage`, `faqPage` (no routes, future-use)
-- ✅ Studio structure cleaned: removed all stale items from sidebar
-- ✅ Removed `console.log` debug lines from sanity.config.ts
+### Content & Data
+- ✅ **About page population script** (`scripts/populate-about-page.ts`) — title, scopeIntro, SEO, entity framing, trust signals, content blocks wired
+- ✅ **Property gaps script** (`scripts/patch-property-gaps.ts`) — patches Shorefield (entityFraming, trustSignals, licenseNotes) and Curlew Cottage (entityFraming, trustSignals, ownerContext, propertyNickname, 4 trust-transfer reviews, typo fixes)
+- ✅ **Accommodation hub fix** — GROQ query now fetches `contentBlocks[]`
 
-### Content & Sanity data
-- ✅ V3 content specs committed: `CANONICAL-BLOCKS-FINAL.md`, `EXPLORE-ISLAY-V3-CORRECTED.md`, `GETTING-HERE-V3-CORRECTED.md`, `HOMEPAGE-V3-CORRECTED.md`
-- ✅ `SANITY-BUILD-SPEC.md` added (authoritative operational build spec)
-- ✅ **All 16 canonical blocks imported to Sanity production** (`createOrReplace`, idempotent)
-- ✅ Hub page content draft created: `docs/content/HUB-PAGE-CONTENT-DRAFT.md`
+### Property Data Completeness (after running patch script)
+| Property | Completeness | Missing |
+|----------|-------------|---------|
+| Portbahn House | 99% | — |
+| Shorefield Eco House | 100% | — (was: entityFraming, trustSignals, licenseNotes) |
+| Curlew Cottage | 98% | googlePlaceId (needs extraction from URL), no guest reviews (expected — new property, trust transfer wired) |
+
+### Already Working (confirmed from audit)
+- ✅ All 16 canonical blocks rendering via BlockRenderer on 5+ pages
+- ✅ PortableText renderer exists and handles all block types
+- ✅ Homepage renders contentBlocks (trust-signals, bruichladdich-proximity, etc.)
+- ✅ Travel-to-islay, Explore Islay, About Us all render contentBlocks
+- ✅ PropertyHostTrustTransfer component wired for Curlew (shows host reviews when totalReviewCount=0)
+- ✅ Hub-and-spoke architecture working (explore-islay → guide pages)
 
 ---
 
 ## Next Actions
 
-### Claude Code (next session)
-1. **Render canonical blocks on frontend** — `app/travel-to-islay/page.tsx` and `app/explore-islay/page.tsx` need to fetch and render `contentBlocks` from their Sanity singleton documents. Currently these pages either have static content or don't render canonical blocks at all. This is the main code task remaining before UI work.
-2. **Check `app/travel-to-islay/page.tsx`** — confirm it's fetching from `gettingHerePage` Sanity document and rendering `contentBlocks` via a PortableText renderer.
-3. **Check `app/explore-islay/page.tsx`** — same audit. Currently renders guide page cards (hub pattern) but doesn't render canonical block content from the singleton.
-4. **PortableText renderer** — check if a shared `PortableTextRenderer` component exists; if not, create one.
-5. **Homepage canonical blocks** — `app/page.tsx` likely needs the same treatment.
+### Immediate — Pi/Lynton (Studio)
+1. **Run population scripts** on local machine with `.env.local`:
+   ```bash
+   npx tsx scripts/populate-about-page.ts
+   npx tsx scripts/patch-property-gaps.ts
+   ```
+2. **Add hero images** — About Us, Contact, all property pages, hub pages
+3. **Publish all documents** in Sanity Studio after verifying content
+4. **Spot-check blocks** in Studio: `about-us`, `trust-signals`, `ferry-support`
 
-### Pi/Lynton (Studio — do before next Claude Code session)
-1. **Open `/studio` → Canonical Content Blocks** — 16 blocks should be visible. Spot-check formatting on: `ferry-support` (numbered list), `distilleries-overview` (10-item list), `food-drink-islay` (complex multi-section).
-2. **Publish all blocks** if any show as drafts.
-3. **Populate `gettingHerePage` singleton** in Studio — use `docs/content/HUB-PAGE-CONTENT-DRAFT.md` for scopeIntro, seoTitle, seoDescription, entityFraming, trustSignals. Add contentBlocks in order: `ferry-basics` (full), `ferry-support` (full), `jura-day-trip` (teaser).
-4. **Populate `exploreIslayPage` singleton** — same doc. ContentBlocks: `distilleries-overview`, `portbahn-beach`, `wildlife-geese`, `food-drink-islay`, `families-children` (all full), `jura-day-trip`, `bothan-jura-teaser` (both teaser).
-5. **Fix `exploreIslayPage` seoDescription** — currently says "nine distilleries" in the live Sanity document. Update to "ten".
-6. **Trim over-length titles/descriptions** — SF report flagged 7 titles and 7 meta descriptions exceeding limits.
+### Next Code Phase — UI Redesign
+1. **Property pages** (priority) — currently ~1,080 lines of functional but text-heavy layout. Needs v0 treatment.
+2. **Hub pages** — accommodation, travel, explore could benefit from layout refinement
+3. **Homepage** — review section layout, property cards
 
-### Decisions Needed
-- **UI priority**: Which page gets v0 treatment first? Property pages (currently "bullet soup") or hub pages?
-- **BJR vs PBI**: Still unresolved. PBI is now in good shape for UI phase.
+### Guide Pages
+- Schema and routing ready (`/guides/[slug]`)
+- **Visit Jura** at `/guides/visit-jura` — canonical Jura content lives on IoJ/BJR; guide page on PBI is fine
+- Additional guides: distilleries, beaches, walks, wildlife — content to come from Cowork
+
+### Low Priority
+- Privacy/Terms pages — placeholder content only
+- Archive one-off scripts to `scripts/_archive/`
+- Update review count from 380+ to 600+ in PropertyHostTrustTransfer component copy
 
 ---
 
 ## Blockers
-- None blocking. Studio content population is user-side.
+- **Images needed** — hero images for About, Contact, hub pages (user action)
+- No code blockers. All pages functional.
 
 ---
 
@@ -96,15 +107,37 @@ Next: review imported blocks in Studio, populate hub page singletons, then move 
 
 | What | Where |
 |------|-------|
-| Authoritative build spec | `docs/content/SANITY-BUILD-SPEC.md` |
+| Implementation spec | `_claude-handoff/CLAUDE-CODE-HANDOFF-2026-01-26.md` |
 | Canonical blocks content | `docs/content/CANONICAL-BLOCKS-FINAL.md` |
-| Hub page content drafts | `docs/content/HUB-PAGE-CONTENT-DRAFT.md` |
-| Explore Islay content | `docs/content/EXPLORE-ISLAY-V3-CORRECTED.md` |
-| Getting Here content | `docs/content/GETTING-HERE-V3-CORRECTED.md` |
-| Homepage content | `docs/content/HOMEPAGE-V3-CORRECTED.md` |
+| Sanity schema spec | `docs/schemas/SANITY-SCHEMA-FINAL.md` |
+| Content architecture | `docs/content/CONTENT-ARCHITECTURE-MVP.md` |
+| Curlew trust transfer | `docs/_session-work/pbi-content-strategy-2026-01-23/CURLEW-TRUST-TRANSFER-SPEC.md` |
+| Curlew review selection | `docs/_session-work/pbi-content-strategy-2026-01-23/CURLEW-HOST-REVIEWS-SELECTION.md` |
+| Population scripts | `scripts/populate-about-page.ts`, `scripts/patch-property-gaps.ts` |
+| Page wiring script | `scripts/wire-page-content-blocks.ts` |
 | Import script | `scripts/import-canonical-blocks.ts` |
 | Sanity schemas | `sanity/schemas/` |
 | Page components | `app/` |
+| Shared components | `components/` |
+
+---
+
+## Pages Map
+
+| Route | Status | Sanity Type | Notes |
+|-------|--------|-------------|-------|
+| `/` | ✅ Built | `homepage` | Property cards + canonical blocks |
+| `/accommodation` | ✅ Built | `accommodationPage` | Hub page, contentBlocks now fetched |
+| `/accommodation/[slug]` | ✅ Built | `property` | Full detail page, trust transfer for Curlew |
+| `/about-us` | ✅ Built | `aboutPage` | Canonical blocks + guest quotes + property cards |
+| `/about` | ✅ Redirect | — | → `/about-us` |
+| `/contact` | ✅ Built | `contactPage` | Email/phone/address + content blocks |
+| `/travel-to-islay` | ✅ Built | `gettingHerePage` | Hub page + guide cards |
+| `/getting-here` | ✅ Redirect | — | → `/travel-to-islay` |
+| `/explore-islay` | ✅ Built | `exploreIslayPage` | Hub page + guide cards |
+| `/guides/[slug]` | ✅ Built | `guidePage` | Spoke pages (need content) |
+| `/availability` | ✅ Built | — | Multi-property calendar |
+| `/studio` | ✅ Built | — | Sanity Studio |
 
 ---
 
@@ -112,9 +145,9 @@ Next: review imported blocks in Studio, populate hub page singletons, then move 
 
 | Environment | Role | Status |
 |---|---|---|
-| /dev (here) | Implementation | ✅ Active — clean on main |
-| GitHub/Vercel | Version control + deploy | ✅ Up to date, deploying |
-| Sanity Studio | CMS | ✅ 16 canonical blocks live in production |
-| Cowork | Strategy + specs | Active |
+| /dev (here) | Implementation | ✅ Active — branch `claude/resume-desktop-work-mQFR3` |
+| GitHub/Vercel | Version control + deploy | ✅ Up to date |
+| Sanity Studio | CMS | ✅ 16 blocks live, 3 properties, singletons ready |
+| Cowork | Strategy + specs | Active — guide page content next |
 | v0 | UI prototyping | Not started — next phase |
 | Cursor | Code refinement | Available |
