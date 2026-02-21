@@ -36,10 +36,10 @@ This is the canonical source of truth for all 16 content blocks. Each block has:
 | 10 | `food-drink-islay` | Activity | Explore Islay | Homepage |
 | 11 | `beaches-overview` | Place | Explore Islay | Homepage |
 | 12 | `families-children` | Activity | Explore Islay | Homepage, Property pages |
-| 13 | `jura-day-trip` | Activity | Jura page | Explore Islay, Getting Here |
-| 14 | `jura-longer-stay` | Activity | Jura page | — |
-| 15 | `bothan-jura-teaser` | Property | Jura page | Homepage, Explore Islay, About |
-| 16 | `about-us` | Trust | About page | — |
+| 13 | `jura-day-trip` | Activity | `/visit-jura` | Explore Islay, Getting Here |
+| 14 | `jura-longer-stay` | Activity | `/visit-jura` | — |
+| 15 | `bothan-jura-teaser` | Property | `/visit-jura` | Homepage, Explore Islay, About Us |
+| 16 | `about-us` | Trust | `/about-us` | — |
 
 ---
 
@@ -180,7 +180,7 @@ CalMac disruptions happen. When they do, we've got your back — we hold a 5.0/5
 
 **Entity Type:** Credibility
 **Canonical Home:** Homepage, Section 3 (Our Track Record)
-**Teaser Used On:** Property pages, About page
+**Teaser Used On:** Property pages, About Us
 
 #### Full Version
 
@@ -768,7 +768,7 @@ Islay is wonderful for families — safe beaches with rock pools, wildlife on yo
 ### Block 13: `jura-day-trip`
 
 **Entity Type:** Activity
-**Canonical Home:** Jura page
+**Canonical Home:** `/visit-jura`
 **Teaser Used On:** Explore Islay, Getting Here
 
 #### Full Version
@@ -805,7 +805,7 @@ With one road, one whisky distillery, one gin distillery, one pub, and more deer
 
 #### Teaser Version
 
-A 5-minute ferry from Port Askaig takes you to Jura — visit the distillery, lunch at the Antlers, cycle to Small Isles Bay. One road, one pub, more deer than people. It feels like a different world. [Jura day trip guide →](/jura)
+A 5-minute ferry from Port Askaig takes you to Jura — visit the distillery, lunch at the Antlers, cycle to Small Isles Bay. One road, one pub, more deer than people. It feels like a different world. [Visiting Jura from Islay — a day trip guide →](/visit-jura)
 
 ---
 
@@ -826,7 +826,7 @@ A 5-minute ferry from Port Askaig takes you to Jura — visit the distillery, lu
 ### Block 14: `jura-longer-stay`
 
 **Entity Type:** Activity
-**Canonical Home:** Jura page
+**Canonical Home:** `/visit-jura`
 **Teaser Used On:** —
 
 #### Full Version
@@ -867,7 +867,7 @@ Consider combining a few days on Jura with your Islay stay — we have accommoda
 
 #### Teaser Version
 
-*[This block has no teaser — it's full content on Jura page only]*
+*[This block has no teaser — it's full content on `/visit-jura` only]*
 
 ---
 
@@ -885,8 +885,8 @@ Consider combining a few days on Jura with your Islay stay — we have accommoda
 ### Block 15: `bothan-jura-teaser`
 
 **Entity Type:** Property
-**Canonical Home:** Jura page
-**Teaser Used On:** Homepage, Explore Islay, About page
+**Canonical Home:** `/visit-jura`
+**Teaser Used On:** Homepage, Explore Islay, About Us
 
 #### Full Version
 
@@ -928,7 +928,7 @@ If Islay fills up or you're looking for even more remoteness, or an experience o
 
 #### Teaser Version
 
-We also own Bothan Jura Retreat on Jura — a passion project with a cottage, lodge, cabin and shepherd's hut, each sleeping 2, with hot tub and sauna under the stars at the foot of the Paps. The kind of place we'd want to escape to ourselves. [Visit Jura →](/jura)
+We also own Bothan Jura Retreat on Jura — a passion project with a cottage, lodge, cabin and shepherd's hut, each sleeping 2, with hot tub and sauna under the stars at the foot of the Paps. The kind of place we'd want to escape to ourselves. [Bothan Jura Retreat — our off-grid hideaway on Jura →](/visit-jura#bothan-jura-retreat)
 
 ---
 
@@ -949,7 +949,7 @@ We also own Bothan Jura Retreat on Jura — a passion project with a cottage, lo
 ### Block 16: `about-us`
 
 **Entity Type:** Trust
-**Canonical Home:** About page
+**Canonical Home:** `/about-us`
 **Teaser Used On:** — (full content only)
 
 #### Full Version
@@ -974,7 +974,7 @@ Pi, Lynton and Amba
 
 #### Teaser Version
 
-*[This block has no teaser — it's full content on About page only]*
+*[This block has no teaser — it's full content on `/about-us` only]*
 
 ---
 

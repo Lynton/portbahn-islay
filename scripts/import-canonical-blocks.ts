@@ -44,10 +44,10 @@ const BLOCK_METADATA: Record<string, { entityType: string; canonicalHome: string
   'food-drink-islay':       { entityType: 'activity',     canonicalHome: '/explore-islay' },
   'beaches-overview':       { entityType: 'place',        canonicalHome: '/explore-islay' },
   'families-children':      { entityType: 'activity',     canonicalHome: '/explore-islay' },
-  'jura-day-trip':          { entityType: 'activity',     canonicalHome: '/jura' },
-  'jura-longer-stay':       { entityType: 'activity',     canonicalHome: '/jura' },
-  'bothan-jura-teaser':     { entityType: 'property',     canonicalHome: '/jura' },
-  'about-us':               { entityType: 'trust',        canonicalHome: '/about' },
+  'jura-day-trip':          { entityType: 'activity',     canonicalHome: '/visit-jura' },
+  'jura-longer-stay':       { entityType: 'activity',     canonicalHome: '/visit-jura' },
+  'bothan-jura-teaser':     { entityType: 'property',     canonicalHome: '/visit-jura' },
+  'about-us':               { entityType: 'trust',        canonicalHome: '/about-us' },
 };
 
 // Canonical order (matches CANONICAL-BLOCKS-FINAL.md block numbers 1-16)
