@@ -62,6 +62,7 @@ const getProperties = cache(async () => {
     sleeps,
     bedrooms,
     petFriendly,
+    totalReviewCount,
     reviewHighlights[]{
       quote,
       source,
@@ -89,6 +90,7 @@ interface Property {
   sleeps?: number;
   bedrooms?: number;
   petFriendly?: boolean;
+  totalReviewCount?: number;
   reviewHighlights?: ReviewHighlight[];
 }
 
@@ -158,14 +160,16 @@ export default async function AboutUsPage() {
             <BlockRenderer blocks={page.contentBlocks} className="mb-16" />
           )}
 
-          {/* Guest Quotes — personal service */}
+          {/* Guest Quotes — personal service (only from properties with their own reviews) */}
           {(() => {
-            const allQuotes = (properties || []).flatMap((p: Property) =>
-              (p.reviewHighlights || []).map((r: ReviewHighlight) => ({
-                ...r,
-                propertyName: p.name,
-              }))
-            );
+            const allQuotes = (properties || [])
+              .filter((p: Property) => (p.totalReviewCount ?? 0) > 0)
+              .flatMap((p: Property) =>
+                (p.reviewHighlights || []).map((r: ReviewHighlight) => ({
+                  ...r,
+                  propertyName: p.name,
+                }))
+              );
             if (allQuotes.length === 0) return null;
             return (
               <section className="mb-16">
