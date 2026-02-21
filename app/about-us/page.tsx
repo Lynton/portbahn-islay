@@ -61,13 +61,24 @@ const getProperties = cache(async () => {
     heroImage,
     sleeps,
     bedrooms,
-    petFriendly
+    petFriendly,
+    reviewHighlights[]{
+      quote,
+      source,
+      rating
+    }
   }`;
 
   return await client.fetch(query, {}, {
     next: { revalidate: 60 },
   });
 });
+
+interface ReviewHighlight {
+  quote: string;
+  source: string;
+  rating?: number;
+}
 
 interface Property {
   _id: string;
@@ -78,6 +89,7 @@ interface Property {
   sleeps?: number;
   bedrooms?: number;
   petFriendly?: boolean;
+  reviewHighlights?: ReviewHighlight[];
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -145,6 +157,41 @@ export default async function AboutUsPage() {
           {page?.contentBlocks && page.contentBlocks.length > 0 && (
             <BlockRenderer blocks={page.contentBlocks} className="mb-16" />
           )}
+
+          {/* Guest Quotes — personal service */}
+          {(() => {
+            const allQuotes = (properties || []).flatMap((p: Property) =>
+              (p.reviewHighlights || []).map((r: ReviewHighlight) => ({
+                ...r,
+                propertyName: p.name,
+              }))
+            );
+            if (allQuotes.length === 0) return null;
+            return (
+              <section className="mb-16">
+                <h2 className="font-serif text-3xl text-harbour-stone mb-8">
+                  What Our Guests Say
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {allQuotes.slice(0, 6).map((q: ReviewHighlight & { propertyName: string }, i: number) => (
+                    <blockquote
+                      key={i}
+                      className="bg-white rounded-lg p-6 border border-washed-timber"
+                    >
+                      <p className="font-mono text-base text-harbour-stone/80 italic leading-relaxed mb-3">
+                        &ldquo;{q.quote}&rdquo;
+                      </p>
+                      <footer className="font-mono text-sm text-harbour-stone/60">
+                        {q.source}
+                        <span className="mx-1">&middot;</span>
+                        {q.propertyName}
+                      </footer>
+                    </blockquote>
+                  ))}
+                </div>
+              </section>
+            );
+          })()}
 
           {/* The Homes We Manage */}
           {properties && properties.length > 0 && (
