@@ -73,8 +73,8 @@ Next: Add hero images in Studio, then UI redesign with v0 (property pages first)
 ### Immediate — Pi/Lynton (Studio)
 1. **Run population scripts** on local machine with `.env.local`:
    ```bash
-   npx tsx scripts/populate-about-page.ts
-   npx tsx scripts/patch-property-gaps.ts
+   npx tsx --tsconfig scripts/tsconfig.json scripts/populate-about-page.ts
+   npx tsx --tsconfig scripts/tsconfig.json scripts/patch-property-gaps.ts
    ```
 2. **Add hero images** — About Us, Contact, all property pages, hub pages
 3. **Publish all documents** in Sanity Studio after verifying content
@@ -93,7 +93,7 @@ Next: Add hero images in Studio, then UI redesign with v0 (property pages first)
 ### Low Priority
 - Privacy/Terms pages — placeholder content only
 - Archive one-off scripts to `scripts/_archive/`
-- Update review count from 380+ to 600+ in PropertyHostTrustTransfer component copy
+- ~~Update review count from 380+ to 600+ in PropertyHostTrustTransfer component copy~~ ✅ Done
 
 ---
 
