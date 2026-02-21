@@ -97,7 +97,7 @@ We recommend treating your first and last days as travel days rather than packin
 
 #### Teaser Version
 
-Travel to Islay is not straightforward — but that's part of the adventure. CalMac ferry from Kennacraig takes 2 hours to Port Askaig or 2 hours 20 minutes to Port Ellen. Loganair flies from Glasgow in 25 minutes. Book ferry vehicle spaces 12 weeks ahead — they fill fast, especially for Fèis Ìle. We've been helping hundreds of guests navigate the journey since 2017. [Full Getting Here Guide →](/travel-to-islay)
+Travel to Islay is not straightforward — but that's part of the adventure. CalMac ferry from Kennacraig takes 2 hours to Port Askaig or 2 hours 20 minutes to Port Ellen. Loganair flies from Glasgow in 25 minutes. Book ferry vehicle spaces 12 weeks ahead — they fill fast, especially for Fèis Ìle. We've been helping hundreds of guests navigate the journey since 2017. [Travelling to Islay — our complete guide →](/travel-to-islay)
 
 ---
 
@@ -304,7 +304,7 @@ This is genuinely one of Islay's best kept secrets, and it's our local spot — 
 
 #### Teaser Version
 
-Portbahn Beach is 5 minutes' walk via the war memorial path — three tiny sheltered coves, safe swimming, rock pools at low tide, and you'll usually have it entirely to yourselves. Our kids have spent countless hours here. One of Islay's hidden gems. [More about Islay's beaches →](/explore-islay#islays-beaches)
+Portbahn Beach is 5 minutes' walk via the war memorial path — three tiny sheltered coves, safe swimming, rock pools at low tide, and you'll usually have it entirely to yourselves. Our kids have spent countless hours here. One of Islay's hidden gems. [Islay's beaches — from hidden coves to golden sand →](/explore-islay#islays-beaches)
 
 ---
 
@@ -347,7 +347,7 @@ If you're a birder or nature lover, Shorefield offers something you won't find a
 
 #### Teaser Version
 
-Shorefield is the Jacksons' creation — they built this eco-house, planted every tree, created the wetlands and bird hides, and filled it with their art and curios. Quirky, characterful, and well-loved — guests who book here value charm over polish. One guest called it *"like a big hug."* [View Shorefield →](/properties/shorefield)
+Shorefield is the Jacksons' creation — they built this eco-house, planted every tree, created the wetlands and bird hides, and filled it with their art and curios. Quirky, characterful, and well-loved — guests who book here value charm over polish. One guest called it *"like a big hug."* [Shorefield Eco House — our quirky eco-retreat →](/accommodation/shorefield-eco-house)
 
 ---
 
@@ -477,7 +477,7 @@ Alternatively, hire a guide or taxi for distillery days. We can recommend local 
 
 #### Teaser Version
 
-Islay has ten working whisky distilleries, and you're a 5-minute walk from Bruichladdich — arguably the most innovative, with unpeated, peated and super-peated expressions plus The Botanist gin. Start there and walk home without worrying about driving. The south coast "killers" (Ardbeg, Lagavulin, Laphroaig) cluster together — break the day with lunch at Ardbeg's great café. We've hosted whisky groups dozens of times and can help you plan your distillery days. [Our distillery guide →](/explore-islay#whisky-distilleries-on-islay)
+Islay has ten working whisky distilleries, and you're a 5-minute walk from Bruichladdich — arguably the most innovative, with unpeated, peated and super-peated expressions plus The Botanist gin. Start there and walk home without worrying about driving. The south coast "killers" (Ardbeg, Lagavulin, Laphroaig) cluster together — break the day with lunch at Ardbeg's great café. We've hosted whisky groups dozens of times and can help you plan your distillery days. [Visiting Islay's ten whisky distilleries →](/explore-islay#whisky-distilleries-on-islay)
 
 ---
 
@@ -535,7 +535,7 @@ Both reserves are free to visit with hides, trails, and visitor information. Bri
 
 #### Teaser Version
 
-Over 30,000 barnacle geese arrive each winter from Greenland — RSPB Loch Gruinart at dawn is unforgettable. Golden eagles and sea eagles (8-foot wingspan!) year-round. Seals from your breakfast table. We keep binoculars in all properties. [Wildlife guide →](/explore-islay#wildlife-on-islay)
+Over 30,000 barnacle geese arrive each winter from Greenland — RSPB Loch Gruinart at dawn is unforgettable. Golden eagles and sea eagles (8-foot wingspan!) year-round. Seals from your breakfast table. We keep binoculars in all properties. [Wildlife on Islay — eagles, geese, seals and more →](/explore-islay#wildlife-on-islay)
 
 ---
 
@@ -614,7 +614,7 @@ Most guests tend to cook several meals during their stay. Our kitchens are fully
 
 #### Teaser Version
 
-Islay's food scene emphasises local seafood, lamb, venison and whisky. Don't miss Lochindaal Seafood Kitchen in Port Charlotte (order the platter 24h ahead — our guests rave about it) and the distillery cafés at Ardbeg and Kilchoman. Aileen's mini-market (5-minute walk) does great coffee and bacon rolls. [Full food guide →](/explore-islay#where-to-eat-on-islay)
+Islay's food scene emphasises local seafood, lamb, venison and whisky. Don't miss Lochindaal Seafood Kitchen in Port Charlotte (order the platter 24h ahead — our guests rave about it) and the distillery cafés at Ardbeg and Kilchoman. Aileen's mini-market (5-minute walk) does great coffee and bacon rolls. [Where to eat on Islay — seafood, cafés and local favourites →](/explore-islay#where-to-eat-on-islay)
 
 ---
 
@@ -670,7 +670,7 @@ For actual swimming, stick to Loch Indaal beaches (Portbahn, Port Charlotte) or 
 
 #### Teaser Version
 
-Islay has dozens of beaches — from our hidden gem Portbahn Beach (5-minute walk, safe swimming, rock pools) to dramatic Machir Bay (2 miles of golden sand, stunning but not safe for swimming). Ardnave Point has rolling dunes perfect for kids running wild. [Beach guide →](/explore-islay#islays-beaches)
+Islay has dozens of beaches — from our hidden gem Portbahn Beach (5-minute walk, safe swimming, rock pools) to dramatic Machir Bay (2 miles of golden sand, stunning but not safe for swimming). Ardnave Point has rolling dunes perfect for kids running wild. [Islay's beaches — safe swimming, rock pools and golden sand →](/explore-islay#islays-beaches)
 
 ---
 
@@ -744,7 +744,7 @@ One guest told us, *"The kids didn't want screens all week — they were too bus
 
 #### Teaser Version
 
-Islay is wonderful for families — safe beaches with rock pools, wildlife on your doorstep, and space for children to properly explore. We've raised our two children here, so we know what works: Portbahn Beach (5-minute walk, our kids' favourite), Ardnave Point for running full pelt across the dunes, Sanaigmore for hide and seek in the rock formations. Rainy days? Swimming pool at Mactaggart or pottery painting with Rosemary at Persabus. [Family activities on Islay →](/explore-islay#families-children)
+Islay is wonderful for families — safe beaches with rock pools, wildlife on your doorstep, and space for children to properly explore. We've raised our two children here, so we know what works: Portbahn Beach (5-minute walk, our kids' favourite), Ardnave Point for running full pelt across the dunes, Sanaigmore for hide and seek in the rock formations. Rainy days? Swimming pool at Mactaggart or pottery painting with Rosemary at Persabus. [Family activities on Islay — beaches, wildlife and rainy day ideas →](/explore-islay#families-children)
 
 ---
 
