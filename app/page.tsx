@@ -29,10 +29,6 @@ const getHomepage = cache(async () => {
     title,
     tagline,
     introText,
-    whyStayTitle,
-    whyStayText,
-    gettingHereTitle,
-    gettingHereText,
     contentBlocks[]{
       version,
       showKeyFacts,
@@ -189,44 +185,6 @@ export default async function Home() {
         {homepage?.contentBlocks && homepage.contentBlocks.length > 0 && (
           <section className="mb-16">
             <BlockRenderer blocks={homepage.contentBlocks} />
-          </section>
-        )}
-
-        {/* Why Stay Section */}
-        {(homepage?.whyStayTitle || homepage?.whyStayText) && (
-          <section className="mb-12">
-            {homepage.whyStayTitle && (
-              <h2 className="font-serif text-3xl text-harbour-stone mb-4">
-                {homepage.whyStayTitle}
-              </h2>
-            )}
-            {homepage.whyStayText && homepage.whyStayText.length > 0 && (
-              <div>
-                <PortableText
-                  value={homepage.whyStayText}
-                  components={portableTextComponents}
-                />
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* Getting Here Section */}
-        {(homepage?.gettingHereTitle || homepage?.gettingHereText) && (
-          <section className="mb-12">
-            {homepage.gettingHereTitle && (
-              <h2 className="font-serif text-3xl text-harbour-stone mb-4">
-                {homepage.gettingHereTitle}
-              </h2>
-            )}
-            {homepage.gettingHereText && homepage.gettingHereText.length > 0 && (
-              <div>
-                <PortableText
-                  value={homepage.gettingHereText}
-                  components={portableTextComponents}
-                />
-              </div>
-            )}
           </section>
         )}
 

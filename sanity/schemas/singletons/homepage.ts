@@ -57,41 +57,6 @@ export default defineType({
       ],
       description: '2-3 intro paragraphs',
     }),
-    defineField({
-      name: 'whyStayTitle',
-      title: 'Why Stay Section - Title',
-      type: 'string',
-      group: 'content',
-    }),
-    defineField({
-      name: 'whyStayText',
-      title: 'Why Stay Section - Text',
-      type: 'array',
-      group: 'content',
-      of: [
-        {
-          type: 'block',
-        },
-      ],
-    }),
-    defineField({
-      name: 'gettingHereTitle',
-      title: 'Getting Here Section - Title',
-      type: 'string',
-      group: 'content',
-    }),
-    defineField({
-      name: 'gettingHereText',
-      title: 'Getting Here Section - Text',
-      type: 'array',
-      group: 'content',
-      of: [
-        {
-          type: 'block',
-        },
-      ],
-    }),
-
     // Canonical Content Blocks
     defineField({
       name: 'contentBlocks',

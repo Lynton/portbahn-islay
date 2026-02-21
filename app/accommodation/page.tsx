@@ -29,6 +29,22 @@ export const revalidate = 60;
  * - Clear navigation to detailed content
  */
 
+const BLOCK_FIELDS = `
+  block->{
+    _id,
+    blockId,
+    title,
+    entityType,
+    canonicalHome,
+    fullContent,
+    teaserContent,
+    keyFacts
+  },
+  version,
+  showKeyFacts,
+  customHeading
+`;
+
 const getAccommodationPage = cache(async () => {
   const query = `*[_type == "accommodationPage" && !(_id in path("drafts.**"))][0]{
     _id,
@@ -36,7 +52,10 @@ const getAccommodationPage = cache(async () => {
     scopeIntro,
     heroImage,
     seoTitle,
-    seoDescription
+    seoDescription,
+    contentBlocks[]{
+      ${BLOCK_FIELDS}
+    }
   }`;
 
   return await client.fetch(query, {}, {

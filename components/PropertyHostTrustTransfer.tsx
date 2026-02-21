@@ -27,7 +27,7 @@ export default function PropertyHostTrustTransfer({
         <p className="font-mono text-base text-harbour-stone leading-relaxed mb-4">
           Curlew Cottage is managed by <strong>Pi and Lynton</strong>, who also own
           and manage Portbahn House and Shorefield on Islay. As{' '}
-          <strong>Airbnb Superhosts with a 4.97/5 rating across 380+ reviews</strong>,
+          <strong>Airbnb Superhosts with a 4.97/5 rating across 600+ reviews</strong>,
           they bring years of hospitality experience to this property.
         </p>
         <p className="font-mono text-base text-harbour-stone leading-relaxed">
