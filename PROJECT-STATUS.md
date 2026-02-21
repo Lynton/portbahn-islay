@@ -56,7 +56,7 @@ Next: Add hero images in Studio, then UI redesign with v0 (property pages first)
 |----------|-------------|---------|
 | Portbahn House | 99% | — |
 | Shorefield Eco House | 100% | — (was: entityFraming, trustSignals, licenseNotes) |
-| Curlew Cottage | 98% | googlePlaceId (needs extraction from URL), no guest reviews (expected — new property, trust transfer wired) |
+| Curlew Cottage | 100% | No guest reviews (expected — new property, trust transfer wired) |
 
 ### Already Working (confirmed from audit)
 - ✅ All 16 canonical blocks rendering via BlockRenderer on 5+ pages

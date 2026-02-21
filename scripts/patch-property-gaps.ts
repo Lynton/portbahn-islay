@@ -130,6 +130,7 @@ const CURLEW_PATCH = {
     },
   ],
   // Google listing
+  googlePlaceId: 'ChIJe28bAphfikgRK5mxg24xTfI',
   googleBusinessUrl: 'https://maps.app.goo.gl/uwhzH2r4vHhEBvX48?g_st=ic',
   // Typo fixes
   gettingHereIntro:
