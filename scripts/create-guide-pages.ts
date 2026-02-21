@@ -7,8 +7,7 @@
  * - /guides/islay-wildlife
  * - /guides/family-holidays
  * - /guides/food-and-drink
- *
- * Note: /jura already exists as a separate page
+ * - /guides/visit-jura
  */
 
 import { createClient } from '@sanity/client';
@@ -183,6 +182,36 @@ const guidePages: GuidePage[] = [
     faqBlocks: [],
     seoTitle: "Food & Drink on Islay | Restaurants & Local Produce | Portbahn Islay",
     seoDescription: "Islay food guide: restaurants, cafes, local produce. From fresh seafood to farm shops. Local recommendations.",
+  },
+  {
+    _type: 'guidePage',
+    _id: 'guide-visit-jura',
+    title: 'Visit Jura from Islay',
+    slug: { _type: 'slug', current: 'visit-jura' },
+    introduction: "Jura is just one short ferry ride from Islay — five minutes across the sound from Port Askaig. Whether you're planning a day trip or a longer stay at Bothan Jura, our guide covers how to get there, what to see and where to stay.",
+    contentBlocks: [
+      {
+        _type: 'blockReference',
+        _key: generateKey(),
+        block: { _type: 'reference', _ref: 'canonical-block-jura-day-trip' },
+        version: 'full',
+      },
+      {
+        _type: 'blockReference',
+        _key: generateKey(),
+        block: { _type: 'reference', _ref: 'canonical-block-jura-longer-stay' },
+        version: 'full',
+      },
+      {
+        _type: 'blockReference',
+        _key: generateKey(),
+        block: { _type: 'reference', _ref: 'canonical-block-bothan-jura-teaser' },
+        version: 'full',
+      },
+    ],
+    faqBlocks: [],
+    seoTitle: 'Visit Jura from Islay | Day Trips & Longer Stays | Portbahn Islay',
+    seoDescription: "How to visit Jura from Islay: the 5-minute ferry from Port Askaig, day trip ideas, and Bothan Jura for longer stays. Local advice from your Islay hosts.",
   },
 ];
 
