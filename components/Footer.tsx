@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { footerNav } from '@/lib/navigation';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -8,51 +9,22 @@ export default function Footer() {
       <div className="mx-auto max-w-7xl px-6 py-12">
         {/* Navigation Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {/* Properties Column */}
-          <div>
-            <h3 className="font-serif text-lg mb-4">Our Accommodation</h3>
-            <ul className="space-y-2 font-mono text-sm">
-              <li>
-                <Link href="/accommodation/portbahn-house" className="text-washed-timber hover:text-emerald-accent transition-colors">
-                  Portbahn House
-                </Link>
-              </li>
-              <li>
-                <Link href="/accommodation/shorefield-eco-house" className="text-washed-timber hover:text-emerald-accent transition-colors">
-                  Shorefield Eco House
-                </Link>
-              </li>
-              <li>
-                <Link href="/accommodation/curlew-cottage" className="text-washed-timber hover:text-emerald-accent transition-colors">
-                  Curlew Cottage
-                </Link>
-              </li>
-            </ul>
-          </div>
+          {footerNav.map((column) => (
+            <div key={column.heading}>
+              <h3 className="font-serif text-lg mb-4">{column.heading}</h3>
+              <ul className="space-y-2 font-mono text-sm">
+                {column.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="text-washed-timber hover:text-emerald-accent transition-colors">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
-          {/* Guides Column */}
-          <div>
-            <h3 className="font-serif text-lg mb-4">Islay Guides</h3>
-            <ul className="space-y-2 font-mono text-sm">
-              <li>
-                <Link href="/availability" className="text-washed-timber hover:text-emerald-accent transition-colors">
-                  Check Availability
-                </Link>
-              </li>
-              <li>
-                <Link href="/travel-to-islay" className="text-washed-timber hover:text-emerald-accent transition-colors">
-                  Travel to Islay
-                </Link>
-              </li>
-              <li>
-                <Link href="/explore-islay" className="text-washed-timber hover:text-emerald-accent transition-colors">
-                  Explore Islay
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Contact Column */}
+          {/* Contact Column — static, not nav data */}
           <div>
             <h3 className="font-serif text-lg mb-4">Contact</h3>
             <p className="font-mono text-sm text-washed-timber mb-2">
