@@ -75,15 +75,7 @@ export default defineType({
       type: 'array',
       group: 'content',
       of: [{ type: 'blockReference' }],
-      description: 'Full content blocks for this topic. Use "full" version for detailed pages.',
-    }),
-    defineField({
-      name: 'faqBlocks',
-      title: 'FAQ Blocks',
-      type: 'array',
-      group: 'content',
-      of: [{ type: 'faqBlockReference' }],
-      description: 'Related FAQs for this topic. These appear after the content.',
+      description: 'All content blocks for this page — including FAQ blocks (entityType: faq). Wire FAQ blocks inline after the related content block.',
     }),
     defineField({
       name: 'schemaType',

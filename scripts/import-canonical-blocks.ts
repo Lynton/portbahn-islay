@@ -1,8 +1,8 @@
 /**
- * Import Script: Canonical Content Blocks (V3)
+ * Import Script: Canonical Content Blocks (V4)
  *
- * Reads from docs/content/CANONICAL-BLOCKS-FINAL.md (V3, current source of truth)
- * and creates all 16 canonical blocks in Sanity using createOrReplace.
+ * Reads from docs/CANONICAL-BLOCKS-MERGED-v4.md (V4, current source of truth)
+ * and creates all 22 canonical blocks in Sanity using createOrReplace.
  *
  * Usage: npx tsx scripts/import-canonical-blocks.ts
  *
@@ -30,27 +30,35 @@ const client = createClient({
 });
 
 // Block metadata: maps blockId → entityType + canonicalHome
-// Aligned with CANONICAL-BLOCKS-FINAL.md V3 (2026-02-20)
+// Aligned with CANONICAL-BLOCKS-MERGED-v4.md (V4, 2026-02-22) — 22 blocks
 const BLOCK_METADATA: Record<string, { entityType: string; canonicalHome: string }> = {
-  'ferry-basics':           { entityType: 'travel',      canonicalHome: '/travel-to-islay' },
-  'ferry-support':          { entityType: 'trust',        canonicalHome: '/travel-to-islay' },
-  'trust-signals':          { entityType: 'credibility',  canonicalHome: '/' },
-  'bruichladdich-proximity':{ entityType: 'location',     canonicalHome: '/' },
-  'portbahn-beach':         { entityType: 'place',        canonicalHome: '/explore-islay' },
-  'shorefield-character':   { entityType: 'property',     canonicalHome: '/accommodation/shorefield-eco-house' },
-  'port-charlotte-village': { entityType: 'place',        canonicalHome: '/' },
-  'distilleries-overview':  { entityType: 'activity',     canonicalHome: '/explore-islay' },
-  'wildlife-geese':         { entityType: 'nature',       canonicalHome: '/explore-islay' },
-  'food-drink-islay':       { entityType: 'activity',     canonicalHome: '/explore-islay' },
-  'beaches-overview':       { entityType: 'place',        canonicalHome: '/explore-islay' },
-  'families-children':      { entityType: 'activity',     canonicalHome: '/explore-islay' },
-  'jura-day-trip':          { entityType: 'activity',     canonicalHome: '/visit-jura' },
-  'jura-longer-stay':       { entityType: 'activity',     canonicalHome: '/visit-jura' },
-  'bothan-jura-teaser':     { entityType: 'property',     canonicalHome: '/visit-jura' },
-  'about-us':               { entityType: 'trust',        canonicalHome: '/about-us' },
+  // Blocks 1–16 (original)
+  'ferry-basics':             { entityType: 'travel',        canonicalHome: '/travel-to-islay' },
+  'ferry-support':            { entityType: 'trust',          canonicalHome: '/travel-to-islay' },
+  'trust-signals':            { entityType: 'credibility',    canonicalHome: '/' },
+  'bruichladdich-proximity':  { entityType: 'location',       canonicalHome: '/' },
+  'portbahn-beach':           { entityType: 'place',          canonicalHome: '/explore-islay' },
+  'shorefield-character':     { entityType: 'property',       canonicalHome: '/accommodation/shorefield-eco-house' },
+  'port-charlotte-village':   { entityType: 'place',          canonicalHome: '/' },
+  'distilleries-overview':    { entityType: 'activity',       canonicalHome: '/explore-islay' },
+  'wildlife-geese':           { entityType: 'nature',         canonicalHome: '/explore-islay' },
+  'food-drink-islay':         { entityType: 'activity',       canonicalHome: '/explore-islay' },
+  'beaches-overview':         { entityType: 'place',          canonicalHome: '/explore-islay' },
+  'families-children':        { entityType: 'activity',       canonicalHome: '/explore-islay' },
+  'jura-day-trip':            { entityType: 'activity',       canonicalHome: '/visit-jura' },
+  'jura-longer-stay':         { entityType: 'activity',       canonicalHome: '/visit-jura' },
+  'bothan-jura-teaser':       { entityType: 'property',       canonicalHome: '/visit-jura' },
+  'about-us':                 { entityType: 'trust',          canonicalHome: '/about-us' },
+  // Blocks 17–22 (v4.0 additions)
+  'loch-gruinart-oysters':    { entityType: 'foodProducer',   canonicalHome: '/explore-islay/food-and-drink' },
+  'food-drink-islay-faqs':    { entityType: 'faq',            canonicalHome: '/explore-islay/food-and-drink' },
+  'families-islay-faqs':      { entityType: 'faq',            canonicalHome: '/explore-islay/family-holidays' },
+  'beaches-islay-faqs':       { entityType: 'faq',            canonicalHome: '/explore-islay/islay-beaches' },
+  'wildlife-islay-faqs':      { entityType: 'faq',            canonicalHome: '/explore-islay/islay-wildlife' },
+  'distilleries-islay-faqs':  { entityType: 'faq',            canonicalHome: '/explore-islay/islay-distilleries' },
 };
 
-// Canonical order (matches CANONICAL-BLOCKS-FINAL.md block numbers 1-16)
+// Canonical order (matches CANONICAL-BLOCKS-MERGED-v4.md block numbers 1–22)
 const BLOCK_ORDER = [
   'ferry-basics',
   'ferry-support',
@@ -68,6 +76,12 @@ const BLOCK_ORDER = [
   'jura-longer-stay',
   'bothan-jura-teaser',
   'about-us',
+  'loch-gruinart-oysters',
+  'food-drink-islay-faqs',
+  'families-islay-faqs',
+  'beaches-islay-faqs',
+  'wildlife-islay-faqs',
+  'distilleries-islay-faqs',
 ];
 
 function generateKey(): string {
@@ -261,7 +275,7 @@ function extractBlock(content: string, blockId: string, blockNumber: number): {
   // Match V3 heading: ### Block N: `block-id`
   const escapedId = blockId.replace(/-/g, '-');
   const blockPattern = new RegExp(
-    `### Block ${blockNumber}: \`${escapedId}\`([\\s\\S]*?)(?=### Block \\d+:|## Summary|$)`
+    `### Block ${blockNumber}: \`${escapedId}\`([\\s\\S]*?)(?=### Block \\d+:|## Key Facts Master|## Summary|## Merge Notes|## Implementation|## Version History|$)`
   );
   const match = content.match(blockPattern);
 
@@ -280,12 +294,20 @@ function extractBlock(content: string, blockId: string, blockNumber: number): {
   const fullContent = fullMatch ? markdownToPortableText(fullMatch[1]) : [];
 
   // Extract teaser version content
+  // FAQ blocks and some content blocks use "Not applicable" — treat as empty
   const teaserMatch = blockContent.match(/#### Teaser Version\n\n([\s\S]*?)\n\n#### Key Facts/);
-  const teaserContent = teaserMatch ? markdownToPortableText(teaserMatch[1]) : [];
+  const teaserRaw = teaserMatch ? teaserMatch[1].trim() : '';
+  const teaserContent = (teaserRaw && !teaserRaw.startsWith('Not applicable') && !teaserRaw.startsWith('*[This block'))
+    ? markdownToPortableText(teaserRaw)
+    : [];
 
   // Extract key facts table
-  const factsMatch = blockContent.match(/#### Key Facts \(immutable\)\n\n([\s\S]*?)(?=\n---\n|$)/);
-  const keyFacts = factsMatch ? parseKeyFacts(factsMatch[1]) : [];
+  // FAQ blocks use "Not applicable" in place of a table — treat as empty
+  const factsMatch = blockContent.match(/#### Key Facts \(immutable[^)]*\)\n\n([\s\S]*?)(?=\n---\n|$)/);
+  const factsRaw = factsMatch ? factsMatch[1].trim() : '';
+  const keyFacts = (factsRaw && !factsRaw.startsWith('Not applicable'))
+    ? parseKeyFacts(factsRaw)
+    : [];
 
   return { blockId, title, fullContent, teaserContent, keyFacts };
 }
@@ -323,10 +345,10 @@ async function upsertBlock(blockData: NonNullable<ReturnType<typeof extractBlock
  */
 async function importBlocks() {
   console.log('\n======================================================');
-  console.log('  Canonical Blocks Import — V3.1 Merged (CANONICAL-BLOCKS-MERGED.md)');
+  console.log('  Canonical Blocks Import — V4.0 (CANONICAL-BLOCKS-MERGED-v4.md)');
   console.log('======================================================\n');
 
-  const mdPath = path.join(process.cwd(), 'docs', 'content', 'CANONICAL-BLOCKS-MERGED.md');
+  const mdPath = path.join(process.cwd(), 'docs', 'CANONICAL-BLOCKS-MERGED-v4.md');
 
   if (!fs.existsSync(mdPath)) {
     console.error(`Error: File not found: ${mdPath}`);

@@ -3,7 +3,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { PortableText } from '@portabletext/react';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import BlockRenderer from '@/components/BlockRenderer';
@@ -28,19 +27,6 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-interface FaqBlockRef {
-  _key: string;
-  overrideQuestion?: string;
-  faqBlock?: {
-    _id: string;
-    question: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    answer: any[];
-    category: string;
-    priority: number;
-  };
-}
-
 const getGuidePage = cache(async (slug: string) => {
   const query = `*[_type == "guidePage" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
     _id,
@@ -63,17 +49,6 @@ const getGuidePage = cache(async (slug: string) => {
         fullContent,
         teaserContent,
         keyFacts
-      }
-    },
-    faqBlocks[]{
-      _key,
-      overrideQuestion,
-      faqBlock->{
-        _id,
-        question,
-        answer,
-        category,
-        priority
       }
     },
     seoTitle,
@@ -119,9 +94,6 @@ export default async function GuidePage({ params }: PageProps) {
   if (!page) {
     notFound();
   }
-
-  // Filter to only resolved FAQs
-  const resolvedFaqs = page?.faqBlocks?.filter((fb: FaqBlockRef) => fb?.faqBlock) || [];
 
   const schemaType = page.schemaType || 'Article';
 
@@ -184,32 +156,6 @@ export default async function GuidePage({ params }: PageProps) {
           <div className="space-y-12 mb-16">
             <BlockRenderer blocks={page.contentBlocks} hideBlockTitles={true} />
           </div>
-        )}
-
-        {/* FAQ Section - Contextually relevant FAQs */}
-        {resolvedFaqs.length > 0 && (
-          <section className="mt-16 pt-8 border-t border-washed-timber">
-            <h2 className="font-serif text-3xl mb-8 text-harbour-stone">
-              Common Questions
-            </h2>
-            <div className="space-y-8">
-              {resolvedFaqs.map((faqBlock: FaqBlockRef) => (
-                <div
-                  key={faqBlock._key}
-                  className="bg-white rounded-lg p-6 shadow-sm border border-washed-timber"
-                >
-                  <h3 className="font-mono text-lg font-semibold text-harbour-stone mb-3">
-                    {faqBlock.overrideQuestion || faqBlock.faqBlock?.question}
-                  </h3>
-                  <div className="font-mono text-base text-harbour-stone/80 prose prose-emerald max-w-none">
-                    {faqBlock.faqBlock?.answer && (
-                      <PortableText value={faqBlock.faqBlock.answer} />
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
         )}
 
         <div className="mt-12 pt-8 border-t border-washed-timber">
