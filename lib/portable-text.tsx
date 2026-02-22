@@ -54,4 +54,9 @@ export const portableTextComponents = {
     bullet: ({ children }: any) => <li>{children}</li>,
     number: ({ children }: any) => <li>{children}</li>,
   },
+  types: {
+    // Render horizontal rules from Sanity portable text — prevents "---" rendering as literal text
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    break: (_props: any) => <hr className="my-8 border-washed-timber" />,
+  },
 };

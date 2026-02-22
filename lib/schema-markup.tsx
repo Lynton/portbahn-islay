@@ -24,7 +24,8 @@ export type SchemaType =
   | 'TouristAttraction'
   | 'HowTo'
   | 'WebPage'
-  | 'CollectionPage';
+  | 'CollectionPage'
+  | 'FAQPage';
 
 export interface BreadcrumbItem {
   name: string;
@@ -636,6 +637,27 @@ function generateCollectionPage(data: any, siteUrl: string) {
   return schema;
 }
 
+// Generate FAQPage schema for guide pages
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function generateFAQPage(data: any) {
+  const faqs = data?.faqBlocks || [];
+  if (faqs.length === 0) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': data?.url ? getCanonicalUrl(`${data.url}#faqs`) : getCanonicalUrl('#faqs'),
+    mainEntity: faqs.map((faq: any) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answerText || faq.question,
+      },
+    })),
+  };
+}
+
 // Main schema generator function
 export function generateSchemaMarkup(
   type: SchemaType | SchemaType[],
@@ -694,6 +716,11 @@ export function generateSchemaMarkup(
       case 'CollectionPage':
         schemas.push(generateCollectionPage(data, BASE_URL));
         break;
+      case 'FAQPage': {
+        const faqSchema = generateFAQPage(data);
+        if (faqSchema) schemas.push(faqSchema);
+        break;
+      }
     }
   });
 

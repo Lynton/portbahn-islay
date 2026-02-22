@@ -91,9 +91,12 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     };
   }
 
+  const canonicalUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahnislay.co.uk'}/explore-islay/${slug}`;
+
   return {
     title: page.seoTitle || `${page.title} | Portbahn Islay`,
     description: page.seoDescription || `Discover ${page.title} on the Isle of Islay.`,
+    alternates: { canonical: canonicalUrl },
   };
 }
 
@@ -107,6 +110,18 @@ export default async function GuidePage({ params }: PageProps) {
 
   const schemaType = page.schemaType || 'Article';
 
+  // Flatten PortableText answer blocks to plain text for FAQPage schema
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const faqsForSchema = (page.faqBlocks || []).map((faq: any) => ({
+    question: faq.question,
+    answerText: (faq.answer || [])
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .filter((b: any) => b._type === 'block')
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      .map((b: any) => (b.children || []).map((c: any) => c.text || '').join(''))
+      .join(' '),
+  }));
+
   const schemaData = {
     name: page.title,
     description: page.seoDescription || page.introduction || `Guide to ${page.title} on the Isle of Islay.`,
@@ -115,12 +130,16 @@ export default async function GuidePage({ params }: PageProps) {
     title: page.title,
     seoDescription: page.seoDescription,
     heroImage: page.heroImage,
+    faqBlocks: faqsForSchema,
   };
+
+  const schemaTypes: typeof schemaType[] = [schemaType, 'TouristAttraction', 'BreadcrumbList'];
+  if (faqsForSchema.length > 0) schemaTypes.push('FAQPage');
 
   return (
     <>
       <SchemaMarkup
-        type={[schemaType, 'BreadcrumbList']}
+        type={schemaTypes}
         data={schemaData}
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -164,7 +183,7 @@ export default async function GuidePage({ params }: PageProps) {
         {/* Content Blocks */}
         {page.contentBlocks && page.contentBlocks.length > 0 && (
           <div className="space-y-12 mb-16">
-            <BlockRenderer blocks={page.contentBlocks} hideBlockTitles={true} />
+            <BlockRenderer blocks={page.contentBlocks} />
           </div>
         )}
 
@@ -186,10 +205,38 @@ export default async function GuidePage({ params }: PageProps) {
           </section>
         )}
 
-        <div className="mt-12 pt-8 border-t border-washed-timber">
-          <Link href="/explore-islay" className="font-mono text-emerald-accent hover:underline">
-            ← Back to Explore Islay
-          </Link>
+        {/* Internal links — properties + related guides */}
+        <div className="mt-16 pt-8 border-t border-washed-timber space-y-8">
+          <div>
+            <h2 className="font-serif text-2xl text-harbour-stone mb-4">Stay on Islay</h2>
+            <ul className="font-mono text-base space-y-2">
+              <li><Link href="/accommodation/portbahn-house" className="text-emerald-accent hover:underline">Portbahn House — sleeps 8, dogs welcome, 5 minutes from Bruichladdich Distillery</Link></li>
+              <li><Link href="/accommodation/shorefield-eco-house" className="text-emerald-accent hover:underline">Shorefield Eco House — sleeps 6, dogs welcome, private bird hides</Link></li>
+              <li><Link href="/accommodation/curlew-cottage" className="text-emerald-accent hover:underline">Curlew Cottage — sleeps 6, walled garden, quiet and pet-free</Link></li>
+            </ul>
+          </div>
+          <div>
+            <h2 className="font-serif text-2xl text-harbour-stone mb-4">More to explore</h2>
+            <ul className="font-mono text-base space-y-2">
+              {[
+                { slug: 'islay-distilleries', title: "Islay's Whisky Distilleries" },
+                { slug: 'islay-beaches', title: 'Beaches of Islay' },
+                { slug: 'islay-wildlife', title: 'Wildlife & Nature on Islay' },
+                { slug: 'food-and-drink', title: 'Food & Drink on Islay' },
+                { slug: 'family-holidays', title: 'Family Holidays on Islay' },
+              ]
+                .filter((g) => g.slug !== slug)
+                .slice(0, 3)
+                .map((g) => (
+                  <li key={g.slug}>
+                    <Link href={`/explore-islay/${g.slug}`} className="text-emerald-accent hover:underline">
+                      {g.title}
+                    </Link>
+                  </li>
+                ))}
+              <li><Link href="/explore-islay" className="text-emerald-accent hover:underline">← All Islay guides</Link></li>
+            </ul>
+          </div>
         </div>
       </div>
     </main>
