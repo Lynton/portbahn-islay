@@ -60,7 +60,7 @@ const getGuidePage = cache(async (slug: string) => {
         keyFacts
       }
     },
-    faqBlocks[]->{ _id, question, answer }[defined(question)],
+    "faqBlocks": faqBlocks[]->{_id, question, answer}[defined(_id) && defined(question)],
     seoTitle,
     seoDescription
   }`;
@@ -112,7 +112,7 @@ export default async function GuidePage({ params }: PageProps) {
 
   // Flatten PortableText answer blocks to plain text for FAQPage schema
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const faqsForSchema = (page.faqBlocks || []).map((faq: any) => ({
+  const faqsForSchema = (page.faqBlocks || []).filter((faq: any) => faq?.question).map((faq: any) => ({
     question: faq.question,
     answerText: (faq.answer || [])
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
