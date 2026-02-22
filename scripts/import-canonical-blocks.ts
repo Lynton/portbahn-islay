@@ -126,6 +126,13 @@ function markdownToPortableText(markdown: string): any[] {
       continue;
     }
 
+    // Skip markdown horizontal rules
+    if (trimmed === '---') {
+      flushParagraph();
+      flushList();
+      continue;
+    }
+
     // H3 heading: ### Heading
     if (trimmed.startsWith('### ')) {
       flushParagraph();
@@ -140,21 +147,21 @@ function markdownToPortableText(markdown: string): any[] {
       continue;
     }
 
-    // H4 heading: #### Heading
+    // H4 heading: #### Heading — stored as h3 (no h4 renderer in frontend)
     if (trimmed.startsWith('#### ')) {
       flushParagraph();
       flushList();
       blocks.push({
         _key: generateKey(),
         _type: 'block',
-        style: 'h4',
+        style: 'h3',
         markDefs: [],
         children: [{ _key: generateKey(), _type: 'span', marks: [], text: trimmed.slice(5) }],
       });
       continue;
     }
 
-    // Standalone bold line used as heading: **Heading Text**
+    // Standalone bold line used as heading: **Heading Text** — stored as h3
     if (/^\*\*[^*]+\*\*$/.test(trimmed)) {
       flushParagraph();
       flushList();
@@ -162,7 +169,7 @@ function markdownToPortableText(markdown: string): any[] {
       blocks.push({
         _key: generateKey(),
         _type: 'block',
-        style: 'h4',
+        style: 'h3',
         markDefs: [],
         children: [{ _key: generateKey(), _type: 'span', marks: [], text }],
       });

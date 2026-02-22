@@ -2,11 +2,11 @@
  * Create Guide Pages (spoke pages for hub-and-spoke architecture)
  *
  * Creates focused topic pages with relevant content blocks and FAQs:
- * - /guides/islay-distilleries
- * - /guides/islay-beaches
- * - /guides/islay-wildlife
- * - /guides/family-holidays
- * - /guides/food-and-drink
+ * - /explore-islay/islay-distilleries
+ * - /explore-islay/islay-beaches
+ * - /explore-islay/islay-wildlife
+ * - /explore-islay/family-holidays
+ * - /explore-islay/food-and-drink
  *
  * Note: /jura already exists as a separate page
  */
@@ -210,7 +210,7 @@ async function createGuidePages() {
   console.log('\nNext steps:');
   console.log('1. Update /explore-islay to be a hub page with teasers');
   console.log('2. Move remaining FAQs from explore-islay to appropriate guide pages');
-  console.log('3. Test pages at /guides/[slug]');
+  console.log('3. Test pages at /explore-islay/[slug]');
 }
 
 createGuidePages().catch(console.error);

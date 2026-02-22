@@ -128,7 +128,7 @@ export default async function GuidePage({ params }: PageProps) {
   const schemaData = {
     name: page.title,
     description: page.seoDescription || page.introduction || `Guide to ${page.title} on the Isle of Islay.`,
-    url: `/guides/${slug}`,
+    url: `/explore-islay/${slug}`,
     slug: { current: slug },
     title: page.title,
     seoDescription: page.seoDescription,
@@ -143,7 +143,7 @@ export default async function GuidePage({ params }: PageProps) {
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Explore Islay', url: '/explore-islay' },
-          { name: page.title, url: `/guides/${slug}` },
+          { name: page.title, url: `/explore-islay/${slug}` },
         ]}
       />
       <main className="min-h-screen bg-sea-spray">
@@ -182,7 +182,7 @@ export default async function GuidePage({ params }: PageProps) {
         {/* Content Blocks */}
         {page.contentBlocks && page.contentBlocks.length > 0 && (
           <div className="space-y-12 mb-16">
-            <BlockRenderer blocks={page.contentBlocks} />
+            <BlockRenderer blocks={page.contentBlocks} hideBlockTitles={true} />
           </div>
         )}
 

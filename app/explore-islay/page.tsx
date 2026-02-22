@@ -160,7 +160,7 @@ export default async function ExploreIslayPage() {
                 {guidePages.map((guide: GuidePage) => (
                 <Link
                   key={guide._id}
-                  href={`/guides/${guide.slug?.current}`}
+                  href={`/explore-islay/${guide.slug?.current}`}
                   className="group bg-white rounded-lg overflow-hidden shadow-sm border border-washed-timber hover:shadow-md transition-shadow"
                 >
                   {guide.heroImage && (

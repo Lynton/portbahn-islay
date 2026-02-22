@@ -56,7 +56,7 @@ async function createVisitJura() {
   });
 
   console.log('Done: guide-visit-jura created');
-  console.log('Check: http://localhost:3000/guides/visit-jura');
+  console.log('Check: http://localhost:3000/explore-islay/visit-jura');
 }
 
 createVisitJura().catch(console.error);

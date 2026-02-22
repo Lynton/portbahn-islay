@@ -10,7 +10,7 @@ export const portableTextComponents = {
       <p className="font-mono text-base text-harbour-stone mb-4 leading-relaxed">{children}</p>
     ),
     h2: ({ children }: any) => (
-      <h2 className="font-serif text-3xl text-harbour-stone mb-6 mt-10">{children}</h2>
+      <h2 className="font-serif text-2xl text-harbour-stone mb-4 mt-10">{children}</h2>
     ),
     h3: ({ children }: any) => (
       <h3 className="font-serif text-xl text-harbour-stone mb-3 mt-6">{children}</h3>

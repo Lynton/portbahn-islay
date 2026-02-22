@@ -55,19 +55,19 @@ export default function Header() {
               <div className="absolute left-0 top-full pt-2 hidden group-hover:block z-50">
                 <div className="bg-sea-spray border border-washed-timber shadow-lg min-w-[200px]">
                   <Link
-                    href="/guides/ferry-to-islay"
+                    href="/explore-islay/ferry-to-islay"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Ferry to Islay
                   </Link>
                   <Link
-                    href="/guides/flights-to-islay"
+                    href="/explore-islay/flights-to-islay"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Flights to Islay
                   </Link>
                   <Link
-                    href="/guides/planning-your-trip"
+                    href="/explore-islay/planning-your-trip"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Planning Your Trip
@@ -95,31 +95,31 @@ export default function Header() {
               <div className="absolute left-0 top-full pt-2 hidden group-hover:block z-50">
                 <div className="bg-sea-spray border border-washed-timber shadow-lg min-w-[200px]">
                   <Link
-                    href="/guides/islay-distilleries"
+                    href="/explore-islay/islay-distilleries"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Whisky Distilleries
                   </Link>
                   <Link
-                    href="/guides/islay-beaches"
+                    href="/explore-islay/islay-beaches"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Beaches
                   </Link>
                   <Link
-                    href="/guides/islay-wildlife"
+                    href="/explore-islay/islay-wildlife"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Wildlife & Birdwatching
                   </Link>
                   <Link
-                    href="/guides/family-holidays"
+                    href="/explore-islay/family-holidays"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Family Holidays
                   </Link>
                   <Link
-                    href="/guides/food-and-drink"
+                    href="/explore-islay/food-and-drink"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Food & Drink

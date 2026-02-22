@@ -482,7 +482,7 @@ function generateBreadcrumbList(breadcrumbs: BreadcrumbItem[]) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function generateArticle(article: any) {
   const path = article.slug?.current
-    ? `/guides/${article.slug.current}`
+    ? `/explore-islay/${article.slug.current}`
     : (typeof article.slug === 'string' ? article.slug : undefined);
   const canonicalUrl = getCanonicalUrl(path);
 

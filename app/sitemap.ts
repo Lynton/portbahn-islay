@@ -71,7 +71,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Dynamic guide pages (spokes in hub-and-spoke architecture)
   const guidePageEntries: MetadataRoute.Sitemap = guidePages.map(
     (guide: { slug: { current: string }; _updatedAt?: string }) => ({
-      url: `${baseUrl}/guides/${guide.slug.current}`,
+      url: `${baseUrl}/explore-islay/${guide.slug.current}`,
       lastModified: guide._updatedAt ? new Date(guide._updatedAt) : new Date(),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
