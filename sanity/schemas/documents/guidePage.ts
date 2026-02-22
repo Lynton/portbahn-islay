@@ -75,7 +75,15 @@ export default defineType({
       type: 'array',
       group: 'content',
       of: [{ type: 'blockReference' }],
-      description: 'All content blocks for this page — including FAQ blocks (entityType: faq). Wire FAQ blocks inline after the related content block.',
+      description: 'Editorial content blocks for this page (canonical blocks — ferry info, distilleries, beaches, etc.).',
+    }),
+    defineField({
+      name: 'faqBlocks',
+      title: 'FAQ Blocks',
+      type: 'array',
+      group: 'content',
+      of: [{ type: 'reference', to: [{ type: 'faqCanonicalBlock' }] }],
+      description: 'Q&A blocks for this page. Each item is a question + answer from the FAQ library. Rendered after the content blocks.',
     }),
     defineField({
       name: 'schemaType',

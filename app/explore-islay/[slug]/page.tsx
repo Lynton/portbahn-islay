@@ -3,10 +3,12 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
+import { PortableText } from '@portabletext/react';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import BlockRenderer from '@/components/BlockRenderer';
 import SchemaMarkup from '@/components/SchemaMarkup';
+import { portableTextComponents } from '@/lib/portable-text';
 
 // Revalidate every 60 seconds
 export const revalidate = 60;
@@ -25,6 +27,13 @@ export const revalidate = 60;
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+interface FaqItem {
+  _id: string;
+  question: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  answer: any[];
 }
 
 const getGuidePage = cache(async (slug: string) => {
@@ -50,6 +59,11 @@ const getGuidePage = cache(async (slug: string) => {
         teaserContent,
         keyFacts
       }
+    },
+    faqBlocks[]->{
+      _id,
+      question,
+      answer
     },
     seoTitle,
     seoDescription
@@ -156,6 +170,24 @@ export default async function GuidePage({ params }: PageProps) {
           <div className="space-y-12 mb-16">
             <BlockRenderer blocks={page.contentBlocks} hideBlockTitles={true} />
           </div>
+        )}
+
+        {/* FAQ Blocks */}
+        {page.faqBlocks && page.faqBlocks.length > 0 && (
+          <section className="mt-4 pt-8 border-t border-washed-timber">
+            <div className="space-y-8">
+              {page.faqBlocks.map((faq: FaqItem) => (
+                <div key={faq._id}>
+                  <h3 className="font-mono text-lg font-semibold text-harbour-stone mb-3">
+                    {faq.question}
+                  </h3>
+                  <div className="font-mono text-base text-harbour-stone/80 prose prose-emerald max-w-none">
+                    <PortableText value={faq.answer} components={portableTextComponents} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </section>
         )}
 
         <div className="mt-12 pt-8 border-t border-washed-timber">

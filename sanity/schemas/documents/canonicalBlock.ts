@@ -48,6 +48,7 @@ export default defineType({
           { title: 'Place', value: 'place' },
           { title: 'Property', value: 'property' },
           { title: 'Nature', value: 'nature' },
+          { title: 'Food Producer', value: 'foodProducer' },
         ],
       },
       validation: (Rule) => Rule.required(),
