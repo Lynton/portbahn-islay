@@ -29,7 +29,7 @@ export default function BlockRenderer({ blocks, className = '', hideBlockTitles 
 
   return (
     <div className={`block-renderer space-y-12 ${className}`}>
-      {blocks.map((blockRef, index) => (
+      {blocks.filter((blockRef) => blockRef?.block?._id).map((blockRef, index) => (
         <CanonicalBlock
           key={blockRef.block._id || index}
           data={blockRef}

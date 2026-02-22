@@ -44,7 +44,7 @@ const getGuidePage = cache(async (slug: string) => {
     heroImage,
     introduction,
     schemaType,
-    contentBlocks[]{
+    "contentBlocks": contentBlocks[defined(block._ref)]{
       _key,
       version,
       showKeyFacts,
@@ -59,7 +59,7 @@ const getGuidePage = cache(async (slug: string) => {
         teaserContent,
         keyFacts
       }
-    },
+    }[defined(block._id)],
     "faqBlocks": faqBlocks[]->{_id, question, answer}[defined(_id) && defined(question)],
     seoTitle,
     seoDescription
