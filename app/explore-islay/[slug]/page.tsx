@@ -60,11 +60,7 @@ const getGuidePage = cache(async (slug: string) => {
         keyFacts
       }
     },
-    faqBlocks[]->{
-      _id,
-      question,
-      answer
-    },
+    faqBlocks[]->{ _id, question, answer }[defined(question)],
     seoTitle,
     seoDescription
   }`;
@@ -176,7 +172,7 @@ export default async function GuidePage({ params }: PageProps) {
         {page.faqBlocks && page.faqBlocks.length > 0 && (
           <section className="mt-4 pt-8 border-t border-washed-timber">
             <div className="space-y-8">
-              {page.faqBlocks.map((faq: FaqItem) => (
+              {page.faqBlocks.filter((faq: FaqItem) => faq && faq.question).map((faq: FaqItem) => (
                 <div key={faq._id}>
                   <h3 className="font-mono text-lg font-semibold text-harbour-stone mb-3">
                     {faq.question}
