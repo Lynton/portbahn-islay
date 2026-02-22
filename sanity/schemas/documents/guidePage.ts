@@ -78,6 +78,14 @@ export default defineType({
       description: 'Editorial content blocks for this page (canonical blocks — ferry info, distilleries, beaches, etc.).',
     }),
     defineField({
+      name: 'extendedEditorial',
+      title: 'Extended Editorial',
+      description: 'Guide-level editorial voice. Renders between contentBlocks and faqBlocks. Page-specific — not a reusable block.',
+      type: 'array',
+      group: 'content',
+      of: [{ type: 'block' }],
+    }),
+    defineField({
       name: 'faqBlocks',
       title: 'FAQ Blocks',
       type: 'array',

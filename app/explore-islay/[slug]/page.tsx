@@ -60,6 +60,7 @@ const getGuidePage = cache(async (slug: string) => {
         keyFacts
       }
     }[defined(block._id)],
+    extendedEditorial,
     "faqBlocks": faqBlocks[]->{_id, question, answer}[defined(_id) && defined(question)],
     seoTitle,
     seoDescription
@@ -184,6 +185,13 @@ export default async function GuidePage({ params }: PageProps) {
         {page.contentBlocks && page.contentBlocks.length > 0 && (
           <div className="space-y-12 mb-16">
             <BlockRenderer blocks={page.contentBlocks} />
+          </div>
+        )}
+
+        {/* Extended Editorial */}
+        {page.extendedEditorial && page.extendedEditorial.length > 0 && (
+          <div className="guide-extended-editorial mb-16">
+            <PortableText value={page.extendedEditorial} components={portableTextComponents} />
           </div>
         )}
 
