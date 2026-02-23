@@ -20,54 +20,82 @@ Portbahn Islay is a holiday rental website for three properties in Bruichladdich
 
 ## Environment Architecture
 
-This repo is part of a multi-environment project. Know where you sit:
+This repo is part of a structured three-repo environment. Know where you sit:
 
-| Environment | Role |
-|---|---|
-| **Cowork** | Strategic home — produces specs, content briefs, design docs, decisions |
-| **/dev (here)** | Implementation source of truth — owns all code, schemas, git history |
-| **GitHub/Vercel** | Version control + deployment pipeline |
-| **Cursor** | Tactical code refinement — operates on /dev files |
+| Environment | Path | Role |
+|---|---|---|
+| **sites/pbi/** | `~/dev/sites/pbi/` | **Here** — code, schemas, git history |
+| **ecosystem/** | `~/dev/ecosystem/` | Shared authority — playbook, ops, strategy |
+| **cw/** | `~/dev/cw/` | Cowork working files — content, design, research |
+| **GitHub/Vercel** | Remote | Version control + deployment pipeline |
+| **Cursor** | Tactical | Code refinement on this repo |
 
-**Flow:** Cowork pushes specs → /dev implements → GitHub/Vercel deploys
+**Flow:** Cowork (cw/) produces content specs → sites/pbi/ implements → GitHub/Vercel deploys
 
-**You receive specs via:** `_claude-handoff/` and `docs/content/`
+**You receive specs via:** `~/dev/cw/pbi/content/` (post-restructure)
 **You do not create content strategy** — implement what the specs say.
+
+### Key paths (post-restructure)
+
+```
+~/dev/
+├── ecosystem/          ← git repo A: playbook, ops, strategy
+├── sites/
+│   └── pbi/           ← git repo B: this repo (code)
+└── cw/                ← git repo C: content, design, research
+    └── pbi/
+        ├── content/   ← canonical content docs live here
+        ├── design/    ← design assets and briefs
+        ├── reviews/   ← property review files
+        └── nuance/    ← brief + property details
+```
 
 ---
 
-## Current Phase (2026-02-20)
+## Current Phase (2026-02-23)
 
 **Active build: PBI (Portbahn Islay)**
 
-Priority task: Implement the canonical content block system in Sanity CMS + Next.js frontend.
+All 12 pages built. Canonical block system live end-to-end. Next: hero images in Studio, then UI redesign with v0 (property pages first).
 
 **Start here:**
-1. Read `PROJECT-STATUS.md` — cross-environment status, current blockers, next actions
-2. Read `_claude-handoff/CLAUDE-CODE-HANDOFF-2026-01-26.md` — full implementation spec
-3. Check git log to orient on what's already done
+1. Read `~/dev/ecosystem/PROJECT-STATUS.md` — cross-environment status, current blockers, next actions
+2. Check git log to orient on what's already done
+3. Check `~/dev/cw/pbi/content/` for latest content specs
 
 ---
 
 ## Key Files
 
+### In this repo (code + schema)
 | What | Where |
 |------|-------|
-| **Current status** | `PROJECT-STATUS.md` (root) |
-| **Implementation spec** | `_claude-handoff/CLAUDE-CODE-HANDOFF-2026-01-26.md` |
-| **Canonical blocks content** | `docs/content/CANONICAL-BLOCKS-FINAL.md` |
-| **Sanity schema definitions** | `docs/schemas/SANITY-SCHEMA-FINAL.md` |
-| **Site structure / page map** | `docs/content/CONTENT-ARCHITECTURE-MVP.md` |
-| **Tone of voice** | `docs/content/PORTBAHN-TONE-OF-VOICE-SKILL.md` |
-| **Homepage content** | `docs/content/HOMEPAGE-V3-CORRECTED.md` |
-| **Getting Here content** | `docs/content/GETTING-HERE-V3-CORRECTED.md` |
-| **Explore Islay content** | `docs/content/EXPLORE-ISLAY-V3-CORRECTED.md` |
-| **Property FAQs** | `docs/content/PROPERTY-FAQ-V3-CORRECTED.md` |
-| **FAQ data (35 Q&As)** | `docs/content/FAQS-STRUCTURED-PORTBAHN-ISLAY.md` |
+| **Sanity schema spec** | `docs/schemas/SANITY-SCHEMA-FINAL.md` |
+| **Sanity build spec** | `docs/content/SANITY-BUILD-SPEC.md` |
 | **Sanity schemas (code)** | `sanity/schemas/` |
 | **Page components** | `app/` |
 | **Shared components** | `components/` |
-| **Historical handoffs** | `_claude-handoff/` |
+| **Data architecture** | `docs/architecture/` |
+
+### In ecosystem/ (shared authority)
+| What | Where |
+|------|-------|
+| **Project status** | `~/dev/ecosystem/PROJECT-STATUS.md` |
+| **AI Search Playbook** | `~/dev/ecosystem/playbook-v1.4.0/` |
+
+### In cw/pbi/ (Cowork content files)
+| What | Where |
+|------|-------|
+| **Canonical blocks** | `~/dev/cw/pbi/content/CANONICAL-BLOCKS-MERGED-v4.md` |
+| **Tone of voice** | `~/dev/cw/pbi/PORTBAHN-TONE-OF-VOICE-SKILL.md` |
+| **Content architecture** | `~/dev/cw/pbi/content/CONTENT-ARCHITECTURE-MVP.md` |
+| **Homepage content** | `~/dev/cw/pbi/content/HOMEPAGE-V3-CORRECTED.md` |
+| **Getting Here content** | `~/dev/cw/pbi/content/GETTING-HERE-V3-CORRECTED.md` |
+| **Explore Islay content** | `~/dev/cw/pbi/content/EXPLORE-ISLAY-V3-CORRECTED.md` |
+| **Property FAQs** | `~/dev/cw/pbi/content/PROPERTY-FAQ-V3-CORRECTED.md` |
+| **FAQ data (35 Q&As)** | `~/dev/cw/pbi/content/FAQS-STRUCTURED-PORTBAHN-ISLAY.md` |
+| **Guide page content** | `~/dev/cw/pbi/content/guides/` |
+| **Nuance brief** | `~/dev/cw/pbi/nuance/PBI-NUANCE-BRIEF-ENHANCED.md` |
 
 ---
 
@@ -75,7 +103,7 @@ Priority task: Implement the canonical content block system in Sanity CMS + Next
 
 The site uses a canonical content block architecture. Core principle: repeated content has a single source of truth in Sanity, rendered as either `full` or `teaser` depending on page context.
 
-**16 canonical blocks** are defined — each with:
+**22 canonical blocks** are defined — each with:
 - `blockId` — lowercase-with-hyphens identifier
 - `fullContent` — PortableText (rendered on the block's canonical home page)
 - `teaserContent` — PortableText (rendered as a summary on other pages)
@@ -83,7 +111,8 @@ The site uses a canonical content block architecture. Core principle: repeated c
 
 **Rule:** Never edit repeated content inline on a page. Edit the canonical block in Sanity Studio — all pages referencing it update automatically.
 
-Full block list and schema: `docs/content/CANONICAL-BLOCKS-FINAL.md` + `docs/schemas/SANITY-SCHEMA-FINAL.md`
+Full block list: `~/dev/cw/pbi/content/CANONICAL-BLOCKS-MERGED-v4.md` (22 blocks, incl. blocks 17–22 guide FAQs)
+Schema: `docs/schemas/SANITY-SCHEMA-FINAL.md`
 
 ---
 

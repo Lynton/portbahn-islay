@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+.claude/
+export.tar.gz
+export-full.tar.gz
+production.tar.gz
