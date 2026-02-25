@@ -67,7 +67,7 @@ const getGuidePage = cache(async (slug: string) => {
   }`;
 
   return await client.fetch(query, { slug }, {
-    next: { revalidate: 60 },
+    cache: 'no-store',
   });
 });
 
