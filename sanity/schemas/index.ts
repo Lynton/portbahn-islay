@@ -2,6 +2,7 @@
 import canonicalBlock from './documents/canonicalBlock';
 import faqCanonicalBlock from './documents/faqCanonicalBlock';
 import guidePage from './documents/guidePage';
+import { siteEntity } from './documents/siteEntity';
 
 // Objects
 import blockReference from './objects/blockReference';
@@ -29,6 +30,7 @@ export const schemaTypes = [
   canonicalBlock,
   faqCanonicalBlock,
   guidePage,
+  siteEntity,
 
   // Objects
   blockReference,

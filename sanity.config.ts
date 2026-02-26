@@ -117,6 +117,14 @@ export default defineConfig({
                 S.documentTypeList('guidePage')
                   .title('Guide Pages')
               ),
+            // Site Entities
+            S.listItem()
+              .title('Site Entities')
+              .child(
+                S.documentTypeList('siteEntity')
+                  .title('Site Entities')
+                  .defaultOrdering([{ field: 'category', direction: 'asc' }])
+              ),
             // Divider
             S.divider(),
             // Collections

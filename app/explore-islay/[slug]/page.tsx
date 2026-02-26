@@ -8,6 +8,8 @@ import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import BlockRenderer from '@/components/BlockRenderer';
 import SchemaMarkup from '@/components/SchemaMarkup';
+import EntityCard from '@/components/EntityCard';
+import GuideMap from '@/components/GuideMap';
 import { portableTextComponents } from '@/lib/portable-text';
 
 // Revalidate every 60 seconds
@@ -61,6 +63,25 @@ const getGuidePage = cache(async (slug: string) => {
       }
     }[defined(block._id)],
     extendedEditorial,
+    "featuredEntities": featuredEntities[]->{
+      _id,
+      entityId,
+      name,
+      category,
+      schemaOrgType,
+      island,
+      status,
+      shortDescription,
+      editorialNote,
+      importantNote,
+      canonicalExternalUrl,
+      ecosystemSite,
+      location,
+      contact,
+      openingHours,
+      attributes,
+      tags
+    },
     "faqBlocks": faqBlocks[]->{_id, question, answer}[defined(_id) && defined(question)],
     seoTitle,
     seoDescription
@@ -192,6 +213,19 @@ export default async function GuidePage({ params }: PageProps) {
         {page.extendedEditorial && page.extendedEditorial.length > 0 && (
           <div className="guide-extended-editorial mb-16">
             <PortableText value={page.extendedEditorial} components={portableTextComponents} />
+          </div>
+        )}
+
+        {/* Entity Cards + Map */}
+        {page.featuredEntities && page.featuredEntities.length > 0 && (
+          <div className="mb-16">
+            <GuideMap entities={page.featuredEntities} pageTitle={page.title} />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+              {page.featuredEntities.map((entity: any) => (
+                <EntityCard key={entity._id} entity={entity} />
+              ))}
+            </div>
           </div>
         )}
 

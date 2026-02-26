@@ -78,6 +78,14 @@ export default defineType({
       description: 'Editorial content blocks for this page (canonical blocks — ferry info, distilleries, beaches, etc.).',
     }),
     defineField({
+      name: 'featuredEntities',
+      title: 'Featured Entities',
+      type: 'array',
+      group: 'content',
+      of: [{ type: 'reference', to: [{ type: 'siteEntity' }] }],
+      description: 'Entities featured on this guide page. Used to render entity cards and the page map.',
+    }),
+    defineField({
       name: 'extendedEditorial',
       title: 'Extended Editorial',
       description: 'Guide-level editorial voice. Renders between contentBlocks and faqBlocks. Page-specific — not a reusable block.',
