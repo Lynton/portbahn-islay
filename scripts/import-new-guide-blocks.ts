@@ -29,20 +29,33 @@ const client = createClient({
 
 const generateKey = () => Math.random().toString(36).substring(2, 11);
 
-function parseInlineMarks(text: string): any[] {
+function parseInlineMarks(text: string): { children: any[]; markDefs: any[] } {
   const children: any[] = [];
-  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*)/g);
+  const markDefs: any[] = [];
+  // Matches: **bold**, *italic*, [link text](url)
+  const parts = text.split(/(\*\*[^*]+\*\*|\*[^*]+\*|\[[^\]]+\]\([^)]+\))/g);
   for (const part of parts) {
     if (!part) continue;
     if (/^\*\*[^*]+\*\*$/.test(part)) {
       children.push({ _key: generateKey(), _type: 'span', marks: ['strong'], text: part.slice(2, -2) });
     } else if (/^\*[^*]+\*$/.test(part)) {
       children.push({ _key: generateKey(), _type: 'span', marks: ['em'], text: part.slice(1, -1) });
+    } else if (/^\[[^\]]+\]\([^)]+\)$/.test(part)) {
+      const match = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (match) {
+        const [, linkText, href] = match;
+        const linkKey = generateKey();
+        markDefs.push({ _key: linkKey, _type: 'link', href });
+        children.push({ _key: generateKey(), _type: 'span', marks: [linkKey], text: linkText });
+      }
     } else {
       children.push({ _key: generateKey(), _type: 'span', marks: [], text: part });
     }
   }
-  return children.length > 0 ? children : [{ _key: generateKey(), _type: 'span', marks: [], text }];
+  return {
+    children: children.length > 0 ? children : [{ _key: generateKey(), _type: 'span', marks: [], text }],
+    markDefs,
+  };
 }
 
 function markdownToPortableText(markdown: string): any[] {
@@ -56,9 +69,10 @@ function markdownToPortableText(markdown: string): any[] {
     if (currentParagraph.length === 0) return;
     const text = currentParagraph.join(' ').trim();
     if (!text) { currentParagraph = []; return; }
+    const { children, markDefs } = parseInlineMarks(text);
     blocks.push({
-      _key: generateKey(), _type: 'block', style: 'normal', markDefs: [],
-      children: parseInlineMarks(text),
+      _key: generateKey(), _type: 'block', style: 'normal', markDefs,
+      children,
     });
     currentParagraph = [];
   };
@@ -66,10 +80,11 @@ function markdownToPortableText(markdown: string): any[] {
   const flushList = () => {
     if (currentList.length === 0) return;
     currentList.forEach(item => {
+      const { children, markDefs } = parseInlineMarks(item.text);
       blocks.push({
         _key: generateKey(), _type: 'block', style: 'normal',
-        listItem: item.style, level: 1, markDefs: [],
-        children: parseInlineMarks(item.text),
+        listItem: item.style, level: 1, markDefs,
+        children,
       });
     });
     currentList = [];
@@ -135,15 +150,15 @@ function textBlock(text: string) {
 // ─── Block 26: islay-villages-overview (canonicalBlock) ──────────────────────
 
 const VILLAGES_OVERVIEW_MD = `
-Islay has six villages of genuinely distinct character, all within 45 minutes' drive of each other. Our three properties — Portbahn House, Shorefield Eco House, and Curlew Cottage — sit on the Loch Indaal shoreline near Bruichladdich, which puts Port Charlotte, Bowmore, and Portnahaven within easy reach on a single morning. The rest of the island opens from there: Port Askaig on the north coast for the Jura ferry, Port Ellen in the south as the gateway to the whisky coast.
+Islay has six villages of genuinely distinct character, all within 45 minutes' drive of each other. Our three properties — [Portbahn House](/accommodation/portbahn-house), [Shorefield Eco House](/accommodation/shorefield-eco-house), and [Curlew Cottage](/accommodation/curlew-cottage) — sit on the Loch Indaal shoreline near Bruichladdich, which puts Port Charlotte, Bowmore, and Portnahaven within easy reach on a single morning. The rest of the island opens from there: Port Askaig on the north coast for the [Jura ferry](/explore-islay/visit-jura), Port Ellen in the south as the gateway to the [whisky coast](/explore-islay/islay-distilleries).
 
 **Port Charlotte**
 
-Port Charlotte is the village we recommend first to guests and the one most come back to. It was built as a planned village in the early 19th century — a neat grid of whitewashed houses running down to the Loch Indaal shore — and the planning shows: it has a shape and a purpose that most Hebridean villages lack. The Museum of Islay Life is here, one of the better small local museums in Scotland and well worth an hour. The Port Charlotte Hotel has a log fire, over 300 single malts, and live music on Wednesday and Sunday evenings. Lochindaal Seafood Kitchen — our top restaurant on the island — is on the waterfront. Port Charlotte is a 5-minute drive from our properties, or 40 minutes on foot along the coastal cycle path that passes our front door.
+Port Charlotte is the village we recommend first to guests and the one most come back to. It was built as a planned village in the early 19th century — a neat grid of whitewashed houses running down to the Loch Indaal shore — and the planning shows: it has a shape and a purpose that most Hebridean villages lack. The [Museum of Islay Life](https://www.islaymuseum.org) is here, one of the better small local museums in Scotland and well worth an hour. The Port Charlotte Hotel has a log fire, over 300 single malts, and live music on Wednesday and Sunday evenings. [Lochindaal Seafood Kitchen](/explore-islay/food-and-drink) — our top restaurant on the island — is on the waterfront. Port Charlotte is a 5-minute drive from our properties, or 40 minutes on foot along the coastal cycle path that passes our front door.
 
 **Bowmore**
 
-Bowmore is Islay's main town, set at the head of Loch Indaal where the island's main roads converge. It is functional rather than picturesque — but it is honest, well-stocked, and important to know. The Co-op is the only proper supermarket on the island; the pharmacy and bank are here; Islay's Plaice does reliable fish and chips; Peatzeria does wood-fired pizza in an old church. Bowmore Distillery sits at the foot of the main street, claimed as Islay's oldest at 1779. At the top of the street, Kilarrow Parish Church (the Round Church, 1767) is one of only a handful of round churches in Scotland — a five-minute stop that repays the curiosity. Bowmore is 15 minutes' drive from our Bruichladdich properties.
+Bowmore is Islay's main town, set at the head of Loch Indaal where the island's main roads converge. It is functional rather than picturesque — but it is honest, well-stocked, and important to know. The Co-op is the only proper supermarket on the island; the pharmacy and bank are here; Islay's Plaice does reliable fish and chips; Peatzeria does wood-fired pizza in an old church. [Bowmore Distillery](https://www.bowmore.com) sits at the foot of the main street, claimed as Islay's oldest at 1779. At the top of the street, Kilarrow Parish Church (the Round Church, 1767) is one of only a handful of round churches in Scotland — a five-minute stop that repays the curiosity. Bowmore is 15 minutes' drive from our Bruichladdich properties.
 
 **Portnahaven and Port Wemyss**
 
@@ -151,15 +166,15 @@ Portnahaven and Port Wemyss are two connected villages at the southern tip of th
 
 **Port Ellen**
 
-Port Ellen on the south coast is where the CalMac ferry from Kennacraig arrives for the longer crossing (2 hours 20 minutes), and it marks the start of Islay's most celebrated distillery cluster. Laphroaig, Lagavulin, and Ardbeg are all within a 10-minute drive east along the coast road, and Port Ellen Distillery — one of whisky's most storied lost distilleries — reopened in 2024 after four decades closed. The Copper Still café by the ferry terminal is our favourite café on the island. SeaSalt Bistro on the waterfront is a good dinner option for south coast evenings. Port Ellen is 45 minutes from our Bruichladdich properties — a south coast day from there is one of the best on the island.
+Port Ellen on the south coast is where the [CalMac](https://www.calmac.co.uk) ferry from Kennacraig arrives for the longer crossing (2 hours 20 minutes), and it marks the start of Islay's most celebrated distillery cluster. [Laphroaig, Lagavulin, and Ardbeg](/explore-islay/islay-distilleries) are all within a 10-minute drive east along the coast road, and Port Ellen Distillery — one of whisky's most storied lost distilleries — reopened in 2024 after four decades closed. The Copper Still café by the ferry terminal is our favourite café on the island. SeaSalt Bistro on the waterfront is a good dinner option for south coast evenings. Port Ellen is 45 minutes from our Bruichladdich properties — a south coast day from there is one of the best on the island.
 
 **Bridgend and Port Askaig**
 
-Bridgend sits at the head of Loch Indaal where the main island roads meet — not a destination village but a useful crossroads. The petrol pump at Bridgend Village Stores is one of the island's most important landmarks when your tank is running low. The Lochside Hotel has a bar and food. Port Askaig on the north coast is the other ferry terminal — faster crossing from Kennacraig (2 hours), closer to the north coast distilleries, and the departure point for the 5-minute Jura ferry. The Port Askaig Hotel bar is worth knowing; there is little else at Port Askaig. Both are practical stops on an island where practicality is part of the plan.
+Bridgend sits at the head of Loch Indaal where the main island roads meet — not a destination village but a useful crossroads. The petrol pump at Bridgend Village Stores is one of the island's most important landmarks when your tank is running low. The Lochside Hotel has a bar and food. Port Askaig on the north coast is the other ferry terminal — faster crossing from Kennacraig (2 hours), closer to the north coast distilleries, and the departure point for the [5-minute Jura ferry](/explore-islay/visit-jura). The Port Askaig Hotel bar is worth knowing; there is little else at Port Askaig. Both are practical stops on an island where practicality is part of the plan.
 `;
 
 const VILLAGES_OVERVIEW_TEASER_MD = `
-Islay's six villages are all within 45 minutes' drive. Port Charlotte is 5 minutes from our door — whitewashed, pretty, and home to the Lochindaal Seafood Kitchen. Bowmore is the main town: Co-op, distillery, the Round Church. Portnahaven has harbour seals and the island's smallest local pub. Port Ellen is the start of the south coast whisky trail.
+Islay's six villages are all within 45 minutes' drive. Port Charlotte is 5 minutes from our door — whitewashed, pretty, and home to the Lochindaal Seafood Kitchen. Bowmore is the main town: Co-op, distillery, the Round Church. Portnahaven has harbour seals and the island's smallest local pub. Port Ellen is the start of the south coast whisky trail. [Islay villages guide →](/explore-islay/islay-villages)
 `;
 
 const VILLAGES_KEY_FACTS = [
@@ -178,29 +193,29 @@ Islay has been continuously inhabited for more than 8,000 years. Its surviving h
 
 **The Oldest Layer: Bunnahabhain Stromatolites**
 
-The oldest thing on Islay is also the most improbable. The rock outcrops near Bunnahabhain Distillery on the north coast contain fossilised stromatolites — layered structures formed by microbial mats in ancient shallow seas — dating to approximately 1.2 billion years ago. They are among the oldest macroscopic fossils in Britain, preserved in Dalradian quartzite on a working coastline. Park at Bunnahabhain Distillery, walk through the distillery yard to the southern end past the cottages, and take the gate onto the rough coastal path toward Rubha a'Mhill; the first fossilised exposures appear approximately 50 metres after the gate, in boulders of Bonahaven Dolomite along the shore. Best viewed at low tide. Combine with a visit to Bunnahabhain, Caol Ila, or Ardnahoe for a north coast day that covers 1.2 billion years and a dram in the same afternoon.
+The oldest thing on Islay is also the most improbable. The rock outcrops near [Bunnahabhain Distillery](https://bunnahabhain.com) on the north coast contain fossilised stromatolites — layered structures formed by microbial mats in ancient shallow seas — dating to approximately 1.2 billion years ago. They are among the oldest macroscopic fossils in Britain, preserved in Dalradian quartzite on a working coastline. Park at Bunnahabhain Distillery, walk through the distillery yard to the southern end past the cottages, and take the gate onto the rough coastal path toward Rubha a'Mhill; the first fossilised exposures appear approximately 50 metres after the gate, in boulders of Bonahaven Dolomite along the shore. Best viewed at low tide. Combine with a [visit to Bunnahabhain, Caol Ila, or Ardnahoe](/explore-islay/islay-distilleries) for a north coast day that covers 1.2 billion years and a dram in the same afternoon.
 
 **Standing Stones, Cairns, and Hillforts: Islay's Prehistoric Landscape**
 
-Before the Lordship, the Lords, and the Early Christian missionaries came something older still. Rubha Port an t-Seilich on Islay's east coast is one of the best-preserved Mesolithic sites in Britain — 12,000-year-old flint tools from the period immediately following the last Ice Age, still visible in the soil for the researchers and archaeologists who return here regularly. Bolsay Farm on the Rhinns adds another chapter: a Mesolithic hunting camp from which over 300,000 flint artefacts have been recovered, now largely held at the Museum of Islay Life in Port Charlotte.
+Before the Lordship, the Lords, and the Early Christian missionaries came something older still. Rubha Port an t-Seilich on Islay's east coast is one of the best-preserved Mesolithic sites in Britain — 12,000-year-old flint tools from the period immediately following the last Ice Age, still visible in the soil for the researchers and archaeologists who return here regularly. Bolsay Farm on the Rhinns adds another chapter: a Mesolithic hunting camp from which over 300,000 flint artefacts have been recovered, now largely held at the [Museum of Islay Life](https://www.islaymuseum.org) in Port Charlotte.
 
 The Bronze Age monuments are harder to miss. The Ballinaby Standing Stones on the northern Rhinns include one stone over four metres tall — difficult to overlook against the Islay skyline. Cultoon Stone Circle near Portnahaven is uniquely strange: fifteen massive stones were laid out in a circle but only two or three were ever raised upright. The project was abandoned mid-construction, leaving a monument to an intention that was never completed. It is one of the more thought-provoking sites on the island. At Dun Nosebridge, an Iron Age hillfort near Mulindry between Bridgend and Ballygrant, the scale of the island's pre-medieval occupation becomes clear. The fort covers 375 square metres and commands 360-degree views of Islay's interior — a short walk from the road, ten minutes from Bowmore. None of these sites charge admission or require booking.
 
 **The Lordship of the Isles: Finlaggan**
 
-Finlaggan, on the shores of Loch Finlaggan in central Islay, is where the Lordship of the Isles administered its domain from approximately 1150 to 1493. The Lordship was the most powerful Gaelic polity in medieval Scotland — a maritime empire that at its height controlled the Hebrides, much of the western mainland, and the Isle of Man, operating under Gaelic law and a political structure independent of and often in conflict with the Scottish crown. The Lords of the Isles met on Eilean na Comhairle (Council Island), the smaller of Finlaggan's two islands; Eilean Mòr (the great island) held the great hall, chapel, and residence buildings. The Lordship was forfeited to the Scottish crown in 1493 and never re-established. Finlaggan was abandoned and has stood largely undisturbed since. The visitor centre is open from Saturday 5 April, Monday to Saturday 1100–1630, closed Sunday; entry is by donation. The islands are accessible year-round via a short path and causeway. It is 25 minutes' drive from our properties.
+[Finlaggan](https://www.finlaggan.com), on the shores of Loch Finlaggan in central Islay, is where the Lordship of the Isles administered its domain from approximately 1150 to 1493. The Lordship was the most powerful Gaelic polity in medieval Scotland — a maritime empire that at its height controlled the Hebrides, much of the western mainland, and the Isle of Man, operating under Gaelic law and a political structure independent of and often in conflict with the Scottish crown. The Lords of the Isles met on Eilean na Comhairle (Council Island), the smaller of Finlaggan's two islands; Eilean Mòr (the great island) held the great hall, chapel, and residence buildings. The Lordship was forfeited to the Scottish crown in 1493 and never re-established. Finlaggan was abandoned and has stood largely undisturbed since. The visitor centre is open from Saturday 5 April, Monday to Saturday 1100–1630, closed Sunday; entry is by donation. The islands are accessible year-round via a short path and causeway. It is 25 minutes' drive from our properties.
 
 **The Kildalton Cross: 8th Century, Still Standing**
 
-The Kildalton Cross stands in the graveyard of Kildalton Church on the south-east coast of Islay and has stood there since it was carved, approximately 800 AD. It is a ringed high cross carved from a single block of blue-grey epidiorite, 2.65 metres high, and it is — by the consensus of scholars and the assessment of Historic Environment Scotland — the finest surviving example of early Christian carved stonework in Scotland, and one of the finest in Europe. The carving includes Old Testament scenes, a Virgin and Child in the central roundel, and interlaced knotwork of exceptional quality. The condition of the carving after 1,200 years in the open Scottish air is remarkable. There is no admission fee, no enclosure, and rarely a crowd. The site is 50 minutes' drive from our properties; the most scenic approach is the Kildalton Shoreline Walk from Port Ellen, which passes Laphroaig, Lagavulin, and Ardbeg on the way.
+The Kildalton Cross stands in the graveyard of Kildalton Church on the south-east coast of Islay and has stood there since it was carved, approximately 800 AD. It is a ringed high cross carved from a single block of blue-grey epidiorite, 2.65 metres high, and it is — by the consensus of scholars and the assessment of [Historic Environment Scotland](https://www.historicenvironment.scot/visit-a-place/places/kildalton-cross) — the finest surviving example of early Christian carved stonework in Scotland, and one of the finest in Europe. The carving includes Old Testament scenes, a Virgin and Child in the central roundel, and interlaced knotwork of exceptional quality. The condition of the carving after 1,200 years in the open Scottish air is remarkable. There is no admission fee, no enclosure, and rarely a crowd. The site is 50 minutes' drive from our properties; the most scenic approach is the [Kildalton Shoreline Walk](/explore-islay/walking) from Port Ellen, which passes Laphroaig, Lagavulin, and Ardbeg on the way.
 
 **Clan Battles and Contested Castles: Kilnave and Dunyvaig**
 
-Kilnave Chapel, on the shore of Loch Gruinart, was built in the late 14th or early 15th century and was the site of one of the darkest episodes in Islay's clan history. On 5 August 1598, the Battle of Traigh Gruinart — the last major clan battle on Islay — was fought on the flats below, between the MacDonalds of Islay and the MacLeans of Mull. Thirty MacLean survivors retreated to the chapel; the MacDonalds fired the thatched roof. All died except one man — a Mac Mhuirich — who escaped through a hole in the burning thatch as it collapsed. The ruins remain open to the sky. Standing immediately to the west is a carved stone cross that predates the chapel by roughly 600 years — an unringed 8th-century cross, 3.35 metres tall, comparable in age to the Kildalton Cross but ringless and far more weathered. Dunyvaig Castle, on the south coast near Lagavulin, was a major MacDonald stronghold from the 12th to the 17th century — the naval base of the Lords of the Isles and later the scene of repeated sieges as control of the island passed between MacDonalds, MacLeans, and ultimately the crown. The castle is ruinous and accessible from the Kildalton Shoreline Walk path; do not enter the structure.
+Kilnave Chapel, on the shore of Loch Gruinart, was built in the late 14th or early 15th century and was the site of one of the darkest episodes in Islay's clan history. On 5 August 1598, the Battle of Traigh Gruinart — the last major clan battle on Islay — was fought on the flats below, between the MacDonalds of Islay and the MacLeans of Mull. Thirty MacLean survivors retreated to the chapel; the MacDonalds fired the thatched roof. All died except one man — a Mac Mhuirich — who escaped through a hole in the burning thatch as it collapsed. The ruins remain open to the sky. Standing immediately to the west is a carved stone cross that predates the chapel by roughly 600 years — an unringed 8th-century cross, 3.35 metres tall, comparable in age to the Kildalton Cross but ringless and far more weathered. Dunyvaig Castle, on the south coast near Lagavulin, was a major MacDonald stronghold from the 12th to the 17th century — the naval base of the Lords of the Isles and later the scene of repeated sieges as control of the island passed between MacDonalds, MacLeans, and ultimately the crown. The castle is ruinous and accessible from the [Kildalton Shoreline Walk](/explore-islay/walking) path; do not enter the structure.
 
 **The Round Church and the Cleared Townships**
 
-Kilarrow Parish Church in Bowmore — locally called the Round Church — was built in 1767, the only circular church on Islay. The tradition that it was built round to deny the Devil a corner to hide in is almost certainly apocryphal, but the building is genuinely distinctive and still in use as a parish church. Islay's landscape also carries the more painful evidence of its 18th and 19th century history. The island's population fell from approximately 15,000 to 6,000 in the first half of the 19th century through clearances, famine, and emigration. The cleared and abandoned townships are visible across the island, particularly on the Oa peninsula: Tockmal near Soldier's Rock, Grasdale, Frachdale, Lurabus, and Lower Killeyan are among the named settlements the RSPB reserve now covers. Near Ardbeg, the hills hold Solam — the plague village — abandoned after a local tradition holds that an 18th-century epidemic followed a shipwrecked sailor's gift; a plaque on site recounts the story. Near Keills, Kilslevan preserves the outline of eight longhouses and a chapel. The Museum of Islay Life in Port Charlotte holds census records and estate papers documenting the island's depopulated areas.
+Kilarrow Parish Church in Bowmore — locally called the Round Church — was built in 1767, the only circular church on Islay. The tradition that it was built round to deny the Devil a corner to hide in is almost certainly apocryphal, but the building is genuinely distinctive and still in use as a parish church. Islay's landscape also carries the more painful evidence of its 18th and 19th century history. The island's population fell from approximately 15,000 to 6,000 in the first half of the 19th century through clearances, famine, and emigration. The cleared and abandoned townships are visible across the island, particularly on the Oa peninsula: Tockmal near Soldier's Rock, Grasdale, Frachdale, Lurabus, and Lower Killeyan are among the named settlements the [RSPB reserve](https://www.rspb.org.uk/reserves-and-events/reserves-a-z/the-oa) now covers. Near Ardbeg, the hills hold Solam — the plague village — abandoned after a local tradition holds that an 18th-century epidemic followed a shipwrecked sailor's gift; a plaque on site recounts the story. Near Keills, Kilslevan preserves the outline of eight longhouses and a chapel. The [Museum of Islay Life](https://www.islaymuseum.org) in Port Charlotte holds census records and estate papers documenting the island's depopulated areas.
 
 **The World War One Chapter: The Oa and Kilchoman**
 
@@ -208,7 +223,7 @@ On 5 February 1918, the troopship USS Tuscania was torpedoed by a German submari
 `;
 
 const ARCHAEOLOGY_OVERVIEW_TEASER_MD = `
-Islay was the seat of the Lords of the Isles — the most powerful Gaelic dynasty in medieval Scotland — and Finlaggan is 25 minutes from our door. The Kildalton Cross has stood since 800 AD. The American Monument on the Oa marks one of WW1's strangest disasters. Most sites are free and open year-round.
+Islay was the seat of the Lords of the Isles — the most powerful Gaelic dynasty in medieval Scotland — and Finlaggan is 25 minutes from our door. The Kildalton Cross has stood since 800 AD. The American Monument on the Oa marks one of WW1's strangest disasters. Most sites are free and open year-round. [Islay archaeology & history guide →](/explore-islay/archaeology-history)
 `;
 
 const ARCHAEOLOGY_KEY_FACTS = [
