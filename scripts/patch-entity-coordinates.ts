@@ -84,7 +84,7 @@ function parseCsv(filePath: string): Row[] {
 // ─── Main ──────────────────────────────────────────────────────────────────────
 
 async function run() {
-  const csvPath = path.resolve(__dirname, '../../cw/_intake/entity-coordinates-complete.csv');
+  const csvPath = path.resolve(__dirname, '../../../cw/_intake/entity-coordinates-complete.csv');
 
   if (!fs.existsSync(csvPath)) {
     console.error(`CSV not found at: ${csvPath}`);
