@@ -2,8 +2,10 @@ import { cache } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
+import { PortableText } from '@portabletext/react';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
+import { portableTextComponents } from '@/lib/portable-text';
 import PropertyCalendar from '@/components/PropertyCalendar';
 import SchemaMarkup from '@/components/SchemaMarkup';
 import Breadcrumbs from '@/components/Breadcrumbs';
@@ -178,7 +180,7 @@ const getAllProperties = cache(async (excludeSlug?: string) => {
         name,
         slug,
         location,
-        description,
+        "description": pt::text(description),
         sleeps,
         bedrooms,
         heroImage
@@ -188,7 +190,7 @@ const getAllProperties = cache(async (excludeSlug?: string) => {
         name,
         slug,
         location,
-        description,
+        "description": pt::text(description),
         sleeps,
         bedrooms,
         heroImage
@@ -324,8 +326,8 @@ export default async function PropertyPage({ params }: PageProps) {
 
           {/* Main Description */}
           {property.description && (
-            <div className="font-mono text-base text-harbour-stone leading-relaxed whitespace-pre-line mb-8">
-              {property.description}
+            <div className="mb-8">
+              <PortableText value={property.description} components={portableTextComponents} />
             </div>
           )}
 
@@ -797,7 +799,9 @@ export default async function PropertyPage({ params }: PageProps) {
           <section className="mb-12">
             <h2 className="font-serif text-3xl text-harbour-stone mb-4">Location</h2>
             {property.locationIntro && (
-              <p className="font-mono text-base text-harbour-stone mb-4">{property.locationIntro}</p>
+              <div className="mb-4">
+                <PortableText value={property.locationIntro} components={portableTextComponents} />
+              </div>
             )}
             {property.nearbyAttractions && property.nearbyAttractions.length > 0 && (
               <div className="mb-4">
@@ -1107,10 +1111,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   return {
     title: property.seoTitle || property.name,
-    description: property.seoDescription || property.description || property.overviewIntro,
+    description: property.seoDescription || property.overviewIntro,
     openGraph: {
       title: property.seoTitle || property.name,
-      description: property.seoDescription || property.description || property.overviewIntro,
+      description: property.seoDescription || property.overviewIntro,
       images: property.heroImage ? [urlFor(property.heroImage).width(1200).height(630).url()] : [],
     },
   };

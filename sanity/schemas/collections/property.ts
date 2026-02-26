@@ -128,16 +128,44 @@ export default defineType({
     defineField({
       name: 'description',
       title: 'Property Description',
-      type: 'text',
+      type: 'array',
       group: 'content',
-      rows: 6,
-      description: `Main property description (2-4 paragraphs).
+      description: `Main property description (2-4 paragraphs). Supports inline links to guide pages and external sites.
 
-🔴 CRITICAL: Include specific features, location benefits, unique attributes.
+🔴 CRITICAL: Include specific features, location benefits, unique attributes. Link distilleries, beaches, villages to /explore-islay/* guides.
 
-✓ DO: "Modern house with private beach access and views to Paps of Jura"
+✓ DO: "Modern house with private beach access and views to Paps of Jura. [Bruichladdich Distillery](/explore-islay/islay-distilleries) is a 5-minute walk."
 
 ✗ DON'T: "Stunning property in unique setting with unforgettable experiences"`,
+      of: [
+        {
+          type: 'block',
+          styles: [{ title: 'Normal', value: 'normal' }],
+          lists: [],
+          marks: {
+            decorators: [
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' },
+            ],
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'URL',
+                    validation: (Rule: any) =>
+                      Rule.uri({ scheme: ['http', 'https'], allowRelative: true }),
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
     }),
     defineField({
       name: 'idealFor',
@@ -865,10 +893,39 @@ export default defineType({
     // ========== LOCATION & NEARBY (AI Block 6) ==========
     defineField({
       name: 'locationIntro',
-      title: 'Location & Nearby - Intro Sentence',
-      type: 'string',
+      title: 'Location & Nearby - Intro',
+      type: 'array',
       group: 'location',
-      description: 'e.g., "Shoreline location between Bruichladdich and Port Charlotte."',
+      description: 'Intro sentence for the location section. Supports inline links to guide pages and distilleries.',
+      of: [
+        {
+          type: 'block',
+          styles: [{ title: 'Normal', value: 'normal' }],
+          lists: [],
+          marks: {
+            decorators: [
+              { title: 'Strong', value: 'strong' },
+              { title: 'Emphasis', value: 'em' },
+            ],
+            annotations: [
+              {
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [
+                  {
+                    name: 'href',
+                    type: 'url',
+                    title: 'URL',
+                    validation: (Rule: any) =>
+                      Rule.uri({ scheme: ['http', 'https'], allowRelative: true }),
+                  },
+                ],
+              },
+            ],
+          },
+        },
+      ],
     }),
     defineField({
       name: 'location',
