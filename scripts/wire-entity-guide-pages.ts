@@ -4,12 +4,13 @@
  * Patches `featuredEntities[]` on existing guide page documents.
  * Maps entity IDs (from populate-entities.ts) to their guide pages.
  *
- * Wires these 8 guide pages:
+ * Wires these 9 guide pages:
  *   - guide-islay-distilleries
  *   - guide-food-and-drink
  *   - guide-islay-beaches
  *   - guide-islay-wildlife
  *   - guide-family-holidays
+ *   - guide-walking              (new — 2026-02-26)
  *   - guide-islay-villages       (new — 2026-02-26)
  *   - guide-archaeology-history  (new — 2026-02-26)
  *   - guide-visit-jura           (updated — 2026-02-26)
@@ -105,6 +106,16 @@ const PAGE_ENTITY_MAP: Record<string, string[]> = {
     'peatzeria-bowmore',
     'the-cottage-bowmore',
     'islays-plaice-bowmore',
+  ],
+  'guide-walking': [
+    // Route order — nearest to furthest from Bruichladdich — per GUIDE-WALKING.md Section 3
+    'route-bruichladdich-port-charlotte',
+    'route-the-oa-circular',
+    'route-loch-gruinart-woodland-trail',
+    'route-finlaggan',
+    'route-singing-sands',
+    'route-machir-bay-kilchoman',
+    'route-ardnave-point',
   ],
   'guide-islay-villages': [
     // Nearest to furthest from Bruichladdich — per GUIDE-VILLAGES.md Section 3
