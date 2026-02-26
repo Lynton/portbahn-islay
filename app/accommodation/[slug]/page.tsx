@@ -1034,6 +1034,43 @@ export default async function PropertyPage({ params }: PageProps) {
             </div>
           </section>
         )}
+        {/* Explore Islay guides */}
+        <section className="mb-12 mt-16 pt-12 border-t-2 border-[#C8C6BF]">
+          <h2 className="font-serif text-3xl text-harbour-stone mb-6">Explore Islay</h2>
+          <ul className="font-mono text-base space-y-3">
+            <li>
+              <Link href="/explore-islay/islay-distilleries" className="text-emerald-accent hover:underline">
+                Islay&apos;s Whisky Distilleries — all 10, including Bruichladdich a 5-minute walk away
+              </Link>
+            </li>
+            <li>
+              <Link href="/explore-islay/islay-beaches" className="text-emerald-accent hover:underline">
+                Beaches of Islay — Portbahn Beach, Machir Bay, Singing Sands and more
+              </Link>
+            </li>
+            <li>
+              <Link href="/explore-islay/islay-wildlife" className="text-emerald-accent hover:underline">
+                Wildlife &amp; Nature — barnacle geese, eagles, seals, RSPB reserves
+              </Link>
+            </li>
+            <li>
+              <Link href="/explore-islay/food-and-drink" className="text-emerald-accent hover:underline">
+                Food &amp; Drink on Islay — restaurants, distillery cafés, local seafood
+              </Link>
+            </li>
+            <li>
+              <Link href="/explore-islay/visit-jura" className="text-emerald-accent hover:underline">
+                Visiting Jura — day trips and longer stays on Islay&apos;s wilder neighbour
+              </Link>
+            </li>
+            <li>
+              <Link href="/travel-to-islay" className="text-emerald-accent hover:underline">
+                Getting to Islay — ferry from Kennacraig, flights from Glasgow
+              </Link>
+            </li>
+          </ul>
+        </section>
+
         </div>
         {/* End main content column */}
 
