@@ -43,3 +43,6 @@ next-env.d.ts
 export.tar.gz
 export-full.tar.gz
 production.tar.gz
+
+# property images — served via Sanity CDN, not committed to repo
+/public/images/

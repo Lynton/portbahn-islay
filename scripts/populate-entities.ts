@@ -39,7 +39,7 @@ function entity(id: string, data: Record<string, any>) {
   };
 }
 
-// ─── DISTILLERIES (10) ─────────────────────────────────────────────────────────
+// ─── DISTILLERIES (11) ─────────────────────────────────────────────────────────
 
 const distilleries = [
   entity('bruichladdich-distillery', {
@@ -263,6 +263,29 @@ const distilleries = [
       requiresBooking: true,
     },
     tags: ['whisky', 'north-coast', 'new-distillery', 'cafe', 'views'],
+    ecosystemSite: 'pbi',
+  }),
+
+  entity('laggan-bay-distillery', {
+    name: 'Laggan Bay Distillery',
+    category: 'distillery',
+    schemaOrgType: 'BreweryOrWinery',
+    island: 'islay',
+    status: 'pre-production',
+    shortDescription: 'Laggan Bay Distillery is a new Islay single malt distillery located at Glenegedale near Islay Airport, developed by Ian Macleod Distillers and The Islay Boys. The 11th Islay distillery, it produces traditional double-distillation Islay whisky, co-sited with Islay Ales brewery.',
+    editorialNote: 'Not yet open to visitors as of Fèis Ìle 2026 — festival participation confirmed but no open day. Do not include in visitor itinerary content until confirmed open.',
+    location: {
+      village: 'Glenegedale (near Islay Airport)',
+      distanceFromBruichladdich: '~20-minute drive',
+    },
+    contact: {
+      website: 'https://www.ianmacleod.com/brands/laggan-bay-distillery',
+    },
+    attributes: {
+      requiresBooking: false,
+      visitorStatus: 'Not open to visitors as of February 2026. Monitor for opening date.',
+    },
+    tags: ['whisky', 'new-distillery', 'laggan-bay', 'glenegedale', 'pre-production'],
     ecosystemSite: 'pbi',
   }),
 ];
@@ -936,7 +959,7 @@ const villages = [
     schemaOrgType: 'Place',
     island: 'islay',
     status: 'active',
-    shortDescription: 'Portnahaven and Port Wemyss are two adjacent traditional fishing villages at the southern tip of the Rhinns peninsula, Islay, facing each other across a small bay. Common seals are reliably spotted in the harbour. An Tigh Seinnse pub is located in Portnahaven.',
+    shortDescription: 'Portnahaven and Port Wemyss are two connected villages at the southern tip of the Rhinns peninsula — 20 minutes from the Bruichladdich properties. The harbour almost always has common seals hauled out on the rocks. An Tigh Seinnse pub serves home-cooked food; book ahead (01496 860725). The sense of being at the very end of the road is real.',
     location: {
       village: 'Portnahaven / Port Wemyss',
       distanceFromBruichladdich: '20-minute drive',
@@ -974,9 +997,24 @@ const villages = [
     tags: ['village', 'ferry-port', 'north-islay', 'jura-gateway'],
     ecosystemSite: 'pbi',
   }),
+
+  entity('bridgend-village', {
+    name: 'Bridgend',
+    category: 'village',
+    schemaOrgType: 'Place',
+    island: 'islay',
+    status: 'active',
+    shortDescription: 'Bridgend is a small village at the head of Loch Indaal, Islay, at the junction of the main island roads. The Islay Woollen Mill is located here, and the petrol pump at Bridgend Village Stores is one of the island\'s essential practical stops.',
+    location: {
+      village: 'Bridgend',
+      distanceFromBruichladdich: '10-minute drive',
+    },
+    tags: ['village', 'bridgend', 'central-islay'],
+    ecosystemSite: 'pbi',
+  }),
 ];
 
-// ─── TRANSPORT (5) ────────────────────────────────────────────────────────────
+// ─── TRANSPORT (7) ────────────────────────────────────────────────────────────
 
 const transport = [
   entity('kennacraig-ferry-terminal', {
@@ -1067,6 +1105,44 @@ const transport = [
     ecosystemSite: 'ioj',
     canonicalExternalUrl: 'https://isleofjura.scot/things-to-do/',
     tags: ['ferry', 'transport', 'jura', 'passenger', 'seasonal', 'mainland'],
+  }),
+
+  entity('bruichladdich-taxis', {
+    name: 'Bruichladdich Taxis',
+    category: 'transport',
+    schemaOrgType: 'LocalBusiness',
+    island: 'islay',
+    status: 'active',
+    shortDescription: 'Bruichladdich Taxis provides local taxi and private hire services on Islay, based in Bruichladdich. Recommended for distillery days — can collect from the properties.',
+    editorialNote: 'Our go-to recommendation for guests doing distillery days. Two numbers — use mobile (07899 942673) if no answer on landline.',
+    location: {
+      village: 'Bruichladdich',
+    },
+    contact: {
+      phone: '07899 942673',
+      website: 'http://bruichladdichtaxis.weebly.com/',
+    },
+    tags: ['taxi', 'transport', 'distillery-days', 'bruichladdich'],
+    ecosystemSite: 'pbi',
+  }),
+
+  entity('attic-cabs-islay', {
+    name: 'Attic Cabs',
+    category: 'transport',
+    schemaOrgType: 'LocalBusiness',
+    island: 'islay',
+    status: 'active',
+    shortDescription: 'Attic Cabs is a local taxi service on Islay covering the whole island, including distillery days and airport/ferry transfers.',
+    location: {
+      village: 'Islay (island-wide)',
+    },
+    contact: {
+      phone: '07944 873323',
+      email: 'atticcabs@gmail.com',
+      website: 'http://www.attic-cabs-islay.co.uk/',
+    },
+    tags: ['taxi', 'transport', 'distillery-days', 'airport-transfer'],
+    ecosystemSite: 'pbi',
   }),
 ];
 
@@ -1742,15 +1818,15 @@ const juraActivities = [
 // ─── Full entity list in priority order ───────────────────────────────────────
 
 const ALL_ENTITIES = [
-  ...distilleries,       // 10 — live on distilleries guide page
+  ...distilleries,       // 11 — live on distilleries guide page (incl. laggan-bay-distillery)
   ...restaurants,        // 9  — live on food-and-drink guide page
   ...cafesShops,         // 4  — food-and-drink
   ...beaches,            // 11 — beaches guide page
   ...nature,             // 4  — wildlife guide page
   ...attractions,        // 4  — family guide page
   ...events,             // 1
-  ...villages,           // 6
-  ...transport,          // 5
+  ...villages,           // 7  — islay-villages guide page (incl. bridgend-village)
+  ...transport,          // 7  — incl. bruichladdich-taxis + attic-cabs-islay
   ...gapEntities,        // 3
   ...routes,             // 7  — walking guide page
   kildaltonRoute,        // 1  — archaeology guide page

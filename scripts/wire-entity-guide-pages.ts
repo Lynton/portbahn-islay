@@ -4,16 +4,20 @@
  * Patches `featuredEntities[]` on existing guide page documents.
  * Maps entity IDs (from populate-entities.ts) to their guide pages.
  *
- * Wires these 5 live guide pages:
+ * Wires these 8 guide pages:
  *   - guide-islay-distilleries
  *   - guide-food-and-drink
  *   - guide-islay-beaches
  *   - guide-islay-wildlife
  *   - guide-family-holidays
+ *   - guide-islay-villages       (new — 2026-02-26)
+ *   - guide-archaeology-history  (new — 2026-02-26)
+ *   - guide-visit-jura           (updated — 2026-02-26)
  *
  * Run AFTER:
  *   1. populate-entities.ts has run (entities exist in Sanity)
  *   2. siteEntity schema is deployed (Studio restart may be needed)
+ *   3. create-new-guide-pages.ts has run (new pages exist in Sanity)
  *
  * Run: npx ts-node --project scripts/tsconfig.json scripts/wire-entity-guide-pages.ts
  */
@@ -102,6 +106,47 @@ const PAGE_ENTITY_MAP: Record<string, string[]> = {
     'the-cottage-bowmore',
     'islays-plaice-bowmore',
   ],
+  'guide-islay-villages': [
+    // Nearest to furthest from Bruichladdich — per GUIDE-VILLAGES.md Section 3
+    'port-charlotte-village',
+    'bridgend-village',
+    'bowmore-village',
+    'portnahaven-village',
+    'port-askaig-village',
+    'port-ellen-village',
+  ],
+  'guide-archaeology-history': [
+    // Chronological / island order — per GUIDE-ARCHAEOLOGY.md Section 3
+    'bunnahabhain-stromatolites',
+    'finlaggan-heritage-site',
+    'kildalton-cross',
+    'kilnave-chapel',
+    'dunyvaig-castle',
+    'bowmore-round-church',
+    'museum-of-islay-life',
+    'american-monument-oa',
+    'kilchoman-military-cemetery',
+    'kildalton-shoreline-walk',
+  ],
+  'guide-visit-jura': [
+    // Getting there → distillery → accommodation → outdoors / experiences — per GUIDE-VISIT-JURA.md Section 3
+    'jura-ferry-service',
+    'jura-passenger-ferry',
+    'jura-distillery',
+    'the-antlers-jura',
+    'jura-hotel',
+    'jura-cycles',
+    'small-isles-bay-jura',
+    'corran-sands-jura',
+    'corryvreckan-whirlpool',
+    'barnhill-jura',
+    'paps-of-jura',
+    'lussa-gin-distillery',
+    'deer-island-rum-jura',
+    'jura-boat-tours',
+    'jura-guided',
+    'island-tours-jura',
+  ],
 };
 
 // ─── Main ──────────────────────────────────────────────────────────────────────
@@ -126,7 +171,6 @@ async function run() {
   console.log('\n=== Done ===');
   console.log('\nVerify in Studio: each guide page → Featured Entities field');
   console.log('Then check EntityCard rendering on the live site.');
-  console.log('\nWalking and visit-jura guide pages to be wired once those pages are created.');
 }
 
 run().catch(console.error);
