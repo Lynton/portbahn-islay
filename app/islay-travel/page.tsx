@@ -75,7 +75,7 @@ export default async function TravelToIslayPage() {
     ],
     introText: page?.scopeIntro || 'Travel to Islay is not straightforward - you don\'t come to the Scottish islands if you want easy. This guide covers all your travel options for reaching Islay by ferry or flight. Whether you choose the scenic CalMac ferry crossing or a quick Loganair flight from Glasgow, we\'re here to help make your journey smooth.',
     sectionHeading: 'Our guide on getting to and from Islay',
-    cardLinkPrefix: '/explore-islay/',
+    cardLinkPrefix: '/islay-travel/',
     emptyStateMessage: 'Travel guide pages coming soon.',
     backLink: {
       href: '/',

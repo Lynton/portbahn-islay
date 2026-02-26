@@ -55,19 +55,19 @@ export default function Header() {
               <div className="absolute left-0 top-full pt-2 hidden group-hover:block z-50">
                 <div className="bg-sea-spray border border-washed-timber shadow-lg min-w-[200px]">
                   <Link
-                    href="/explore-islay/ferry-to-islay"
+                    href="/islay-travel/ferry-to-islay"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Ferry to Islay
                   </Link>
                   <Link
-                    href="/explore-islay/flights-to-islay"
+                    href="/islay-travel/flights-to-islay"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Flights to Islay
                   </Link>
                   <Link
-                    href="/explore-islay/planning-your-trip"
+                    href="/islay-travel/planning-your-trip"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Planning Your Trip

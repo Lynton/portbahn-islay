@@ -75,6 +75,22 @@ const nextConfig: NextConfig = {
         destination: '/islay-travel',
         permanent: true,
       },
+      // Travel sub-pages: move from /explore-islay/ → /islay-travel/
+      {
+        source: '/explore-islay/ferry-to-islay',
+        destination: '/islay-travel/ferry-to-islay',
+        permanent: true,
+      },
+      {
+        source: '/explore-islay/flights-to-islay',
+        destination: '/islay-travel/flights-to-islay',
+        permanent: true,
+      },
+      {
+        source: '/explore-islay/planning-your-trip',
+        destination: '/islay-travel/planning-your-trip',
+        permanent: true,
+      },
     ];
   },
 };
