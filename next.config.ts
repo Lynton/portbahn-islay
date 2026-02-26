@@ -69,6 +69,12 @@ const nextConfig: NextConfig = {
         destination: '/explore-islay/:slug',
         permanent: true,
       },
+      // Legacy /travel-to-islay → canonical /islay-travel
+      {
+        source: '/travel-to-islay',
+        destination: '/islay-travel',
+        permanent: true,
+      },
     ];
   },
 };

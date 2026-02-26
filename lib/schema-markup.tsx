@@ -544,7 +544,7 @@ function generateTouristAttraction(data: any) {
 // Generate HowTo schema (for Getting Here page)
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function generateHowTo(data: any) {
-  const canonicalUrl = getCanonicalUrl(data?.url || '/travel-to-islay');
+  const canonicalUrl = getCanonicalUrl(data?.url || '/islay-travel');
   return {
     '@context': 'https://schema.org',
     '@type': 'HowTo',

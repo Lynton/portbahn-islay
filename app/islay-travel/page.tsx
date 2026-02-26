@@ -85,7 +85,7 @@ export default async function TravelToIslayPage() {
     schemaData: {
       name: 'Ways to Reach Islay',
       description: page?.seoDescription || 'Complete guide to travel options for reaching the Isle of Islay by CalMac ferry, Loganair flight, car, and bus.',
-      url: '/travel-to-islay',
+      url: '/islay-travel',
       about: {
         '@type': 'Trip',
         name: 'Travel to Isle of Islay',

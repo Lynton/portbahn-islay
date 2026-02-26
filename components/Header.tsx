@@ -47,7 +47,7 @@ export default function Header() {
             {/* Travel to Islay Dropdown */}
             <div className="relative group">
               <Link
-                href="/travel-to-islay"
+                href="/islay-travel"
                 className="font-mono text-sm text-harbour-stone group-hover:text-emerald-accent transition-colors"
               >
                 Travel to Islay
@@ -123,6 +123,30 @@ export default function Header() {
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Food & Drink
+                  </Link>
+                  <Link
+                    href="/explore-islay/walking"
+                    className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
+                  >
+                    Walking
+                  </Link>
+                  <Link
+                    href="/explore-islay/visit-jura"
+                    className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
+                  >
+                    Visit Jura
+                  </Link>
+                  <Link
+                    href="/explore-islay/islay-villages"
+                    className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
+                  >
+                    Islay Villages
+                  </Link>
+                  <Link
+                    href="/explore-islay/archaeology-history"
+                    className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
+                  >
+                    Archaeology & History
                   </Link>
                 </div>
               </div>

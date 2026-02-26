@@ -40,7 +40,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/travel-to-islay" className="text-washed-timber hover:text-emerald-accent transition-colors">
+                <Link href="/islay-travel" className="text-washed-timber hover:text-emerald-accent transition-colors">
                   Travel to Islay
                 </Link>
               </li>
