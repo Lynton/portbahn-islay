@@ -185,7 +185,7 @@ export const siteEntity = defineType({
         ],
         preview: {
           select: { title: 'label', subtitle: 'opens' },
-          prepare: ({ title, subtitle }: { title: string; subtitle: string }) => ({ title, subtitle: `Opens ${subtitle}` }),
+          prepare: ({ title, subtitle }) => ({ title, subtitle: `Opens ${subtitle}` }),
         },
       }],
     }),
@@ -282,7 +282,7 @@ export const siteEntity = defineType({
       subtitle: 'category',
       media: 'images.0',
     },
-    prepare: ({ title, subtitle, media }: { title: string; subtitle: string; media: any }) => ({
+    prepare: ({ title, subtitle, media }) => ({
       title,
       subtitle: subtitle ? subtitle.charAt(0).toUpperCase() + subtitle.slice(1) : 'Entity',
       media,
