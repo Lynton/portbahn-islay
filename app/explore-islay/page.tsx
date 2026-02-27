@@ -18,6 +18,22 @@ interface GuidePage {
   };
 }
 
+interface BlockReferenceData {
+  block: {
+    _id: string;
+    blockId: { current: string };
+    title: string;
+    entityType: string;
+    canonicalHome: string;
+    fullContent: any[];
+    teaserContent: any[];
+    keyFacts?: Array<{ fact: string; value: string }>;
+  };
+  version: 'full' | 'teaser';
+  showKeyFacts?: boolean;
+  customHeading?: string;
+}
+
 // Revalidate every 60 seconds
 export const revalidate = 60;
 
@@ -105,7 +121,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: page?.seoTitle || page?.title || 'Explore Islay | Portbahn Islay',
-    description: page?.seoDescription || "Discover Islay's ten whisky distilleries, stunning beaches, abundant wildlife, and local restaurants.",
+    description: page?.seoDescription || "A local family's guide to things to do on Islay — whisky distilleries, beaches, wildlife, walking, food and drink, villages, and family holidays on this remarkable Scottish island.",
   };
 }
 
@@ -115,9 +131,18 @@ export default async function ExploreIslayPage() {
     getGuidePages(),
   ]);
 
+  // Force teaser version on all hub content blocks.
+  // Hub pages are signposts — full content belongs exclusively on spoke pages.
+  // This prevents semantic cannibalisation of spoke pages by the hub regardless
+  // of what version is stored in Sanity, and enforces the hub-and-spoke principle
+  // at the architectural level.
+  const teaserBlocks: BlockReferenceData[] = (page?.contentBlocks ?? []).map(
+    (b: BlockReferenceData) => ({ ...b, version: 'teaser' as const })
+  );
+
   const schemaData = {
-    name: 'What to See and Do on Islay',
-    description: page?.seoDescription || 'Guide to activities, attractions and experiences on the Isle of Islay - from whisky distilleries to hidden beaches.',
+    name: 'Explore the Isle of Islay — Things to See and Do',
+    description: page?.seoDescription || "A local family's guide to things to do on Islay — whisky distilleries, beaches, wildlife, walking, food and drink, villages, and family holidays.",
     url: '/explore-islay',
     about: {
       '@type': 'Place',
@@ -160,12 +185,14 @@ export default async function ExploreIslayPage() {
           </h1>
 
           <p className="font-mono text-lg text-harbour-stone/80 mb-12 leading-relaxed max-w-2xl">
-            {page?.scopeIntro || 'Having lived and worked on Islay for a number of years, we know the island well. This guide covers activities, attractions and experiences across Islay - from whisky distilleries to hidden beaches. Islay is one of the Inner Hebrides islands of Scotland, renowned for its ten working whisky distilleries, dramatic Atlantic coastline and abundant wildlife.'}
+            {page?.scopeIntro || "Islay is a 25-mile island off Scotland's west coast with more to explore than most visitors expect. These guides are written by hosts who have lived and worked here — covering whisky distilleries, beaches, walking routes, wildlife, food and drink, villages, family activities, and day trips to neighbouring Jura. Each guide goes deep on its topic. This is the overview."}
           </p>
 
-          {/* Canonical Content Blocks */}
-          {page?.contentBlocks && page.contentBlocks.length > 0 && (
-            <BlockRenderer blocks={page.contentBlocks} className="mb-16" />
+          {/* Canonical Content Blocks — rendered as teaser only.
+              Hub pages are signposts; teaserBlocks enforces this at the
+              architectural level regardless of Sanity version field. */}
+          {teaserBlocks.length > 0 && (
+            <BlockRenderer blocks={teaserBlocks} className="mb-16" />
           )}
 
           {/* Guide Cards Grid */}
