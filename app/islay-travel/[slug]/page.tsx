@@ -52,7 +52,7 @@ const getTravelGuidePage = cache(async (slug: string) => {
       }
     }[defined(block._id)],
     extendedEditorial,
-    "featuredEntities": featuredEntities[]->{
+    "featuredEntities": featuredEntities[defined(@->_id)]->{
       _id,
       entityId,
       name,
@@ -194,10 +194,10 @@ export default async function TravelSubPage({ params }: PageProps) {
 
           {page.featuredEntities && page.featuredEntities.length > 0 && (
             <div className="mb-16">
-              <GuideMap entities={page.featuredEntities} pageTitle={page.title} />
+              <GuideMap entities={page.featuredEntities.filter(Boolean)} pageTitle={page.title} />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                {page.featuredEntities.map((entity: any) => (
+                {page.featuredEntities.filter(Boolean).map((entity: any) => (
                   <EntityCard key={entity._id} entity={entity} />
                 ))}
               </div>
