@@ -8,6 +8,7 @@ import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import BlockRenderer from '@/components/BlockRenderer';
 import SchemaMarkup from '@/components/SchemaMarkup';
+import type { SchemaType } from '@/lib/schema-markup';
 import EntityCard from '@/components/EntityCard';
 import GuideMap from '@/components/GuideMap';
 import { portableTextComponents } from '@/lib/portable-text';
@@ -20,11 +21,12 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+type PTBlock = { _type: string; children?: Array<{ text?: string }> };
+
 interface FaqItem {
   _id: string;
   question: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  answer: any[];
+  answer: PTBlock[];
 }
 
 const getTravelGuidePage = cache(async (slug: string) => {
@@ -71,7 +73,7 @@ const getTravelGuidePage = cache(async (slug: string) => {
       attributes,
       tags
     },
-    "faqBlocks": faqBlocks[]->{_id, question, answer},
+    "faqBlocks": faqBlocks[defined(@->_id)]->{_id, question, answer},
     seoTitle,
     seoDescription
   }`;
@@ -112,16 +114,15 @@ export default async function TravelSubPage({ params }: PageProps) {
 
   const schemaType = page.schemaType || 'Article';
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const faqsForSchema = (page.faqBlocks || []).filter((faq: any) => faq?.question).map((faq: any) => ({
-    question: faq.question,
-    answerText: (faq.answer || [])
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .filter((b: any) => b._type === 'block')
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .map((b: any) => (b.children || []).map((c: any) => c.text || '').join(''))
-      .join(' '),
-  }));
+  const faqsForSchema = ((page.faqBlocks ?? []) as (FaqItem | null)[])
+    .filter((faq): faq is FaqItem => !!faq?.question)
+    .map((faq) => ({
+      question: faq.question,
+      answerText: faq.answer
+        .filter((b) => b._type === 'block')
+        .map((b) => (b.children ?? []).map((c) => c.text ?? '').join(''))
+        .join(' '),
+    }));
 
   const schemaData = {
     name: page.title,
@@ -134,8 +135,11 @@ export default async function TravelSubPage({ params }: PageProps) {
     faqBlocks: faqsForSchema,
   };
 
-  const schemaTypes: typeof schemaType[] = [schemaType, 'TouristAttraction', 'BreadcrumbList'];
+  const schemaTypes: SchemaType[] = [schemaType as SchemaType, 'TouristAttraction', 'BreadcrumbList'];
   if (faqsForSchema.length > 0) schemaTypes.push('FAQPage');
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const entities: any[] = page.featuredEntities ?? [];
 
   return (
     <>
@@ -192,12 +196,11 @@ export default async function TravelSubPage({ params }: PageProps) {
             </div>
           )}
 
-          {page.featuredEntities && page.featuredEntities.length > 0 && (
+          {entities.length > 0 && (
             <div className="mb-16">
-              <GuideMap entities={page.featuredEntities.filter(Boolean)} pageTitle={page.title} />
+              <GuideMap entities={entities} pageTitle={page.title} />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                {page.featuredEntities.filter(Boolean).map((entity: any) => (
+                {entities.map((entity) => (
                   <EntityCard key={entity._id} entity={entity} />
                 ))}
               </div>
