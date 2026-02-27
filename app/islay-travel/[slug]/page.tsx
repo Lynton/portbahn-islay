@@ -70,8 +70,8 @@ const getTravelGuidePage = cache(async (slug: string) => {
       openingHours,
       attributes,
       tags
-    }[defined(_id)],
-    "faqBlocks": faqBlocks[]->{_id, question, answer}[defined(_id) && defined(question)],
+    },
+    "faqBlocks": faqBlocks[]->{_id, question, answer},
     seoTitle,
     seoDescription
   }`;
