@@ -182,8 +182,8 @@ export default async function ExploreIslayPage() {
                         {guide.introduction}
                       </p>
                     )}
-                    <span className="font-mono text-sm text-emerald-accent group-hover:underline">
-                      Read more →
+                    <span className="font-mono text-sm text-emerald-accent group-hover:underline" aria-hidden="true">
+                      Explore guide →
                     </span>
                   </div>
                 </Link>

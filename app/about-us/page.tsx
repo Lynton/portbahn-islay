@@ -236,7 +236,7 @@ export default async function AboutUsPage() {
                           <span>{property.petFriendly ? 'Dogs welcome' : 'Pet-free'}</span>
                         )}
                       </div>
-                      <span className="font-mono text-sm text-emerald-accent group-hover:underline mt-3 inline-block">
+                      <span className="font-mono text-sm text-emerald-accent group-hover:underline mt-3 inline-block" aria-hidden="true">
                         View property &rarr;
                       </span>
                     </div>

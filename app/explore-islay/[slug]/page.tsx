@@ -258,7 +258,7 @@ export default async function GuidePage({ params }: PageProps) {
             </ul>
           </div>
           <div>
-            <h2 className="font-serif text-2xl text-harbour-stone mb-4">More to explore</h2>
+            <h2 className="font-serif text-2xl text-harbour-stone mb-4">More Islay guides</h2>
             <ul className="font-mono text-base space-y-2">
               {[
                 { slug: 'islay-distilleries', title: "Islay's Whisky Distilleries" },
@@ -266,6 +266,13 @@ export default async function GuidePage({ params }: PageProps) {
                 { slug: 'islay-wildlife', title: 'Wildlife & Nature on Islay' },
                 { slug: 'food-and-drink', title: 'Food & Drink on Islay' },
                 { slug: 'family-holidays', title: 'Family Holidays on Islay' },
+                { slug: 'walking', title: 'Walking on Islay' },
+                { slug: 'visit-jura', title: 'Visiting Jura from Islay' },
+                { slug: 'islay-villages', title: 'Islay Villages' },
+                { slug: 'archaeology-history', title: 'Archaeology & History' },
+                { slug: 'ferry-to-islay', title: 'Ferry to Islay' },
+                { slug: 'flights-to-islay', title: 'Flights to Islay' },
+                { slug: 'planning-your-trip', title: 'Planning Your Trip to Islay' },
               ]
                 .filter((g) => g.slug !== slug)
                 .slice(0, 3)

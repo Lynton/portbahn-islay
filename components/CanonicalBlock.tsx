@@ -69,7 +69,7 @@ export default function CanonicalBlock({ data, className = '', hideTitle = false
             href={block.canonicalHome}
             className="font-mono text-emerald-accent hover:underline inline-flex items-center group"
           >
-            Read more
+            More about {block.title}
             <span className="ml-1 transition-transform group-hover:translate-x-1">→</span>
           </Link>
         </p>

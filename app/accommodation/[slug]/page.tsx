@@ -259,7 +259,7 @@ export default async function PropertyPage({ params }: PageProps) {
   // Generate breadcrumbs
   const breadcrumbs = [
     { name: 'Home', url: '/' },
-    { name: 'Accommodation', url: '/' },
+    { name: 'Accommodation', url: '/accommodation' },
     { name: property.name, url: `/accommodation/${property.slug?.current || property.slug}` },
   ];
 
@@ -1068,7 +1068,7 @@ export default async function PropertyPage({ params }: PageProps) {
               </Link>
             </li>
             <li>
-              <Link href="/travel-to-islay" className="text-emerald-accent hover:underline">
+              <Link href="/islay-travel" className="text-emerald-accent hover:underline">
                 Getting to Islay — ferry from Kennacraig, flights from Glasgow
               </Link>
             </li>

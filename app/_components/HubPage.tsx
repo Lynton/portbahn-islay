@@ -146,8 +146,8 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                             {cardDescription}
                           </p>
                         )}
-                        <span className="font-mono text-sm text-emerald-accent group-hover:underline">
-                          {config.cardLinkSuffix || 'Read more →'}
+                        <span className="font-mono text-sm text-emerald-accent group-hover:underline" aria-hidden="true">
+                          {config.cardLinkSuffix || 'View details →'}
                         </span>
                       </div>
                     </Link>
