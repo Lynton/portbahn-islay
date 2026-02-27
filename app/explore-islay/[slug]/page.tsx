@@ -15,6 +15,9 @@ import { portableTextComponents } from '@/lib/portable-text';
 // Revalidate every 60 seconds
 export const revalidate = 60;
 
+// Travel pages belong under /islay-travel/ — keep the two hubs cleanly separated
+const TRAVEL_SLUGS = ['ferry-to-islay', 'flights-to-islay', 'planning-your-trip'];
+
 /**
  * Guide Page - Focused topic pages (spokes in hub-and-spoke architecture)
  *
@@ -81,7 +84,7 @@ const getGuidePage = cache(async (slug: string) => {
       openingHours,
       attributes,
       tags
-    },
+    }[defined(_id)],
     "faqBlocks": faqBlocks[]->{_id, question, answer}[defined(_id) && defined(question)],
     seoTitle,
     seoDescription
@@ -92,12 +95,12 @@ const getGuidePage = cache(async (slug: string) => {
   });
 });
 
-// Generate static params for all guide pages
+// Generate static params for explore guide pages — excludes travel pages (those belong under /islay-travel/)
 export async function generateStaticParams() {
-  const query = `*[_type == "guidePage" && defined(slug.current)]{
+  const query = `*[_type == "guidePage" && defined(slug.current) && !(slug.current in $travelSlugs)]{
     "slug": slug.current
   }`;
-  const pages = await client.fetch(query);
+  const pages = await client.fetch(query, { travelSlugs: TRAVEL_SLUGS });
   return pages.map((page: { slug: string }) => ({
     slug: page.slug,
   }));
@@ -105,6 +108,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  if (TRAVEL_SLUGS.includes(slug)) notFound();
   const page = await getGuidePage(slug);
 
   if (!page) {
@@ -124,6 +128,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function GuidePage({ params }: PageProps) {
   const { slug } = await params;
+  if (TRAVEL_SLUGS.includes(slug)) notFound();
   const page = await getGuidePage(slug);
 
   if (!page) {

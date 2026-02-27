@@ -6,6 +6,9 @@ import { client } from '@/sanity/lib/client';
 // deployments will serve this but it won't be submitted to search engines.
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahn-islay.vercel.app';
 
+// Travel spokes belong under /islay-travel/ — kept separate from /explore-islay/ cluster
+const TRAVEL_SLUGS = ['ferry-to-islay', 'flights-to-islay', 'planning-your-trip'];
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all properties from Sanity
   const propertiesQuery = `*[_type == "property" && defined(slug.current)]{
@@ -13,15 +16,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     _updatedAt
   }`;
 
-  // Fetch all published guide pages from Sanity
-  const guidePagesQuery = `*[_type == "guidePage" && defined(slug.current) && !(_id in path("drafts.**"))]{
+  // Fetch explore guide pages — excludes travel pages
+  const guidePagesQuery = `*[_type == "guidePage" && defined(slug.current) && !(slug.current in $travelSlugs) && !(_id in path("drafts.**"))]{
     slug,
     _updatedAt
   }`;
 
-  const [properties, guidePages] = await Promise.all([
+  // Fetch travel spoke pages for /islay-travel/ hub
+  const travelPagesQuery = `*[_type == "guidePage" && slug.current in $travelSlugs && !(_id in path("drafts.**"))]{
+    slug,
+    _updatedAt
+  }`;
+
+  const [properties, guidePages, travelPages] = await Promise.all([
     client.fetch(propertiesQuery),
-    client.fetch(guidePagesQuery),
+    client.fetch(guidePagesQuery, { travelSlugs: TRAVEL_SLUGS }),
+    client.fetch(travelPagesQuery, { travelSlugs: TRAVEL_SLUGS }),
   ]);
 
   // Static hub pages
@@ -68,7 +78,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
-  // Dynamic guide pages (spokes in hub-and-spoke architecture)
+  // Explore Islay spoke pages
   const guidePageEntries: MetadataRoute.Sitemap = guidePages.map(
     (guide: { slug: { current: string }; _updatedAt?: string }) => ({
       url: `${baseUrl}/explore-islay/${guide.slug.current}`,
@@ -78,6 +88,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
   );
 
-  return [...staticPages, ...propertyPages, ...guidePageEntries];
-}
+  // Travel to Islay spoke pages
+  const travelPageEntries: MetadataRoute.Sitemap = travelPages.map(
+    (guide: { slug: { current: string }; _updatedAt?: string }) => ({
+      url: `${baseUrl}/islay-travel/${guide.slug.current}`,
+      lastModified: guide._updatedAt ? new Date(guide._updatedAt) : new Date(),
+      changeFrequency: 'monthly' as const,
+      priority: 0.7,
+    })
+  );
 
+  return [...staticPages, ...propertyPages, ...guidePageEntries, ...travelPageEntries];
+}
