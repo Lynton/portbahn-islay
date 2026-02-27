@@ -21,6 +21,24 @@ interface GuidePage {
 // Revalidate every 60 seconds
 export const revalidate = 60;
 
+// Travel slugs excluded from this hub — they belong under /islay-travel/
+const TRAVEL_SLUGS = ['ferry-to-islay', 'flights-to-islay', 'planning-your-trip'];
+
+// Hardcoded spoke index — renders unconditionally in server HTML so crawlers
+// and AI retrieval systems always have a static path from hub to every spoke,
+// independent of Sanity data availability or ISR cache state.
+const EXPLORE_SPOKES = [
+  { slug: 'islay-distilleries',   title: "Islay's Whisky Distilleries" },
+  { slug: 'islay-beaches',        title: 'Beaches of Islay' },
+  { slug: 'islay-wildlife',       title: 'Wildlife & Nature on Islay' },
+  { slug: 'food-and-drink',       title: 'Food & Drink on Islay' },
+  { slug: 'walking',              title: 'Walking on Islay' },
+  { slug: 'family-holidays',      title: 'Family Holidays on Islay' },
+  { slug: 'islay-villages',       title: 'Islay Villages' },
+  { slug: 'visit-jura',           title: 'Visiting Jura from Islay' },
+  { slug: 'archaeology-history',  title: 'Archaeology & History' },
+];
+
 /**
  * Explore Islay Hub Page
  *
@@ -67,9 +85,9 @@ const getExploreIslayPage = cache(async () => {
   });
 });
 
-// Get all guide pages for the hub
+// Get explore guide pages for the hub — excludes travel pages
 const getGuidePages = cache(async () => {
-  const query = `*[_type == "guidePage" && !(_id in path("drafts.**"))] | order(title asc) {
+  const query = `*[_type == "guidePage" && !(slug.current in $travelSlugs) && !(_id in path("drafts.**"))] | order(title asc) {
     _id,
     title,
     slug,
@@ -77,7 +95,7 @@ const getGuidePages = cache(async () => {
     heroImage
   }`;
 
-  return await client.fetch(query, {}, {
+  return await client.fetch(query, { travelSlugs: TRAVEL_SLUGS }, {
     next: { revalidate: 60 },
   });
 });
@@ -201,7 +219,22 @@ export default async function ExploreIslayPage() {
             </div>
           )}
 
-          <div className="mt-12 pt-8 border-t border-washed-timber">
+          {/* Static spoke index — always present in server HTML for crawler and AI retrieval.
+              Ensures hub→spoke links exist unconditionally, independent of Sanity data or ISR state. */}
+          <nav aria-label="Islay guides" className="mt-12 pt-8 border-t border-washed-timber">
+            <h2 className="font-serif text-2xl text-harbour-stone mb-4">All Islay guides</h2>
+            <ul className="font-mono text-base space-y-2">
+              {EXPLORE_SPOKES.map((spoke) => (
+                <li key={spoke.slug}>
+                  <Link href={`/explore-islay/${spoke.slug}`} className="text-emerald-accent hover:underline">
+                    {spoke.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="mt-8 pt-8 border-t border-washed-timber">
             <Link href="/" className="font-mono text-emerald-accent hover:underline">
               ← Back to Our Properties
             </Link>
