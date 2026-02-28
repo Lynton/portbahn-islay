@@ -38,7 +38,15 @@ interface BlockReferenceData {
 export const revalidate = 60;
 
 // Travel slugs excluded from this hub — they belong under /islay-travel/
-const TRAVEL_SLUGS = ['ferry-to-islay', 'flights-to-islay', 'planning-your-trip'];
+const TRAVEL_SLUGS = [
+  'ferry-to-islay',
+  'flights-to-islay',
+  'planning-your-trip',
+  'travelling-without-a-car',
+  'travelling-to-islay-with-your-dog',
+  'arriving-on-islay',
+  'getting-around-islay',
+];
 
 // Hardcoded spoke index — renders unconditionally in server HTML so crawlers
 // and AI retrieval systems always have a static path from hub to every spoke,
@@ -53,6 +61,7 @@ const EXPLORE_SPOKES = [
   { slug: 'islay-villages',       title: 'Islay Villages' },
   { slug: 'visit-jura',           title: 'Visiting Jura from Islay' },
   { slug: 'archaeology-history',  title: 'Archaeology & History' },
+  { slug: 'dog-friendly-islay',   title: 'Dog-Friendly Islay' },
 ];
 
 /**

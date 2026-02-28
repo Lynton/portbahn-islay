@@ -17,7 +17,15 @@ import { portableTextComponents } from '@/lib/portable-text';
 export const revalidate = 60;
 
 // Travel pages belong under /islay-travel/ — keep the two hubs cleanly separated
-const TRAVEL_SLUGS = ['ferry-to-islay', 'flights-to-islay', 'planning-your-trip'];
+const TRAVEL_SLUGS = [
+  'ferry-to-islay',
+  'flights-to-islay',
+  'planning-your-trip',
+  'travelling-without-a-car',
+  'travelling-to-islay-with-your-dog',
+  'arriving-on-islay',
+  'getting-around-islay',
+];
 
 /**
  * Guide Page - Focused topic pages (spokes in hub-and-spoke architecture)

@@ -39,8 +39,18 @@ const getTravelToIslayPage = cache(async () => {
   });
 });
 
+const TRAVEL_SPOKE_SLUGS = [
+  'ferry-to-islay',
+  'flights-to-islay',
+  'planning-your-trip',
+  'travelling-without-a-car',
+  'travelling-to-islay-with-your-dog',
+  'arriving-on-islay',
+  'getting-around-islay',
+];
+
 const getTravelGuidePages = cache(async () => {
-  const query = `*[_type == "guidePage" && slug.current in ["ferry-to-islay", "flights-to-islay", "planning-your-trip"] && !(_id in path("drafts.**"))] | order(title asc) {
+  const query = `*[_type == "guidePage" && slug.current in $slugs && !(_id in path("drafts.**"))] | order(title asc) {
     _id,
     title,
     slug,
@@ -48,7 +58,7 @@ const getTravelGuidePages = cache(async () => {
     heroImage
   }`;
 
-  return await client.fetch(query, {}, {
+  return await client.fetch(query, { slugs: TRAVEL_SPOKE_SLUGS }, {
     next: { revalidate: 60 },
   });
 });

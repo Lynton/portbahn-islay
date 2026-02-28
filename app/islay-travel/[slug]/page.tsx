@@ -15,7 +15,15 @@ import { portableTextComponents } from '@/lib/portable-text';
 
 export const revalidate = 60;
 
-const TRAVEL_SLUGS = ['ferry-to-islay', 'flights-to-islay', 'planning-your-trip'];
+const TRAVEL_SLUGS = [
+  'ferry-to-islay',
+  'flights-to-islay',
+  'planning-your-trip',
+  'travelling-without-a-car',
+  'travelling-to-islay-with-your-dog',
+  'arriving-on-islay',
+  'getting-around-islay',
+];
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -241,6 +249,10 @@ export default async function TravelSubPage({ params }: PageProps) {
                     'ferry-to-islay': 'Ferry to Islay — CalMac timetables & booking',
                     'flights-to-islay': 'Flights to Islay — Loganair from Glasgow',
                     'planning-your-trip': 'Planning your Islay trip',
+                    'travelling-without-a-car': 'Travelling to Islay without a car',
+                    'travelling-to-islay-with-your-dog': 'Travelling to Islay with your dog',
+                    'arriving-on-islay': 'Arriving on Islay — ports, late arrivals & cancellations',
+                    'getting-around-islay': 'Getting around Islay — taxis, buses & bike hire',
                   };
                   return (
                     <li key={s}>
