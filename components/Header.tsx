@@ -53,7 +53,7 @@ export default function Header() {
                 Travel to Islay
               </Link>
               <div className="absolute left-0 top-full pt-2 hidden group-hover:block z-50">
-                <div className="bg-sea-spray border border-washed-timber shadow-lg min-w-[200px]">
+                <div className="bg-sea-spray border border-washed-timber shadow-lg min-w-[220px]">
                   <Link
                     href="/islay-travel/ferry-to-islay"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
@@ -71,6 +71,30 @@ export default function Header() {
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Planning Your Trip
+                  </Link>
+                  <Link
+                    href="/islay-travel/travelling-without-a-car"
+                    className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
+                  >
+                    Travelling Without a Car
+                  </Link>
+                  <Link
+                    href="/islay-travel/travelling-to-islay-with-your-dog"
+                    className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
+                  >
+                    Travelling With Your Dog
+                  </Link>
+                  <Link
+                    href="/islay-travel/arriving-on-islay"
+                    className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
+                  >
+                    Arriving on Islay
+                  </Link>
+                  <Link
+                    href="/islay-travel/getting-around-islay"
+                    className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
+                  >
+                    Getting Around Islay
                   </Link>
                 </div>
               </div>
@@ -147,6 +171,12 @@ export default function Header() {
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >
                     Archaeology & History
+                  </Link>
+                  <Link
+                    href="/explore-islay/dog-friendly-islay"
+                    className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
+                  >
+                    Dog-Friendly Islay
                   </Link>
                 </div>
               </div>

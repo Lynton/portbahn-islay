@@ -7,7 +7,15 @@ import { client } from '@/sanity/lib/client';
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahn-islay.vercel.app';
 
 // Travel spokes belong under /islay-travel/ — kept separate from /explore-islay/ cluster
-const TRAVEL_SLUGS = ['ferry-to-islay', 'flights-to-islay', 'planning-your-trip'];
+const TRAVEL_SLUGS = [
+  'ferry-to-islay',
+  'flights-to-islay',
+  'planning-your-trip',
+  'travelling-without-a-car',
+  'travelling-to-islay-with-your-dog',
+  'arriving-on-islay',
+  'getting-around-islay',
+];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Fetch all properties from Sanity
