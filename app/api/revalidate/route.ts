@@ -17,6 +17,9 @@ import { NextRequest, NextResponse } from 'next/server';
 const ALL_PATHS = [
   '/',
   '/accommodation',
+  '/accommodation/portbahn-house',
+  '/accommodation/shorefield-eco-house',
+  '/accommodation/curlew-cottage',
   '/explore-islay',
   '/explore-islay/islay-distilleries',
   '/explore-islay/islay-beaches',
@@ -27,15 +30,17 @@ const ALL_PATHS = [
   '/explore-islay/islay-villages',
   '/explore-islay/visit-jura',
   '/explore-islay/archaeology-history',
+  '/explore-islay/dog-friendly-islay',
   '/islay-travel',
   '/islay-travel/ferry-to-islay',
   '/islay-travel/flights-to-islay',
   '/islay-travel/planning-your-trip',
+  '/islay-travel/travelling-without-a-car',
+  '/islay-travel/travelling-to-islay-with-your-dog',
+  '/islay-travel/arriving-on-islay',
+  '/islay-travel/getting-around-islay',
   '/about-us',
   '/contact',
-  '/accommodation/portbahn-house',
-  '/accommodation/shorefield-eco-house',
-  '/accommodation/curlew-cottage',
 ];
 
 export async function GET(request: NextRequest) {
