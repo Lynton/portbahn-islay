@@ -49,7 +49,7 @@ interface HubPageProps {
 /**
  * HubPage Component - Reusable hub page template
  *
- * Used by /explore-islay, /getting-here, and /accommodation
+ * Used by /explore-islay, /islay-travel, and /accommodation
  * Implements hub-and-spoke architecture with teaser cards
  */
 export default function HubPage({ page, cards, config }: HubPageProps) {

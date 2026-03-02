@@ -46,3 +46,6 @@ production.tar.gz
 
 # property images — served via Sanity CDN, not committed to repo
 /public/images/
+
+# local content snapshots — exported from Sanity, not committed
+/exports/content-snapshots/

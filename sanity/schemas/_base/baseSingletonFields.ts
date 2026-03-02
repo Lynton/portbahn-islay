@@ -1,6 +1,6 @@
 import { defineField } from 'sanity';
 
-// Shared fields for singleton pages (homepage, about, getting-here, etc.)
+// Shared fields for singleton pages (homepage, about, islay-travel, etc.)
 export const baseSingletonFields = [
   defineField({
     name: 'title',

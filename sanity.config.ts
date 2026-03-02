@@ -69,7 +69,7 @@ export default defineConfig({
                           .documentId('accommodationPage')
                       ),
                     S.listItem()
-                      .title('Getting Here')
+                      .title('Travel to Islay (Hub)')
                       .id('gettingHerePage')
                       .child(
                         S.document()

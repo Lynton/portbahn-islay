@@ -223,7 +223,7 @@ async function importContent() {
   console.log('1. Visit Sanity Studio to review and tweak content');
   console.log('2. Add hero images to both pages');
   console.log('3. Verify pages at:');
-  console.log('   - https://portbahn-islay.vercel.app/getting-here');
+  console.log('   - https://portbahn-islay.vercel.app/islay-travel');
   console.log('   - https://portbahn-islay.vercel.app/explore-islay');
 }
 
