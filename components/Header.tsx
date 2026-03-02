@@ -173,6 +173,12 @@ export default function Header() {
                     Archaeology & History
                   </Link>
                   <Link
+                    href="/explore-islay/islay-geology"
+                    className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
+                  >
+                    Geology
+                  </Link>
+                  <Link
                     href="/explore-islay/dog-friendly-islay"
                     className="block px-4 py-3 font-mono text-sm text-harbour-stone hover:bg-machair-sand hover:text-emerald-accent transition-colors"
                   >

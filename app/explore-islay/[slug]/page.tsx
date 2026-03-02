@@ -286,6 +286,7 @@ export default async function GuidePage({ params }: PageProps) {
                 { slug: 'visit-jura', title: 'Visiting Jura from Islay' },
                 { slug: 'islay-villages', title: 'Islay Villages' },
                 { slug: 'archaeology-history', title: 'Archaeology & History' },
+                { slug: 'islay-geology', title: 'Geology' },
                 { slug: 'ferry-to-islay', title: 'Ferry to Islay' },
                 { slug: 'flights-to-islay', title: 'Flights to Islay' },
                 { slug: 'planning-your-trip', title: 'Planning Your Trip to Islay' },

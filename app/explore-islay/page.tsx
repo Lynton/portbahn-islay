@@ -61,6 +61,7 @@ const EXPLORE_SPOKES = [
   { slug: 'islay-villages',       title: 'Islay Villages' },
   { slug: 'visit-jura',           title: 'Visiting Jura from Islay' },
   { slug: 'archaeology-history',  title: 'Archaeology & History' },
+  { slug: 'islay-geology',        title: 'Geology' },
   { slug: 'dog-friendly-islay',   title: 'Dog-Friendly Islay' },
 ];
 
