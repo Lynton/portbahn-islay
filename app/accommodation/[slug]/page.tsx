@@ -172,6 +172,16 @@ const getProperty = cache(async (slug: string) => {
   return await client.fetch(query, { slug });
 });
 
+// Fetch Block 25 (dog-friendly-properties) teaserContent for dog-friendly properties
+const getDogFriendlyBlock = cache(async () => {
+  const query = `*[_type == "canonicalBlock" && blockId.current == "dog-friendly-properties"][0]{
+    title,
+    teaserContent,
+    canonicalHome
+  }`;
+  return await client.fetch(query, {}, { next: { revalidate: 3600 } });
+});
+
 const getAllProperties = cache(async (excludeSlug?: string) => {
   // Build query conditionally to exclude current property
   const query = excludeSlug
@@ -255,6 +265,9 @@ export default async function PropertyPage({ params }: PageProps) {
 
   // Fetch all other properties for navigation
   const otherProperties = await getAllProperties(property.slug?.current || property.slug);
+
+  // Fetch dog-friendly block for pet-friendly properties
+  const dogFriendlyBlock = property.petFriendly ? await getDogFriendlyBlock() : null;
 
   // Generate breadcrumbs
   const breadcrumbs = [
@@ -883,6 +896,12 @@ export default async function PropertyPage({ params }: PageProps) {
             <p className="font-mono text-base text-harbour-stone mb-2">
               <strong>Pet Friendly:</strong> {property.petFriendly ? 'Yes' : 'No'}
             </p>
+            {/* Dog-friendly Islay context — renders Block 25 teaserContent for pet-friendly properties */}
+            {dogFriendlyBlock?.teaserContent && dogFriendlyBlock.teaserContent.length > 0 && (
+              <div className="prose-portbahn mb-4">
+                <PortableText value={dogFriendlyBlock.teaserContent} components={portableTextComponents} />
+              </div>
+            )}
             {property.petPolicyIntro && (
               <p className="font-mono text-base text-harbour-stone mb-4">{property.petPolicyIntro}</p>
             )}
