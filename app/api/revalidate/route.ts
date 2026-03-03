@@ -30,6 +30,7 @@ const ALL_PATHS = [
   '/explore-islay/islay-villages',
   '/explore-islay/visit-jura',
   '/explore-islay/archaeology-history',
+  '/explore-islay/islay-geology',
   '/explore-islay/dog-friendly-islay',
   '/islay-travel',
   '/islay-travel/ferry-to-islay',
