@@ -44,7 +44,6 @@ const TRAVEL_SPOKE_SLUGS = [
   'flights-to-islay',
   'planning-your-trip',
   'travelling-without-a-car',
-  'travelling-to-islay-with-your-dog',
   'arriving-on-islay',
   'getting-around-islay',
 ];

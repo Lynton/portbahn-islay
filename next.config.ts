@@ -69,6 +69,12 @@ const nextConfig: NextConfig = {
         destination: '/explore-islay/:slug',
         permanent: true,
       },
+      // Dog travel spoke merged into explore-islay/dog-friendly-islay
+      {
+        source: '/islay-travel/travelling-to-islay-with-your-dog',
+        destination: '/explore-islay/dog-friendly-islay',
+        permanent: true,
+      },
       // Legacy /getting-here → canonical /islay-travel
       {
         source: '/getting-here',
