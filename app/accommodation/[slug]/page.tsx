@@ -266,13 +266,6 @@ export default async function PropertyPage({ params }: PageProps) {
   const galleryImages = property.images || [];
   const heroImage = property.heroImage;
 
-  console.log("[v0] property.name:", property.name);
-  console.log("[v0] heroImage:", heroImage ? "exists" : "null/undefined");
-  if (heroImage) {
-    console.log("[v0] heroImage URL:", urlFor(heroImage).width(1920).height(960).url());
-  }
-  console.log("[v0] galleryImages count:", galleryImages.length);
-
   // Fetch all other properties for navigation
   const otherProperties = await getAllProperties(property.slug?.current || property.slug);
 

@@ -15,9 +15,9 @@ export default function PropertyHero({
   heroImage,
 }: PropertyHeroProps) {
   return (
-    <section aria-label={`${name} hero`}>
-      {/* Hero image — full-width, sharp edges, no overlay */}
-      <div className="relative w-full aspect-[4/3] md:aspect-[16/7] overflow-hidden">
+    <section aria-label={`${name} hero`} className="bg-sea-spray">
+      {/* Full-width hero photograph — sharp edges, no overlay, no rounded corners */}
+      <div className="relative w-full aspect-[4/3] md:aspect-[16/7]">
         <Image
           src={heroImage.url}
           alt={
@@ -31,14 +31,28 @@ export default function PropertyHero({
         />
       </div>
 
-      {/* Property name block — below the image, not overlaid */}
-      <div className="px-6 md:px-12 lg:px-20 pt-12 pb-8">
+      {/* 
+        Property name block — BELOW the image, never overlaid.
+        H1 is sculptural: big, confident, given room to breathe.
+        Nickname as a mono uppercase label anchored above the H1.
+      */}
+      <div className="px-6 md:px-16 lg:px-24 xl:px-32 pt-12 md:pt-16 pb-8 md:pb-10">
         {nickname && (
-          <p className="font-mono text-xs tracking-[0.2em] uppercase text-kelp-edge mb-4">
+          <p
+            className="font-mono text-kelp-edge mb-5 md:mb-6"
+            style={{ fontSize: "12px", letterSpacing: "0.2em", textTransform: "uppercase", lineHeight: 1.4 }}
+          >
             {nickname}
           </p>
         )}
-        <h1 className="font-serif font-bold text-harbour-stone text-[2.5rem] leading-[1.08] md:text-[4rem] lg:text-[5rem] md:leading-[1.05] max-w-[18ch]">
+        <h1
+          className="font-serif font-bold text-harbour-stone max-w-[16ch]"
+          style={{
+            fontSize: "clamp(2.5rem, 5vw + 1rem, 5rem)",
+            lineHeight: 1.05,
+            letterSpacing: "-0.02em",
+          }}
+        >
           {name}
         </h1>
       </div>

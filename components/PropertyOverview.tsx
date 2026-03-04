@@ -22,19 +22,41 @@ export default function PropertyOverview({
   return (
     <section
       aria-label="Property overview"
-      className="bg-sea-spray px-6 md:px-12 lg:px-20 py-20 md:py-[120px]"
+      className="bg-sea-spray"
+      style={{ paddingTop: "120px", paddingBottom: "120px" }}
     >
-      <div className="max-w-[960px]">
-        {/* Section heading */}
-        <h2 className="font-serif font-bold text-harbour-stone text-[1.75rem] leading-[1.12] md:text-[2.75rem] md:leading-[1.1] mb-10 md:mb-14">
+      {/*
+        Asymmetric editorial layout — the overview reads like a magazine spread.
+        Pull quote is offset to the right of the body column, breaking the grid
+        like an editorial callout in Cereal or Kinfolk.
+        Max content width ~1120px, but NOT centred — left-aligned with generous
+        left padding to create the editorial indent.
+      */}
+      <div className="px-6 md:px-16 lg:px-24 xl:px-32 max-w-[1280px]">
+        {/* Section heading — serif H2, given room */}
+        <h2
+          className="font-serif font-bold text-harbour-stone mb-12 md:mb-16 max-w-[20ch]"
+          style={{
+            fontSize: "clamp(1.75rem, 3vw + 0.5rem, 3rem)",
+            lineHeight: 1.1,
+            letterSpacing: "-0.01em",
+          }}
+        >
           {heading}
         </h2>
 
-        {/* Body + pull-quote layout — asymmetric editorial grid */}
-        <div className="md:grid md:grid-cols-[1fr_280px] md:gap-x-16 lg:gap-x-24 items-start">
-          {/* Main body column — max 65ch, mono */}
+        {/* Body + pull-quote — asymmetric two-column on desktop */}
+        <div className="lg:grid lg:grid-cols-[minmax(0,720px)_1fr] lg:gap-x-20 xl:gap-x-28 items-start">
+          {/* Main body column — mono, max 65ch, full render (no truncation) */}
           {hasBody && (
-            <div className="font-mono text-base leading-[1.6] text-harbour-stone max-w-[65ch] md:text-[1.0625rem] md:leading-[1.6] [&_p]:mb-5 [&_p:last-child]:mb-0 [&_a]:text-kelp-edge [&_a]:underline [&_a:hover]:text-emerald-accent">
+            <div
+              className="font-mono text-harbour-stone [&_p]:mb-6 [&_p:last-child]:mb-0 [&_a]:text-kelp-edge [&_a]:underline [&_a:hover]:text-emerald-accent"
+              style={{
+                fontSize: "clamp(1rem, 0.5vw + 0.875rem, 1.125rem)",
+                lineHeight: 1.6,
+                maxWidth: "65ch",
+              }}
+            >
               {Array.isArray(body) ? (
                 <PortableText value={body} components={portableTextComponents} />
               ) : (
@@ -43,16 +65,35 @@ export default function PropertyOverview({
             </div>
           )}
 
-          {/* Pull quote — offset right of body, editorial callout */}
+          {/*
+            Pull quote — offset right column, editorial callout.
+            Not a box, not a card. Just large italic serif text given breathing room,
+            set apart from the main column like a Monocle magazine pull quote.
+          */}
           {pullQuote && (
-            <aside className="mt-10 md:mt-0 md:pt-4">
-              <blockquote>
-                <p className="font-serif font-bold italic text-harbour-stone text-xl leading-[1.25] md:text-2xl md:leading-[1.2]">
-                  {`\u201C${pullQuote}\u201D`}
+            <aside className="mt-12 lg:mt-0 lg:pt-2 lg:pl-0">
+              <blockquote className="lg:sticky lg:top-32">
+                <p
+                  className="font-serif font-bold italic text-harbour-stone"
+                  style={{
+                    fontSize: "clamp(1.25rem, 1.5vw + 0.5rem, 1.75rem)",
+                    lineHeight: 1.25,
+                  }}
+                >
+                  {"\u201C"}
+                  {pullQuote}
+                  {"\u201D"}
                 </p>
                 {pullQuoteSource && (
-                  <footer className="mt-4">
-                    <cite className="font-mono text-xs tracking-[0.1em] uppercase text-washed-timber not-italic">
+                  <footer className="mt-5">
+                    <cite
+                      className="font-mono text-washed-timber not-italic"
+                      style={{
+                        fontSize: "12px",
+                        letterSpacing: "0.12em",
+                        textTransform: "uppercase",
+                      }}
+                    >
                       {pullQuoteSource}
                     </cite>
                   </footer>
@@ -62,13 +103,32 @@ export default function PropertyOverview({
           )}
         </div>
 
-        {/* Owner note */}
+        {/* Owner note — personal touch, separated by a quiet washed-timber rule */}
         {ownerNote && (
-          <div className="mt-16 md:mt-20 pt-10 border-t border-washed-timber max-w-[65ch]">
-            <p className="font-mono text-xs tracking-[0.2em] uppercase text-kelp-edge mb-4">
+          <div
+            className="border-t border-washed-timber max-w-[65ch]"
+            style={{ marginTop: "80px", paddingTop: "40px" }}
+          >
+            <p
+              className="font-mono text-kelp-edge mb-5"
+              style={{
+                fontSize: "12px",
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                lineHeight: 1.4,
+              }}
+            >
               A note from the owners
             </p>
-            <p className="font-mono text-sm leading-[1.6] text-harbour-stone/80">
+            <p
+              className="font-mono text-harbour-stone"
+              style={{
+                fontSize: "14px",
+                lineHeight: 1.65,
+                maxWidth: "60ch",
+                opacity: 0.8,
+              }}
+            >
               {ownerNote}
             </p>
           </div>

@@ -33,28 +33,39 @@ export default function QuickFactsStrip({
   }
 
   return (
-    <section
-      aria-label="Property quick facts"
-      className="bg-machair-sand px-6 md:px-12 lg:px-20 py-8"
-    >
-      <dl className="grid grid-cols-2 gap-y-6 gap-x-8 md:flex md:items-baseline md:gap-0">
-        {facts.map((fact, index) => (
-          <div
-            key={fact.label}
-            className={`
-              md:flex md:flex-col md:items-start
-              ${index > 0 ? "md:border-l md:border-washed-timber md:pl-8 md:ml-8" : ""}
-            `}
-          >
-            <dt className="font-mono text-xs tracking-[0.15em] uppercase text-kelp-edge">
-              {fact.label}
-            </dt>
-            <dd className="font-mono text-base text-harbour-stone mt-1">
-              {fact.value}
-            </dd>
-          </div>
-        ))}
-      </dl>
+    <section aria-label="Property quick facts" className="bg-machair-sand">
+      <div className="px-6 md:px-16 lg:px-24 xl:px-32 py-8 md:py-10">
+        <dl className="grid grid-cols-2 gap-y-6 gap-x-8 md:flex md:flex-row md:items-baseline">
+          {facts.map((fact, i) => (
+            <div
+              key={fact.label}
+              className={`flex flex-col${
+                i > 0
+                  ? " md:border-l md:border-washed-timber md:pl-8 md:ml-8"
+                  : ""
+              }`}
+            >
+              <dt
+                className="font-mono text-kelp-edge"
+                style={{
+                  fontSize: "12px",
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  lineHeight: 1.4,
+                }}
+              >
+                {fact.label}
+              </dt>
+              <dd
+                className="font-mono text-harbour-stone mt-1"
+                style={{ fontSize: "16px", lineHeight: 1.5 }}
+              >
+                {fact.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
     </section>
   );
 }
