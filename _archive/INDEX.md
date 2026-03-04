@@ -19,3 +19,17 @@ Not working:
 - Layout too safe/generic, not Phaidon/Taschen level
 - No inline images woven into content narrative
 - Amenities/facilities still list-heavy, no editorial grouping
+
+
+## V3 — Sticky Calendar + Art Gallery + Cinematic Hero
+Files: v3-property-page.tsx, v3-PropertyHero.tsx, v3-QuickFactsStrip.tsx, v3-PropertyOverview.tsx, v3-PropertyGallery.tsx
+
+Changes from V2:
+- **Sticky calendar rail**: Full-height right column, persists through entire scroll
+- **Art gallery component**: Single featured image + thumbnail strip + prev/next + counter
+- **Cinematic hero**: 21:9 aspect ratio on desktop, massive 7rem title
+- **Inline images**: Gallery images woven between content chapters (coffee table book)
+- **Content chapters**: More vertical breathing room (py-36), narrative flow
+
+Feedback (pending review):
+- [awaiting user review]
