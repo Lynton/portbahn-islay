@@ -13,6 +13,9 @@ import PropertyCard from '@/components/PropertyCard';
 import GoogleMap from '@/components/GoogleMap';
 import GoogleReviewsClient from '@/components/GoogleReviewsClient';
 import PropertyHostTrustTransfer from '@/components/PropertyHostTrustTransfer';
+import PropertyHero from '@/components/PropertyHero';
+import QuickFactsStrip from '@/components/QuickFactsStrip';
+import PropertyOverview from '@/components/PropertyOverview';
 
 // TypeScript types for AI-optimized fields
 // (Types kept inline where used)
@@ -284,17 +287,42 @@ export default async function PropertyPage({ params }: PageProps) {
         breadcrumbs={breadcrumbs}
       />
       <main className="min-h-screen bg-sea-spray">
-      {/* Hero Image */}
+      {/* Editorial Hero — PropertyHero + QuickFactsStrip + PropertyOverview */}
       {heroImage && (
-        <div className="w-full h-[60vh] relative overflow-hidden">
-          <Image
-            src={urlFor(heroImage).width(1600).height(960).url()}
-            alt={heroImage.alt || property.name}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
+        <PropertyHero
+          name={property.name}
+          nickname={property.propertyNickname || undefined}
+          heroImage={{
+            url: urlFor(heroImage).width(1920).height(960).url(),
+            alt: heroImage.alt || property.name,
+          }}
+        />
+      )}
+
+      <QuickFactsStrip
+        sleeps={property.sleeps || 0}
+        bedrooms={property.bedrooms || 0}
+        bathrooms={property.bathrooms || 0}
+        petsWelcome={property.petFriendly}
+        walkToDistillery={property.nearbyAttractions?.find((a: string) =>
+          a.toLowerCase().includes('distillery')
+        ) ? '10 minutes' : undefined}
+      />
+
+      {(property.overviewIntro || property.description || property.ownerContext) && (
+        <PropertyOverview
+          heading={property.overviewIntro || `About ${property.name}`}
+          body={
+            property.description
+              ? (typeof property.description === 'string'
+                  ? property.description
+                  : '')
+              : ''
+          }
+          pullQuote={property.reviewHighlights?.[0]?.quote}
+          pullQuoteSource={property.reviewHighlights?.[0]?.source}
+          ownerNote={property.ownerContext}
+        />
       )}
 
       {/* Breadcrumbs */}
@@ -305,39 +333,10 @@ export default async function PropertyPage({ params }: PageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main content column */}
           <div className="lg:col-span-2">
-        {/* Property Name & Type */}
-        <div className="mb-4">
-          <h1 className="font-serif text-5xl text-harbour-stone mb-2">
-            {property.name}
-          </h1>
-          {property.propertyType && (
-            <p className="font-mono text-sm text-harbour-stone opacity-60 uppercase">
-              {property.propertyType}
-            </p>
-          )}
-        </div>
 
-        {/* Location + Capacity Info */}
-        <div className="font-mono text-sm text-harbour-stone mb-8 space-y-1">
-          {property.location && <p>{property.location}</p>}
-          <div className="flex gap-4">
-            {property.sleeps && <p>Sleeps {property.sleeps}</p>}
-            {property.bedrooms && <p>• {property.bedrooms} {property.bedrooms === 1 ? 'bedroom' : 'bedrooms'}</p>}
-            {property.beds && <p>• {property.beds} {property.beds === 1 ? 'bed' : 'beds'}</p>}
-            {property.bathrooms && <p>• {property.bathrooms} {property.bathrooms === 1 ? 'bathroom' : 'bathrooms'}</p>}
-          </div>
-        </div>
-
-        {/* Overview Section */}
+        {/* Overview Section — detailed description below editorial hero */}
         <section className="mb-12">
-          {/* Overview Intro */}
-          {property.overviewIntro && (
-            <p className="font-serif text-xl text-harbour-stone mb-6 italic">
-              {property.overviewIntro}
-            </p>
-          )}
-
-          {/* Main Description */}
+          {/* Main Description (Portable Text — full detail) */}
           {property.description && (
             <div className="mb-8">
               <PortableText value={property.description} components={portableTextComponents} />

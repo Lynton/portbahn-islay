@@ -4,7 +4,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['var(--font-lora)', 'Georgia', 'serif'],
+        serif: ['var(--font-seasons)', 'var(--font-lora)', 'Georgia', 'serif'],
         mono: ['var(--font-ibm-plex-mono)', 'monospace'],
       },
     },

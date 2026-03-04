@@ -11,7 +11,7 @@
   --color-emerald-accent: #008060;
 
   /* Typography - Font Families */
-  --font-family-serif: 'Lora', Georgia, serif;
+  --font-family-serif: var(--font-seasons), 'Lora', Georgia, serif;
   --font-family-mono: 'IBM Plex Mono', 'Courier New', monospace;
 
   /* Spacing Scale (from design docs) */
@@ -59,7 +59,7 @@ body {
 
 /* Typography utilities */
 .font-serif {
-  font-family: 'Lora', Georgia, serif !important;
+  font-family: var(--font-seasons), 'Lora', Georgia, serif !important;
 }
 
 .font-mono {
@@ -68,7 +68,7 @@ body {
 
 /* Typography scale - following editorial, minimal aesthetic */
 h1 {
-  font-family: 'Lora', Georgia, serif !important;
+  font-family: var(--font-seasons), 'Lora', Georgia, serif !important;
   font-size: 3.75rem; /* 60px */
   line-height: 1.1;
   font-weight: 400;
@@ -76,7 +76,7 @@ h1 {
 }
 
 h2 {
-  font-family: 'Lora', Georgia, serif !important;
+  font-family: var(--font-seasons), 'Lora', Georgia, serif !important;
   font-size: 2.5rem; /* 40px */
   line-height: 1.2;
   font-weight: 400;
@@ -84,7 +84,7 @@ h2 {
 }
 
 h3 {
-  font-family: 'Lora', Georgia, serif !important;
+  font-family: var(--font-seasons), 'Lora', Georgia, serif !important;
   font-size: 1.875rem; /* 30px */
   line-height: 1.3;
   font-weight: 400;

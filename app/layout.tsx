@@ -1,8 +1,26 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import SchemaMarkup from "@/components/SchemaMarkup";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
+
+const seasons = localFont({
+  src: [
+    {
+      path: "../public/fonts/TheSeasons-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/fonts/TheSeasons-Bold.woff",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-seasons",
+  display: "swap",
+});
 
 // Only index on the production domain. Vercel preview deployments (*.vercel.app) stay
 // noindex to avoid competing with the live site at portbahnislay.co.uk.
@@ -35,7 +53,7 @@ export default async function RootLayout({
         {/* Site-wide Organization schema */}
         <SchemaMarkup type="Organization" data={null} />
       </head>
-      <body className="antialiased font-mono flex flex-col min-h-screen">
+      <body className={`${seasons.variable} antialiased font-mono flex flex-col min-h-screen`}>
         <Header />
         <div className="flex-grow">
           {children}
