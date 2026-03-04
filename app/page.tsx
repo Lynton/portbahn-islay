@@ -77,6 +77,19 @@ export default async function Home() {
   const homepage = await getHomepage();
   const properties = await getProperties();
 
+  console.log("[v0] SANITY_PROJECT_ID:", process.env.NEXT_PUBLIC_SANITY_PROJECT_ID);
+  console.log("[v0] SANITY_DATASET:", process.env.NEXT_PUBLIC_SANITY_DATASET);
+  console.log("[v0] SANITY_TOKEN exists:", !!process.env.SANITY_API_TOKEN);
+  console.log("[v0] homepage exists:", !!homepage);
+  console.log("[v0] homepage heroImage:", homepage?.heroImage ? "yes" : "no");
+  console.log("[v0] properties count:", properties?.length);
+  if (homepage?.heroImage) {
+    console.log("[v0] hero URL:", urlFor(homepage.heroImage).width(1600).height(960).url());
+  }
+  if (properties?.[0]?.heroImage) {
+    console.log("[v0] first property image URL:", urlFor(properties[0].heroImage).width(800).height(1200).url());
+  }
+
   return (
     <>
       <SchemaMarkup
