@@ -104,9 +104,14 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
             {config.introText}
           </p>
 
-          {/* Canonical Content Blocks */}
+          {/* Canonical Content Blocks — forced to teaser version.
+              Hub pages are signposts; full content belongs exclusively on spoke pages.
+              Prevents semantic cannibalisation of spokes regardless of Sanity version field. */}
           {page?.contentBlocks && page.contentBlocks.length > 0 && (
-            <BlockRenderer blocks={page.contentBlocks} className="mb-16" />
+            <BlockRenderer
+              blocks={page.contentBlocks.map((b: any) => ({ ...b, version: 'teaser' as const }))}
+              className="mb-16"
+            />
           )}
 
           {/* Cards Grid */}
