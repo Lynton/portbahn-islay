@@ -1,4 +1,4 @@
-import Image from "next/image";
+
 
 interface PropertyHeroProps {
   name: string;
@@ -18,16 +18,14 @@ export default function PropertyHero({
     <section aria-label={`${name} hero`} className="bg-sea-spray">
       {/* Full-width hero photograph — sharp edges, no overlay, no rounded corners */}
       <div className="relative w-full aspect-[4/3] md:aspect-[16/7]">
-        <Image
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
           src={heroImage.url}
           alt={
             heroImage.alt ||
             `${name} — holiday accommodation on the Isle of Islay, Scotland`
           }
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
+          className="absolute inset-0 w-full h-full object-cover"
         />
       </div>
 

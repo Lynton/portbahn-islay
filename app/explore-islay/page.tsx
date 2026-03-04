@@ -173,12 +173,11 @@ export default async function ExploreIslayPage() {
       <main className="min-h-screen bg-sea-spray">
         {page?.heroImage && (
           <div className="w-full h-[40vh] relative overflow-hidden">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={urlFor(page.heroImage).width(1600).height(640).url()}
               alt={page.heroImage.alt || page?.title || 'Explore Islay'}
-              fill
-              className="object-cover"
-              priority
+              className="absolute inset-0 w-full h-full object-cover"
             />
           </div>
         )}
@@ -220,11 +219,11 @@ export default async function ExploreIslayPage() {
                 >
                   {guide.heroImage && (
                     <div className="relative h-48 overflow-hidden">
-                      <Image
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
                         src={urlFor(guide.heroImage).width(600).height(300).url()}
                         alt={guide.heroImage.alt || guide.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                     </div>
                   )}

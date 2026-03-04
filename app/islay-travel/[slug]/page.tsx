@@ -163,12 +163,11 @@ export default async function TravelSubPage({ params }: PageProps) {
       <main className="min-h-screen bg-sea-spray">
         {page.heroImage && (
           <div className="w-full h-[40vh] relative overflow-hidden">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={urlFor(page.heroImage).width(1600).height(640).url()}
               alt={page.heroImage.alt || page.title}
-              fill
-              className="object-cover"
-              priority
+              className="absolute inset-0 w-full h-full object-cover"
             />
           </div>
         )}

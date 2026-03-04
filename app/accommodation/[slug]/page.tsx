@@ -1011,11 +1011,11 @@ export default async function PropertyPage({ params }: PageProps) {
             <div className="grid grid-cols-2 gap-4">
               {galleryImages.map((image: unknown, index: number) => (
                 <div key={index} className="aspect-[4/3] relative overflow-hidden">
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={urlFor(image as any).width(800).height(600).url()}
                     alt={(image as any)?.alt || `${property.name} - Image ${index + 1}`}
-                    fill
-                    className="object-cover"
+                    className="absolute inset-0 w-full h-full object-cover"
                   />
                   {(image as any)?.caption && (
                     <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-sea-spray font-mono text-sm px-4 py-2">

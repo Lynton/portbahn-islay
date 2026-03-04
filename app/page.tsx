@@ -96,12 +96,11 @@ export default async function Home() {
       {/* Hero Image */}
       {homepage?.heroImage && (
         <div className="w-full h-[60vh] relative overflow-hidden">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={urlFor(homepage.heroImage).width(1600).height(960).url()}
             alt={homepage.heroImage.alt || homepage?.title || 'Portbahn Islay'}
-            fill
-            className="object-cover"
-            priority
+            className="absolute inset-0 w-full h-full object-cover"
           />
         </div>
       )}

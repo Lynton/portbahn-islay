@@ -65,12 +65,11 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
       <main className="min-h-screen bg-sea-spray">
         {page?.heroImage && (
           <div className="w-full h-[40vh] relative overflow-hidden">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
               src={urlFor(page.heroImage).width(1600).height(640).url()}
               alt={page.heroImage.alt || page?.title || 'Portbahn Islay'}
-              fill
-              className="object-cover"
-              priority
+              className="absolute inset-0 w-full h-full object-cover"
             />
           </div>
         )}
@@ -129,11 +128,11 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                     >
                       {card.heroImage && (
                         <div className="relative h-48 md:h-64 overflow-hidden">
-                          <Image
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
                             src={urlFor(card.heroImage).width(600).height(400).url()}
                             alt={card.heroImage.alt || cardTitle}
-                            fill
-                            className="object-cover group-hover:scale-105 transition-transform duration-300"
+                            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
                         </div>
                       )}

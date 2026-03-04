@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Image from 'next/image';
+
 
 interface PropertyCardProps {
   name: string;
@@ -25,11 +25,10 @@ export default function PropertyCard({
       <article className="border border-washed-timber p-6 text-left">
         {/* Portrait image */}
         <div className="aspect-[3/4] mb-6 overflow-hidden">
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={imageUrl}
             alt={name}
-            width={400}
-            height={533}
             className="w-full h-full object-cover"
           />
         </div>
