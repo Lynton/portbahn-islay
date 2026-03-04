@@ -266,6 +266,7 @@ export default async function PropertyPage({ params }: PageProps) {
   const galleryImages = property.images || [];
   const heroImage = property.heroImage;
 
+
   // Fetch all other properties for navigation
   const otherProperties = await getAllProperties(property.slug?.current || property.slug);
 
@@ -304,21 +305,20 @@ export default async function PropertyPage({ params }: PageProps) {
         bedrooms={property.bedrooms || 0}
         bathrooms={property.bathrooms || 0}
         petsWelcome={property.petFriendly}
-        walkToDistillery={property.nearbyAttractions?.find((a: string) =>
-          a.toLowerCase().includes('distillery')
-        ) ? '10 minutes' : undefined}
+        walkToDistillery={(() => {
+          const match = property.nearbyAttractions?.find((a: string) =>
+            a.toLowerCase().includes('distillery')
+          );
+          if (!match) return undefined;
+          const timeMatch = match.match(/(\d+)\s*min/i);
+          return timeMatch ? `${timeMatch[1]} minutes` : match;
+        })()}
       />
 
       {(property.overviewIntro || property.description || property.ownerContext) && (
         <PropertyOverview
           heading={property.overviewIntro || `About ${property.name}`}
-          body={
-            property.description
-              ? (typeof property.description === 'string'
-                  ? property.description
-                  : '')
-              : ''
-          }
+          body={property.description || ''}
           pullQuote={property.reviewHighlights?.[0]?.quote}
           pullQuoteSource={property.reviewHighlights?.[0]?.source}
           ownerNote={property.ownerContext}

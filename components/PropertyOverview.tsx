@@ -1,6 +1,10 @@
+import { PortableText } from "@portabletext/react";
+import { portableTextComponents } from "@/lib/portable-text";
+
 interface PropertyOverviewProps {
   heading: string;
-  body: string;
+  /** Portable Text block array from Sanity, or a plain string fallback */
+  body: any[] | string;
   pullQuote?: string;
   pullQuoteSource?: string;
   ownerNote?: string;
@@ -13,6 +17,8 @@ export default function PropertyOverview({
   pullQuoteSource,
   ownerNote,
 }: PropertyOverviewProps) {
+  const hasBody = Array.isArray(body) ? body.length > 0 : !!body;
+
   return (
     <section
       aria-label="Property overview"
@@ -27,11 +33,15 @@ export default function PropertyOverview({
         {/* Body + pull-quote layout — asymmetric editorial grid */}
         <div className="md:grid md:grid-cols-[1fr_280px] md:gap-x-16 lg:gap-x-24 items-start">
           {/* Main body column — max 65ch, mono */}
-          <div>
-            <p className="font-mono text-base leading-[1.6] text-harbour-stone max-w-[65ch] md:text-[1.0625rem] md:leading-[1.6]">
-              {body}
-            </p>
-          </div>
+          {hasBody && (
+            <div className="font-mono text-base leading-[1.6] text-harbour-stone max-w-[65ch] md:text-[1.0625rem] md:leading-[1.6] [&_p]:mb-5 [&_p:last-child]:mb-0 [&_a]:text-kelp-edge [&_a]:underline [&_a:hover]:text-emerald-accent">
+              {Array.isArray(body) ? (
+                <PortableText value={body} components={portableTextComponents} />
+              ) : (
+                <p>{body}</p>
+              )}
+            </div>
+          )}
 
           {/* Pull quote — offset right of body, editorial callout */}
           {pullQuote && (
