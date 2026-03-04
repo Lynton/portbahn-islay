@@ -97,9 +97,9 @@ export default async function PropertyPage({ params }: PageProps) {
   const heroImage = property.heroImage;
 
   const breadcrumbs = [
-    { label: 'Home', href: '/' },
-    { label: 'Accommodation', href: '/accommodation' },
-    { label: property.name, href: `/accommodation/${slug}` },
+    { name: 'Home', url: '/' },
+    { name: 'Accommodation', url: '/accommodation' },
+    { name: property.name, url: `/accommodation/${slug}` },
   ];
 
   // Extract distillery walk time
@@ -613,7 +613,7 @@ export default async function PropertyPage({ params }: PageProps) {
           </section>
         )}
 
-        {/* ═══════════════════════════════════════════════════
+        {/* ══════════════���════════════════════════════════════
             SECTION 8 — THINGS TO KNOW (honest, grouped)
             Alternating sand/white bands continue
         ═══════════════════════════════════════════════════ */}
@@ -930,12 +930,12 @@ export default async function PropertyPage({ params }: PageProps) {
                     <PropertyCard
                       key={p._id}
                       name={p.name}
-                      location={p.location}
-                      description={p.description}
-                      sleeps={p.sleeps}
-                      bedrooms={p.bedrooms}
+                      location={p.location || ''}
+                      description={p.overviewIntro || p.name}
+                      sleeps={p.sleeps || 0}
+                      bedrooms={p.bedrooms || 0}
                       imageUrl={imageUrl}
-                      href={`/accommodation/${p.slug?.current || p.slug}`}
+                      href={`/accommodation/${p.slug?.current || p.slug || ''}`}
                     />
                   );
                 })}
