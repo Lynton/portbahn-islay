@@ -15,6 +15,17 @@ import { portableTextComponents } from '@/lib/portable-text';
 
 export const revalidate = 60;
 
+// Stock photo fallbacks (Unsplash CC) — replace with Sanity hero images when available
+const TRAVEL_IMAGES: Record<string, string> = {
+  'ferry-to-islay':                    'https://images.unsplash.com/photo-1464621922360-27f3bf0eca75?w=1600&h=640&fit=crop&auto=format',
+  'flights-to-islay':                  'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&h=640&fit=crop&auto=format',
+  'planning-your-trip':                'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=640&fit=crop&auto=format',
+  'travelling-without-a-car':          'https://images.unsplash.com/photo-1455587734955-081b22074882?w=1600&h=640&fit=crop&auto=format',
+  'travelling-to-islay-with-your-dog': 'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1600&h=640&fit=crop&auto=format',
+  'arriving-on-islay':                 'https://images.unsplash.com/photo-1465321756780-2e5c7fc42fae?w=1600&h=640&fit=crop&auto=format',
+  'getting-around-islay':              'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=640&fit=crop&auto=format&sat=-20',
+};
+
 const TRAVEL_SLUGS = [
   'ferry-to-islay',
   'flights-to-islay',
@@ -172,16 +183,25 @@ export default async function TravelSubPage({ params }: PageProps) {
       />
       <main className="min-h-screen bg-sea-spray">
 
-        {/* ── HERO ────────────────────────────────────────────────── */}
-        {page.heroImage && (
+        {/* ── HERO — Sanity image or stock fallback ───────────────── */}
+        {(page.heroImage || TRAVEL_IMAGES[slug]) && (
           <div className="w-full relative overflow-hidden" style={{ height: '50vh', maxHeight: '520px' }}>
-            <Image
-              src={urlFor(page.heroImage).width(1600).height(640).url()}
-              alt={page.heroImage.alt || page.title}
-              fill
-              className="object-cover"
-              priority
-            />
+            {page.heroImage ? (
+              <Image
+                src={urlFor(page.heroImage).width(1600).height(640).url()}
+                alt={page.heroImage.alt || page.title}
+                fill
+                className="object-cover"
+                priority
+              />
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={TRAVEL_IMAGES[slug]}
+                alt={page.title}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            )}
             <div style={{
               position: 'absolute',
               inset: 0,

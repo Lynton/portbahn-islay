@@ -16,6 +16,21 @@ import { portableTextComponents } from '@/lib/portable-text';
 // Revalidate every 60 seconds
 export const revalidate = 60;
 
+// Stock photo fallbacks (Unsplash CC) — replace with Sanity hero images when available
+const GUIDE_IMAGES: Record<string, string> = {
+  'islay-distilleries':   'https://images.unsplash.com/photo-1527856263669-12c3a0af2aa6?w=1600&h=640&fit=crop&auto=format',
+  'islay-beaches':        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&h=640&fit=crop&auto=format',
+  'islay-wildlife':       'https://images.unsplash.com/photo-1452570053594-1b985d6ea890?w=1600&h=640&fit=crop&auto=format',
+  'food-and-drink':       'https://images.unsplash.com/photo-1476224203421-9ac39bcb3df1?w=1600&h=640&fit=crop&auto=format',
+  'walking':              'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&h=640&fit=crop&auto=format',
+  'family-holidays':      'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=1600&h=640&fit=crop&auto=format',
+  'islay-villages':       'https://images.unsplash.com/photo-1455587734955-081b22074882?w=1600&h=640&fit=crop&auto=format',
+  'visit-jura':           'https://images.unsplash.com/photo-1465321756780-2e5c7fc42fae?w=1600&h=640&fit=crop&auto=format',
+  'archaeology-history':  'https://images.unsplash.com/photo-1565436454699-b0cbcdf9c99a?w=1600&h=640&fit=crop&auto=format',
+  'islay-geology':        'https://images.unsplash.com/photo-1519710164239-da838a7e055b?w=1600&h=640&fit=crop&auto=format',
+  'dog-friendly-islay':   'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=1600&h=640&fit=crop&auto=format',
+};
+
 // Travel pages belong under /islay-travel/ — keep the two hubs cleanly separated
 const TRAVEL_SLUGS = [
   'ferry-to-islay',
@@ -188,20 +203,29 @@ export default async function GuidePage({ params }: PageProps) {
       />
       <main className="min-h-screen bg-sea-spray">
 
-        {/* ── HERO ────────────────────────────────────────────────── */}
-        {page.heroImage && (
+        {/* ── HERO — Sanity image or stock fallback ───────────────── */}
+        {(page.heroImage || GUIDE_IMAGES[slug]) && (
           <div className="w-full relative overflow-hidden" style={{ height: '55vh', maxHeight: '560px' }}>
-            <Image
-              src={urlFor(page.heroImage).width(1600).height(700).url()}
-              alt={page.heroImage.alt || page.title}
-              fill
-              className="object-cover"
-              priority
-            />
+            {page.heroImage ? (
+              <Image
+                src={urlFor(page.heroImage).width(1600).height(700).url()}
+                alt={page.heroImage.alt || page.title}
+                fill
+                className="object-cover"
+                priority
+              />
+            ) : (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={GUIDE_IMAGES[slug]}
+                alt={page.title}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+            )}
             <div style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(to bottom, rgba(15,58,74,0.05) 0%, rgba(15,58,74,0.45) 100%)',
+              background: 'linear-gradient(to bottom, rgba(15,58,74,0.05) 0%, rgba(15,58,74,0.50) 100%)',
             }} />
           </div>
         )}

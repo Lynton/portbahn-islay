@@ -4,9 +4,23 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import SchemaMarkup from '@/components/SchemaMarkup';
-import BlockRenderer from '@/components/BlockRenderer';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
+
+// Stock photo fallbacks (Unsplash CC) — swap for Sanity hero images when available
+const GUIDE_IMAGES: Record<string, string> = {
+  'islay-distilleries':   'https://images.unsplash.com/photo-1569529465841-dfecdab7503b?w=600&h=300&fit=crop&auto=format',
+  'islay-beaches':        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&h=300&fit=crop&auto=format',
+  'islay-wildlife':       'https://images.unsplash.com/photo-1474511320723-9a56873867b5?w=600&h=300&fit=crop&auto=format',
+  'food-and-drink':       'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=300&fit=crop&auto=format',
+  'walking':              'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=300&fit=crop&auto=format',
+  'family-holidays':      'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?w=600&h=300&fit=crop&auto=format',
+  'islay-villages':       'https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&h=300&fit=crop&auto=format',
+  'visit-jura':           'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=300&fit=crop&auto=format&sat=-40',
+  'archaeology-history':  'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=600&h=300&fit=crop&auto=format',
+  'islay-geology':        'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=600&h=300&fit=crop&auto=format',
+  'dog-friendly-islay':   'https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&h=300&fit=crop&auto=format',
+};
 
 interface GuidePage {
   _id: string;
@@ -19,21 +33,6 @@ interface GuidePage {
   };
 }
 
-interface BlockReferenceData {
-  block: {
-    _id: string;
-    blockId: { current: string };
-    title: string;
-    entityType: string;
-    canonicalHome: string;
-    fullContent: any[];
-    teaserContent: any[];
-    keyFacts?: Array<{ fact: string; value: string }>;
-  };
-  version: 'full' | 'teaser';
-  showKeyFacts?: boolean;
-  customHeading?: string;
-}
 
 // Revalidate every 60 seconds
 export const revalidate = 60;
@@ -142,15 +141,6 @@ export default async function ExploreIslayPage() {
     getGuidePages(),
   ]);
 
-  // Force teaser version on all hub content blocks.
-  // Hub pages are signposts — full content belongs exclusively on spoke pages.
-  // This prevents semantic cannibalisation of spoke pages by the hub regardless
-  // of what version is stored in Sanity, and enforces the hub-and-spoke principle
-  // at the architectural level.
-  const teaserBlocks: BlockReferenceData[] = (page?.contentBlocks ?? []).map(
-    (b: BlockReferenceData) => ({ ...b, version: 'teaser' as const })
-  );
-
   const schemaData = {
     name: 'Explore the Isle of Islay — Things to See and Do',
     description: page?.seoDescription || "A local family's guide to things to do on Islay — whisky distilleries, beaches, wildlife, walking, food and drink, villages, and family holidays.",
@@ -233,33 +223,29 @@ export default async function ExploreIslayPage() {
             }}>
               {page?.title || 'Explore the Isle of Islay'}
             </h1>
-            <p style={{
-              fontFamily: '"IBM Plex Mono", monospace',
-              fontSize: '15px',
-              color: 'var(--color-harbour-stone)',
-              opacity: 0.75,
-              lineHeight: 1.7,
-              maxWidth: '680px',
-            }}>
-              {page?.scopeIntro || "Islay is a 25-mile island off Scotland's west coast with more to explore than most visitors expect. These guides are written by hosts who have lived and worked here — covering whisky distilleries, beaches, walking routes, wildlife, food and drink, villages, family activities, and day trips to neighbouring Jura. Each guide goes deep on its topic. This is the overview."}
-            </p>
+            {(page?.scopeIntro || "Islay is a 25-mile island off Scotland's west coast with more to explore than most visitors expect. These guides are written by hosts who have lived and worked here — covering whisky distilleries, beaches, walking routes, wildlife, food and drink, villages, family activities, and day trips to neighbouring Jura. Each guide goes deep on its topic. This is the overview.").split('\n\n').filter(Boolean).map((para: string, i: number) => (
+              <p key={i} style={{
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: '15px',
+                color: 'var(--color-harbour-stone)',
+                opacity: 0.75,
+                lineHeight: 1.7,
+                maxWidth: '680px',
+                marginBottom: '16px',
+              }}>
+                {para}
+              </p>
+            ))}
           </div>
         </section>
 
         {/* ── PAGE CONTENT ────────────────────────────────────────── */}
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 48px 80px' }}>
 
-          {/* Canonical Content Blocks — teaser only */}
-          {teaserBlocks.length > 0 && (
-            <div style={{ marginBottom: '64px' }}>
-              <BlockRenderer blocks={teaserBlocks} className="mb-0" />
-            </div>
-          )}
-
           {/* Guide Cards Grid */}
           {guidePages && guidePages.length > 0 && (
             <>
-              <div style={{ marginBottom: '32px' }}>
+              <div style={{ marginBottom: '32px', paddingBottom: '28px', borderBottom: '1px solid var(--color-washed-timber)' }}>
                 <p style={{
                   fontFamily: '"IBM Plex Mono", monospace',
                   fontSize: '9px',
@@ -268,7 +254,7 @@ export default async function ExploreIslayPage() {
                   color: 'var(--color-kelp-edge)',
                   marginBottom: '10px',
                 }}>
-                  Explore
+                  Explore Islay
                 </p>
                 <h2 style={{
                   fontFamily: '"The Seasons", Georgia, serif',
@@ -283,22 +269,37 @@ export default async function ExploreIslayPage() {
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '3px', marginBottom: '64px' }}>
-                {guidePages.map((guide: GuidePage) => (
+                {guidePages.map((guide: GuidePage) => {
+                  const slug = guide.slug?.current || '';
+                  const fallbackImg = GUIDE_IMAGES[slug];
+                  const hasImage = !!guide.heroImage || !!fallbackImg;
+
+                  return (
                   <Link
                     key={guide._id}
-                    href={`/explore-islay/${guide.slug?.current}`}
+                    href={`/explore-islay/${slug}`}
                     style={{ display: 'block', textDecoration: 'none' }}
                     className="hover-opacity"
                   >
-                    <div style={{ background: 'var(--color-machair-sand)', border: '1px solid var(--color-washed-timber)', overflow: 'hidden' }}>
-                      {guide.heroImage && (
-                        <div style={{ position: 'relative', height: '200px', overflow: 'hidden' }}>
-                          <Image
-                            src={urlFor(guide.heroImage).width(600).height(300).url()}
-                            alt={guide.heroImage.alt || guide.title}
-                            fill
-                            className="object-cover"
-                          />
+                    <div style={{ background: 'var(--color-machair-sand)', overflow: 'hidden' }}>
+                      {/* Image — Sanity first, then stock fallback */}
+                      {hasImage && (
+                        <div style={{ position: 'relative', height: '200px', overflow: 'hidden', background: 'var(--color-harbour-stone)' }}>
+                          {guide.heroImage ? (
+                            <Image
+                              src={urlFor(guide.heroImage).width(600).height(300).url()}
+                              alt={guide.heroImage.alt || guide.title}
+                              fill
+                              className="object-cover"
+                            />
+                          ) : (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img
+                              src={fallbackImg}
+                              alt={guide.title}
+                              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            />
+                          )}
                         </div>
                       )}
                       <div style={{ padding: '20px 20px 22px' }}>
@@ -341,7 +342,8 @@ export default async function ExploreIslayPage() {
                       </div>
                     </div>
                   </Link>
-                ))}
+                  );
+                })}
               </div>
             </>
           )}

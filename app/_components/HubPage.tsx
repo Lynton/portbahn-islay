@@ -2,7 +2,6 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import SchemaMarkup from '@/components/SchemaMarkup';
-import BlockRenderer from '@/components/BlockRenderer';
 import { urlFor } from '@/sanity/lib/image';
 
 interface HubPageProps {
@@ -141,31 +140,24 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
             }}>
               {page?.title || config.breadcrumbs[config.breadcrumbs.length - 1].label}
             </h1>
-            <p style={{
-              fontFamily: '"IBM Plex Mono", monospace',
-              fontSize: '15px',
-              color: 'var(--color-harbour-stone)',
-              opacity: 0.75,
-              lineHeight: 1.7,
-              maxWidth: '680px',
-            }}>
-              {config.introText}
-            </p>
+            {config.introText.split('\n\n').filter(Boolean).map((para, i) => (
+              <p key={i} style={{
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: '15px',
+                color: 'var(--color-harbour-stone)',
+                opacity: 0.75,
+                lineHeight: 1.7,
+                maxWidth: '680px',
+                marginBottom: '16px',
+              }}>
+                {para}
+              </p>
+            ))}
           </div>
         </section>
 
         {/* ── PAGE CONTENT ──────────────────────────────────────── */}
         <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 48px 80px' }}>
-
-          {/* Canonical Content Blocks — teaser version */}
-          {page?.contentBlocks && page.contentBlocks.length > 0 && (
-            <div style={{ marginBottom: '56px' }}>
-              <BlockRenderer
-                blocks={page.contentBlocks.map((b: any) => ({ ...b, version: 'teaser' as const }))}
-                className="mb-0"
-              />
-            </div>
-          )}
 
           {/* Cards Grid */}
           {cards && cards.length > 0 && (
