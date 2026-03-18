@@ -190,44 +190,47 @@ export default async function TravelSubPage({ params }: PageProps) {
           </div>
         )}
 
-        {/* ── BREADCRUMB STRIP ────────────────────────────────────── */}
+        {/* ── TEAL CAPTION BAR ────────────────────────────────────── */}
         <div style={{
-          background: 'var(--color-machair-sand)',
-          borderBottom: '1px solid var(--color-washed-timber)',
-          padding: '10px 48px',
+          background: 'var(--color-sound-of-islay)',
+          padding: '18px 48px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}>
-          <nav style={{ maxWidth: '1280px', margin: '0 auto', fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'var(--color-harbour-stone)' }}>
-            <Link href="/" style={{ opacity: 0.55, textDecoration: 'none', color: 'inherit' }}>Home</Link>
-            <span style={{ margin: '0 8px', opacity: 0.3 }}>→</span>
-            <Link href="/islay-travel" style={{ opacity: 0.55, textDecoration: 'none', color: 'inherit' }}>Travel to Islay</Link>
-            <span style={{ margin: '0 8px', opacity: 0.3 }}>→</span>
-            <span style={{ opacity: 0.85 }}>{page.title}</span>
+          <nav style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.12em', color: 'rgba(255,254,250,0.65)' }}>
+            <Link href="/" style={{ color: 'inherit', textDecoration: 'none' }}>Home</Link>
+            {' · '}
+            <Link href="/islay-travel" style={{ color: 'inherit', textDecoration: 'none' }}>Travel to Islay</Link>
+            {' · '}
+            <span style={{ color: 'rgba(255,254,250,0.9)' }}>{page.title}</span>
           </nav>
+          <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,254,250,0.5)' }}>
+            Isle of Islay, Scotland
+          </span>
         </div>
 
-        {/* ── GUIDE CONTENT ───────────────────────────────────────── */}
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 48px 80px' }}>
-
-          {/* Title frame */}
-          <div style={{ maxWidth: '780px', paddingTop: '52px', paddingBottom: '44px', borderBottom: '1px solid var(--color-washed-timber)', marginBottom: '52px' }}>
+        {/* ── SAND TITLE FRAME ────────────────────────────────────── */}
+        <section style={{ background: 'var(--color-machair-sand)', padding: '64px 48px 60px' }}>
+          <div style={{ maxWidth: '860px' }}>
             <p style={{
               fontFamily: '"IBM Plex Mono", monospace',
               fontSize: '9px',
-              letterSpacing: '0.16em',
+              letterSpacing: '0.20em',
               textTransform: 'uppercase',
               color: 'var(--color-kelp-edge)',
-              marginBottom: '12px',
+              marginBottom: '16px',
             }}>
               Travel to Islay
             </p>
             <h1 style={{
               fontFamily: '"The Seasons", Georgia, serif',
               fontWeight: 700,
-              fontSize: 'clamp(2.25rem, 4vw, 3.5rem)',
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
               color: 'var(--color-harbour-stone)',
-              lineHeight: 1.05,
+              lineHeight: 1.02,
               letterSpacing: '-0.02em',
-              marginBottom: '20px',
+              marginBottom: '24px',
             }}>
               {page.title}
             </h1>
@@ -237,17 +240,20 @@ export default async function TravelSubPage({ params }: PageProps) {
                 fontSize: '15px',
                 color: 'var(--color-harbour-stone)',
                 opacity: 0.75,
-                lineHeight: 1.65,
+                lineHeight: 1.7,
+                maxWidth: '680px',
               }}>
                 {page.introduction}
               </p>
             )}
           </div>
+        </section>
+
+        {/* ── GUIDE CONTENT ───────────────────────────────────────── */}
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 48px 80px' }}>
 
           {/* Main content + sidebar two-column */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '60px' }}
-            className="md:[grid-template-columns:minmax(0,1fr)_260px]"
-          >
+          <div className="guide-grid">
             {/* Main content column */}
             <div style={{ minWidth: 0 }}>
 
@@ -310,7 +316,7 @@ export default async function TravelSubPage({ params }: PageProps) {
             </div>
 
             {/* Right sidebar — stay links + related travel guides */}
-            <aside style={{ display: 'none' }} className="md:block">
+            <aside className="hidden md:block">
               <div style={{ position: 'sticky', top: '80px' }}>
 
                 {/* Stay on Islay */}
@@ -319,7 +325,7 @@ export default async function TravelSubPage({ params }: PageProps) {
                   borderTop: '3px solid var(--color-kelp-edge)',
                   padding: '20px',
                   marginBottom: '20px',
-                  background: 'var(--color-sea-spray)',
+                  background: 'var(--color-machair-sand)',
                 }}>
                   <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '14px' }}>
                     Stay on Islay
@@ -361,7 +367,7 @@ export default async function TravelSubPage({ params }: PageProps) {
                 </div>
 
                 {/* Related travel guides */}
-                <div style={{ border: '1px solid var(--color-washed-timber)', padding: '20px', background: 'var(--color-sea-spray)' }}>
+                <div style={{ border: '1px solid var(--color-washed-timber)', padding: '20px', background: 'var(--color-machair-sand)' }}>
                   <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '14px' }}>
                     More travel information
                   </p>

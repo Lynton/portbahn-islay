@@ -183,11 +183,27 @@ p {
 }
 .aw-cta:hover { opacity: 0.85; }
 
+/* ─── GUIDE PAGE GRID ───────────────────────────────────────────────── */
+.guide-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .guide-grid {
+    grid-template-columns: minmax(0, 1fr) 260px;
+    column-gap: 48px;
+  }
+}
+@media (min-width: 1024px) {
+  .guide-grid {
+    grid-template-columns: minmax(0, 1fr) 300px;
+  }
+}
+
 /* ─── PROPERTY PAGE GRID ────────────────────────────────────────────── */
 .property-grid {
   display: grid;
   grid-template-columns: 1fr;
-  align-items: start;
 }
 @media (min-width: 768px) {
   .property-grid {
@@ -200,6 +216,117 @@ p {
     grid-template-columns: minmax(0, 1fr) 400px;
     column-gap: 48px;
   }
+}
+
+/* ─── CONCEPT-1B SECTION LAYOUTS ───────────────────────────────────────── */
+
+/* Title frame */
+.c1b-title-frame { padding: 64px 48px 56px; }
+
+/* Editorial spread — image 60fr / text panel 40fr */
+.c1b-spread { display: grid; grid-template-columns: 60fr 40fr; min-height: 70vh; }
+.c1b-spread-img { overflow: hidden; }
+.c1b-spread-img img { width: 100%; height: 100%; object-fit: cover; }
+.c1b-spread-text {
+  background: var(--color-machair-sand);
+  padding: 80px 60px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+/* Caption bar */
+.c1b-caption-bar {
+  background: var(--color-sound-of-islay);
+  padding: 20px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+/* Overview — 3-col centred body with aside + offset quote */
+.c1b-overview {
+  background: var(--color-sea-spray);
+  padding: 120px 48px;
+  display: grid; grid-template-columns: 1fr 520px 1fr; gap: 0;
+}
+.c1b-overview-aside { padding-top: 8px; }
+.c1b-overview-offset { padding: 80px 0 0 48px; align-self: start; }
+
+/* Gallery row — 1fr 1.4fr 1fr */
+.c1b-gallery-row {
+  display: grid; grid-template-columns: 1fr 1.4fr 1fr;
+  gap: 3px; background: var(--color-harbour-stone);
+}
+.c1b-gallery-row-cell { overflow: hidden; }
+
+/* Spaces */
+.c1b-spaces { background: var(--color-machair-sand); padding: 100px 48px; }
+.c1b-spaces-header { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 64px; }
+.c1b-spaces-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
+
+/* Bedroom strip */
+.c1b-bedroom-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; background: var(--color-harbour-stone); }
+.c1b-bedroom-cell { position: relative; overflow: hidden; }
+
+/* Image pair */
+.c1b-image-pair { display: grid; grid-template-columns: 3fr 2fr; gap: 3px; background: var(--color-harbour-stone); height: 65vh; }
+
+/* Reviews — 3-col teal */
+.c1b-reviews {
+  background: var(--color-sound-of-islay);
+  padding: 100px 48px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 64px;
+}
+
+/* Location */
+.c1b-location {
+  background: var(--color-sea-spray);
+  padding: 100px 48px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+}
+
+/* Good to know */
+.c1b-good-to-know { background: var(--color-machair-sand); padding: 80px 48px; }
+.c1b-expectations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+
+/* Explore Islay */
+.c1b-explore { background: var(--color-sea-spray); padding: 100px 48px; }
+.c1b-explore-header { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-bottom: 64px; align-items: end; }
+.c1b-explore-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; background: var(--color-harbour-stone); }
+
+/* ─── RESPONSIVE ──────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .c1b-title-frame { padding: 56px 28px 48px; }
+  .c1b-spread { grid-template-columns: 1fr; }
+  .c1b-spread-text { padding: 48px 28px; }
+  .c1b-caption-bar { padding: 16px 28px; }
+  .c1b-overview { padding: 80px 28px; grid-template-columns: 1fr; }
+  .c1b-overview-aside { display: none; }
+  .c1b-overview-offset { padding: 40px 0 0 0; }
+  .c1b-gallery-row { grid-template-columns: 1fr 1fr; }
+  .c1b-bedroom-strip { grid-template-columns: 1fr 1fr; }
+  .c1b-image-pair { grid-template-columns: 1fr; height: auto; }
+  .c1b-reviews { grid-template-columns: 1fr; padding: 72px 28px; gap: 40px; }
+  .c1b-location { grid-template-columns: 1fr; gap: 40px; padding: 72px 28px; }
+  .c1b-good-to-know { padding: 64px 28px; }
+  .c1b-expectations-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .c1b-explore { padding: 72px 28px; }
+  .c1b-explore-header { grid-template-columns: 1fr; gap: 24px; }
+  .c1b-explore-grid { grid-template-columns: 1fr 1fr; }
+  .c1b-spaces { padding: 72px 28px; }
+  .c1b-spaces-header { grid-template-columns: 1fr; gap: 24px; }
+  .c1b-spaces-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+@media (max-width: 560px) {
+  .c1b-title-frame { padding: 40px 20px 36px; }
+  .c1b-spread-text { padding: 36px 20px; }
+  .c1b-caption-bar { padding: 14px 20px; flex-direction: column; align-items: flex-start; gap: 4px; }
+  .c1b-gallery-row { grid-template-columns: 1fr; }
+  .c1b-reviews { padding: 56px 20px; }
+  .c1b-location { padding: 56px 20px; }
+  .c1b-good-to-know { padding: 56px 20px; }
+  .c1b-expectations-grid { grid-template-columns: 1fr; }
+  .c1b-explore { padding: 56px 20px; }
+  .c1b-explore-grid { grid-template-columns: 1fr; }
+  .c1b-spaces { padding: 56px 20px; }
+  .c1b-spaces-grid { grid-template-columns: 1fr; }
 }
 
 /* ─── HOVER UTILITIES (server-component safe — no JS handlers needed) ─ */

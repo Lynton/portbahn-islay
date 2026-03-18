@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import SchemaMarkup from '@/components/SchemaMarkup';
@@ -84,58 +85,59 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
           </div>
         )}
 
-        {/* ── BREADCRUMB STRIP ──────────────────────────────────── */}
+        {/* ── TEAL CAPTION BAR ──────────────────────────────────── */}
         <div style={{
-          background: 'var(--color-machair-sand)',
-          borderBottom: '1px solid var(--color-washed-timber)',
-          padding: '10px 48px',
+          background: 'var(--color-sound-of-islay)',
+          padding: '18px 48px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}>
-          <nav style={{ maxWidth: '1280px', margin: '0 auto', fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'var(--color-harbour-stone)' }}>
+          <nav style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.12em', color: 'rgba(255,254,250,0.65)' }}>
             {config.breadcrumbs.map((crumb, index) => (
               <span key={index}>
                 {crumb.href ? (
-                  <Link
-                    href={crumb.href}
-                    style={{ color: 'var(--color-harbour-stone)', opacity: 0.6, textDecoration: 'none' }}
-                  >
+                  <Link href={crumb.href} style={{ color: 'inherit', textDecoration: 'none' }}>
                     {crumb.label}
                   </Link>
                 ) : (
-                  <span style={{ opacity: 0.85 }}>{crumb.label}</span>
+                  <span style={{ color: 'rgba(255,254,250,0.9)' }}>{crumb.label}</span>
                 )}
-                {index < config.breadcrumbs.length - 1 && (
-                  <span style={{ margin: '0 8px', opacity: 0.35 }}>→</span>
-                )}
+                {index < config.breadcrumbs.length - 1 && ' · '}
               </span>
             ))}
           </nav>
+          <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,254,250,0.5)' }}>
+            Isle of Islay, Scotland
+          </span>
         </div>
 
-        {/* ── PAGE CONTENT ──────────────────────────────────────── */}
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '56px 48px 80px' }}>
-
-          {/* Title + intro */}
-          <div style={{ maxWidth: '700px', marginBottom: '56px', paddingBottom: '48px', borderBottom: '1px solid var(--color-washed-timber)' }}>
+        {/* ── SAND TITLE FRAME ──────────────────────────────────── */}
+        <section style={{ background: 'var(--color-machair-sand)', padding: '64px 48px 60px' }}>
+          <div style={{ maxWidth: '860px' }}>
             <p style={{
               fontFamily: '"IBM Plex Mono", monospace',
               fontSize: '9px',
-              letterSpacing: '0.16em',
+              letterSpacing: '0.20em',
               textTransform: 'uppercase',
               color: 'var(--color-kelp-edge)',
-              marginBottom: '12px',
+              marginBottom: '16px',
             }}>
-              {config.breadcrumbs.length > 1
-                ? config.breadcrumbs[config.breadcrumbs.length - 2]?.label || 'Portbahn Islay'
-                : 'Portbahn Islay'}
+              {(() => {
+                const parent = config.breadcrumbs.length > 1
+                  ? config.breadcrumbs[config.breadcrumbs.length - 2]?.label
+                  : null;
+                return (parent && parent !== 'Home') ? parent : 'Portbahn Islay';
+              })()}
             </p>
             <h1 style={{
               fontFamily: '"The Seasons", Georgia, serif',
               fontWeight: 700,
-              fontSize: 'clamp(2.25rem, 4vw, 3.5rem)',
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
               color: 'var(--color-harbour-stone)',
-              lineHeight: 1.05,
+              lineHeight: 1.02,
               letterSpacing: '-0.02em',
-              marginBottom: '20px',
+              marginBottom: '24px',
             }}>
               {page?.title || config.breadcrumbs[config.breadcrumbs.length - 1].label}
             </h1>
@@ -144,11 +146,16 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
               fontSize: '15px',
               color: 'var(--color-harbour-stone)',
               opacity: 0.75,
-              lineHeight: 1.65,
+              lineHeight: 1.7,
+              maxWidth: '680px',
             }}>
               {config.introText}
             </p>
           </div>
+        </section>
+
+        {/* ── PAGE CONTENT ──────────────────────────────────────── */}
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '60px 48px 80px' }}>
 
           {/* Canonical Content Blocks — teaser version */}
           {page?.contentBlocks && page.contentBlocks.length > 0 && (
@@ -202,7 +209,7 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                       <div
                         className="hover-card"
                         style={{
-                          background: 'var(--color-sea-spray)',
+                          background: 'var(--color-machair-sand)',
                           border: '1px solid var(--color-washed-timber)',
                           overflow: 'hidden',
                         }}

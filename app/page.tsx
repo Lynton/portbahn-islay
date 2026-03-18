@@ -195,95 +195,119 @@ export default async function Home() {
 
         {/* ── ACCOMMODATION ────────────────────────────────────────── */}
         {properties.length > 0 && (
-          <section style={{ padding: '72px 48px 80px' }}>
-            <div style={{ maxWidth: '1280px', margin: '0 auto' }}>
-              <div style={{ marginBottom: '40px' }}>
-                <p style={{
-                  fontFamily: '"IBM Plex Mono", monospace',
-                  fontSize: '9px',
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-kelp-edge)',
-                  marginBottom: '10px',
-                }}>
-                  Self-catering on Islay
-                </p>
-                <h2 style={{
-                  fontFamily: '"The Seasons", Georgia, serif',
-                  fontWeight: 700,
-                  fontSize: 'clamp(1.75rem, 3vw, 2.75rem)',
-                  color: 'var(--color-harbour-stone)',
-                  lineHeight: 1.1,
-                  letterSpacing: '-0.02em',
-                }}>
-                  Our Accommodation
-                </h2>
-              </div>
+          <section style={{ paddingTop: '72px', paddingBottom: '80px' }}>
 
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '28px', marginBottom: '60px' }}>
-                {(properties as Property[]).map((p) => {
-                  const imageUrl = p.heroImage
-                    ? urlFor(p.heroImage).width(800).height(1200).url()
-                    : '';
-
-                  let description = '';
-                  if (Array.isArray(p.overview)) {
-                    const firstBlock = p.overview.find((block) => block._type === 'block');
-                    if (firstBlock?.children) {
-                      description = firstBlock.children
-                        .map((child) => child.text || '')
-                        .join(' ')
-                        .substring(0, 150);
-                    }
-                  }
-
-                  const locationText = typeof p.location === 'string'
-                    ? p.location
-                    : (p.location?.address || p.location?.nearestTown || '');
-
-                  const slug = typeof p.slug === 'string' ? p.slug : p.slug?.current;
-
-                  return (
-                    <PropertyCard
-                      key={p._id}
-                      name={p.name}
-                      location={locationText}
-                      description={description || 'Self-catering holiday home on Islay'}
-                      sleeps={p.sleeps ?? 0}
-                      bedrooms={p.bedrooms ?? 0}
-                      imageUrl={imageUrl}
-                      href={`/accommodation/${slug}`}
-                    />
-                  );
-                })}
-              </div>
-
-              {/* Map */}
-              <div>
-                <p style={{
-                  fontFamily: '"IBM Plex Mono", monospace',
-                  fontSize: '9px',
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: 'var(--color-kelp-edge)',
-                  marginBottom: '10px',
-                }}>
-                  Where we are
-                </p>
-                <h3 style={{
-                  fontFamily: '"The Seasons", Georgia, serif',
-                  fontWeight: 700,
-                  fontSize: 'clamp(1.25rem, 2vw, 1.75rem)',
-                  color: 'var(--color-harbour-stone)',
-                  lineHeight: 1.1,
-                  letterSpacing: '-0.01em',
-                  marginBottom: '20px',
-                }}>
-                  Property Locations
-                </h3>
-                <MultiPropertyMap />
-              </div>
+            {/* Section heading — contained */}
+            <div style={{ padding: '0 48px', marginBottom: '40px' }}>
+              <p style={{
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: '9px',
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                color: 'var(--color-kelp-edge)',
+                marginBottom: '10px',
+              }}>
+                Self-catering on Islay
+              </p>
+              <h2 style={{
+                fontFamily: '"The Seasons", Georgia, serif',
+                fontWeight: 700,
+                fontSize: 'clamp(1.75rem, 3vw, 2.75rem)',
+                color: 'var(--color-harbour-stone)',
+                lineHeight: 1.1,
+                letterSpacing: '-0.02em',
+              }}>
+                Our Accommodation
+              </h2>
             </div>
+
+            {/* Full-width landscape cards */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3px', marginBottom: '64px' }}>
+              {(properties as Property[]).map((p) => {
+                const imageUrl = p.heroImage
+                  ? urlFor(p.heroImage).width(1200).height(800).url()
+                  : '';
+                const locationText = typeof p.location === 'string'
+                  ? p.location
+                  : (p.location?.address || p.location?.nearestTown || 'Bruichladdich, Islay');
+                const slug = typeof p.slug === 'string' ? p.slug : p.slug?.current;
+
+                return (
+                  <Link key={p._id} href={`/accommodation/${slug}`} style={{ display: 'block', textDecoration: 'none' }} className="hover-opacity">
+                    {/* Landscape image */}
+                    <div style={{ aspectRatio: '4/3', overflow: 'hidden', position: 'relative', background: 'var(--color-harbour-stone)' }}>
+                      {imageUrl && (
+                        <Image
+                          src={imageUrl}
+                          alt={p.name}
+                          fill
+                          style={{ objectFit: 'cover' }}
+                        />
+                      )}
+                    </div>
+                    {/* Summary below */}
+                    <div style={{ padding: '20px 24px 24px', background: 'var(--color-machair-sand)' }}>
+                      <p style={{
+                        fontFamily: '"IBM Plex Mono", monospace',
+                        fontSize: '9px',
+                        letterSpacing: '0.16em',
+                        textTransform: 'uppercase',
+                        color: 'var(--color-kelp-edge)',
+                        marginBottom: '8px',
+                      }}>
+                        {locationText}
+                      </p>
+                      <h3 style={{
+                        fontFamily: '"The Seasons", Georgia, serif',
+                        fontWeight: 700,
+                        fontSize: 'clamp(1.25rem, 2vw, 1.6rem)',
+                        color: 'var(--color-harbour-stone)',
+                        lineHeight: 1.1,
+                        letterSpacing: '-0.01em',
+                        marginBottom: '10px',
+                      }}>
+                        {p.name}
+                      </h3>
+                      <p style={{
+                        fontFamily: '"IBM Plex Mono", monospace',
+                        fontSize: '11px',
+                        color: 'var(--color-harbour-stone)',
+                        opacity: 0.6,
+                      }}>
+                        Sleeps {p.sleeps ?? '—'} · {p.bedrooms ?? '—'} bedrooms
+                      </p>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Map — contained */}
+            <div style={{ padding: '0 48px' }}>
+              <p style={{
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: '9px',
+                letterSpacing: '0.16em',
+                textTransform: 'uppercase',
+                color: 'var(--color-kelp-edge)',
+                marginBottom: '10px',
+              }}>
+                Where we are
+              </p>
+              <h3 style={{
+                fontFamily: '"The Seasons", Georgia, serif',
+                fontWeight: 700,
+                fontSize: 'clamp(1.25rem, 2vw, 1.75rem)',
+                color: 'var(--color-harbour-stone)',
+                lineHeight: 1.1,
+                letterSpacing: '-0.01em',
+                marginBottom: '20px',
+              }}>
+                Property Locations
+              </h3>
+              <MultiPropertyMap />
+            </div>
+
           </section>
         )}
 

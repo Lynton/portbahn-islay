@@ -190,9 +190,9 @@ export default async function GuidePage({ params }: PageProps) {
 
         {/* ── HERO ────────────────────────────────────────────────── */}
         {page.heroImage && (
-          <div className="w-full relative overflow-hidden" style={{ height: '50vh', maxHeight: '520px' }}>
+          <div className="w-full relative overflow-hidden" style={{ height: '55vh', maxHeight: '560px' }}>
             <Image
-              src={urlFor(page.heroImage).width(1600).height(640).url()}
+              src={urlFor(page.heroImage).width(1600).height(700).url()}
               alt={page.heroImage.alt || page.title}
               fill
               className="object-cover"
@@ -201,49 +201,52 @@ export default async function GuidePage({ params }: PageProps) {
             <div style={{
               position: 'absolute',
               inset: 0,
-              background: 'linear-gradient(to bottom, rgba(15,58,74,0.10) 0%, rgba(15,58,74,0.55) 100%)',
+              background: 'linear-gradient(to bottom, rgba(15,58,74,0.05) 0%, rgba(15,58,74,0.45) 100%)',
             }} />
           </div>
         )}
 
-        {/* ── BREADCRUMB STRIP ────────────────────────────────────── */}
+        {/* ── TEAL CAPTION BAR ────────────────────────────────────── */}
         <div style={{
-          background: 'var(--color-machair-sand)',
-          borderBottom: '1px solid var(--color-washed-timber)',
-          padding: '10px 48px',
+          background: 'var(--color-sound-of-islay)',
+          padding: '18px 48px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}>
-          <nav style={{ maxWidth: '1280px', margin: '0 auto', fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'var(--color-harbour-stone)' }}>
-            <Link href="/" style={{ opacity: 0.55, textDecoration: 'none', color: 'inherit' }}>Home</Link>
-            <span style={{ margin: '0 8px', opacity: 0.3 }}>→</span>
-            <Link href="/explore-islay" style={{ opacity: 0.55, textDecoration: 'none', color: 'inherit' }}>Explore Islay</Link>
-            <span style={{ margin: '0 8px', opacity: 0.3 }}>→</span>
-            <span style={{ opacity: 0.85 }}>{page.title}</span>
+          <nav style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.12em', color: 'rgba(255,254,250,0.65)' }}>
+            <Link href="/" style={{ opacity: 0.7, textDecoration: 'none', color: 'inherit' }}>Home</Link>
+            <span style={{ margin: '0 10px', opacity: 0.35 }}>·</span>
+            <Link href="/explore-islay" style={{ opacity: 0.7, textDecoration: 'none', color: 'inherit' }}>Explore Islay</Link>
+            <span style={{ margin: '0 10px', opacity: 0.35 }}>·</span>
+            <span style={{ opacity: 1, color: 'rgba(255,254,250,0.9)' }}>{page.title}</span>
           </nav>
+          <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,254,250,0.5)' }}>
+            Isle of Islay, Scotland
+          </span>
         </div>
 
-        {/* ── GUIDE CONTENT ───────────────────────────────────────── */}
-        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 48px 80px' }}>
-
-          {/* Title frame */}
-          <div style={{ maxWidth: '780px', paddingTop: '52px', paddingBottom: '44px', borderBottom: '1px solid var(--color-washed-timber)', marginBottom: '52px' }}>
+        {/* ── TITLE FRAME ─────────────────────────────────────────── */}
+        <section style={{ background: 'var(--color-machair-sand)', padding: '64px 48px 60px' }}>
+          <div style={{ maxWidth: '860px' }}>
             <p style={{
               fontFamily: '"IBM Plex Mono", monospace',
               fontSize: '9px',
-              letterSpacing: '0.16em',
+              letterSpacing: '0.20em',
               textTransform: 'uppercase',
               color: 'var(--color-kelp-edge)',
-              marginBottom: '12px',
+              marginBottom: '16px',
             }}>
               Explore Islay
             </p>
             <h1 style={{
               fontFamily: '"The Seasons", Georgia, serif',
               fontWeight: 700,
-              fontSize: 'clamp(2.25rem, 4vw, 3.5rem)',
+              fontSize: 'clamp(2.5rem, 5vw, 4rem)',
               color: 'var(--color-harbour-stone)',
-              lineHeight: 1.05,
+              lineHeight: 1.02,
               letterSpacing: '-0.02em',
-              marginBottom: '20px',
+              marginBottom: '24px',
             }}>
               {page.title}
             </h1>
@@ -253,17 +256,20 @@ export default async function GuidePage({ params }: PageProps) {
                 fontSize: '15px',
                 color: 'var(--color-harbour-stone)',
                 opacity: 0.75,
-                lineHeight: 1.65,
+                lineHeight: 1.7,
+                maxWidth: '680px',
               }}>
                 {page.introduction}
               </p>
             )}
           </div>
+        </section>
+
+        {/* ── GUIDE CONTENT ───────────────────────────────────────── */}
+        <div style={{ padding: '0 48px 80px' }}>
 
           {/* Main content + sidebar two-column */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '60px' }}
-            className="md:[grid-template-columns:minmax(0,1fr)_260px]"
-          >
+          <div className="guide-grid" style={{ paddingTop: '64px' }}>
             {/* Main content column */}
             <div style={{ minWidth: 0 }}>
 
@@ -325,30 +331,31 @@ export default async function GuidePage({ params }: PageProps) {
 
             </div>
 
-            {/* Right sidebar — stays links + related guides */}
-            <aside style={{ display: 'none' }} className="md:block">
-              <div style={{ position: 'sticky', top: '80px' }}>
+            {/* Right sidebar — visible md+ */}
+            <aside className="hidden md:block">
+              <div style={{ position: 'sticky', top: '80px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
                 {/* Stay on Islay */}
                 <div style={{
-                  border: '1px solid var(--color-washed-timber)',
                   borderTop: '3px solid var(--color-kelp-edge)',
+                  borderLeft: '1px solid var(--color-washed-timber)',
+                  borderRight: '1px solid var(--color-washed-timber)',
+                  borderBottom: '1px solid var(--color-washed-timber)',
                   padding: '20px',
-                  marginBottom: '20px',
-                  background: 'var(--color-sea-spray)',
+                  background: 'var(--color-machair-sand)',
                 }}>
                   <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '14px' }}>
                     Stay on Islay
                   </p>
-                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', listStyle: 'none' }}>
                     {[
                       { href: '/accommodation/portbahn-house', name: 'Portbahn House', detail: 'Sleeps 8 · dogs welcome' },
                       { href: '/accommodation/shorefield-eco-house', name: 'Shorefield Eco House', detail: 'Sleeps 6 · bird hides' },
                       { href: '/accommodation/curlew-cottage', name: 'Curlew Cottage', detail: 'Sleeps 6 · walled garden' },
                     ].map(({ href, name, detail }) => (
-                      <li key={href} style={{ listStyle: 'none' }}>
-                        <Link href={href} style={{ textDecoration: 'none' }}>
-                          <span style={{ display: 'block', fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-harbour-stone)', marginBottom: '2px' }}>
+                      <li key={href}>
+                        <Link href={href} style={{ textDecoration: 'none' }} className="hover-opacity">
+                          <span style={{ display: 'block', fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: '0.95rem', color: 'var(--color-harbour-stone)', marginBottom: '2px' }}>
                             {name}
                           </span>
                           <span style={{ display: 'block', fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: 'var(--color-harbour-stone)', opacity: 0.55 }}>
@@ -358,7 +365,7 @@ export default async function GuidePage({ params }: PageProps) {
                       </li>
                     ))}
                   </ul>
-                  <Link href="/availability" style={{
+                  <Link href="/availability" className="hover-opacity" style={{
                     display: 'block',
                     marginTop: '16px',
                     background: 'var(--color-emerald-accent)',
@@ -367,21 +374,20 @@ export default async function GuidePage({ params }: PageProps) {
                     fontSize: '9.5px',
                     letterSpacing: '0.14em',
                     textTransform: 'uppercase',
-                    padding: '11px',
+                    padding: '12px',
                     textAlign: 'center',
                     textDecoration: 'none',
-                    transition: 'opacity 0.2s',
                   }}>
                     Check Availability
                   </Link>
                 </div>
 
                 {/* Related guides */}
-                <div style={{ border: '1px solid var(--color-washed-timber)', padding: '20px', background: 'var(--color-sea-spray)' }}>
+                <div style={{ border: '1px solid var(--color-washed-timber)', padding: '20px', background: 'var(--color-machair-sand)' }}>
                   <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '14px' }}>
                     More Islay guides
                   </p>
-                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px', listStyle: 'none' }}>
                     {[
                       { slug: 'islay-distilleries', title: 'Whisky Distilleries' },
                       { slug: 'islay-beaches', title: 'Beaches of Islay' },
@@ -393,10 +399,8 @@ export default async function GuidePage({ params }: PageProps) {
                       .filter((g) => g.slug !== slug)
                       .slice(0, 5)
                       .map((g) => (
-                        <li key={g.slug} style={{ listStyle: 'none' }}>
-                          <Link href={`/explore-islay/${g.slug}`}
-                          className="hover-dim"
-                          style={{
+                        <li key={g.slug}>
+                          <Link href={`/explore-islay/${g.slug}`} className="hover-dim" style={{
                             fontFamily: '"IBM Plex Mono", monospace',
                             fontSize: '11px',
                             color: 'var(--color-harbour-stone)',
@@ -407,7 +411,7 @@ export default async function GuidePage({ params }: PageProps) {
                           </Link>
                         </li>
                       ))}
-                    <li style={{ listStyle: 'none', paddingTop: '6px', borderTop: '1px solid var(--color-washed-timber)' }}>
+                    <li style={{ paddingTop: '10px', borderTop: '1px solid var(--color-washed-timber)' }}>
                       <Link href="/explore-islay" style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--color-kelp-edge)', textDecoration: 'none' }}>
                         ← All Islay guides
                       </Link>
@@ -420,19 +424,19 @@ export default async function GuidePage({ params }: PageProps) {
 
           </div>
 
-          {/* Mobile: Stay on Islay + related guides (shown below content on mobile) */}
+          {/* Mobile: Stay on Islay + related guides */}
           <div className="md:hidden" style={{ marginTop: '52px', paddingTop: '44px', borderTop: '1px solid var(--color-washed-timber)', display: 'flex', flexDirection: 'column', gap: '24px' }}>
             <div>
               <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '12px' }}>
                 Stay on Islay
               </p>
-              <ul style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <ul style={{ display: 'flex', flexDirection: 'column', gap: '8px', listStyle: 'none' }}>
                 {[
                   { href: '/accommodation/portbahn-house', text: 'Portbahn House — sleeps 8, dogs welcome' },
                   { href: '/accommodation/shorefield-eco-house', text: 'Shorefield Eco House — sleeps 6' },
                   { href: '/accommodation/curlew-cottage', text: 'Curlew Cottage — sleeps 6, walled garden' },
                 ].map(({ href, text }) => (
-                  <li key={href} style={{ listStyle: 'none' }}>
+                  <li key={href}>
                     <Link href={href} style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-kelp-edge)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
                       {text}
                     </Link>
@@ -440,11 +444,9 @@ export default async function GuidePage({ params }: PageProps) {
                 ))}
               </ul>
             </div>
-            <div>
-              <Link href="/explore-islay" style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-kelp-edge)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
-                ← All Islay guides
-              </Link>
-            </div>
+            <Link href="/explore-islay" style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-kelp-edge)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+              ← All Islay guides
+            </Link>
           </div>
 
         </div>
