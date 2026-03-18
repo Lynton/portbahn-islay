@@ -149,6 +149,16 @@ export default async function TravelSubPage({ params }: PageProps) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const entities: any[] = page.featuredEntities ?? [];
 
+  const travelLabels: Record<string, string> = {
+    'ferry-to-islay': 'Ferry to Islay',
+    'flights-to-islay': 'Flights to Islay',
+    'planning-your-trip': 'Planning Your Trip',
+    'travelling-without-a-car': 'Travelling Without a Car',
+    'travelling-to-islay-with-your-dog': 'Travelling With Your Dog',
+    'arriving-on-islay': 'Arriving on Islay',
+    'getting-around-islay': 'Getting Around Islay',
+  };
+
   return (
     <>
       <SchemaMarkup
@@ -161,8 +171,10 @@ export default async function TravelSubPage({ params }: PageProps) {
         ]}
       />
       <main className="min-h-screen bg-sea-spray">
+
+        {/* ── HERO ────────────────────────────────────────────────── */}
         {page.heroImage && (
-          <div className="w-full h-[40vh] relative overflow-hidden">
+          <div className="w-full relative overflow-hidden" style={{ height: '50vh', maxHeight: '520px' }}>
             <Image
               src={urlFor(page.heroImage).width(1600).height(640).url()}
               alt={page.heroImage.alt || page.title}
@@ -170,102 +182,247 @@ export default async function TravelSubPage({ params }: PageProps) {
               className="object-cover"
               priority
             />
+            <div style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(to bottom, rgba(15,58,74,0.10) 0%, rgba(15,58,74,0.55) 100%)',
+            }} />
           </div>
         )}
 
-        <div className="mx-auto max-w-4xl px-6 py-12">
-          <nav className="mb-6 font-mono text-sm text-harbour-stone/70">
-            <Link href="/" className="hover:text-emerald-accent">Home</Link>
-            <span className="mx-2">→</span>
-            <Link href="/islay-travel" className="hover:text-emerald-accent">Travel to Islay</Link>
-            <span className="mx-2">→</span>
-            <span>{page.title}</span>
+        {/* ── BREADCRUMB STRIP ────────────────────────────────────── */}
+        <div style={{
+          background: 'var(--color-machair-sand)',
+          borderBottom: '1px solid var(--color-washed-timber)',
+          padding: '10px 48px',
+        }}>
+          <nav style={{ maxWidth: '1280px', margin: '0 auto', fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'var(--color-harbour-stone)' }}>
+            <Link href="/" style={{ opacity: 0.55, textDecoration: 'none', color: 'inherit' }}>Home</Link>
+            <span style={{ margin: '0 8px', opacity: 0.3 }}>→</span>
+            <Link href="/islay-travel" style={{ opacity: 0.55, textDecoration: 'none', color: 'inherit' }}>Travel to Islay</Link>
+            <span style={{ margin: '0 8px', opacity: 0.3 }}>→</span>
+            <span style={{ opacity: 0.85 }}>{page.title}</span>
           </nav>
+        </div>
 
-          <h1 className="font-serif text-5xl mb-8 text-harbour-stone">
-            {page.title}
-          </h1>
+        {/* ── GUIDE CONTENT ───────────────────────────────────────── */}
+        <div style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 48px 80px' }}>
 
-          {page.introduction && (
-            <p className="font-mono text-lg text-harbour-stone/80 mb-12 leading-relaxed">
-              {page.introduction}
+          {/* Title frame */}
+          <div style={{ maxWidth: '780px', paddingTop: '52px', paddingBottom: '44px', borderBottom: '1px solid var(--color-washed-timber)', marginBottom: '52px' }}>
+            <p style={{
+              fontFamily: '"IBM Plex Mono", monospace',
+              fontSize: '9px',
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              color: 'var(--color-kelp-edge)',
+              marginBottom: '12px',
+            }}>
+              Travel to Islay
             </p>
-          )}
+            <h1 style={{
+              fontFamily: '"The Seasons", Georgia, serif',
+              fontWeight: 700,
+              fontSize: 'clamp(2.25rem, 4vw, 3.5rem)',
+              color: 'var(--color-harbour-stone)',
+              lineHeight: 1.05,
+              letterSpacing: '-0.02em',
+              marginBottom: '20px',
+            }}>
+              {page.title}
+            </h1>
+            {page.introduction && (
+              <p style={{
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: '15px',
+                color: 'var(--color-harbour-stone)',
+                opacity: 0.75,
+                lineHeight: 1.65,
+              }}>
+                {page.introduction}
+              </p>
+            )}
+          </div>
 
-          {page.contentBlocks && page.contentBlocks.length > 0 && (
-            <div className="space-y-12 mb-16">
-              <BlockRenderer blocks={page.contentBlocks} />
-            </div>
-          )}
+          {/* Main content + sidebar two-column */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr)', gap: '60px' }}
+            className="md:[grid-template-columns:minmax(0,1fr)_260px]"
+          >
+            {/* Main content column */}
+            <div style={{ minWidth: 0 }}>
 
-          {page.extendedEditorial && page.extendedEditorial.length > 0 && (
-            <div className="guide-extended-editorial mb-16">
-              <PortableText value={page.extendedEditorial} components={portableTextComponents} />
-            </div>
-          )}
+              {/* Content Blocks */}
+              {page.contentBlocks && page.contentBlocks.length > 0 && (
+                <div style={{ marginBottom: '52px' }}>
+                  <BlockRenderer blocks={page.contentBlocks} />
+                </div>
+              )}
 
-          {entities.length > 0 && (
-            <div className="mb-16">
-              <GuideMap entities={entities} pageTitle={page.title} />
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {entities.map((entity) => (
-                  <EntityCard key={entity._id} entity={entity} />
-                ))}
-              </div>
-            </div>
-          )}
+              {/* Extended Editorial */}
+              {page.extendedEditorial && page.extendedEditorial.length > 0 && (
+                <div style={{ marginBottom: '52px' }}>
+                  <PortableText value={page.extendedEditorial} components={portableTextComponents} />
+                </div>
+              )}
 
-          {page.faqBlocks && page.faqBlocks.length > 0 && (
-            <section className="mt-4 pt-8 border-t border-washed-timber">
-              <div className="space-y-8">
-                {page.faqBlocks.filter((faq: FaqItem) => faq && faq.question).map((faq: FaqItem) => (
-                  <div key={faq._id}>
-                    <h3 className="font-mono text-lg font-semibold text-harbour-stone mb-3">
-                      {faq.question}
-                    </h3>
-                    <div className="font-mono text-base text-harbour-stone/80 prose prose-emerald max-w-none">
-                      <PortableText value={faq.answer} components={portableTextComponents} />
-                    </div>
+              {/* Entity Cards + Map */}
+              {entities.length > 0 && (
+                <div style={{ marginBottom: '52px' }}>
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '10px' }}>
+                    Featured
+                  </p>
+                  <h2 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: 'clamp(1.5rem, 2.5vw, 2rem)', color: 'var(--color-harbour-stone)', lineHeight: 1.1, marginBottom: '24px' }}>
+                    Essential Listings
+                  </h2>
+                  <GuideMap entities={entities} pageTitle={page.title} />
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '16px', marginTop: '20px' }}>
+                    {entities.map((entity) => (
+                      <EntityCard key={entity._id} entity={entity} />
+                    ))}
                   </div>
-                ))}
-              </div>
-            </section>
-          )}
+                </div>
+              )}
 
-          <div className="mt-16 pt-8 border-t border-washed-timber space-y-8">
-            <div>
-              <h2 className="font-serif text-2xl text-harbour-stone mb-4">Stay on Islay</h2>
-              <ul className="font-mono text-base space-y-2">
-                <li><Link href="/accommodation/portbahn-house" className="text-emerald-accent hover:underline">Portbahn House — sleeps 8, dogs welcome, 5 minutes from Bruichladdich Distillery</Link></li>
-                <li><Link href="/accommodation/shorefield-eco-house" className="text-emerald-accent hover:underline">Shorefield Eco House — sleeps 6, dogs welcome, private bird hides</Link></li>
-                <li><Link href="/accommodation/curlew-cottage" className="text-emerald-accent hover:underline">Curlew Cottage — sleeps 6, walled garden, quiet and pet-free</Link></li>
-              </ul>
+              {/* FAQ Blocks */}
+              {page.faqBlocks && page.faqBlocks.length > 0 && (
+                <section style={{ paddingTop: '44px', borderTop: '1px solid var(--color-washed-timber)' }}>
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '10px' }}>
+                    Common questions
+                  </p>
+                  <h2 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: 'clamp(1.5rem, 2.5vw, 2rem)', color: 'var(--color-harbour-stone)', lineHeight: 1.1, marginBottom: '32px' }}>
+                    Frequently Asked
+                  </h2>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                    {page.faqBlocks.filter((faq: FaqItem) => faq && faq.question).map((faq: FaqItem) => (
+                      <div key={faq._id} style={{ borderLeft: '3px solid var(--color-kelp-edge)', paddingLeft: '20px' }}>
+                        <h3 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: '1.1rem', color: 'var(--color-harbour-stone)', marginBottom: '8px', lineHeight: 1.2 }}>
+                          {faq.question}
+                        </h3>
+                        <div style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '13px', color: 'var(--color-harbour-stone)', opacity: 0.8, lineHeight: 1.65 }}>
+                          <PortableText value={faq.answer} components={portableTextComponents} />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
             </div>
-            <div>
-              <h2 className="font-serif text-2xl text-harbour-stone mb-4">More travel information</h2>
-              <ul className="font-mono text-base space-y-2">
-                {TRAVEL_SLUGS.filter((s) => s !== slug).map((s) => {
-                  const labels: Record<string, string> = {
-                    'ferry-to-islay': 'Ferry to Islay — CalMac timetables & booking',
-                    'flights-to-islay': 'Flights to Islay — Loganair from Glasgow',
-                    'planning-your-trip': 'Planning your Islay trip',
-                    'travelling-without-a-car': 'Travelling to Islay without a car',
-                    'travelling-to-islay-with-your-dog': 'Travelling to Islay with your dog',
-                    'arriving-on-islay': 'Arriving on Islay — ports, late arrivals & cancellations',
-                    'getting-around-islay': 'Getting around Islay — taxis, buses & bike hire',
-                  };
-                  return (
-                    <li key={s}>
-                      <Link href={`/islay-travel/${s}`} className="text-emerald-accent hover:underline">
-                        {labels[s]}
+
+            {/* Right sidebar — stay links + related travel guides */}
+            <aside style={{ display: 'none' }} className="md:block">
+              <div style={{ position: 'sticky', top: '80px' }}>
+
+                {/* Stay on Islay */}
+                <div style={{
+                  border: '1px solid var(--color-washed-timber)',
+                  borderTop: '3px solid var(--color-kelp-edge)',
+                  padding: '20px',
+                  marginBottom: '20px',
+                  background: 'var(--color-sea-spray)',
+                }}>
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '14px' }}>
+                    Stay on Islay
+                  </p>
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {[
+                      { href: '/accommodation/portbahn-house', name: 'Portbahn House', detail: 'Sleeps 8 · dogs welcome' },
+                      { href: '/accommodation/shorefield-eco-house', name: 'Shorefield Eco House', detail: 'Sleeps 6 · bird hides' },
+                      { href: '/accommodation/curlew-cottage', name: 'Curlew Cottage', detail: 'Sleeps 6 · walled garden' },
+                    ].map(({ href, name, detail }) => (
+                      <li key={href} style={{ listStyle: 'none' }}>
+                        <Link href={href} style={{ textDecoration: 'none' }}>
+                          <span style={{ display: 'block', fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: '0.9rem', color: 'var(--color-harbour-stone)', marginBottom: '2px' }}>
+                            {name}
+                          </span>
+                          <span style={{ display: 'block', fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: 'var(--color-harbour-stone)', opacity: 0.55 }}>
+                            {detail}
+                          </span>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                  <Link href="/availability" style={{
+                    display: 'block',
+                    marginTop: '16px',
+                    background: 'var(--color-emerald-accent)',
+                    color: '#fff',
+                    fontFamily: '"IBM Plex Mono", monospace',
+                    fontSize: '9.5px',
+                    letterSpacing: '0.14em',
+                    textTransform: 'uppercase',
+                    padding: '11px',
+                    textAlign: 'center',
+                    textDecoration: 'none',
+                    transition: 'opacity 0.2s',
+                  }}>
+                    Check Availability
+                  </Link>
+                </div>
+
+                {/* Related travel guides */}
+                <div style={{ border: '1px solid var(--color-washed-timber)', padding: '20px', background: 'var(--color-sea-spray)' }}>
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '14px' }}>
+                    More travel information
+                  </p>
+                  <ul style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    {TRAVEL_SLUGS
+                      .filter((s) => s !== slug)
+                      .map((s) => (
+                        <li key={s} style={{ listStyle: 'none' }}>
+                          <Link href={`/islay-travel/${s}`}
+                            className="hover-dim"
+                            style={{
+                              fontFamily: '"IBM Plex Mono", monospace',
+                              fontSize: '11px',
+                              color: 'var(--color-harbour-stone)',
+                              textDecoration: 'none',
+                              display: 'block',
+                            }}>
+                            {travelLabels[s] || s} →
+                          </Link>
+                        </li>
+                      ))}
+                    <li style={{ listStyle: 'none', paddingTop: '6px', borderTop: '1px solid var(--color-washed-timber)' }}>
+                      <Link href="/islay-travel" style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--color-kelp-edge)', textDecoration: 'none' }}>
+                        ← Travel to Islay
                       </Link>
                     </li>
-                  );
-                })}
-                <li><Link href="/islay-travel" className="text-emerald-accent hover:underline">← Travel to Islay overview</Link></li>
+                  </ul>
+                </div>
+
+              </div>
+            </aside>
+
+          </div>
+
+          {/* Mobile: Stay on Islay + related travel (shown below content on mobile) */}
+          <div className="md:hidden" style={{ marginTop: '52px', paddingTop: '44px', borderTop: '1px solid var(--color-washed-timber)', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+            <div>
+              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '12px' }}>
+                Stay on Islay
+              </p>
+              <ul style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {[
+                  { href: '/accommodation/portbahn-house', text: 'Portbahn House — sleeps 8, dogs welcome' },
+                  { href: '/accommodation/shorefield-eco-house', text: 'Shorefield Eco House — sleeps 6' },
+                  { href: '/accommodation/curlew-cottage', text: 'Curlew Cottage — sleeps 6, walled garden' },
+                ].map(({ href, text }) => (
+                  <li key={href} style={{ listStyle: 'none' }}>
+                    <Link href={href} style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-kelp-edge)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+                      {text}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </div>
+            <div>
+              <Link href="/islay-travel" style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-kelp-edge)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+                ← Travel to Islay
+              </Link>
+            </div>
           </div>
+
         </div>
       </main>
     </>

@@ -26,18 +26,20 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* IBM Plex Mono — Google Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap"
           rel="stylesheet"
         />
+        {/* The Seasons Bold — self-hosted via @font-face in globals.css */}
         {/* Site-wide Organization schema */}
         <SchemaMarkup type="Organization" data={null} />
       </head>
-      <body className="antialiased font-mono flex flex-col min-h-screen">
+      <body className="antialiased font-mono flex flex-col min-h-screen bg-sea-spray">
         <Header />
-        <div className="flex-grow">
+        <div className="flex-grow pt-[60px]">
           {children}
         </div>
         <Footer />

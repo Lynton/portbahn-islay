@@ -4,15 +4,11 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        serif: ['var(--font-lora)', 'Georgia', 'serif'],
-        mono: ['var(--font-ibm-plex-mono)', 'monospace'],
+        serif: ['"The Seasons"', 'Georgia', 'serif'],
+        mono:  ['"IBM Plex Mono"', '"Courier New"', 'monospace'],
       },
     },
   },
 };
 
 export default config;
-
-
-
-

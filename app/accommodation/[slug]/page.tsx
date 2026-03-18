@@ -7,8 +7,8 @@ import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import { portableTextComponents } from '@/lib/portable-text';
 import PropertyCalendar from '@/components/PropertyCalendar';
+import MobileAvailBar from '@/components/MobileAvailBar';
 import SchemaMarkup from '@/components/SchemaMarkup';
-import Breadcrumbs from '@/components/Breadcrumbs';
 import PropertyCard from '@/components/PropertyCard';
 import GoogleMap from '@/components/GoogleMap';
 import GoogleReviewsClient from '@/components/GoogleReviewsClient';
@@ -168,7 +168,7 @@ const getProperty = cache(async (slug: string) => {
     googleBusinessUrl,
     googlePlaceId
   }`;
-  
+
   return await client.fetch(query, { slug });
 });
 
@@ -205,7 +205,7 @@ const getAllProperties = cache(async (excludeSlug?: string) => {
         bedrooms,
         heroImage
       }`;
-  
+
   return excludeSlug
     ? await client.fetch(query, { excludeSlug })
     : await client.fetch(query);
@@ -217,7 +217,8 @@ interface PageProps {
   }>;
 }
 
-// Helper component to render array fields
+// ─── HELPER COMPONENTS ─────────────────────────────────────────────────────
+
 function ArrayField({ items, className = '' }: { items: string[] | undefined; className?: string }) {
   if (!items || items.length === 0) return null;
   return (
@@ -229,19 +230,88 @@ function ArrayField({ items, className = '' }: { items: string[] | undefined; cl
   );
 }
 
-// Helper component to render checkbox arrays
 function CheckboxArray({ items, className = '' }: { items: string[] | undefined; className?: string }) {
   if (!items || items.length === 0) return null;
   return (
     <div className={`flex flex-wrap gap-2 ${className}`}>
       {items.map((item, idx) => (
-        <span key={idx} className="px-3 py-1 bg-[#F3F1E7] rounded font-mono text-sm text-harbour-stone">
+        <span
+          key={idx}
+          style={{
+            padding: '5px 12px',
+            background: 'var(--color-machair-sand)',
+            fontFamily: '"IBM Plex Mono", monospace',
+            fontSize: '11px',
+            letterSpacing: '0.04em',
+            color: 'var(--color-harbour-stone)',
+          }}
+        >
           {item.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
         </span>
       ))}
     </div>
   );
 }
+
+function FactItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div style={{
+      paddingRight: '28px',
+      marginRight: '28px',
+      borderRight: '1px solid var(--color-washed-timber)',
+      paddingBottom: '4px',
+    }}>
+      <p style={{
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: '10px',
+        letterSpacing: '0.14em',
+        textTransform: 'uppercase',
+        color: 'var(--color-kelp-edge)',
+        marginBottom: '6px',
+      }}>
+        {label}
+      </p>
+      <p style={{
+        fontFamily: '"IBM Plex Mono", monospace',
+        fontSize: '15px',
+        color: 'var(--color-harbour-stone)',
+      }}>
+        {value}
+      </p>
+    </div>
+  );
+}
+
+function SectionHeading({ label, title }: { label?: string; title: string }) {
+  return (
+    <div style={{ marginBottom: '20px' }}>
+      {label && (
+        <p style={{
+          fontFamily: '"IBM Plex Mono", monospace',
+          fontSize: '9px',
+          letterSpacing: '0.16em',
+          textTransform: 'uppercase',
+          color: 'var(--color-kelp-edge)',
+          marginBottom: '8px',
+        }}>
+          {label}
+        </p>
+      )}
+      <h2 style={{
+        fontFamily: '"The Seasons", Georgia, serif',
+        fontWeight: 700,
+        fontSize: 'clamp(1.5rem, 2.5vw, 2.25rem)',
+        color: 'var(--color-harbour-stone)',
+        lineHeight: 1.1,
+        letterSpacing: '-0.01em',
+      }}>
+        {title}
+      </h2>
+    </div>
+  );
+}
+
+// ─── PAGE COMPONENT ────────────────────────────────────────────────────────
 
 export default async function PropertyPage({ params }: PageProps) {
   const { slug } = await params;
@@ -263,18 +333,20 @@ export default async function PropertyPage({ params }: PageProps) {
   const galleryImages = property.images || [];
   const heroImage = property.heroImage;
 
-  // Fetch all other properties for navigation
   const otherProperties = await getAllProperties(property.slug?.current || property.slug);
-
-  // Fetch dog-friendly block for pet-friendly properties
   const dogFriendlyBlock = property.petFriendly ? await getDogFriendlyBlock() : null;
 
-  // Generate breadcrumbs
   const breadcrumbs = [
     { name: 'Home', url: '/' },
     { name: 'Accommodation', url: '/accommodation' },
     { name: property.name, url: `/accommodation/${property.slug?.current || property.slug}` },
   ];
+
+  const sectionDivider: React.CSSProperties = {
+    paddingTop: '44px',
+    borderTop: '1px solid var(--color-washed-timber)',
+    marginBottom: '44px',
+  };
 
   return (
     <>
@@ -283,837 +355,849 @@ export default async function PropertyPage({ params }: PageProps) {
         data={property}
         breadcrumbs={breadcrumbs}
       />
-      <main className="min-h-screen bg-sea-spray">
-      {/* Hero Image */}
-      {heroImage && (
-        <div className="w-full h-[60vh] relative overflow-hidden">
-          <Image
-            src={urlFor(heroImage).width(1600).height(960).url()}
-            alt={heroImage.alt || property.name}
-            fill
-            className="object-cover"
-            priority
-          />
-        </div>
-      )}
 
-      {/* Breadcrumbs */}
-      <Breadcrumbs items={breadcrumbs} />
+      {/* Mobile bottom padding to clear fixed availability bar */}
+      <main className="min-h-screen bg-sea-spray pb-20 md:pb-0">
 
-      {/* Two-column layout: main content + sticky calendar */}
-      <div className="mx-auto max-w-7xl px-6 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main content column */}
-          <div className="lg:col-span-2">
-        {/* Property Name & Type */}
-        <div className="mb-4">
-          <h1 className="font-serif text-5xl text-harbour-stone mb-2">
-            {property.name}
-          </h1>
-          {property.propertyType && (
-            <p className="font-mono text-sm text-harbour-stone opacity-60 uppercase">
-              {property.propertyType}
-            </p>
-          )}
-        </div>
-
-        {/* Location + Capacity Info */}
-        <div className="font-mono text-sm text-harbour-stone mb-8 space-y-1">
-          {property.location && <p>{property.location}</p>}
-          <div className="flex gap-4">
-            {property.sleeps && <p>Sleeps {property.sleeps}</p>}
-            {property.bedrooms && <p>• {property.bedrooms} {property.bedrooms === 1 ? 'bedroom' : 'bedrooms'}</p>}
-            {property.beds && <p>• {property.beds} {property.beds === 1 ? 'bed' : 'beds'}</p>}
-            {property.bathrooms && <p>• {property.bathrooms} {property.bathrooms === 1 ? 'bathroom' : 'bathrooms'}</p>}
+        {/* ── FULL-BLEED HERO ──────────────────────────────────────── */}
+        {heroImage && (
+          <div className="w-full relative overflow-hidden" style={{ height: '65vh', maxHeight: '700px' }}>
+            <Image
+              src={urlFor(heroImage).width(1600).height(960).url()}
+              alt={heroImage.alt || property.name}
+              fill
+              className="object-cover"
+              priority
+            />
           </div>
-        </div>
+        )}
 
-        {/* Overview Section */}
-        <section className="mb-12">
-          {/* Overview Intro */}
-          {property.overviewIntro && (
-            <p className="font-serif text-xl text-harbour-stone mb-6 italic">
-              {property.overviewIntro}
-            </p>
-          )}
+        {/* ── TWO-COLUMN GRID ─────────────────────────────────────── */}
+        <div
+          className="property-grid overflow-x-clip"
+          style={{ maxWidth: '1280px', margin: '0 auto', padding: '0 24px' }}
+        >
 
-          {/* Main Description */}
-          {property.description && (
-            <div className="mb-8">
-              <PortableText value={property.description} components={portableTextComponents} />
-            </div>
-          )}
+          {/* ── LEFT CONTENT COLUMN ─────────────────────────────── */}
+          <div style={{ minWidth: 0, paddingBottom: '80px' }}>
 
-          {/* Entity Definition Block - AI extraction anchor */}
-          {property.entityFraming?.whatItIs && (
-            <div className="my-8 border-l-4 border-gray-300 pl-6 py-4 bg-gray-50">
-              <p className="text-lg text-gray-900 leading-relaxed">
-                {property.entityFraming.whatItIs}
+            {/* TITLE FRAME */}
+            <div style={{ paddingTop: '64px', paddingBottom: '56px', marginBottom: '40px' }}>
+              {/* Property type label */}
+              <p style={{
+                fontFamily: '"IBM Plex Mono", monospace',
+                fontSize: '11px',
+                letterSpacing: '0.14em',
+                textTransform: 'uppercase',
+                color: 'var(--color-kelp-edge)',
+                marginBottom: '20px',
+              }}>
+                {property.propertyNickname || 'Self-Catering Holiday Home'}
               </p>
-              
-              {property.entityFraming.primaryDifferentiator && (
-                <p className="mt-3 text-base text-gray-700">
-                  {property.entityFraming.primaryDifferentiator}
+              <h1 style={{
+                fontFamily: '"The Seasons", Georgia, serif',
+                fontWeight: 700,
+                fontSize: 'clamp(4rem, 8vw, 6.75rem)',
+                color: 'var(--color-harbour-stone)',
+                lineHeight: 0.96,
+                letterSpacing: '-0.02em',
+                marginBottom: '24px',
+              }}>
+                {property.name}
+              </h1>
+              {/* Location meta */}
+              {property.location && (
+                <p style={{
+                  fontFamily: '"IBM Plex Mono", monospace',
+                  fontSize: '13px',
+                  color: 'var(--color-washed-timber)',
+                  letterSpacing: '0.06em',
+                  textTransform: 'uppercase',
+                  marginBottom: '40px',
+                }}>
+                  {property.location} · Isle of Islay
                 </p>
               )}
+              {/* Facts strip */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', borderTop: '1px solid var(--color-washed-timber)', paddingTop: '24px' }}>
+                {property.sleeps && <FactItem label="Sleeps" value={String(property.sleeps)} />}
+                {property.bedrooms && <FactItem label="Bedrooms" value={String(property.bedrooms)} />}
+                {property.beds && <FactItem label="Beds" value={String(property.beds)} />}
+                {property.bathrooms && <FactItem label="Bathrooms" value={String(property.bathrooms)} />}
+                {property.petFriendly !== undefined && (
+                  <FactItem label="Pets" value={property.petFriendly ? 'Welcome' : 'Not permitted'} />
+                )}
+              </div>
             </div>
-          )}
 
-          {/* Trust Signals - subtle credibility layer */}
-          {(property.trustSignals?.established || property.trustSignals?.ownership || property.trustSignals?.guestExperience) && (
-            <div className="mt-6 text-sm text-gray-600 flex flex-wrap gap-x-3 gap-y-1">
-              {property.trustSignals.established && (
-                <span>{property.trustSignals.established}</span>
-              )}
-              {property.trustSignals.ownership && (
-                <>
-                  {property.trustSignals.established && <span className="text-gray-400">•</span>}
-                  <span>{property.trustSignals.ownership}</span>
-                </>
-              )}
-              {property.trustSignals.guestExperience && (
-                <>
-                  {(property.trustSignals.established || property.trustSignals.ownership) && (
-                    <span className="text-gray-400">•</span>
-                  )}
-                  <span>{property.trustSignals.guestExperience}</span>
-                </>
-              )}
-            </div>
-          )}
-
-          {property.trustSignals?.localCredentials && property.trustSignals.localCredentials.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-2">
-              {property.trustSignals.localCredentials.map((credential: string, i: number) => (
-                <span 
-                  key={i} 
-                  className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full"
-                >
-                  {credential}
-                </span>
-              ))}
-            </div>
-          )}
-
-          {/* Ideal For */}
-          {property.idealFor && property.idealFor.length > 0 && (
-            <div className="mt-8">
-              <h3 className="font-serif text-2xl text-harbour-stone mb-4">Ideal For</h3>
-              <ul className="list-disc list-inside space-y-2 font-mono text-base text-harbour-stone">
-                {property.idealFor.map((item: string, index: number) => (
-                  <li key={index}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </section>
-
-
-        {/* Sleeping Arrangements */}
-        {(property.sleepingIntro || property.bedroomDetails?.length || property.bathroomDetails?.length) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Sleeping Arrangements</h2>
-            {property.sleepingIntro && (
-              <p className="font-mono text-base text-harbour-stone mb-4">{property.sleepingIntro}</p>
-            )}
-            {property.bedroomDetails && property.bedroomDetails.length > 0 && (
-              <div className="mb-4">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Bedrooms</h3>
-                <ArrayField items={property.bedroomDetails} />
-              </div>
-            )}
-            {property.bathroomDetails && property.bathroomDetails.length > 0 && (
-              <div>
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Bathrooms</h3>
-                <ArrayField items={property.bathroomDetails} />
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* Accommodation Facilities */}
-        {(property.facilitiesIntro || property.kitchenDining?.length || property.livingAreas?.length || 
-          property.heatingCooling?.length || property.entertainment?.length || property.laundryFacilities?.length || 
-          property.safetyFeatures?.length) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Facilities</h2>
-            {property.facilitiesIntro && (
-              <p className="font-mono text-base text-harbour-stone mb-6">{property.facilitiesIntro}</p>
-            )}
-            
-            {property.kitchenDining && property.kitchenDining.length > 0 && (
-              <div className="mb-6">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Kitchen & Dining</h3>
-                <CheckboxArray items={property.kitchenDining} />
-                {property.kitchenDiningNotes && property.kitchenDiningNotes.length > 0 && (
-                  <ArrayField items={property.kitchenDiningNotes} className="mt-3" />
-                )}
-              </div>
-            )}
-
-            {property.livingAreas && property.livingAreas.length > 0 && (
-              <div className="mb-6">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Living Areas</h3>
-                <CheckboxArray items={property.livingAreas} />
-                {property.livingAreasNotes && property.livingAreasNotes.length > 0 && (
-                  <ArrayField items={property.livingAreasNotes} className="mt-3" />
-                )}
-              </div>
-            )}
-
-            {property.heatingCooling && property.heatingCooling.length > 0 && (
-              <div className="mb-6">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Heating & Cooling</h3>
-                <CheckboxArray items={property.heatingCooling} />
-                {property.heatingCoolingNotes && property.heatingCoolingNotes.length > 0 && (
-                  <ArrayField items={property.heatingCoolingNotes} className="mt-3" />
-                )}
-              </div>
-            )}
-
-            {property.entertainment && property.entertainment.length > 0 && (
-              <div className="mb-6">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Entertainment</h3>
-                <CheckboxArray items={property.entertainment} />
-                {property.entertainmentNotes && property.entertainmentNotes.length > 0 && (
-                  <ArrayField items={property.entertainmentNotes} className="mt-3" />
-                )}
-              </div>
-            )}
-
-            {property.laundryFacilities && property.laundryFacilities.length > 0 && (
-              <div className="mb-6">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Laundry</h3>
-                <CheckboxArray items={property.laundryFacilities} />
-              </div>
-            )}
-
-            {property.safetyFeatures && property.safetyFeatures.length > 0 && (
-              <div className="mb-6">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Safety Features</h3>
-                <CheckboxArray items={property.safetyFeatures} />
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* Outdoor Spaces */}
-        {(property.outdoorIntro || property.outdoorFeatures?.length || property.parkingInfo) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Outdoor Spaces</h2>
-            {property.outdoorIntro && (
-              <p className="font-mono text-base text-harbour-stone mb-4">{property.outdoorIntro}</p>
-            )}
-            {property.outdoorFeatures && property.outdoorFeatures.length > 0 && (
-              <div className="mb-4">
-                <CheckboxArray items={property.outdoorFeatures} />
-                {property.outdoorFeaturesNotes && property.outdoorFeaturesNotes.length > 0 && (
-                  <ArrayField items={property.outdoorFeaturesNotes} className="mt-3" />
-                )}
-              </div>
-            )}
-            {property.parkingInfo && (
-              <p className="font-mono text-base text-harbour-stone mt-4">{property.parkingInfo}</p>
-            )}
-          </section>
-        )}
-
-        {/* What's Included */}
-        {(property.includedIntro || property.included?.length || property.notIncluded?.length) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">What&apos;s Included</h2>
-            {property.includedIntro && (
-              <p className="font-mono text-base text-harbour-stone mb-4">{property.includedIntro}</p>
-            )}
-            {property.included && property.included.length > 0 && (
-              <div className="mb-4">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Included</h3>
-                <ArrayField items={property.included} />
-              </div>
-            )}
-            {property.notIncluded && property.notIncluded.length > 0 && (
-              <div>
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Not Included</h3>
-                <ArrayField items={property.notIncluded} />
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* Trust Transfer - only shows for zero-review properties */}
-        <PropertyHostTrustTransfer
-          reviews={property.reviewHighlights || []}
-          totalReviewCount={property.totalReviewCount || 0}
-        />
-
-        {/* Common Questions - natural language query matching */}
-        {property.commonQuestions && property.commonQuestions.length > 0 && (
-          <section id="common-questions" className="my-16 max-w-4xl">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-8">
-              Common Questions About {property.name}
-            </h2>
-            <div className="space-y-8">
-              {property.commonQuestions.map((qa: { question: string; answer: string }, index: number) => (
-                <div
-                  key={index}
-                  className="border-l-4 border-emerald-accent pl-6 py-2"
-                >
-                  <h3 className="font-serif text-xl text-harbour-stone mb-3">
-                    {qa.question}
-                  </h3>
-                  <p className="font-mono text-base text-harbour-stone leading-relaxed">
-                    {qa.answer}
+            {/* OVERVIEW */}
+            {(property.overviewIntro || property.description || property.entityFraming?.whatItIs || property.idealFor?.length) && (
+              <div style={{ marginBottom: '44px' }}>
+                {property.overviewIntro && (
+                  <p style={{
+                    fontFamily: '"The Seasons", Georgia, serif',
+                    fontWeight: 700,
+                    fontSize: 'clamp(1.25rem, 2vw, 1.6rem)',
+                    color: 'var(--color-harbour-stone)',
+                    lineHeight: 1.3,
+                    letterSpacing: '-0.01em',
+                    marginBottom: '24px',
+                  }}>
+                    {property.overviewIntro}
                   </p>
-                </div>
-              ))}
-            </div>
+                )}
 
-            {/* Cross-links to other property FAQs */}
-            {property.faqCrossLinks && property.faqCrossLinks.length > 0 && (
-              <div className="mt-8 pt-6 border-t border-washed-timber">
-                <p className="font-mono text-sm text-harbour-stone/70">
-                  {property.faqCrossLinks.map((link: { text: string; property: { slug: { current: string } } }, i: number) => (
-                    <span key={i}>
-                      {i > 0 && ' · '}
-                      <Link
-                        href={`/accommodation/${link.property?.slug?.current}#common-questions`}
-                        className="text-emerald-accent hover:underline"
-                      >
-                        {link.text}
-                      </Link>
-                    </span>
-                  ))}
-                </p>
-              </div>
-            )}
-          </section>
-        )}
+                {property.description && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <PortableText value={property.description} components={portableTextComponents} />
+                  </div>
+                )}
 
-        {/* Personality & Guest Experience */}
-        {(property.propertyNickname || property.guestSuperlatives?.length || property.magicMoments?.length || 
-          property.perfectFor?.length || property.honestFriction?.length || property.ownerContext) && (
-          <section className="mb-12 max-w-4xl">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-6">Guest Experience</h2>
-            
-            {/* Property Nickname */}
-            {property.propertyNickname && (
-              <p className="font-serif text-xl text-harbour-stone italic mb-6">
-                {property.propertyNickname}
-              </p>
-            )}
-
-            {/* Guest Superlatives */}
-            {property.guestSuperlatives && property.guestSuperlatives.length > 0 && (
-              <div className="mb-8">
-                <h3 className="font-serif text-xl text-harbour-stone mb-4">What Guests Say</h3>
-                <div className="space-y-3">
-                  {property.guestSuperlatives.map((quote: string, i: number) => (
-                    <p key={i} className="font-mono text-base text-harbour-stone italic border-l-4 border-emerald-accent pl-4 py-2">
-                      &quot;{quote}&quot;
+                {property.entityFraming?.whatItIs && (
+                  <div style={{
+                    borderLeft: '3px solid var(--color-kelp-edge)',
+                    paddingLeft: '20px',
+                    paddingTop: '8px',
+                    paddingBottom: '8px',
+                    marginBottom: '20px',
+                  }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '15px', color: 'var(--color-harbour-stone)', lineHeight: 1.6 }}>
+                      {property.entityFraming.whatItIs}
                     </p>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Magic Moments */}
-            {property.magicMoments && property.magicMoments.length > 0 && (
-              <div className="mb-8">
-                <h3 className="font-serif text-xl text-harbour-stone mb-4">Magic Moments</h3>
-                <div className="space-y-4">
-                  {property.magicMoments.map((moment: MagicMoment, i: number) => (
-                    <div key={i} className="border-l-4 border-gray-300 pl-6 py-2">
-                      <p className="font-mono text-base text-harbour-stone">{moment.moment}</p>
-                      {moment.frequency && (
-                        <p className="font-mono text-sm text-harbour-stone opacity-60 mt-1">{moment.frequency}</p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Perfect For */}
-            {property.perfectFor && property.perfectFor.length > 0 && (
-              <div className="mb-8">
-                <h3 className="font-serif text-xl text-harbour-stone mb-4">Perfect For</h3>
-                <div className="space-y-6">
-                  {property.perfectFor.map((item: PerfectFor, i: number) => (
-                    <div key={i} className="border-l-4 border-emerald-accent pl-6 py-3">
-                      <h4 className="font-serif text-lg text-harbour-stone mb-2">{item.guestType}</h4>
-                      <p className="font-mono text-base text-harbour-stone mb-2">{item.why}</p>
-                      {item.reviewEvidence && (
-                        <p className="font-mono text-sm text-harbour-stone opacity-60">{item.reviewEvidence}</p>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Honest Friction */}
-            {property.honestFriction && property.honestFriction.length > 0 && (
-              <div className="mb-8">
-                <h3 className="font-serif text-xl text-harbour-stone mb-4">Things to Know</h3>
-                <div className="space-y-4">
-                  {property.honestFriction.map((friction: HonestFriction, i: number) => (
-                    <div key={i} className="border-l-4 border-gray-400 pl-6 py-3 bg-gray-50">
-                      <h4 className="font-serif text-lg text-harbour-stone mb-2">{friction.issue}</h4>
-                      <p className="font-mono text-base text-harbour-stone">{friction.context}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Owner Context */}
-            {property.ownerContext && (
-              <div className="mb-8">
-                <h3 className="font-serif text-xl text-harbour-stone mb-4">About the Property</h3>
-                <p className="font-mono text-base text-harbour-stone leading-relaxed whitespace-pre-line">
-                  {property.ownerContext}
-                </p>
-              </div>
-            )}
-          </section>
-        )}
-
-        {/* Reviews & Social Proof */}
-        {(property.reviewScores || property.reviewThemes?.length || property.reviewHighlights?.length || property.totalReviewCount) && (
-          <section className="mb-12 max-w-4xl">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-6">Guest Reviews</h2>
-            
-            {/* Review Scores */}
-            {property.reviewScores && (
-              <div className="mb-8 p-6 bg-gray-50 rounded-lg">
-                <h3 className="font-serif text-xl text-harbour-stone mb-4">Review Scores</h3>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {property.reviewScores.airbnbScore && (
-                    <div>
-                      <p className="font-mono text-sm text-harbour-stone opacity-60 mb-1">Airbnb</p>
-                      <p className="font-serif text-3xl text-harbour-stone">
-                        {property.reviewScores.airbnbScore.toFixed(1)}
-                        <span className="text-lg">/5</span>
+                    {property.entityFraming.primaryDifferentiator && (
+                      <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', opacity: 0.7, marginTop: '8px', lineHeight: 1.6 }}>
+                        {property.entityFraming.primaryDifferentiator}
                       </p>
-                      {property.reviewScores.airbnbCount && (
-                        <p className="font-mono text-sm text-harbour-stone opacity-60 mt-1">
-                          {property.reviewScores.airbnbCount} reviews
-                        </p>
-                      )}
-                      {property.reviewScores.airbnbBadges && property.reviewScores.airbnbBadges.length > 0 && (
-                        <div className="mt-2 flex flex-wrap gap-2">
-                          {property.reviewScores.airbnbBadges.map((badge: string, i: number) => (
-                            <span key={i} className="text-xs bg-emerald-accent text-white px-2 py-1 rounded">
-                              {badge.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                  {property.reviewScores.bookingScore && (
-                    <div>
-                      <p className="font-mono text-sm text-harbour-stone opacity-60 mb-1">Booking.com</p>
-                      <p className="font-serif text-3xl text-harbour-stone">
-                        {property.reviewScores.bookingScore.toFixed(1)}
-                        <span className="text-lg">/10</span>
-                      </p>
-                      {property.reviewScores.bookingCount && (
-                        <p className="font-mono text-sm text-harbour-stone opacity-60 mt-1">
-                          {property.reviewScores.bookingCount} reviews
-                        </p>
-                      )}
-                      {property.reviewScores.bookingCategory && (
-                        <p className="font-mono text-sm text-emerald-accent mt-1 capitalize">
-                          {property.reviewScores.bookingCategory.replace(/-/g, ' ')}
-                        </p>
-                      )}
-                    </div>
-                  )}
-                  {property.reviewScores.googleScore && (
-                    <div>
-                      <p className="font-mono text-sm text-harbour-stone opacity-60 mb-1">Google</p>
-                      <p className="font-serif text-3xl text-harbour-stone">
-                        {property.reviewScores.googleScore.toFixed(1)}
-                        <span className="text-lg">/5</span>
-                      </p>
-                      {property.reviewScores.googleCount && (
-                        <p className="font-mono text-sm text-harbour-stone opacity-60 mt-1">
-                          {property.reviewScores.googleCount} reviews
-                        </p>
-                      )}
-                    </div>
-                  )}
-                </div>
-                {property.totalReviewCount && (
-                  <p className="font-mono text-base text-harbour-stone mt-4 pt-4 border-t border-gray-300">
-                    <strong>Total Reviews:</strong> {property.totalReviewCount} across all platforms
+                    )}
+                  </div>
+                )}
+
+                {(property.trustSignals?.established || property.trustSignals?.ownership || property.trustSignals?.guestExperience) && (
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-harbour-stone)', opacity: 0.55, lineHeight: 1.8 }}>
+                    {[property.trustSignals.established, property.trustSignals.ownership, property.trustSignals.guestExperience]
+                      .filter(Boolean)
+                      .join(' · ')}
                   </p>
+                )}
+
+                {property.idealFor && property.idealFor.length > 0 && (
+                  <div style={{ marginTop: '20px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '10px' }}>
+                      Ideal for
+                    </p>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                      {property.idealFor.map((item: string, index: number) => (
+                        <span key={index} style={{
+                          padding: '5px 12px',
+                          background: 'var(--color-machair-sand)',
+                          fontFamily: '"IBM Plex Mono", monospace',
+                          fontSize: '11px',
+                          color: 'var(--color-harbour-stone)',
+                          letterSpacing: '0.03em',
+                        }}>
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 )}
               </div>
             )}
 
-            {/* Review Themes */}
-            {property.reviewThemes && property.reviewThemes.length > 0 && (
-              <div className="mb-8">
-                <h3 className="font-serif text-xl text-harbour-stone mb-4">What Guests Love</h3>
-                <div className="flex flex-wrap gap-2">
-                  {property.reviewThemes.map((theme: string, i: number) => (
-                    <span 
-                      key={i} 
-                      className="px-4 py-2 bg-emerald-accent text-white rounded-full font-mono text-sm"
-                    >
-                      {theme.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                    </span>
-                  ))}
+            {/* GALLERY — FIRST PAIR */}
+            {galleryImages.length >= 2 && (
+              <div style={{ display: 'grid', gridTemplateColumns: '3fr 2fr', gap: '6px', marginBottom: '44px' }}>
+                <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden' }}>
+                  <Image
+                    src={urlFor(galleryImages[0]).width(900).height(675).url()}
+                    alt={(galleryImages[0] as any)?.alt || `${property.name} — 1`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden' }}>
+                  <Image
+                    src={urlFor(galleryImages[1]).width(600).height(800).url()}
+                    alt={(galleryImages[1] as any)?.alt || `${property.name} — 2`}
+                    fill
+                    className="object-cover"
+                  />
                 </div>
               </div>
             )}
 
-            {/* Review Highlights */}
-            {property.reviewHighlights && property.reviewHighlights.length > 0 && (
-              <div className="mb-8">
-                <h3 className="font-serif text-xl text-harbour-stone mb-4">Review Highlights</h3>
-                <div className="space-y-6">
-                  {property.reviewHighlights.map((highlight: ReviewHighlight, i: number) => (
-                    <div key={i} className="border-l-4 border-emerald-accent pl-6 py-3">
-                      <p className="font-mono text-base text-harbour-stone italic mb-2">
-                        &quot;{highlight.quote}&quot;
-                      </p>
-                      <div className="flex items-center gap-3">
-                        <p className="font-mono text-sm text-harbour-stone opacity-60">
-                          — {highlight.source}
+            {/* SLEEPING & BEDROOMS */}
+            {(property.sleepingIntro || property.bedroomDetails?.length || property.bathroomDetails?.length) && (
+              <section style={sectionDivider}>
+                <SectionHeading label="Rooms" title="Sleeping Arrangements" />
+                {property.sleepingIntro && (
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, marginBottom: '20px' }}>
+                    {property.sleepingIntro}
+                  </p>
+                )}
+                {property.bedroomDetails && property.bedroomDetails.length > 0 && (
+                  <div style={{ marginBottom: '16px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '8px' }}>Bedrooms</p>
+                    <ArrayField items={property.bedroomDetails} />
+                  </div>
+                )}
+                {property.bathroomDetails && property.bathroomDetails.length > 0 && (
+                  <div>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '8px' }}>Bathrooms</p>
+                    <ArrayField items={property.bathroomDetails} />
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* FACILITIES */}
+            {(property.facilitiesIntro || property.kitchenDining?.length || property.livingAreas?.length ||
+              property.heatingCooling?.length || property.entertainment?.length || property.laundryFacilities?.length ||
+              property.safetyFeatures?.length) && (
+              <section style={sectionDivider}>
+                <SectionHeading label="Inside" title="Facilities" />
+                {property.facilitiesIntro && (
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, marginBottom: '24px' }}>
+                    {property.facilitiesIntro}
+                  </p>
+                )}
+
+                {[
+                  { label: 'Kitchen & Dining', items: property.kitchenDining, notes: property.kitchenDiningNotes },
+                  { label: 'Living Areas', items: property.livingAreas, notes: property.livingAreasNotes },
+                  { label: 'Heating & Cooling', items: property.heatingCooling, notes: property.heatingCoolingNotes },
+                  { label: 'Entertainment', items: property.entertainment, notes: property.entertainmentNotes },
+                  { label: 'Laundry', items: property.laundryFacilities, notes: undefined },
+                  { label: 'Safety Features', items: property.safetyFeatures, notes: undefined },
+                ].map(({ label, items, notes }) => items && items.length > 0 && (
+                  <div key={label} style={{ marginBottom: '20px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '8px' }}>{label}</p>
+                    <CheckboxArray items={items} />
+                    {notes && notes.length > 0 && <ArrayField items={notes} className="mt-3" />}
+                  </div>
+                ))}
+              </section>
+            )}
+
+            {/* OUTDOOR */}
+            {(property.outdoorIntro || property.outdoorFeatures?.length || property.parkingInfo) && (
+              <section style={sectionDivider}>
+                <SectionHeading label="Outside" title="Outdoor Spaces" />
+                {property.outdoorIntro && (
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, marginBottom: '16px' }}>
+                    {property.outdoorIntro}
+                  </p>
+                )}
+                {property.outdoorFeatures && property.outdoorFeatures.length > 0 && (
+                  <div style={{ marginBottom: '12px' }}>
+                    <CheckboxArray items={property.outdoorFeatures} />
+                    {property.outdoorFeaturesNotes && property.outdoorFeaturesNotes.length > 0 && (
+                      <ArrayField items={property.outdoorFeaturesNotes} className="mt-3" />
+                    )}
+                  </div>
+                )}
+                {property.parkingInfo && (
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, marginTop: '12px' }}>
+                    {property.parkingInfo}
+                  </p>
+                )}
+              </section>
+            )}
+
+            {/* GALLERY — SECOND PAIR */}
+            {galleryImages.length >= 4 && (
+              <div style={{ display: 'grid', gridTemplateColumns: '2fr 3fr', gap: '6px', margin: '44px 0' }}>
+                <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden' }}>
+                  <Image
+                    src={urlFor(galleryImages[2]).width(600).height(800).url()}
+                    alt={(galleryImages[2] as any)?.alt || `${property.name} — 3`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden' }}>
+                  <Image
+                    src={urlFor(galleryImages[3]).width(900).height(675).url()}
+                    alt={(galleryImages[3] as any)?.alt || `${property.name} — 4`}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* WHAT'S INCLUDED */}
+            {(property.includedIntro || property.included?.length || property.notIncluded?.length) && (
+              <section style={sectionDivider}>
+                <SectionHeading label="What you get" title="What&apos;s Included" />
+                {property.includedIntro && (
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, marginBottom: '16px' }}>
+                    {property.includedIntro}
+                  </p>
+                )}
+                {property.included && property.included.length > 0 && (
+                  <div style={{ marginBottom: '16px' }}>
+                    <ArrayField items={property.included} />
+                  </div>
+                )}
+                {property.notIncluded && property.notIncluded.length > 0 && (
+                  <div>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '8px', marginTop: '16px' }}>Not included</p>
+                    <ArrayField items={property.notIncluded} />
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* GUEST EXPERIENCE / PERSONALITY */}
+            {(property.propertyNickname || property.guestSuperlatives?.length || property.magicMoments?.length ||
+              property.perfectFor?.length || property.honestFriction?.length || property.ownerContext) && (
+              <section style={sectionDivider}>
+                <SectionHeading label="Your stay" title="Guest Experience" />
+
+                {property.propertyNickname && (
+                  <p style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: '1.25rem', color: 'var(--color-harbour-stone)', fontStyle: 'italic', marginBottom: '20px', lineHeight: 1.3 }}>
+                    {property.propertyNickname}
+                  </p>
+                )}
+
+                {property.guestSuperlatives && property.guestSuperlatives.length > 0 && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '12px' }}>What guests say</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {property.guestSuperlatives.map((quote: string, i: number) => (
+                        <p key={i} style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', fontStyle: 'italic', borderLeft: '3px solid var(--color-kelp-edge)', paddingLeft: '16px', paddingTop: '4px', paddingBottom: '4px', lineHeight: 1.6 }}>
+                          &quot;{quote}&quot;
                         </p>
-                        {highlight.rating && (
-                          <span className="font-mono text-sm text-emerald-accent">
-                            {highlight.rating}/5
-                          </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {property.magicMoments && property.magicMoments.length > 0 && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '12px' }}>Magic moments</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {property.magicMoments.map((moment: MagicMoment, i: number) => (
+                        <div key={i} style={{ borderLeft: '1px solid var(--color-washed-timber)', paddingLeft: '16px', paddingTop: '4px', paddingBottom: '4px' }}>
+                          <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.6 }}>{moment.moment}</p>
+                          {moment.frequency && (
+                            <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-harbour-stone)', opacity: 0.55, marginTop: '4px' }}>{moment.frequency}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {property.perfectFor && property.perfectFor.length > 0 && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '12px' }}>Perfect for</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      {property.perfectFor.map((item: PerfectFor, i: number) => (
+                        <div key={i} style={{ borderLeft: '3px solid var(--color-kelp-edge)', paddingLeft: '16px', paddingTop: '6px', paddingBottom: '6px' }}>
+                          <p style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: '1rem', color: 'var(--color-harbour-stone)', marginBottom: '4px' }}>{item.guestType}</p>
+                          <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '13px', color: 'var(--color-harbour-stone)', lineHeight: 1.6, marginBottom: '4px' }}>{item.why}</p>
+                          {item.reviewEvidence && (
+                            <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-harbour-stone)', opacity: 0.55, lineHeight: 1.5 }}>{item.reviewEvidence}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {property.honestFriction && property.honestFriction.length > 0 && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '12px' }}>Things to know</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                      {property.honestFriction.map((friction: HonestFriction, i: number) => (
+                        <div key={i} style={{ background: 'var(--color-machair-sand)', padding: '14px 16px' }}>
+                          <p style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: '1rem', color: 'var(--color-harbour-stone)', marginBottom: '6px' }}>{friction.issue}</p>
+                          <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '13px', color: 'var(--color-harbour-stone)', lineHeight: 1.6 }}>{friction.context}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {property.ownerContext && (
+                  <div>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '12px' }}>From the owners</p>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, whiteSpace: 'pre-line' }}>
+                      {property.ownerContext}
+                    </p>
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* HOST TRUST TRANSFER */}
+            <PropertyHostTrustTransfer
+              reviews={property.reviewHighlights || []}
+              totalReviewCount={property.totalReviewCount || 0}
+            />
+
+            {/* REVIEWS — teal panel */}
+            {(property.reviewScores || property.reviewThemes?.length || property.reviewHighlights?.length) && (
+              <section style={{
+                background: 'var(--color-sound-of-islay)',
+                padding: '40px 32px',
+                marginBottom: '0',
+                marginTop: '44px',
+              }}>
+                <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(241,236,228,0.55)', marginBottom: '8px' }}>
+                  Guest reviews
+                </p>
+                <h2 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: 'clamp(1.5rem, 2.5vw, 2.25rem)', color: 'var(--color-machair-sand)', lineHeight: 1.1, marginBottom: '28px' }}>
+                  What Guests Say
+                </h2>
+
+                {property.reviewScores && (
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '20px', marginBottom: '28px', paddingBottom: '28px', borderBottom: '1px solid rgba(241,236,228,0.15)' }}>
+                    {property.reviewScores.airbnbScore && (
+                      <div>
+                        <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(241,236,228,0.5)', marginBottom: '6px' }}>Airbnb</p>
+                        <p style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: '2.25rem', color: 'var(--color-machair-sand)', lineHeight: 1 }}>
+                          {property.reviewScores.airbnbScore.toFixed(1)}
+                          <span style={{ fontSize: '1rem', color: 'rgba(241,236,228,0.5)' }}>/5</span>
+                        </p>
+                        {property.reviewScores.airbnbCount && (
+                          <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'rgba(241,236,228,0.5)', marginTop: '4px' }}>
+                            {property.reviewScores.airbnbCount} reviews
+                          </p>
+                        )}
+                        {property.reviewScores.airbnbBadges && property.reviewScores.airbnbBadges.length > 0 && (
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginTop: '8px' }}>
+                            {property.reviewScores.airbnbBadges.map((badge: string, i: number) => (
+                              <span key={i} style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.06em', color: 'var(--color-machair-sand)', border: '1px solid rgba(241,236,228,0.3)', padding: '3px 7px', textTransform: 'uppercase' }}>
+                                {badge.replace(/-/g, ' ')}
+                              </span>
+                            ))}
+                          </div>
                         )}
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </section>
-        )}
+                    )}
+                    {property.reviewScores.bookingScore && (
+                      <div>
+                        <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(241,236,228,0.5)', marginBottom: '6px' }}>Booking.com</p>
+                        <p style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: '2.25rem', color: 'var(--color-machair-sand)', lineHeight: 1 }}>
+                          {property.reviewScores.bookingScore.toFixed(1)}
+                          <span style={{ fontSize: '1rem', color: 'rgba(241,236,228,0.5)' }}>/10</span>
+                        </p>
+                        {property.reviewScores.bookingCount && (
+                          <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'rgba(241,236,228,0.5)', marginTop: '4px' }}>
+                            {property.reviewScores.bookingCount} reviews
+                          </p>
+                        )}
+                        {property.reviewScores.bookingCategory && (
+                          <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'rgba(199,228,210,0.8)', marginTop: '4px', textTransform: 'capitalize' }}>
+                            {property.reviewScores.bookingCategory.replace(/-/g, ' ')}
+                          </p>
+                        )}
+                      </div>
+                    )}
+                    {property.reviewScores.googleScore && (
+                      <div>
+                        <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'rgba(241,236,228,0.5)', marginBottom: '6px' }}>Google</p>
+                        <p style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: '2.25rem', color: 'var(--color-machair-sand)', lineHeight: 1 }}>
+                          {property.reviewScores.googleScore.toFixed(1)}
+                          <span style={{ fontSize: '1rem', color: 'rgba(241,236,228,0.5)' }}>/5</span>
+                        </p>
+                        {property.reviewScores.googleCount && (
+                          <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'rgba(241,236,228,0.5)', marginTop: '4px' }}>
+                            {property.reviewScores.googleCount} reviews
+                          </p>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                )}
 
-        {/* Google Reviews */}
-        {(property.googleBusinessUrl || property.googlePlaceId) && (
-          <GoogleReviewsClient
-            googleBusinessUrl={property.googleBusinessUrl}
-            googlePlaceId={property.googlePlaceId}
-            propertyName={property.name}
-          />
-        )}
+                {property.reviewThemes && property.reviewThemes.length > 0 && (
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '28px' }}>
+                    {property.reviewThemes.map((theme: string, i: number) => (
+                      <span key={i} style={{
+                        fontFamily: '"IBM Plex Mono", monospace',
+                        fontSize: '10px',
+                        letterSpacing: '0.08em',
+                        color: 'var(--color-machair-sand)',
+                        border: '1px solid rgba(241,236,228,0.25)',
+                        padding: '5px 10px',
+                        textTransform: 'uppercase',
+                      }}>
+                        {theme.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                      </span>
+                    ))}
+                  </div>
+                )}
 
-        {/* Location & Nearby */}
-        {(property.locationIntro || property.nearbyAttractions?.length || property.whatToDoNearby?.length) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Location</h2>
-            {property.locationIntro && (
-              <div className="mb-4">
-                <PortableText value={property.locationIntro} components={portableTextComponents} />
-              </div>
-            )}
-            {property.nearbyAttractions && property.nearbyAttractions.length > 0 && (
-              <div className="mb-4">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">What&apos;s Nearby?</h3>
-                <ArrayField items={property.nearbyAttractions} />
-              </div>
-            )}
-            {property.whatToDoNearby && property.whatToDoNearby.length > 0 && (
-              <div>
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">What To Do Nearby</h3>
-                <ArrayField items={property.whatToDoNearby} />
-              </div>
-            )}
-          </section>
-        )}
+                {property.reviewHighlights && property.reviewHighlights.length > 0 && (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                    {property.reviewHighlights.map((highlight: ReviewHighlight, i: number) => (
+                      <div key={i} style={{ borderLeft: '2px solid rgba(241,236,228,0.2)', paddingLeft: '16px' }}>
+                        <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-machair-sand)', fontStyle: 'italic', lineHeight: 1.6, marginBottom: '8px' }}>
+                          &quot;{highlight.quote}&quot;
+                        </p>
+                        <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'rgba(241,236,228,0.5)' }}>
+                          — {highlight.source}
+                          {highlight.rating && <span style={{ marginLeft: '10px', color: 'rgba(199,228,210,0.7)' }}>{highlight.rating}/5</span>}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-        {/* Getting Here */}
-        {(property.gettingHereIntro || property.postcode || property.directions ||
-          property.ferryInfo || property.airportDistance || property.portDistance ||
-          property.latitude || property.longitude || property.location) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Getting Here</h2>
-            {property.gettingHereIntro && (
-              <p className="font-mono text-base text-harbour-stone mb-4">{property.gettingHereIntro}</p>
+                {property.totalReviewCount && (
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'rgba(241,236,228,0.4)', marginTop: '24px', letterSpacing: '0.04em' }}>
+                    {property.totalReviewCount} verified reviews across all platforms
+                  </p>
+                )}
+              </section>
             )}
 
-            {/* Google Map */}
-            {(property.latitude || property.longitude || property.postcode || property.location) && (
-              <div className="mb-6">
-                <GoogleMap
-                  latitude={property.latitude}
-                  longitude={property.longitude}
-                  postcode={property.postcode}
-                  location={property.location}
-                  name={property.name}
-                  height="450px"
+            {/* GOOGLE REVIEWS */}
+            {(property.googleBusinessUrl || property.googlePlaceId) && (
+              <div style={{ marginTop: '44px' }}>
+                <GoogleReviewsClient
+                  googleBusinessUrl={property.googleBusinessUrl}
+                  googlePlaceId={property.googlePlaceId}
+                  propertyName={property.name}
                 />
               </div>
             )}
 
-            {property.postcode && (
-              <p className="font-mono text-base text-harbour-stone mb-2">
-                <strong>Postcode:</strong> {property.postcode}
-              </p>
+            {/* LOCATION */}
+            {(property.locationIntro || property.nearbyAttractions?.length || property.whatToDoNearby?.length) && (
+              <section style={sectionDivider}>
+                <SectionHeading label="Where you are" title="Location" />
+                {property.locationIntro && (
+                  <div style={{ marginBottom: '20px' }}>
+                    <PortableText value={property.locationIntro} components={portableTextComponents} />
+                  </div>
+                )}
+                {property.nearbyAttractions && property.nearbyAttractions.length > 0 && (
+                  <div style={{ marginBottom: '16px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '10px' }}>What&apos;s nearby</p>
+                    <ArrayField items={property.nearbyAttractions} />
+                  </div>
+                )}
+                {property.whatToDoNearby && property.whatToDoNearby.length > 0 && (
+                  <div>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '10px' }}>What to do nearby</p>
+                    <ArrayField items={property.whatToDoNearby} />
+                  </div>
+                )}
+              </section>
             )}
-            {property.directions && (
-              <div className="mb-4">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Directions</h3>
-                <div className="font-mono text-base text-harbour-stone whitespace-pre-line">
-                  {property.directions}
-                </div>
-              </div>
-            )}
-            {property.ferryInfo && (
-              <div className="mb-4">
-                <h3 className="font-serif text-xl text-harbour-stone mb-2">Ferry Information</h3>
-                <div className="font-mono text-base text-harbour-stone whitespace-pre-line">
-                  {property.ferryInfo}
-                </div>
-              </div>
-            )}
-            {property.airportDistance && (
-              <p className="font-mono text-base text-harbour-stone mb-2">
-                <strong>Airport:</strong> {property.airportDistance}
-              </p>
-            )}
-            {property.portDistance && (
-              <p className="font-mono text-base text-harbour-stone mb-2">
-                <strong>Port:</strong> {property.portDistance}
-              </p>
-            )}
-          </section>
-        )}
 
-        {/* Pet Policy */}
-        {(property.petFriendly !== undefined || property.petPolicyIntro || property.petPolicyDetails?.length) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Can I Bring Pets?</h2>
-            <p className="font-mono text-base text-harbour-stone mb-2">
-              <strong>Pet Friendly:</strong> {property.petFriendly ? 'Yes' : 'No'}
-            </p>
-            {/* Dog-friendly Islay context — renders Block 25 teaserContent for pet-friendly properties */}
-            {dogFriendlyBlock?.teaserContent && dogFriendlyBlock.teaserContent.length > 0 && (
-              <div className="prose-portbahn mb-4">
-                <PortableText value={dogFriendlyBlock.teaserContent} components={portableTextComponents} />
-              </div>
-            )}
-            {property.petPolicyIntro && (
-              <p className="font-mono text-base text-harbour-stone mb-4">{property.petPolicyIntro}</p>
-            )}
-            {property.petPolicyDetails && property.petPolicyDetails.length > 0 && (
-              <ArrayField items={property.petPolicyDetails} />
-            )}
-          </section>
-        )}
+            {/* GETTING HERE */}
+            {(property.gettingHereIntro || property.postcode || property.directions ||
+              property.ferryInfo || property.airportDistance || property.portDistance ||
+              property.latitude || property.longitude || property.location) && (
+              <section style={sectionDivider}>
+                <SectionHeading label="Travel" title="Getting Here" />
+                {property.gettingHereIntro && (
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, marginBottom: '20px' }}>
+                    {property.gettingHereIntro}
+                  </p>
+                )}
 
-        {/* House Rules & Policies */}
-        {(property.policiesIntro || property.checkInTime || property.checkOutTime || property.minimumStay ||
-          property.cancellationPolicy || property.paymentTerms || property.securityDeposit ||
-          property.licensingStatus || property.licenseNumber || property.licenseNotes || property.availabilityStatus || property.importantInfo?.length) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">House Rules</h2>
-            {property.policiesIntro && (
-              <p className="font-mono text-base text-harbour-stone mb-4">{property.policiesIntro}</p>
+                {(property.latitude || property.longitude || property.postcode || property.location) && (
+                  <div style={{ marginBottom: '24px' }}>
+                    <GoogleMap
+                      latitude={property.latitude}
+                      longitude={property.longitude}
+                      postcode={property.postcode}
+                      location={property.location}
+                      name={property.name}
+                      height="420px"
+                    />
+                  </div>
+                )}
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65 }}>
+                  {property.postcode && (
+                    <p><span style={{ opacity: 0.55 }}>Postcode —</span> {property.postcode}</p>
+                  )}
+                  {property.airportDistance && (
+                    <p><span style={{ opacity: 0.55 }}>Airport —</span> {property.airportDistance}</p>
+                  )}
+                  {property.portDistance && (
+                    <p><span style={{ opacity: 0.55 }}>Ferry port —</span> {property.portDistance}</p>
+                  )}
+                </div>
+
+                {property.directions && (
+                  <div style={{ marginTop: '16px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '8px' }}>Directions</p>
+                    <div style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, whiteSpace: 'pre-line' }}>
+                      {property.directions}
+                    </div>
+                  </div>
+                )}
+                {property.ferryInfo && (
+                  <div style={{ marginTop: '16px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '8px' }}>Ferry information</p>
+                    <div style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, whiteSpace: 'pre-line' }}>
+                      {property.ferryInfo}
+                    </div>
+                  </div>
+                )}
+              </section>
             )}
-            <div className="space-y-3 font-mono text-base text-harbour-stone">
-              {property.checkInTime && (
-                <p><strong>Check-in:</strong> {property.checkInTime}</p>
-              )}
-              {property.checkOutTime && (
-                <p><strong>Check-out:</strong> {property.checkOutTime}</p>
-              )}
-              {property.minimumStay && (
-                <p><strong>Minimum Stay:</strong> {property.minimumStay} {property.minimumStay === 1 ? 'night' : 'nights'}</p>
-              )}
-              {property.availabilityStatus && (
-                <p className="mt-4">
-                  <strong>Availability:</strong>{' '}
-                  <span className={property.availabilityStatus === 'bookable' ? 'text-emerald-accent' : 'text-gray-600'}>
-                    {property.availabilityStatus === 'bookable' && 'Bookable'}
-                    {property.availabilityStatus === 'enquiries' && 'Enquiries Only'}
-                    {property.availabilityStatus === 'coming-soon' && 'Coming Soon'}
-                    {property.availabilityStatus === 'unavailable' && 'Unavailable'}
-                  </span>
+
+            {/* PET POLICY */}
+            {(property.petFriendly !== undefined || property.petPolicyIntro || property.petPolicyDetails?.length) && (
+              <section style={sectionDivider}>
+                <SectionHeading label="Bringing a dog?" title="Pet Policy" />
+                <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, marginBottom: '16px' }}>
+                  <span style={{ opacity: 0.55 }}>Pet friendly —</span> {property.petFriendly ? 'Yes, pets are welcome.' : 'We do not accept pets.'}
                 </p>
-              )}
-              {property.cancellationPolicy && (
-                <div className="mt-4">
-                  <h3 className="font-serif text-xl text-harbour-stone mb-2">Cancellation Policy</h3>
-                  <div className="whitespace-pre-line">{property.cancellationPolicy}</div>
-                </div>
-              )}
-              {property.paymentTerms && (
-                <div className="mt-4">
-                  <h3 className="font-serif text-xl text-harbour-stone mb-2">Payment Terms</h3>
-                  <div className="whitespace-pre-line">{property.paymentTerms}</div>
-                </div>
-              )}
-              {property.securityDeposit && (
-                <p className="mt-4"><strong>Security Deposit:</strong> {property.securityDeposit}</p>
-              )}
-              {(property.licensingStatus || property.licenseNumber) && (
-                <div className="mt-4">
-                  <h3 className="font-serif text-xl text-harbour-stone mb-2">Short Term Let License</h3>
-                  {property.licensingStatus && (
+                {dogFriendlyBlock?.teaserContent && dogFriendlyBlock.teaserContent.length > 0 && (
+                  <div style={{ marginBottom: '16px' }}>
+                    <PortableText value={dogFriendlyBlock.teaserContent} components={portableTextComponents} />
+                  </div>
+                )}
+                {property.petPolicyIntro && (
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, marginBottom: '12px' }}>
+                    {property.petPolicyIntro}
+                  </p>
+                )}
+                {property.petPolicyDetails && property.petPolicyDetails.length > 0 && (
+                  <ArrayField items={property.petPolicyDetails} />
+                )}
+              </section>
+            )}
+
+            {/* HOUSE RULES & POLICIES */}
+            {(property.policiesIntro || property.checkInTime || property.checkOutTime || property.minimumStay ||
+              property.cancellationPolicy || property.paymentTerms || property.securityDeposit ||
+              property.licensingStatus || property.licenseNumber || property.licenseNotes ||
+              property.availabilityStatus || property.importantInfo?.length) && (
+              <section style={sectionDivider}>
+                <SectionHeading label="Good to know" title="House Rules" />
+                {property.policiesIntro && (
+                  <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, marginBottom: '20px' }}>
+                    {property.policiesIntro}
+                  </p>
+                )}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65 }}>
+                  {property.checkInTime && (
+                    <p><span style={{ opacity: 0.55 }}>Check-in —</span> {property.checkInTime}</p>
+                  )}
+                  {property.checkOutTime && (
+                    <p><span style={{ opacity: 0.55 }}>Check-out —</span> {property.checkOutTime}</p>
+                  )}
+                  {property.minimumStay && (
+                    <p><span style={{ opacity: 0.55 }}>Minimum stay —</span> {property.minimumStay} {property.minimumStay === 1 ? 'night' : 'nights'}</p>
+                  )}
+                  {property.availabilityStatus && (
                     <p>
-                      <strong>Status:</strong>{' '}
-                      {property.licensingStatus === 'approved' && 'Approved'}
-                      {property.licensingStatus === 'pending-bookable' && 'Pending - Bookable'}
-                      {property.licensingStatus === 'pending-enquiries' && 'Pending - Enquiries Only'}
-                      {property.licensingStatus === 'coming-soon' && 'Coming Soon'}
+                      <span style={{ opacity: 0.55 }}>Status —</span>{' '}
+                      <span style={{ color: property.availabilityStatus === 'bookable' ? 'var(--color-kelp-edge)' : 'inherit' }}>
+                        {property.availabilityStatus === 'bookable' && 'Bookable'}
+                        {property.availabilityStatus === 'enquiries' && 'Enquiries Only'}
+                        {property.availabilityStatus === 'coming-soon' && 'Coming Soon'}
+                        {property.availabilityStatus === 'unavailable' && 'Unavailable'}
+                      </span>
                     </p>
                   )}
-                  {property.licenseNumber && (
-                    <p className="mt-2"><strong>License Number:</strong> {property.licenseNumber}</p>
-                  )}
-                  {property.licenseNotes && (
-                    <p className="mt-2 font-mono text-sm text-harbour-stone opacity-75 whitespace-pre-line">
-                      {property.licenseNotes}
-                    </p>
+                  {property.securityDeposit && (
+                    <p><span style={{ opacity: 0.55 }}>Security deposit —</span> {property.securityDeposit}</p>
                   )}
                 </div>
-              )}
-              {property.importantInfo && property.importantInfo.length > 0 && (
-                <div className="mt-4">
-                  <h3 className="font-serif text-xl text-harbour-stone mb-2">Important Information</h3>
-                  {property.importantInfo.map((info: string, idx: number) => (
-                    <div key={idx} className="mb-2 whitespace-pre-line">{info}</div>
+                {property.cancellationPolicy && (
+                  <div style={{ marginTop: '20px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '8px' }}>Cancellation policy</p>
+                    <div style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '13px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, whiteSpace: 'pre-line' }}>{property.cancellationPolicy}</div>
+                  </div>
+                )}
+                {property.paymentTerms && (
+                  <div style={{ marginTop: '20px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '8px' }}>Payment terms</p>
+                    <div style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '13px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, whiteSpace: 'pre-line' }}>{property.paymentTerms}</div>
+                  </div>
+                )}
+                {(property.licensingStatus || property.licenseNumber) && (
+                  <div style={{ marginTop: '20px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '8px' }}>Short term let licence</p>
+                    {property.licensingStatus && (
+                      <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '13px', color: 'var(--color-harbour-stone)', lineHeight: 1.65 }}>
+                        {property.licensingStatus === 'approved' && 'Approved'}
+                        {property.licensingStatus === 'pending-bookable' && 'Pending — Bookable'}
+                        {property.licensingStatus === 'pending-enquiries' && 'Pending — Enquiries Only'}
+                        {property.licensingStatus === 'coming-soon' && 'Coming Soon'}
+                      </p>
+                    )}
+                    {property.licenseNumber && (
+                      <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '13px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, marginTop: '4px' }}>Licence: {property.licenseNumber}</p>
+                    )}
+                    {property.licenseNotes && (
+                      <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-harbour-stone)', opacity: 0.6, marginTop: '8px', lineHeight: 1.6, whiteSpace: 'pre-line' }}>{property.licenseNotes}</p>
+                    )}
+                  </div>
+                )}
+                {property.importantInfo && property.importantInfo.length > 0 && (
+                  <div style={{ marginTop: '20px' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.10em', textTransform: 'uppercase', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '8px' }}>Important information</p>
+                    {property.importantInfo.map((info: string, idx: number) => (
+                      <div key={idx} style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '13px', color: 'var(--color-harbour-stone)', lineHeight: 1.65, whiteSpace: 'pre-line', marginBottom: '8px' }}>{info}</div>
+                    ))}
+                  </div>
+                )}
+              </section>
+            )}
+
+            {/* COMMON QUESTIONS */}
+            {property.commonQuestions && property.commonQuestions.length > 0 && (
+              <section id="common-questions" style={sectionDivider}>
+                <SectionHeading label="FAQ" title={`Common Questions About ${property.name}`} />
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
+                  {property.commonQuestions.map((qa: { question: string; answer: string }, index: number) => (
+                    <div key={index} style={{ borderLeft: '3px solid var(--color-kelp-edge)', paddingLeft: '20px', paddingTop: '4px', paddingBottom: '4px' }}>
+                      <h3 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: '1.1rem', color: 'var(--color-harbour-stone)', marginBottom: '8px', lineHeight: 1.2 }}>
+                        {qa.question}
+                      </h3>
+                      <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '14px', color: 'var(--color-harbour-stone)', lineHeight: 1.65 }}>
+                        {qa.answer}
+                      </p>
+                    </div>
                   ))}
                 </div>
-              )}
-            </div>
-          </section>
-        )}
 
-        {/* Pricing */}
-        {(property.dailyRate || property.weeklyRate) && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Pricing</h2>
-            <div className="font-mono text-base text-harbour-stone space-y-2">
-              {property.dailyRate && (
-                <p><strong>Daily Rate:</strong> £{property.dailyRate.toLocaleString()}</p>
-              )}
-              {property.weeklyRate && (
-                <p><strong>Weekly Rate:</strong> £{property.weeklyRate.toLocaleString()}</p>
-              )}
-            </div>
-          </section>
-        )}
+                {property.faqCrossLinks && property.faqCrossLinks.length > 0 && (
+                  <div style={{ marginTop: '24px', paddingTop: '16px', borderTop: '1px solid var(--color-washed-timber)' }}>
+                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-harbour-stone)', opacity: 0.6 }}>
+                      {property.faqCrossLinks.map((link: { text: string; property: { slug: { current: string } } }, i: number) => (
+                        <span key={i}>
+                          {i > 0 && ' · '}
+                          <Link
+                            href={`/accommodation/${link.property?.slug?.current}#common-questions`}
+                            style={{ color: 'var(--color-kelp-edge)', textDecoration: 'underline', textUnderlineOffset: '2px' }}
+                          >
+                            {link.text}
+                          </Link>
+                        </span>
+                      ))}
+                    </p>
+                  </div>
+                )}
+              </section>
+            )}
 
-
-        {/* Image Gallery Grid */}
-        {galleryImages.length > 0 && (
-          <section className="mb-12">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-4">Gallery</h2>
-            <div className="grid grid-cols-2 gap-4">
-              {galleryImages.map((image: unknown, index: number) => (
-                <div key={index} className="aspect-[4/3] relative overflow-hidden">
-                  <Image
-                    src={urlFor(image as any).width(800).height(600).url()}
-                    alt={(image as any)?.alt || `${property.name} - Image ${index + 1}`}
-                    fill
-                    className="object-cover"
-                  />
-                  {(image as any)?.caption && (
-                    <div className="absolute bottom-0 left-0 right-0 bg-black bg-opacity-60 text-sea-spray font-mono text-sm px-4 py-2">
-                      {(image as any).caption}
+            {/* GALLERY — REMAINING IMAGES */}
+            {galleryImages.length > 4 && (
+              <section style={sectionDivider}>
+                <SectionHeading label="Photography" title="Gallery" />
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
+                  {galleryImages.slice(4).map((image: unknown, index: number) => (
+                    <div key={index} style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden' }}>
+                      <Image
+                        src={urlFor(image as any).width(800).height(600).url()}
+                        alt={(image as any)?.alt || `${property.name} — ${index + 5}`}
+                        fill
+                        className="object-cover"
+                      />
+                      {(image as any)?.caption && (
+                        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(43,44,46,0.65)', color: 'var(--color-sea-spray)', fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', padding: '8px 12px' }}>
+                          {(image as any).caption}
+                        </div>
+                      )}
                     </div>
-                  )}
+                  ))}
                 </div>
-              ))}
-            </div>
-          </section>
-        )}
+              </section>
+            )}
 
-        {/* Other Accommodation */}
-        {otherProperties.length > 0 && (
-          <section className="mb-12 mt-16 pt-12 border-t-2 border-[#C8C6BF]">
-            <h2 className="font-serif text-3xl text-harbour-stone mb-8">Our Other Accommodation</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {otherProperties.map((otherProperty: unknown) => {
-                const p = otherProperty as any;
-                const imageUrl = p.heroImage
-                  ? urlFor(p.heroImage).width(800).height(1200).url()
-                  : '';
+            {/* OTHER ACCOMMODATION */}
+            {otherProperties.length > 0 && (
+              <section style={{ ...sectionDivider, marginTop: '60px' }}>
+                <SectionHeading label="Also on Islay" title="Our Other Accommodation" />
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '24px' }}>
+                  {otherProperties.map((otherProperty: unknown) => {
+                    const p = otherProperty as any;
+                    const imageUrl = p.heroImage
+                      ? urlFor(p.heroImage).width(800).height(1200).url()
+                      : '';
+                    return (
+                      <PropertyCard
+                        key={p._id}
+                        name={p.name}
+                        location={p.location}
+                        description={p.description}
+                        sleeps={p.sleeps}
+                        bedrooms={p.bedrooms}
+                        imageUrl={imageUrl}
+                        href={`/accommodation/${p.slug?.current || p.slug}`}
+                      />
+                    );
+                  })}
+                </div>
+              </section>
+            )}
 
-                return (
-                  <PropertyCard
-                    key={p._id}
-                    name={p.name}
-                    location={p.location}
-                    description={p.description}
-                    sleeps={p.sleeps}
-                    bedrooms={p.bedrooms}
-                    imageUrl={imageUrl}
-                    href={`/accommodation/${p.slug?.current || p.slug}`}
-                  />
-                );
-              })}
-            </div>
-          </section>
-        )}
-        {/* Explore Islay guides */}
-        <section className="mb-12 mt-16 pt-12 border-t-2 border-[#C8C6BF]">
-          <h2 className="font-serif text-3xl text-harbour-stone mb-6">Explore Islay</h2>
-          <ul className="font-mono text-base space-y-3">
-            <li>
-              <Link href="/explore-islay/islay-distilleries" className="text-emerald-accent hover:underline">
-                Islay&apos;s Whisky Distilleries — all 10, including Bruichladdich a 5-minute walk away
-              </Link>
-            </li>
-            <li>
-              <Link href="/explore-islay/islay-beaches" className="text-emerald-accent hover:underline">
-                Beaches of Islay — Portbahn Beach, Machir Bay, Singing Sands and more
-              </Link>
-            </li>
-            <li>
-              <Link href="/explore-islay/islay-wildlife" className="text-emerald-accent hover:underline">
-                Wildlife &amp; Nature — barnacle geese, eagles, seals, RSPB reserves
-              </Link>
-            </li>
-            <li>
-              <Link href="/explore-islay/food-and-drink" className="text-emerald-accent hover:underline">
-                Food &amp; Drink on Islay — restaurants, distillery cafés, local seafood
-              </Link>
-            </li>
-            <li>
-              <Link href="/explore-islay/visit-jura" className="text-emerald-accent hover:underline">
-                Visiting Jura — day trips and longer stays on Islay&apos;s wilder neighbour
-              </Link>
-            </li>
-            <li>
-              <Link href="/islay-travel" className="text-emerald-accent hover:underline">
-                Getting to Islay — ferry from Kennacraig, flights from Glasgow
-              </Link>
-            </li>
-          </ul>
-        </section>
+            {/* EXPLORE ISLAY LINKS */}
+            <section style={{ ...sectionDivider, marginTop: '40px' }}>
+              <SectionHeading label="Discover" title="Explore Islay" />
+              <ul style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                {[
+                  { href: '/explore-islay/islay-distilleries', text: 'Whisky Distilleries — all 10, including Bruichladdich a 5-minute walk away' },
+                  { href: '/explore-islay/islay-beaches', text: 'Beaches — Portbahn Beach, Machir Bay, Singing Sands and more' },
+                  { href: '/explore-islay/islay-wildlife', text: 'Wildlife & Nature — barnacle geese, eagles, seals, RSPB reserves' },
+                  { href: '/explore-islay/food-and-drink', text: 'Food & Drink — restaurants, distillery cafés, local seafood' },
+                  { href: '/explore-islay/visit-jura', text: 'Visiting Jura — day trips and longer stays on Islay\'s wilder neighbour' },
+                  { href: '/islay-travel', text: 'Getting to Islay — ferry from Kennacraig, flights from Glasgow' },
+                ].map(({ href, text }) => (
+                  <li key={href} style={{ listStyle: 'none' }}>
+                    <Link
+                      href={href}
+                      className="hover-fade"
+                      style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '13px', color: 'var(--color-kelp-edge)', textDecoration: 'underline', textUnderlineOffset: '3px', lineHeight: 1.6 }}
+                    >
+                      {text} →
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </section>
+
+          </div>
+          {/* END LEFT CONTENT COLUMN */}
+
+          {/* ── RIGHT STICKY SIDEBAR ─────────────────────────────── */}
+          <div className="hidden md:block" style={{ paddingTop: '48px' }}>
+            {property.lodgifyPropertyId && property.lodgifyRoomId && property.slug?.current && (
+              <PropertyCalendar
+                propertySlug={property.slug.current}
+                propertyId={property.lodgifyPropertyId}
+                propertyName={property.name}
+                sleeps={property.sleeps}
+                weeklyRate={property.weeklyRate}
+                dailyRate={property.dailyRate}
+                minimumStay={property.minimumStay}
+              />
+            )}
+          </div>
+          {/* END STICKY SIDEBAR */}
 
         </div>
-        {/* End main content column */}
+        {/* END TWO-COLUMN GRID */}
 
-        {/* Sticky calendar sidebar */}
-        <div className="lg:col-span-1">
-          {property.lodgifyPropertyId && property.lodgifyRoomId && property.slug?.current && (
-            <PropertyCalendar
-              propertySlug={property.slug.current}
-              propertyId={property.lodgifyPropertyId}
-              propertyName={property.name}
-              sleeps={property.sleeps}
-            />
-          )}
-        </div>
-        {/* End calendar sidebar */}
-      </div>
-      {/* End grid */}
-      </div>
-      {/* End container */}
-    </main>
+        {/* ── MOBILE AVAILABILITY BAR ─────────────────────────── */}
+        {property.lodgifyPropertyId && property.lodgifyRoomId && property.slug?.current && (
+          <MobileAvailBar
+            propertySlug={property.slug.current}
+            propertyId={property.lodgifyPropertyId}
+            propertyName={property.name}
+            sleeps={property.sleeps}
+            weeklyRate={property.weeklyRate}
+            dailyRate={property.dailyRate}
+            minimumStay={property.minimumStay}
+          />
+        )}
+
+      </main>
     </>
   );
 }

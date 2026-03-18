@@ -1,161 +1,256 @@
 @import "tailwindcss";
 
+/* ─── THE SEASONS BOLD — self-hosted ───────────────────────────────── */
+@font-face {
+  font-family: 'The Seasons';
+  src: url('/fonts/TheSeasons-Bold.woff2') format('woff2'),
+       url('/fonts/TheSeasons-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── DESIGN TOKENS ────────────────────────────────────────────────── */
 @theme {
-  /* PBI Colors */
-  --color-kelp-edge: #1F5E4D;
+  /* Colors */
+  --color-kelp-edge:      #1F5E4D;
   --color-sound-of-islay: #0F3A4A;
-  --color-harbour-stone: #2B2C2E;
-  --color-machair-sand: #F1ECE4;
-  --color-sea-spray: #FFFEFA;
-  --color-washed-timber: #CFCAC2;
+  --color-harbour-stone:  #2B2C2E;
+  --color-machair-sand:   #F1ECE4;
+  --color-sea-spray:      #FFFEFA;
+  --color-washed-timber:  #CFCAC2;
   --color-emerald-accent: #008060;
 
-  /* Typography - Font Families */
-  --font-family-serif: 'Lora', Georgia, serif;
-  --font-family-mono: 'IBM Plex Mono', 'Courier New', monospace;
+  /* Font Families */
+  --font-family-serif: 'The Seasons', Georgia, serif;
+  --font-family-mono:  'IBM Plex Mono', 'Courier New', monospace;
 
-  /* Spacing Scale (from design docs) */
-  --spacing-xs: 0.25rem; /* 4px */
-  --spacing-s: 0.5rem; /* 8px */
-  --spacing-m: 1rem; /* 16px */
-  --spacing-l: 2rem; /* 32px */
-  --spacing-xl: 3rem; /* 48px */
-  --spacing-xxl: 5rem; /* 80px */
+  /* Spacing */
+  --spacing-xs:  0.25rem;  /* 4px  */
+  --spacing-s:   0.5rem;   /* 8px  */
+  --spacing-m:   1rem;     /* 16px */
+  --spacing-l:   2rem;     /* 32px */
+  --spacing-xl:  3rem;     /* 48px */
+  --spacing-xxl: 5rem;     /* 80px */
 }
 
-/* Custom color utilities for Tailwind v4 */
+/* ─── COLOR UTILITIES ──────────────────────────────────────────────── */
 @layer utilities {
-  .bg-kelp-edge { background-color: var(--color-kelp-edge); }
-  .bg-sound-of-islay { background-color: var(--color-sound-of-islay); }
-  .bg-harbour-stone { background-color: var(--color-harbour-stone); }
-  .bg-machair-sand { background-color: var(--color-machair-sand); }
-  .bg-sea-spray { background-color: var(--color-sea-spray); }
-  .bg-washed-timber { background-color: var(--color-washed-timber); }
-  .bg-emerald-accent { background-color: var(--color-emerald-accent); }
-  
-  .text-kelp-edge { color: var(--color-kelp-edge); }
-  .text-sound-of-islay { color: var(--color-sound-of-islay); }
-  .text-harbour-stone { color: var(--color-harbour-stone); }
-  .text-machair-sand { color: var(--color-machair-sand); }
-  .text-sea-spray { color: var(--color-sea-spray); }
-  .text-washed-timber { color: var(--color-washed-timber); }
-  .text-emerald-accent { color: var(--color-emerald-accent); }
-  
-  .border-kelp-edge { border-color: var(--color-kelp-edge); }
-  .border-sound-of-islay { border-color: var(--color-sound-of-islay); }
-  .border-harbour-stone { border-color: var(--color-harbour-stone); }
-  .border-machair-sand { border-color: var(--color-machair-sand); }
-  .border-sea-spray { border-color: var(--color-sea-spray); }
-  .border-washed-timber { border-color: var(--color-washed-timber); }
-  .border-emerald-accent { border-color: var(--color-emerald-accent); }
+  .bg-kelp-edge       { background-color: var(--color-kelp-edge); }
+  .bg-sound-of-islay  { background-color: var(--color-sound-of-islay); }
+  .bg-harbour-stone   { background-color: var(--color-harbour-stone); }
+  .bg-machair-sand    { background-color: var(--color-machair-sand); }
+  .bg-sea-spray       { background-color: var(--color-sea-spray); }
+  .bg-washed-timber   { background-color: var(--color-washed-timber); }
+  .bg-emerald-accent  { background-color: var(--color-emerald-accent); }
+
+  .text-kelp-edge       { color: var(--color-kelp-edge); }
+  .text-sound-of-islay  { color: var(--color-sound-of-islay); }
+  .text-harbour-stone   { color: var(--color-harbour-stone); }
+  .text-machair-sand    { color: var(--color-machair-sand); }
+  .text-sea-spray       { color: var(--color-sea-spray); }
+  .text-washed-timber   { color: var(--color-washed-timber); }
+  .text-emerald-accent  { color: var(--color-emerald-accent); }
+
+  .border-kelp-edge       { border-color: var(--color-kelp-edge); }
+  .border-sound-of-islay  { border-color: var(--color-sound-of-islay); }
+  .border-harbour-stone   { border-color: var(--color-harbour-stone); }
+  .border-machair-sand    { border-color: var(--color-machair-sand); }
+  .border-sea-spray       { border-color: var(--color-sea-spray); }
+  .border-washed-timber   { border-color: var(--color-washed-timber); }
+  .border-emerald-accent  { border-color: var(--color-emerald-accent); }
+
+  /* Overflow clip — preserves position: sticky (unlike overflow: hidden) */
+  .overflow-x-clip { overflow-x: clip; }
 }
+
+/* ─── BASE ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
 
 body {
   background: var(--color-sea-spray);
   color: var(--color-harbour-stone);
   font-family: 'IBM Plex Mono', 'Courier New', monospace;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Typography utilities */
+img { display: block; max-width: 100%; }
+a   { color: inherit; text-decoration: none; }
+
+/* ─── TYPOGRAPHY UTILITIES ─────────────────────────────────────────── */
 .font-serif {
-  font-family: 'Lora', Georgia, serif !important;
+  font-family: 'The Seasons', Georgia, serif !important;
+  font-weight: 700;
 }
 
 .font-mono {
   font-family: 'IBM Plex Mono', 'Courier New', monospace !important;
 }
 
-/* Typography scale - following editorial, minimal aesthetic */
-h1 {
-  font-family: 'Lora', Georgia, serif !important;
-  font-size: 3.75rem; /* 60px */
-  line-height: 1.1;
-  font-weight: 400;
+/* ─── HEADING SCALE ─────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'The Seasons', Georgia, serif;
+  font-weight: 700;
+  line-height: 1.05;
   letter-spacing: -0.02em;
 }
 
-h2 {
-  font-family: 'Lora', Georgia, serif !important;
-  font-size: 2.5rem; /* 40px */
-  line-height: 1.2;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-}
+h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.1; }
+h3 { font-size: clamp(1.5rem, 2.5vw, 2.25rem); line-height: 1.2; letter-spacing: -0.01em; }
+h4 { font-size: 1.25rem; line-height: 1.3; letter-spacing: 0; }
 
-h3 {
-  font-family: 'Lora', Georgia, serif !important;
-  font-size: 1.875rem; /* 30px */
-  line-height: 1.3;
-  font-weight: 400;
-}
-
-/* Body text uses mono by default */
+/* ─── BODY TEXT ────────────────────────────────────────────────────── */
 p {
   font-family: 'IBM Plex Mono', 'Courier New', monospace;
-  font-size: 1rem;
-  line-height: 1.6;
-  max-width: 65ch; /* Optimal reading width */
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.65;
 }
 
-/* React DatePicker Custom Styles - PBI Design System */
+/* ─── NAV / LABEL SCALE ────────────────────────────────────────────── */
+/* Used via inline styles and utility classes in components */
+.nav-label {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.8125rem; /* 13px */
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+}
+
+.section-label {
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-size: 0.625rem; /* 10px */
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-kelp-edge);
+}
+
+/* ─── AVAILABILITY WIDGET ─────────────────────────────────────────── */
+.avail-widget {
+  position: sticky;
+  top: 80px;
+  border: 1px solid var(--color-washed-timber);
+  border-top: 3px solid var(--color-kelp-edge);
+  border-radius: 2px;
+  background: var(--color-sea-spray);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.07);
+  align-self: start;
+}
+.aw-header {
+  padding: 16px 16px 0;
+  border-bottom: 1px solid var(--color-washed-timber);
+}
+.aw-price-from { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--color-washed-timber); letter-spacing: 0.06em; }
+.aw-price-num  { font-family: 'IBM Plex Mono', monospace; font-size: 22px; color: var(--color-harbour-stone); margin: 0 2px; }
+.aw-price-unit { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--color-washed-timber); }
+.aw-min-stay   { font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--color-kelp-edge); }
+.aw-cal        { padding: 10px 16px 8px; }
+.aw-cal-nav    { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.aw-cal-nav button {
+  background: none; border: none; cursor: pointer;
+  font-size: 18px; color: var(--color-harbour-stone); opacity: 0.45;
+  padding: 2px 6px; line-height: 1; transition: opacity 0.15s;
+}
+.aw-cal-nav button:hover:not(:disabled) { opacity: 1; }
+.aw-month { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; color: var(--color-harbour-stone); }
+.aw-day-labels { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 2px; }
+.aw-day-labels span { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-align: center; color: var(--color-washed-timber); padding: 2px 0; }
+.aw-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+.aw-grid b, .aw-grid em {
+  font-style: normal; font-weight: normal;
+  font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  text-align: center; padding: 5px 0; cursor: pointer; display: block;
+}
+.aw-grid em { cursor: default; color: var(--color-washed-timber); opacity: 0.4; }
+.aw-a { color: var(--color-harbour-stone); background: rgba(0,128,96,0.06); }
+.aw-a:hover { background: rgba(0,128,96,0.16); color: var(--color-kelp-edge); }
+.aw-x { background: rgba(180,40,40,0.07); color: rgba(43,44,46,0.35); text-decoration: line-through; cursor: not-allowed; }
+.aw-ci { color: var(--color-kelp-edge); background: rgba(0,128,96,0.18); position: relative; }
+.aw-ci::after { content: ''; display: block; width: 3px; height: 3px; background: var(--color-kelp-edge); border-radius: 50%; margin: 1px auto 0; }
+.aw-legend { display: flex; gap: 10px; padding: 6px 16px 8px; border-top: 1px solid var(--color-washed-timber); }
+.aw-leg { font-family: 'IBM Plex Mono', monospace; font-size: 8px; color: var(--color-washed-timber); display: flex; align-items: center; gap: 5px; }
+.aw-leg::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 2px; }
+.aw-leg-a::before  { background: rgba(0,128,96,0.06); border: 1px solid rgba(0,128,96,0.25); }
+.aw-leg-x::before  { background: rgba(180,40,40,0.07); border: 1px solid rgba(180,40,40,0.2); }
+.aw-leg-ci::before { background: rgba(0,128,96,0.18); border: 1px solid var(--color-kelp-edge); }
+.aw-cta {
+  display: block; margin: 0 16px 12px;
+  background: var(--color-emerald-accent); color: #fff;
+  font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  text-align: center; padding: 13px; text-decoration: none;
+  transition: opacity 0.2s;
+}
+.aw-cta:hover { opacity: 0.85; }
+
+/* ─── PROPERTY PAGE GRID ────────────────────────────────────────────── */
+.property-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+}
+@media (min-width: 768px) {
+  .property-grid {
+    grid-template-columns: minmax(0, 1fr) 340px;
+    column-gap: 40px;
+  }
+}
+@media (min-width: 1280px) {
+  .property-grid {
+    grid-template-columns: minmax(0, 1fr) 400px;
+    column-gap: 48px;
+  }
+}
+
+/* ─── HOVER UTILITIES (server-component safe — no JS handlers needed) ─ */
+.hover-card { transition: box-shadow 0.2s ease; }
+.hover-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09); }
+
+.hover-opacity { transition: opacity 0.2s; }
+.hover-opacity:hover { opacity: 0.85; }
+
+.hover-fade { transition: opacity 0.2s; }
+.hover-fade:hover { opacity: 0.75; }
+
+.hover-dim { opacity: 0.7; transition: opacity 0.15s; }
+.hover-dim:hover { opacity: 1; }
+
+/* ─── REACT DATEPICKER (kept for any remaining usage) ──────────────── */
 .react-datepicker {
   font-family: 'IBM Plex Mono', 'Courier New', monospace !important;
   border: 1px solid var(--color-washed-timber) !important;
   border-radius: 0 !important;
 }
-
 .react-datepicker__header {
   background-color: var(--color-sea-spray) !important;
   border-bottom: 1px solid var(--color-washed-timber) !important;
   padding-top: 0.75rem !important;
 }
-
 .react-datepicker__current-month {
-  font-family: 'Lora', Georgia, serif !important;
+  font-family: 'The Seasons', Georgia, serif !important;
   font-size: 1rem !important;
   color: var(--color-harbour-stone) !important;
-  font-weight: 400 !important;
+  font-weight: 700 !important;
 }
-
-.react-datepicker__day-name {
-  font-family: 'IBM Plex Mono', 'Courier New', monospace !important;
-  color: var(--color-harbour-stone) !important;
-  font-size: 0.875rem !important;
-}
-
+.react-datepicker__day-name,
 .react-datepicker__day {
   font-family: 'IBM Plex Mono', 'Courier New', monospace !important;
   color: var(--color-harbour-stone) !important;
   border-radius: 0 !important;
 }
-
 .react-datepicker__day:hover {
   background-color: var(--color-machair-sand) !important;
-  color: var(--color-harbour-stone) !important;
 }
-
 .react-datepicker__day--selected,
 .react-datepicker__day--in-selecting-range,
-.react-datepicker__day--in-range {
-  background-color: var(--color-emerald-accent) !important;
-  color: var(--color-sea-spray) !important;
-}
-
-.react-datepicker__day--disabled {
-  color: var(--color-washed-timber) !important;
-  cursor: not-allowed !important;
-}
-
+.react-datepicker__day--in-range,
 .react-datepicker__day--keyboard-selected {
   background-color: var(--color-emerald-accent) !important;
   color: var(--color-sea-spray) !important;
 }
-
-.react-datepicker__navigation {
-  top: 0.75rem !important;
+.react-datepicker__day--disabled {
+  color: var(--color-washed-timber) !important;
+  cursor: not-allowed !important;
 }
-
-.react-datepicker__navigation-icon::before {
-  border-color: var(--color-harbour-stone) !important;
-}
+.react-datepicker__navigation { top: 0.75rem !important; }
+.react-datepicker__navigation-icon::before { border-color: var(--color-harbour-stone) !important; }
