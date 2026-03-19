@@ -14,9 +14,9 @@ export const lodgifyProperties: Record<string, LodgifyProperty> = {
     unitId: 425830,
     icsUrl: 'https://www.lodgify.com/65a57bc4-bff6-491b-8ff5-1b823735c3d9.ics',
   },
-  'shorefield-house': {
-    name: 'Shorefield House',
-    slug: 'shorefield-house',
+  'shorefield-eco-house': {
+    name: 'Shorefield Eco House',
+    slug: 'shorefield-eco-house',
     propertyId: 360241,
     unitId: 425833,
     icsUrl: 'https://www.lodgify.com/5d637e81-39ad-47a3-9abe-29a0fa1699c8.ics',

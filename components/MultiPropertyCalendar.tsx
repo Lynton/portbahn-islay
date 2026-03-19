@@ -42,7 +42,7 @@ export default function MultiPropertyCalendar() {
   const [loadingMaxGuests, setLoadingMaxGuests] = useState(false);
   const [properties, setProperties] = useState<Property[]>([
     { slug: 'portbahn-house', name: 'Portbahn House', lodgifyPropertyId: 360238 },
-    { slug: 'shorefield-house', name: 'Shorefield House', lodgifyPropertyId: 360241 },
+    { slug: 'shorefield-eco-house', name: 'Shorefield Eco House', lodgifyPropertyId: 360241 },
     { slug: 'curlew-cottage', name: 'Curlew Cottage', lodgifyPropertyId: 629317 },
   ]);
 
