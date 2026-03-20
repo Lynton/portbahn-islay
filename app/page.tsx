@@ -65,7 +65,7 @@ export default async function Home() {
                 {homepage.tagline}
               </p>
             )}
-            <Link href="/accommodation" className="typo-btn hover-opacity">View Accommodation</Link>
+            <Link href="/accommodation" className="typo-btn hover-btn">View Accommodation</Link>
           </div>
         </div>
 

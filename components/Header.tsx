@@ -130,7 +130,7 @@ export default function Header() {
                   <div className="h-px bg-washed-timber mx-3 my-1.5 opacity-40" />
                   <Link
                     href={item.href}
-                    className="block py-1.5 px-[18px] font-mono text-sm tracking-widest uppercase text-kelp-edge opacity-75 hover:opacity-100 transition-opacity"
+                    className="block py-1.5 px-[18px] font-mono text-sm tracking-widest uppercase text-kelp-edge opacity-75 hover-link"
                   >
                     View all {item.label.toLowerCase()} →
                   </Link>

@@ -47,7 +47,7 @@ export default function PropertyCardGrid({ properties, showHighlights = false }:
         const highlights = showHighlights ? buildHighlights(p) : [];
 
         return (
-          <Link key={p._id} href={`/accommodation/${propSlug}`} className="block hover-opacity">
+          <Link key={p._id} href={`/accommodation/${propSlug}`} className="block hover-card">
             <div className="bg-harbour-stone relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
               {imageUrl && <Image src={imageUrl} alt={p.heroImage?.alt || p.name} fill className="object-cover" />}
             </div>

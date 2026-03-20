@@ -509,13 +509,35 @@ p {
   .g-layout-spread { padding: 56px 20px; }
 }
 
-/* ─── HOVER UTILITIES ─────────────────────────────────────────────── */
+/* ─── HOVER SYSTEM ────────────────────────────────────────────────── */
+/* Four consistent hover patterns across the entire site:             */
+/*                                                                     */
+/* 1. hover-link   — text links: emerald colour + underline appears   */
+/* 2. hover-card   — cards/blocks: subtle shadow appears              */
+/* 3. hover-btn    — CTA buttons (emerald bg): slight dim             */
+/* 4. hover-light  — links on dark backgrounds: brightens to white    */
+/*                                                                     */
+/* Legacy aliases kept for backward compatibility during migration.    */
+
+/* Text links — default for inline and navigation links */
+.hover-link { transition: color 0.15s; }
+.hover-link:hover { color: var(--color-emerald-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Cards and interactive blocks — shadow on hover */
 .hover-card { transition: box-shadow 0.2s ease; }
 .hover-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09); }
+
+/* CTA buttons (emerald background) — slight dim */
+.hover-btn { transition: opacity 0.2s; }
+.hover-btn:hover { opacity: 0.85; }
+
+/* Links on dark/teal backgrounds — brightens to white */
+.hover-light { transition: color 0.2s; }
+.hover-light:hover { color: var(--color-sea-spray); }
+
+/* Legacy aliases */
 .hover-opacity { transition: opacity 0.2s; }
 .hover-opacity:hover { opacity: 0.85; }
-.hover-fade { transition: opacity 0.2s; }
-.hover-fade:hover { opacity: 0.75; }
 .hover-dim { opacity: 0.7; transition: opacity 0.15s; }
 .hover-dim:hover { opacity: 1; }
 

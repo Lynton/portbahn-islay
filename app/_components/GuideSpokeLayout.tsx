@@ -306,7 +306,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
           </div>
           <PropertyCardGrid properties={properties} showHighlights />
           <div className="max-w-[1280px] mx-auto mt-7 text-center">
-            <Link href="/availability" className="typo-btn hover-opacity">Check Availability</Link>
+            <Link href="/availability" className="typo-btn hover-btn">Check Availability</Link>
           </div>
         </section>
 
@@ -316,7 +316,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
             <span className="typo-kicker shrink-0">More guides</span>
             {relatedGuides.map((g, i) => (
               <span key={g.slug}>
-                <Link href={`${config.urlPrefix}${g.slug}`} className="hover-dim font-mono text-md text-harbour-stone">{g.title}</Link>
+                <Link href={`${config.urlPrefix}${g.slug}`} className="hover-link font-mono text-md text-harbour-stone">{g.title}</Link>
                 {i < relatedGuides.length - 1 && <span className="mx-1 text-washed-timber">·</span>}
               </span>
             ))}

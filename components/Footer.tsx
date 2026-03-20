@@ -77,7 +77,7 @@ export default function Footer() {
               <ul className="m-0 p-0" style={{ listStyle: 'none' }}>
                 {col.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="block py-[7px] font-mono transition-colors duration-200 hover:text-sea-spray" style={{ fontSize: '13px', color: 'rgba(255,254,250,0.7)' }}>
+                    <Link href={link.href} className="block py-[7px] font-mono hover-light" style={{ fontSize: '13px', color: 'rgba(255,254,250,0.7)' }}>
                       {link.label}
                     </Link>
                   </li>
@@ -92,8 +92,8 @@ export default function Footer() {
       <div className="max-w-[1400px] mx-auto flex justify-between items-center px-12 py-5 font-mono text-sm tracking-wide" style={{ borderTop: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,250,0.55)' }}>
         <span>&copy; {currentYear} Portbahn Islay. All rights reserved.</span>
         <div className="flex gap-6">
-          <Link href="/privacy" className="transition-colors duration-200 hover:text-sea-spray" style={{ color: 'rgba(255,255,250,0.5)' }}>Privacy</Link>
-          <Link href="/terms" className="transition-colors duration-200 hover:text-sea-spray" style={{ color: 'rgba(255,255,250,0.5)' }}>Terms</Link>
+          <Link href="/privacy" className="hover-light" style={{ color: 'rgba(255,255,250,0.5)' }}>Privacy</Link>
+          <Link href="/terms" className="hover-light" style={{ color: 'rgba(255,255,250,0.5)' }}>Terms</Link>
         </div>
       </div>
     </footer>
