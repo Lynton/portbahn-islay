@@ -8,8 +8,9 @@
 
 Portbahn Islay is a holiday rental website for three properties in Bruichladdich, Isle of Islay, Scotland, managed by Pi & Lynton.
 
-**Tech stack:** Next.js (App Router) + TypeScript + Sanity CMS v3 + Tailwind CSS + Vercel
+**Tech stack:** Next.js 16 (App Router) + TypeScript + Sanity CMS v3 + Tailwind CSS v4 + Vercel
 **Sanity dataset:** production
+**Tailwind:** v4 — configured via `@theme` in `globals.css`, NOT `tailwind.config.ts` (deleted)
 
 **Properties:**
 - Portbahn House — sleeps 8, 3 bedrooms, dogs welcome, ground floor bedrooms
@@ -20,82 +21,152 @@ Portbahn Islay is a holiday rental website for three properties in Bruichladdich
 
 ## Environment Architecture
 
-This repo is part of a structured three-repo environment. Know where you sit:
-
-| Environment | Path | Role |
-|---|---|---|
-| **sites/pbi/** | `~/dev/sites/pbi/` | **Here** — code, schemas, git history |
-| **ecosystem/** | `~/dev/ecosystem/` | Shared authority — playbook, ops, strategy |
-| **cw/** | `~/dev/cw/` | Cowork working files — content, design, research |
-| **GitHub/Vercel** | Remote | Version control + deployment pipeline |
-| **Cursor** | Tactical | Code refinement on this repo |
-
-**Flow:** Cowork (cw/) produces content specs → sites/pbi/ implements → GitHub/Vercel deploys
-
-**You receive specs via:** `~/dev/cw/pbi/content/` (post-restructure)
-**You do not create content strategy** — implement what the specs say.
-
-### Key paths (post-restructure)
+| Path | Role |
+|------|------|
+| **sites/pbi/** (`~/dev/sites/pbi/`) | **This repo** — code, schemas, git history |
+| **ecosystem/** (`~/dev/ecosystem/`) | Shared authority — playbook, ops, strategy |
+| **reference/** (`~/dev/reference/`) | Canonical content — brand, tone, content specs (read-only) |
+| **_work/** (`~/dev/_work/`) | Working files — specs, drafts, intake |
+| **GitHub/Vercel** | Version control + deployment pipeline |
 
 ```
 ~/dev/
-├── ecosystem/          ← git repo A: playbook, ops, strategy
+├── ecosystem/          ← playbook, ops, strategy
 ├── sites/
-│   └── pbi/           ← git repo B: this repo (code)
-└── cw/                ← git repo C: content, design, research
-    └── pbi/
-        ├── content/   ← canonical content docs live here
-        ├── design/    ← design assets and briefs
-        ├── reviews/   ← property review files
-        └── nuance/    ← brief + property details
+│   └── pbi/           ← this repo (code)
+├── reference/
+│   └── pbi/           ← canonical content (read-only)
+│       ├── brand/     ← tone of voice, critical facts
+│       ├── content/   ← canonical blocks, guides
+│       └── ...
+└── _work/
+    └── pbi/           ← working files, specs, intake
 ```
 
 ---
 
-## Current Phase (2026-02-23)
+## Current State (2026-03-20)
 
 **Active build: PBI (Portbahn Islay)**
 
-All 12 pages built. Canonical block system live end-to-end. Next: hero images in Studio, then UI redesign with v0 (property pages first).
+All pages built. Canonical block system live. Guide pages redesigned with Phaidon/Taschen editorial layouts. CSS fully migrated to Tailwind v4 with design system tokens and typography presets. UI is designed and built iteratively in CC — v0 is not used.
 
 **Start here:**
-1. Read `~/dev/ecosystem/PROJECT-STATUS.md` — cross-environment status, current blockers, next actions
-2. Check git log to orient on what's already done
-3. Check `~/dev/cw/pbi/content/` for latest content specs
+1. Read `~/dev/ecosystem/PROJECT-STATUS.md` — cross-environment status
+2. Check git log to orient on recent work
+3. Check `~/dev/reference/pbi/content/` for content specs
 
 ---
 
 ## Key Files
 
-### In this repo (code + schema)
+### In this repo
 | What | Where |
 |------|-------|
-| **Sanity schema spec** | `docs/schemas/SANITY-SCHEMA-FINAL.md` |
-| **Sanity build spec** | `docs/content/SANITY-BUILD-SPEC.md` |
+| **CSS / design system** | `app/globals.css` — `@theme` tokens, typography presets, hover system |
+| **Shared data queries** | `lib/queries.ts` — `getProperties()` etc. |
+| **PortableText config** | `lib/portable-text.tsx` |
+| **Hub template** | `app/_components/HubPage.tsx` |
+| **Spoke template** | `app/_components/GuideSpokeLayout.tsx` |
 | **Sanity schemas (code)** | `sanity/schemas/` |
-| **Page components** | `app/` |
-| **Shared components** | `components/` |
-| **Data architecture** | `docs/architecture/` |
 
-### In ecosystem/ (shared authority)
+### Reference (read-only)
 | What | Where |
 |------|-------|
 | **Project status** | `~/dev/ecosystem/PROJECT-STATUS.md` |
-| **AI Search Playbook** | `~/dev/ecosystem/playbook-v1.4.0/` |
+| **AI Search Playbook** | `~/dev/ecosystem/ai-search-playbook/` |
+| **Canonical blocks** | `~/dev/reference/pbi/content/CANONICAL-BLOCKS-MERGED-v4.md` |
+| **Tone of voice** | `~/dev/reference/pbi/brand/PORTBAHN-TONE-OF-VOICE-SKILL.md` |
+| **Critical facts** | `~/dev/reference/pbi/brand/CRITICAL-FACTS.md` |
+| **Guide page content** | `~/dev/reference/pbi/content/guides/` |
 
-### In cw/pbi/ (Cowork content files)
-| What | Where |
-|------|-------|
-| **Canonical blocks** | `~/dev/cw/pbi/content/CANONICAL-BLOCKS-MERGED-v4.md` |
-| **Tone of voice** | `~/dev/cw/pbi/PORTBAHN-TONE-OF-VOICE-SKILL.md` |
-| **Content architecture** | `~/dev/cw/pbi/content/CONTENT-ARCHITECTURE-MVP.md` |
-| **Homepage content** | `~/dev/cw/pbi/content/HOMEPAGE-V3-CORRECTED.md` |
-| **Getting Here content** | `~/dev/cw/pbi/content/GETTING-HERE-V3-CORRECTED.md` |
-| **Explore Islay content** | `~/dev/cw/pbi/content/EXPLORE-ISLAY-V3-CORRECTED.md` |
-| **Property FAQs** | `~/dev/cw/pbi/content/PROPERTY-FAQ-V3-CORRECTED.md` |
-| **FAQ data (35 Q&As)** | `~/dev/cw/pbi/content/FAQS-STRUCTURED-PORTBAHN-ISLAY.md` |
-| **Guide page content** | `~/dev/cw/pbi/content/guides/` |
-| **Nuance brief** | `~/dev/cw/pbi/nuance/PBI-NUANCE-BRIEF-ENHANCED.md` |
+---
+
+## CSS & Tailwind System
+
+**Tailwind v4** — all configuration lives in `@theme` block in `app/globals.css`. There is NO `tailwind.config.ts`. Tailwind v4 auto-generates utility classes from `@theme` tokens.
+
+### Design tokens (`@theme`)
+- **7 colours** — `--color-kelp-edge`, `--color-sound-of-islay`, `--color-harbour-stone`, `--color-machair-sand`, `--color-sea-spray`, `--color-washed-timber`, `--color-emerald-accent`
+- **2 font families** — `--font-serif` (The Seasons), `--font-mono` (IBM Plex Mono)
+- **10 font sizes** — `--text-2xs` (8px) through `--text-3xl` (16px)
+- **9 letter-spacings** — `--tracking-tight` through `--tracking-ultra`
+- **10 line-heights** — `--leading-none` through `--leading-wide`
+
+### Typography presets (`globals.css`)
+23 presets covering all recurring patterns. Use these instead of inline styles:
+- `typo-kicker` — mono/9px/uppercase/kelp-edge (section labels)
+- `typo-label` — mono/10px/uppercase (property page labels)
+- `typo-h1`, `typo-h2`, `typo-h3` — serif headings at three scales
+- `typo-body`, `typo-body-sm` — mono body text
+- `typo-cta`, `typo-btn` — CTA text and button styles
+- `typo-h2-light`, `typo-h3-light`, `typo-body-light`, `typo-kicker-light` — light-on-dark variants for teal backgrounds
+- `typo-spread-heading`, `typo-card-title`, `typo-pull-quote`, `typo-offset-quote` — specific layout contexts
+- `typo-score`, `typo-review-quote`, `typo-caption-serif`, `typo-fact-label`, `typo-fact-value` — property page specifics
+
+### Hover system
+Four patterns, defined in `globals.css`:
+- `hover-link` — text links: emerald + underline
+- `hover-card` — cards/blocks: shadow appears
+- `hover-btn` — CTA buttons: slight dim
+- `hover-light` — links on dark backgrounds: brightens to white
+
+### Rules
+- **Never use inline `style={{}}` for typography** — use a `typo-*` preset or Tailwind utilities
+- **Inline styles are only for**: gradients, `clamp()` sizes, `aspectRatio`, `vh` heights, `rgba` overrides, interactive state transforms
+- **Never create a new `tailwind.config.ts`** — all config is in `@theme`
+- **Colours auto-generate utilities** — `bg-kelp-edge`, `text-sea-spray`, `border-washed-timber` all work from `@theme` tokens
+
+---
+
+## Page Architecture
+
+### Shared templates (single source of truth)
+| Template | File | Used by |
+|----------|------|---------|
+| **HubPage** | `app/_components/HubPage.tsx` | `/explore-islay`, `/islay-travel`, `/accommodation` |
+| **GuideSpokeLayout** | `app/_components/GuideSpokeLayout.tsx` | `/explore-islay/[slug]`, `/islay-travel/[slug]` |
+
+### Page files are config-only
+Hub and spoke page files (~90 lines each) contain ONLY:
+- Data fetching (GROQ queries)
+- Config object (breadcrumbs, labels, fallback images, related guides)
+- `return <SharedTemplate config={config} />`
+
+**Never duplicate rendering logic in page files.** All rendering lives in the shared templates.
+
+### Shared data
+| Query | File | Used by |
+|-------|------|---------|
+| `getProperties()` | `lib/queries.ts` | Homepage, guide spokes, accommodation hub, about page |
+
+### Shared components
+| Component | File | Purpose |
+|-----------|------|---------|
+| `PropertyCardGrid` | `components/PropertyCardGrid.tsx` | Property cards with image, bullets, highlights |
+| `EntityCard` | `components/EntityCard.tsx` | Entity listing cards (sand variant for guide pages) |
+| `CanonicalBlock` | `components/CanonicalBlock.tsx` | Canonical content block (full/teaser/compact) |
+| `BlockRenderer` | `components/BlockRenderer.tsx` | Maps block references to CanonicalBlock |
+
+### URL structure
+```
+/                           ← Homepage
+/accommodation              ← Hub (HubPage)
+/accommodation/[slug]       ← Property page (unique template)
+/explore-islay              ← Hub (HubPage)
+/explore-islay/[slug]       ← Guide spoke (GuideSpokeLayout)
+/islay-travel               ← Hub (HubPage)
+/islay-travel/[slug]        ← Travel spoke (GuideSpokeLayout)
+```
+
+The two spoke paths (`/explore-islay/[slug]` and `/islay-travel/[slug]`) exist as separate Next.js routes because the URL structure matters for SEO/AI retrieval — travel intent vs explore intent as distinct hub-and-spoke clusters. Both use the same `GuideSpokeLayout` template with different config.
+
+### Guide page features
+- **Two layout variants**: Overview (first block, 3-col with vertical label + sticky RHC nav) → Spread (all others, heading left + body right)
+- **Gallery image pool**: `galleryImages` array on `guidePage` schema — template picks by index at fixed insertion points
+- **Pull quote**: `pullQuote` field — dedicated editorial sentence, auto-extracted if not set
+- **Quick nav**: RHC sticky nav built from all heading sources (content blocks, editorial, entities, FAQs)
+- **Anchor navigation**: all h2/h3 headings rendered with `id` attributes, `scroll-padding-top: 80px` for fixed header
 
 ---
 
@@ -111,7 +182,7 @@ The site uses a canonical content block architecture. Core principle: repeated c
 
 **Rule:** Never edit repeated content inline on a page. Edit the canonical block in Sanity Studio — all pages referencing it update automatically.
 
-Full block list: `~/dev/cw/pbi/content/CANONICAL-BLOCKS-MERGED-v4.md` (22 blocks, incl. blocks 17–22 guide FAQs)
+Full block list: `~/dev/reference/pbi/content/CANONICAL-BLOCKS-MERGED-v4.md` (22 blocks, incl. blocks 17–22 guide FAQs)
 Schema: `docs/schemas/SANITY-SCHEMA-FINAL.md`
 
 ---
