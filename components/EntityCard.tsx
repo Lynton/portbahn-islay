@@ -175,7 +175,11 @@ export default function EntityCard({ entity, variant = 'default' }: EntityCardPr
           {CATEGORY_LABELS[category] || category}
         </p>
         <h3 className="font-serif text-xl text-harbour-stone leading-snug">
-          {entity.name}
+          {contact?.website ? (
+            <a href={contact.website} target="_blank" rel="noopener noreferrer" className="hover-link">{entity.name}</a>
+          ) : (
+            entity.name
+          )}
         </h3>
       </div>
 

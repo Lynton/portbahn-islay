@@ -84,38 +84,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
   // Slugify heading text for anchor IDs
   const toAnchor = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
-  // Build quick nav items from all heading sources
-  const quickNav: Array<{ label: string; anchor: string }> = [];
-  // Content block titles (skip first — it's the overview section they're already in)
-  blocks.slice(1).forEach((b: any) => {
-    const title = b.customHeading || b.block.title;
-    if (title) quickNav.push({ label: title, anchor: `block-${b.block.blockId?.current || b.block._id}` });
-  });
-  // Extended editorial headings
-  (page.editorialHeadings || []).forEach((h: string) => {
-    if (h) quickNav.push({ label: h, anchor: toAnchor(h) });
-  });
-  // Entities and FAQs
-  if (entities.length > 0) quickNav.push({ label: 'Places & Listings', anchor: 'entities' });
-  if (faqs.length > 0) quickNav.push({ label: 'Common Questions', anchor: 'faqs' });
-
-  // Custom PortableText for extended editorial — adds id to h2/h3
-  const editorialComponents = {
-    ...portableTextComponents,
-    block: {
-      ...portableTextComponents.block,
-      h2: ({ children }: any) => {
-        const text = typeof children === 'string' ? children : (Array.isArray(children) ? children.join('') : '');
-        return <h2 id={toAnchor(text)} className="typo-h2 mt-12 mb-4">{children}</h2>;
-      },
-      h3: ({ children }: any) => {
-        const text = typeof children === 'string' ? children : (Array.isArray(children) ? children.join('') : '');
-        return <h3 id={toAnchor(text)} className="font-serif font-bold text-[1.25rem] text-harbour-stone leading-snug mt-8 mb-3">{children}</h3>;
-      },
-    },
-  };
-
-  // Entity section heading — contextual, not generic
+  // Entity section heading — contextual, not generic (must be before quickNav)
   const entityHeading = (() => {
     if (entities.length === 0) return '';
     const categories = [...new Set(entities.map((e: any) => e.category).filter(Boolean))];
@@ -129,6 +98,37 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
     }
     return `${page.title} — Places & Services`;
   })();
+
+  // Build quick nav from ALL heading sources in page order
+  const quickNav: Array<{ label: string; anchor: string }> = [];
+  blocks.forEach((b: any) => {
+    const title = b.customHeading || b.block.title;
+    if (title) quickNav.push({ label: title, anchor: `block-${b.block.blockId?.current || b.block._id}` });
+    (b.block.contentHeadings || []).forEach((h: string) => {
+      if (h) quickNav.push({ label: h, anchor: toAnchor(h) });
+    });
+  });
+  (page.editorialHeadings || []).forEach((h: string) => {
+    if (h) quickNav.push({ label: h, anchor: toAnchor(h) });
+  });
+  if (entities.length > 0) quickNav.push({ label: entityHeading || 'Places & Listings', anchor: 'entities' });
+  if (faqs.length > 0) quickNav.push({ label: 'Common Questions', anchor: 'faqs' });
+
+  // PortableText with anchored headings
+  const anchoredComponents = {
+    ...portableTextComponents,
+    block: {
+      ...portableTextComponents.block,
+      h2: ({ children }: any) => {
+        const text = typeof children === 'string' ? children : (Array.isArray(children) ? children.join('') : '');
+        return <h2 id={toAnchor(text)} className="typo-h2 mt-12 mb-4">{children}</h2>;
+      },
+      h3: ({ children }: any) => {
+        const text = typeof children === 'string' ? children : (Array.isArray(children) ? children.join('') : '');
+        return <h3 id={toAnchor(text)} className="font-serif font-bold text-[1.25rem] text-harbour-stone leading-snug mt-8 mb-3">{children}</h3>;
+      },
+    },
+  };
 
   let galleryIndex = 0;
   const nextGalleryImage = () => galleryImage(page, galleryIndex++);
@@ -171,7 +171,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
 
         {/* ── TITLE FRAME ────────────────────────────────────────────── */}
         <section className="bg-machair-sand" style={{ padding: '80px 48px 72px' }}>
-          <div className="max-w-[860px] mx-auto">
+          <div className="max-w-[860px]">
             <p className="typo-kicker mb-5">{config.hubLabel}</p>
             <h1 className="typo-h1 mb-7">{page.title}</h1>
             {page.introduction && (
@@ -219,12 +219,12 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
           return (
             <React.Fragment key={blockRef.block._id || index}>
               {isFirst ? (
-                <section className="bg-sea-spray" data-block-id={blockRef.block.blockId?.current}>
+                <section className="bg-sea-spray" id={`block-${blockRef.block.blockId?.current || blockRef.block._id}`} data-block-id={blockRef.block.blockId?.current}>
                   <div className="g-layout-overview">
                     <div className="g-layout-overview-label">{blockRef.block.entityType || 'Guide'}</div>
                     <div className="g-layout-overview-body">
                       {heading && <h2 className="typo-h2 mb-8">{heading}</h2>}
-                      {content && content.length > 0 && <div><PortableText value={content} components={portableTextComponents} /></div>}
+                      {content && content.length > 0 && <div><PortableText value={content} components={anchoredComponents} /></div>}
                       {teaserCta}
                       {keyFactsEl}
                     </div>
@@ -252,7 +252,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                     <div className="g-layout-spread-grid">
                       <div>{heading && <h2 className="typo-spread-heading sticky top-[100px]">{heading}</h2>}</div>
                       <div>
-                        {content && content.length > 0 && <PortableText value={content} components={portableTextComponents} />}
+                        {content && content.length > 0 && <PortableText value={content} components={anchoredComponents} />}
                         {teaserCta}
                         {keyFactsEl}
                       </div>
@@ -285,7 +285,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
               <p className="typo-kicker mb-5">Further reading</p>
               <div className="g-layout-spread-grid">
                 <div><h2 className="typo-spread-heading sticky top-[100px]">More to<br />Discover</h2></div>
-                <div><PortableText value={page.extendedEditorial} components={editorialComponents} /></div>
+                <div><PortableText value={page.extendedEditorial} components={anchoredComponents} /></div>
               </div>
             </div>
           </section>
@@ -375,7 +375,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
 
         {/* ── BACK TO TOP ──────────────────────────────────────────── */}
         <div className="fixed bottom-6 right-6 z-50">
-          <a href="#top" className="flex items-center justify-center w-10 h-10 bg-harbour-stone/80 text-sea-spray rounded-full hover-btn" aria-label="Back to top" style={{ backdropFilter: 'blur(4px)' }}>
+          <a href="#top" className="flex items-center justify-center w-10 h-10 bg-sea-spray text-kelp-edge border border-washed-timber rounded-full hover-card" aria-label="Back to top" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.12)' }}>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M8 3L3 8.5M8 3L13 8.5M8 3V14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
