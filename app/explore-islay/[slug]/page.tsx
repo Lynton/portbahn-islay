@@ -14,7 +14,6 @@ import { portableTextComponents } from '@/lib/portable-text';
 
 export const revalidate = 60;
 
-// Property data for "Stay on Islay" cards
 const getProperties = cache(async () => {
   const query = `*[_type == "property"]{
     _id, name, slug, location, heroImage,
@@ -25,21 +24,13 @@ const getProperties = cache(async () => {
 });
 
 interface PropertyCard {
-  _id: string;
-  name: string;
-  slug: string | { current: string };
+  _id: string; name: string; slug: string | { current: string };
   location: string | { address?: string; nearestTown?: string };
   heroImage?: { alt?: string; asset: { _ref: string } };
-  sleeps?: number;
-  bedrooms?: number;
-  bathrooms?: number;
-  petFriendly?: boolean;
-  kitchenDining?: string[];
-  livingAreas?: string[];
-  outdoorFeatures?: string[];
+  sleeps?: number; bedrooms?: number; bathrooms?: number; petFriendly?: boolean;
+  kitchenDining?: string[]; livingAreas?: string[]; outdoorFeatures?: string[];
 }
 
-// Stock photo fallbacks (Unsplash CC) — replace with Sanity hero images when available
 const GUIDE_IMAGES: Record<string, string> = {
   'islay-distilleries':   'https://images.unsplash.com/photo-1527856263669-12c3a0af2aa6?w=1600&h=640&fit=crop&auto=format',
   'islay-beaches':        'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&h=640&fit=crop&auto=format',
@@ -94,39 +85,31 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (TRAVEL_SLUGS.includes(slug)) notFound();
   const page = await getGuidePage(slug);
   if (!page) return { title: 'Guide Not Found | Portbahn Islay' };
-  const canonicalUrl = `${process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahnislay.co.uk'}/explore-islay/${slug}`;
   return {
     title: page.seoTitle || `${page.title} | Portbahn Islay`,
     description: page.seoDescription || `Discover ${page.title} on the Isle of Islay.`,
-    alternates: { canonical: canonicalUrl },
+    alternates: { canonical: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahnislay.co.uk'}/explore-islay/${slug}` },
   };
 }
 
-// ── Helper: gallery image at index, returns Sanity image or null ──────
-function galleryImage(page: any, index: number) {
-  return page.galleryImages?.[index] || null;
-}
+function galleryImage(page: any, index: number) { return page.galleryImages?.[index] || null; }
 
-// ── Helper: full-bleed image break with optional caption bar ──────────
 function ImageBreak({ image, caption, page }: { image: any; caption?: string; page: any }) {
   return (
     <div>
-      <div style={{ overflow: 'hidden' }}>
+      <div className="overflow-hidden">
         <Image
           src={urlFor(image).width(1600).height(900).url()}
           alt={image.alt || page.title}
           width={1600} height={900}
-          style={{ width: '100%', height: '50vh', maxHeight: '460px', objectFit: 'cover', objectPosition: 'center 40%', display: 'block' }}
+          className="w-full object-cover block"
+          style={{ height: '50vh', maxHeight: '460px', objectPosition: 'center 40%' }}
         />
       </div>
       {caption && (
         <div className="c1b-caption-bar">
-          <span style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: '18px', color: 'var(--color-sea-spray)', fontStyle: 'italic' }}>
-            {caption}
-          </span>
-          <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: 'var(--color-washed-timber)', letterSpacing: '0.12em', textTransform: 'uppercase', flexShrink: 0, marginLeft: '24px' }}>
-            Isle of Islay
-          </span>
+          <span className="font-serif text-lg text-sea-spray italic">{caption}</span>
+          <span className="typo-caption ml-6 shrink-0">Isle of Islay</span>
         </div>
       )}
     </div>
@@ -161,7 +144,6 @@ export default async function GuidePage({ params }: PageProps) {
   const faqs = ((page.faqBlocks ?? []) as (FaqItem | null)[]).filter((faq): faq is FaqItem => !!faq?.question);
   const blocks = (page.contentBlocks || []).filter((b: any) => b?.block?._id);
 
-  // Pull quote: dedicated field → first sentence fallback
   const pullQuote: string | null = (() => {
     if (page.pullQuote) return page.pullQuote;
     const firstPara = (page.introduction || '').split('\n\n')[0] || '';
@@ -180,7 +162,6 @@ export default async function GuidePage({ params }: PageProps) {
     { slug: 'islay-villages', title: 'Villages of Islay' },
   ].filter((g) => g.slug !== slug).slice(0, 6);
 
-  // Gallery image pool — pick by index, null if not available
   let galleryIndex = 0;
   const nextGalleryImage = () => galleryImage(page, galleryIndex++);
 
@@ -203,41 +184,33 @@ export default async function GuidePage({ params }: PageProps) {
               <Image src={urlFor(page.heroImage).width(1600).height(900).url()} alt={page.heroImage.alt || page.title} fill className="object-cover" priority />
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={GUIDE_IMAGES[slug]} alt={page.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={GUIDE_IMAGES[slug]} alt={page.title} className="w-full h-full object-cover" />
             )}
-            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(15,58,74,0.05) 0%, rgba(15,58,74,0.45) 100%)' }} />
+            <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(15,58,74,0.05) 0%, rgba(15,58,74,0.45) 100%)' }} />
           </div>
         )}
 
         {/* ── CAPTION BAR ────────────────────────────────────────────── */}
         <div className="c1b-caption-bar">
-          <nav style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.12em', color: 'rgba(255,254,250,0.65)' }}>
-            <Link href="/" style={{ opacity: 0.7, textDecoration: 'none', color: 'inherit' }}>Home</Link>
-            <span style={{ margin: '0 10px', opacity: 0.35 }}>·</span>
-            <Link href="/explore-islay" style={{ opacity: 0.7, textDecoration: 'none', color: 'inherit' }}>Explore Islay</Link>
-            <span style={{ margin: '0 10px', opacity: 0.35 }}>·</span>
-            <span style={{ color: 'rgba(255,254,250,0.9)' }}>{page.title}</span>
+          <nav className="typo-nav">
+            <Link href="/" className="opacity-70 no-underline">Home</Link>
+            <span className="mx-2.5 opacity-35">·</span>
+            <Link href="/explore-islay" className="opacity-70 no-underline">Explore Islay</Link>
+            <span className="mx-2.5 opacity-35">·</span>
+            <span className="opacity-100" style={{ color: 'rgba(255,254,250,0.9)' }}>{page.title}</span>
           </nav>
-          <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'rgba(255,254,250,0.5)' }}>
-            Isle of Islay, Scotland
-          </span>
+          <span className="typo-caption" style={{ color: 'rgba(255,254,250,0.5)' }}>Isle of Islay, Scotland</span>
         </div>
 
         {/* ── TITLE FRAME ────────────────────────────────────────────── */}
-        <section style={{ background: 'var(--color-machair-sand)', padding: '80px 48px 72px' }}>
-          <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-            <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.20em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '20px' }}>
-              Explore Islay
-            </p>
-            <h1 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: 'clamp(2.75rem, 6vw, 4.5rem)', color: 'var(--color-harbour-stone)', lineHeight: 0.98, letterSpacing: '-0.02em', marginBottom: '28px' }}>
-              {page.title}
-            </h1>
+        <section className="bg-machair-sand" style={{ padding: '80px 48px 72px' }}>
+          <div className="max-w-[860px] mx-auto">
+            <p className="typo-kicker mb-5">Explore Islay</p>
+            <h1 className="typo-h1 mb-7">{page.title}</h1>
             {page.introduction && (
-              <div style={{ maxWidth: '640px' }}>
+              <div className="max-w-[640px]">
                 {page.introduction.split('\n\n').filter(Boolean).slice(0, 2).map((para: string, i: number) => (
-                  <p key={i} style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '15px', color: 'var(--color-harbour-stone)', opacity: 0.75, lineHeight: 1.7, marginBottom: '16px' }}>
-                    {para}
-                  </p>
+                  <p key={i} className="typo-body opacity-75 mb-4">{para}</p>
                 ))}
               </div>
             )}
@@ -250,73 +223,65 @@ export default async function GuidePage({ params }: PageProps) {
           const content = blockRef.version === 'full' ? blockRef.block.fullContent : blockRef.block.teaserContent;
           const showKeyFacts = blockRef.showKeyFacts && blockRef.block.keyFacts?.length > 0;
           const isFirst = index === 0;
-          const bg = index % 2 === 0 ? 'var(--color-sea-spray)' : 'var(--color-machair-sand)';
+          const bgClass = index % 2 === 0 ? 'bg-sea-spray' : 'bg-machair-sand';
 
-          // Teaser CTA
           const teaserCta = blockRef.version === 'teaser' && blockRef.block.canonicalHome ? (
-            <p style={{ marginTop: '24px' }}>
-              <Link href={blockRef.block.canonicalHome} style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', letterSpacing: '0.06em', color: 'var(--color-kelp-edge)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
+            <p className="mt-6">
+              <Link href={blockRef.block.canonicalHome} className="font-mono text-base tracking-wide text-kelp-edge underline underline-offset-[3px]">
                 More about {blockRef.block.title} →
               </Link>
             </p>
           ) : null;
 
-          // Key facts
           const keyFactsEl = showKeyFacts ? (
-            <div style={{ marginTop: '32px', padding: '24px 28px', background: index % 2 === 0 ? 'var(--color-machair-sand)' : 'var(--color-sea-spray)', borderLeft: '3px solid var(--color-kelp-edge)' }}>
-              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '16px' }}>Key Facts</p>
-              <dl style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '16px' }}>
+            <div className={`mt-8 p-6 border-l-[3px] border-kelp-edge ${index % 2 === 0 ? 'bg-machair-sand' : 'bg-sea-spray'}`}>
+              <p className="typo-kicker mb-4" style={{ letterSpacing: 'var(--tracking-caps)' }}>Key Facts</p>
+              <dl className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
                 {blockRef.block.keyFacts.map((fact: any, idx: number) => (
                   <div key={idx}>
-                    <dt style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', color: 'var(--color-harbour-stone)', opacity: 0.55, marginBottom: '4px' }}>{fact.fact}</dt>
-                    <dd style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '13px', color: 'var(--color-harbour-stone)', fontWeight: 600 }}>{fact.value}</dd>
+                    <dt className="font-mono text-sm text-harbour-stone opacity-55 mb-1">{fact.fact}</dt>
+                    <dd className="font-mono text-lg text-harbour-stone font-semibold">{fact.value}</dd>
                   </div>
                 ))}
               </dl>
             </div>
           ) : null;
 
-          // Try to claim next gallery image for break after this block
           const breakImg = (index < blocks.length - 1) ? nextGalleryImage() : null;
 
           return (
             <React.Fragment key={blockRef.block._id || index}>
-              {/* ── Layout A: first block — overview with vertical label ── */}
               {isFirst ? (
-                <section style={{ background: 'var(--color-sea-spray)' }} data-block-id={blockRef.block.blockId?.current}>
+                <section className="bg-sea-spray" data-block-id={blockRef.block.blockId?.current}>
                   <div className="g-layout-overview">
                     <div className="g-layout-overview-label">{blockRef.block.entityType || 'Guide'}</div>
                     <div className="g-layout-overview-body">
-                      {heading && <h2 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3.25rem)', lineHeight: 1.08, color: 'var(--color-harbour-stone)', letterSpacing: '-0.01em', marginBottom: '32px' }}>{heading}</h2>}
+                      {heading && <h2 className="typo-h2 mb-8">{heading}</h2>}
                       {content && content.length > 0 && <div><PortableText value={content} components={portableTextComponents} /></div>}
                       {teaserCta}
                       {keyFactsEl}
                     </div>
                     <div className="g-layout-overview-aside">
-                      {/* On this page — quick nav */}
                       <nav>
-                        <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '16px' }}>On this page</p>
-                        <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        <p className="typo-kicker mb-4" style={{ letterSpacing: 'var(--tracking-caps)' }}>On this page</p>
+                        <ul className="flex flex-col gap-2.5" style={{ listStyle: 'none' }}>
                           {blocks.slice(1).map((b: any) => (
-                            <li key={b.block._id}><span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'var(--color-harbour-stone)', opacity: 0.7 }}>{b.customHeading || b.block.title}</span></li>
+                            <li key={b.block._id}><span className="font-mono text-base text-harbour-stone opacity-70">{b.customHeading || b.block.title}</span></li>
                           ))}
-                          {entities.length > 0 && <li><span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'var(--color-harbour-stone)', opacity: 0.7 }}>Essential Listings</span></li>}
-                          {faqs.length > 0 && <li><span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'var(--color-harbour-stone)', opacity: 0.7 }}>Frequently Asked</span></li>}
+                          {entities.length > 0 && <li><span className="font-mono text-base text-harbour-stone opacity-70">Essential Listings</span></li>}
+                          {faqs.length > 0 && <li><span className="font-mono text-base text-harbour-stone opacity-70">Frequently Asked</span></li>}
                         </ul>
                       </nav>
                     </div>
                   </div>
                 </section>
               ) : (
-              /* ── Layout B: all other blocks — spread (heading left, body right) ── */
-                <section style={{ background: bg }} data-block-id={blockRef.block.blockId?.current}>
+                <section className={bgClass} data-block-id={blockRef.block.blockId?.current}>
                   <div className="g-layout-spread">
-                    {blockRef.block.entityType && (
-                      <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '20px' }}>{blockRef.block.entityType}</p>
-                    )}
+                    {blockRef.block.entityType && <p className="typo-kicker mb-5">{blockRef.block.entityType}</p>}
                     <div className="g-layout-spread-grid">
                       <div>
-                        {heading && <h2 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.08, color: 'var(--color-harbour-stone)', letterSpacing: '-0.01em', position: 'sticky', top: '100px' }}>{heading}</h2>}
+                        {heading && <h2 className="typo-spread-heading sticky top-[100px]">{heading}</h2>}
                       </div>
                       <div>
                         {content && content.length > 0 && <PortableText value={content} components={portableTextComponents} />}
@@ -328,22 +293,18 @@ export default async function GuidePage({ params }: PageProps) {
                 </section>
               )}
 
-              {/* Gallery image break after first block (with caption bar) */}
               {isFirst && (() => {
                 const img = breakImg || (blocks.length > 1 ? page.heroImage : null);
                 if (!img) return null;
-                const caption = img.caption || img.alt || `${page.title} — Isle of Islay`;
-                return <ImageBreak image={img} caption={caption} page={page} />;
+                return <ImageBreak image={img} caption={img.caption || img.alt || `${page.title} — Isle of Islay`} page={page} />;
               })()}
 
-              {/* Pull quote after first block */}
               {isFirst && blocks.length > 1 && pullQuote && (
-                <div className="g-pull-quote" style={{ background: 'var(--color-sound-of-islay)' }}>
-                  <blockquote style={{ color: 'var(--color-sea-spray)' }}>&ldquo;{pullQuote}&rdquo;</blockquote>
+                <div className="g-pull-quote bg-sound-of-islay">
+                  <blockquote className="text-sea-spray">&ldquo;{pullQuote}&rdquo;</blockquote>
                 </div>
               )}
 
-              {/* Gallery image break between later blocks */}
               {!isFirst && breakImg && <ImageBreak image={breakImg} page={page} />}
             </React.Fragment>
           );
@@ -351,23 +312,20 @@ export default async function GuidePage({ params }: PageProps) {
 
         {/* ── EXTENDED EDITORIAL ──────────────────────────────────────── */}
         {page.extendedEditorial && page.extendedEditorial.length > 0 && (
-          <section style={{ background: blocks.length % 2 === 0 ? 'var(--color-sea-spray)' : 'var(--color-machair-sand)' }}>
+          <section className={blocks.length % 2 === 0 ? 'bg-sea-spray' : 'bg-machair-sand'}>
             <div className="g-layout-spread">
-              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '20px' }}>Further reading</p>
+              <p className="typo-kicker mb-5">Further reading</p>
               <div className="g-layout-spread-grid">
-                <div>
-                  <h2 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.08, color: 'var(--color-harbour-stone)', letterSpacing: '-0.01em', position: 'sticky', top: '100px' }}>More to<br />Discover</h2>
-                </div>
+                <div><h2 className="typo-spread-heading sticky top-[100px]">More to<br />Discover</h2></div>
                 <div><PortableText value={page.extendedEditorial} components={portableTextComponents} /></div>
               </div>
             </div>
           </section>
         )}
 
-        {/* ── Pull quote fallback (single block pages) ───────────────── */}
         {blocks.length <= 1 && pullQuote && (
-          <div className="g-pull-quote" style={{ background: 'var(--color-sound-of-islay)' }}>
-            <blockquote style={{ color: 'var(--color-sea-spray)' }}>&ldquo;{pullQuote}&rdquo;</blockquote>
+          <div className="g-pull-quote bg-sound-of-islay">
+            <blockquote className="text-sea-spray">&ldquo;{pullQuote}&rdquo;</blockquote>
           </div>
         )}
 
@@ -375,8 +333,8 @@ export default async function GuidePage({ params }: PageProps) {
         {entities.length > 0 && (
           <section className="g-entities">
             <div className="g-section-header">
-              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '12px' }}>Featured</p>
-              <h2 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'var(--color-harbour-stone)', lineHeight: 1.05, letterSpacing: '-0.01em', marginBottom: '16px' }}>Essential Listings</h2>
+              <p className="typo-kicker mb-3">Featured</p>
+              <h2 className="typo-h2 mb-4">Essential Listings</h2>
               <GuideMap entities={entities} pageTitle={page.title} />
             </div>
             <div className="g-entities-grid">
@@ -385,36 +343,32 @@ export default async function GuidePage({ params }: PageProps) {
           </section>
         )}
 
-        {/* ── Image break before FAQs ────────────────────────────────── */}
-        {faqs.length > 0 && (() => {
-          const img = nextGalleryImage();
-          if (!img) return null;
-          return <ImageBreak image={img} page={page} />;
-        })()}
+        {faqs.length > 0 && (() => { const img = nextGalleryImage(); return img ? <ImageBreak image={img} page={page} /> : null; })()}
 
         {/* ── FAQs ───────────────────────────────────────────────────── */}
         {faqs.length > 0 && (
           <section className="g-faqs">
             <div className="g-faqs-inner">
-              <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'rgba(255,254,250,0.55)', marginBottom: '12px' }}>Common questions</p>
-              <h2 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'var(--color-sea-spray)', lineHeight: 1.05, letterSpacing: '-0.01em', marginBottom: '48px' }}>Frequently Asked</h2>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '36px' }}>
+              <p className="typo-kicker mb-3" style={{ color: 'rgba(255,254,250,0.55)' }}>Common questions</p>
+              <h2 className="typo-h2 text-sea-spray mb-12">Frequently Asked</h2>
+              <div className="flex flex-col gap-9">
                 {faqs.map((faq) => (
                   <div key={faq._id} className="g-faq-item">
-                    <h3 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: 'clamp(1.1rem, 2vw, 1.35rem)', color: 'var(--color-sea-spray)', marginBottom: '10px', lineHeight: 1.2 }}>{faq.question}</h3>
+                    <h3 className="typo-h3 text-sea-spray mb-2.5">{faq.question}</h3>
                     <div>
                       <PortableText value={faq.answer} components={{
                         ...portableTextComponents,
                         block: { ...portableTextComponents.block,
-                          normal: ({ children }: any) => <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '13.5px', color: 'rgba(255,254,250,0.75)', lineHeight: 1.75, marginBottom: '16px' }}>{children}</p>,
+                          normal: ({ children }: any) => <p className="font-mono text-lg leading-wide mb-4" style={{ color: 'rgba(255,254,250,0.75)' }}>{children}</p>,
                         },
                         marks: { ...portableTextComponents.marks,
                           link: ({ children, value }: any) => {
                             const href = value?.href || '';
-                            const style = { color: 'rgba(255,254,250,0.9)', textDecoration: 'underline' as const, textUnderlineOffset: '3px' };
+                            const cls = 'underline underline-offset-[3px]';
+                            const style = { color: 'rgba(255,254,250,0.9)' };
                             return href.startsWith('http')
-                              ? <a href={href} target="_blank" rel="noopener noreferrer" style={style}>{children}</a>
-                              : <Link href={href} style={style}>{children}</Link>;
+                              ? <a href={href} target="_blank" rel="noopener noreferrer" className={cls} style={style}>{children}</a>
+                              : <Link href={href} className={cls} style={style}>{children}</Link>;
                           },
                         },
                       }} />
@@ -429,8 +383,8 @@ export default async function GuidePage({ params }: PageProps) {
         {/* ── STAY ON ISLAY ──────────────────────────────────────────── */}
         <section className="g-stay">
           <div className="g-section-header">
-            <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '12px' }}>Accommodation</p>
-            <h2 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'var(--color-harbour-stone)', lineHeight: 1.05, letterSpacing: '-0.01em' }}>Stay on Islay</h2>
+            <p className="typo-kicker mb-3">Accommodation</p>
+            <h2 className="typo-h2">Stay on Islay</h2>
           </div>
           <div className="g-stay-cards">
             {(properties as PropertyCard[]).map((p) => {
@@ -452,43 +406,41 @@ export default async function GuidePage({ params }: PageProps) {
               if (p.livingAreas?.includes('conservatory')) highlights.push('Conservatory');
               const unique = [...new Set(highlights)].slice(0, 3);
               return (
-                <Link key={p._id} href={`/accommodation/${propSlug}`} style={{ display: 'block', textDecoration: 'none' }} className="hover-opacity">
-                  <div style={{ aspectRatio: '4/3', overflow: 'hidden', position: 'relative', background: 'var(--color-harbour-stone)' }}>
-                    {imageUrl && <Image src={imageUrl} alt={p.heroImage?.alt || p.name} fill style={{ objectFit: 'cover' }} />}
+                <Link key={p._id} href={`/accommodation/${propSlug}`} className="block hover-opacity">
+                  <div className="bg-harbour-stone relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
+                    {imageUrl && <Image src={imageUrl} alt={p.heroImage?.alt || p.name} fill className="object-cover" />}
                   </div>
-                  <div style={{ padding: '20px 24px 24px', background: 'var(--color-machair-sand)' }}>
-                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', marginBottom: '8px' }}>{locationText}</p>
-                    <h3 style={{ fontFamily: '"The Seasons", Georgia, serif', fontWeight: 700, fontSize: 'clamp(1.25rem, 2vw, 1.6rem)', color: 'var(--color-harbour-stone)', lineHeight: 1.1, letterSpacing: '-0.01em', marginBottom: '10px' }}>{p.name}</h3>
-                    <p style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '11px', color: 'var(--color-harbour-stone)', opacity: 0.6, marginBottom: '10px' }}>{bullets.join(' · ')}</p>
+                  <div className="bg-machair-sand p-5 pb-6">
+                    <p className="typo-kicker mb-2">{locationText}</p>
+                    <h3 className="typo-card-title mb-2.5">{p.name}</h3>
+                    <p className="font-mono text-base text-harbour-stone opacity-60 mb-2.5">{bullets.join(' · ')}</p>
                     {unique.length > 0 && (
-                      <ul style={{ listStyle: 'none', display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '14px' }}>
-                        {unique.map((h) => <li key={h} style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.06em', color: 'var(--color-kelp-edge)', background: 'var(--color-sea-spray)', padding: '4px 10px' }}>{h}</li>)}
+                      <ul className="flex flex-wrap gap-1.5 mb-3.5" style={{ listStyle: 'none' }}>
+                        {unique.map((h) => <li key={h} className="font-mono text-xs tracking-wide text-kelp-edge bg-sea-spray px-2.5 py-1">{h}</li>)}
                       </ul>
                     )}
-                    <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)' }}>View property →</span>
+                    <span className="typo-cta">View property →</span>
                   </div>
                 </Link>
               );
             })}
           </div>
-          <div style={{ maxWidth: '1280px', margin: '28px auto 0', textAlign: 'center' }}>
-            <Link href="/availability" className="hover-opacity" style={{ display: 'inline-block', background: 'var(--color-emerald-accent)', color: '#fff', fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.14em', textTransform: 'uppercase', padding: '14px 48px', textDecoration: 'none' }}>
-              Check Availability
-            </Link>
+          <div className="max-w-[1280px] mx-auto mt-7 text-center">
+            <Link href="/availability" className="typo-btn hover-opacity">Check Availability</Link>
           </div>
         </section>
 
         {/* ── RELATED GUIDES ─────────────────────────────────────────── */}
         <div className="g-related">
           <div className="g-related-inner">
-            <span style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '9px', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-kelp-edge)', flexShrink: 0 }}>More guides</span>
+            <span className="typo-kicker shrink-0">More guides</span>
             {relatedGuides.map((g, i) => (
               <span key={g.slug}>
-                <Link href={`/explore-islay/${g.slug}`} className="hover-dim" style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-harbour-stone)', textDecoration: 'none' }}>{g.title}</Link>
-                {i < relatedGuides.length - 1 && <span style={{ margin: '0 4px', color: 'var(--color-washed-timber)' }}>·</span>}
+                <Link href={`/explore-islay/${g.slug}`} className="hover-dim font-mono text-md text-harbour-stone">{g.title}</Link>
+                {i < relatedGuides.length - 1 && <span className="mx-1 text-washed-timber">·</span>}
               </span>
             ))}
-            <Link href="/explore-islay" style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '10px', letterSpacing: '0.08em', color: 'var(--color-kelp-edge)', textDecoration: 'none', marginLeft: 'auto', flexShrink: 0 }}>← All guides</Link>
+            <Link href="/explore-islay" className="typo-cta ml-auto shrink-0" style={{ textTransform: 'none', letterSpacing: 'var(--tracking-wider)' }}>← All guides</Link>
           </div>
         </div>
 

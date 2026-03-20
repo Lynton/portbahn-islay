@@ -2,117 +2,47 @@ import Link from 'next/link';
 
 /**
  * Shared PortableText component configuration
- * Concept-1b design system — inline styles throughout
+ * Uses typo-* presets + Tailwind utilities from design system
  */
-
-const monoStyle = {
-  fontFamily: '"IBM Plex Mono", monospace',
-  fontSize: '13.5px',
-  color: 'var(--color-harbour-stone)',
-  lineHeight: 1.75,
-  marginBottom: '20px',
-  opacity: 0.85,
-} as React.CSSProperties;
 
 export const portableTextComponents = {
   block: {
     normal: ({ children }: any) => (
-      <p style={monoStyle}>{children}</p>
+      <p className="font-mono text-lg text-harbour-stone leading-wide opacity-85 mb-5">{children}</p>
     ),
     h2: ({ children }: any) => (
-      <h2 style={{
-        fontFamily: '"The Seasons", Georgia, serif',
-        fontWeight: 700,
-        fontSize: 'clamp(1.4rem, 2.5vw, 1.85rem)',
-        color: 'var(--color-harbour-stone)',
-        lineHeight: 1.1,
-        letterSpacing: '-0.01em',
-        marginBottom: '16px',
-        marginTop: '48px',
-      }}>{children}</h2>
+      <h2 className="typo-h2 mt-12 mb-4">{children}</h2>
     ),
     h3: ({ children }: any) => (
-      <h3 style={{
-        fontFamily: '"The Seasons", Georgia, serif',
-        fontWeight: 700,
-        fontSize: '1.25rem',
-        color: 'var(--color-harbour-stone)',
-        lineHeight: 1.15,
-        marginBottom: '12px',
-        marginTop: '32px',
-      }}>{children}</h3>
+      <h3 className="font-serif font-bold text-[1.25rem] text-harbour-stone leading-snug mt-8 mb-3">{children}</h3>
     ),
     blockquote: ({ children }: any) => (
-      <blockquote style={{
-        borderLeft: '3px solid var(--color-emerald-accent)',
-        paddingLeft: '24px',
-        margin: '36px 0',
-        fontFamily: '"The Seasons", Georgia, serif',
-        fontStyle: 'italic',
-        fontSize: 'clamp(1.1rem, 2vw, 1.35rem)',
-        color: 'var(--color-harbour-stone)',
-        lineHeight: 1.55,
-      }}>{children}</blockquote>
+      <blockquote className="font-serif italic text-harbour-stone leading-relaxed border-l-[3px] border-emerald-accent pl-6 my-9" style={{ fontSize: 'clamp(1.1rem, 2vw, 1.35rem)' }}>
+        {children}
+      </blockquote>
     ),
   },
   marks: {
-    strong: ({ children }: any) => (
-      <strong style={{ fontWeight: 600 }}>{children}</strong>
-    ),
-    em: ({ children }: any) => (
-      <em style={{ fontStyle: 'italic' }}>{children}</em>
-    ),
+    strong: ({ children }: any) => <strong className="font-semibold">{children}</strong>,
+    em: ({ children }: any) => <em className="italic">{children}</em>,
     link: ({ children, value }: any) => {
       const href = value?.href || '';
-      const isExternal = href.startsWith('http');
-      return isExternal ? (
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: 'var(--color-emerald-accent)', textDecoration: 'underline', textUnderlineOffset: '3px' }}
-        >
-          {children}
-        </a>
+      const cls = 'text-emerald-accent underline underline-offset-[3px]';
+      return href.startsWith('http') ? (
+        <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>
       ) : (
-        <Link href={href} style={{ color: 'var(--color-emerald-accent)', textDecoration: 'underline', textUnderlineOffset: '3px' }}>
-          {children}
-        </Link>
+        <Link href={href} className={cls}>{children}</Link>
       );
     },
   },
   list: {
     bullet: ({ children }: any) => (
-      <ul style={{
-        listStyleType: 'disc',
-        listStylePosition: 'inside',
-        marginBottom: '20px',
-        fontFamily: '"IBM Plex Mono", monospace',
-        fontSize: '13.5px',
-        color: 'var(--color-harbour-stone)',
-        opacity: 0.85,
-        paddingLeft: '8px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '6px',
-      } as React.CSSProperties}>
+      <ul className="font-mono text-lg text-harbour-stone opacity-85 pl-2 flex flex-col gap-1.5 mb-5" style={{ listStyleType: 'disc', listStylePosition: 'inside' }}>
         {children}
       </ul>
     ),
     number: ({ children }: any) => (
-      <ol style={{
-        listStyleType: 'decimal',
-        listStylePosition: 'inside',
-        marginBottom: '20px',
-        fontFamily: '"IBM Plex Mono", monospace',
-        fontSize: '13.5px',
-        color: 'var(--color-harbour-stone)',
-        opacity: 0.85,
-        paddingLeft: '8px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '6px',
-      } as React.CSSProperties}>
+      <ol className="font-mono text-lg text-harbour-stone opacity-85 pl-2 flex flex-col gap-1.5 mb-5" style={{ listStyleType: 'decimal', listStylePosition: 'inside' }}>
         {children}
       </ol>
     ),
@@ -123,9 +53,7 @@ export const portableTextComponents = {
   },
   types: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    break: (_props: any) => (
-      <hr style={{ margin: '40px 0', borderTop: '1px solid var(--color-washed-timber)', borderBottom: 'none' }} />
-    ),
+    break: (_props: any) => <hr className="my-10 border-t border-washed-timber" />,
   },
 };
 
@@ -133,41 +61,26 @@ export const portableTextComponents = {
 export const compactPortableTextComponents = {
   block: {
     normal: ({ children }: any) => (
-      <p style={{
-        fontFamily: '"IBM Plex Mono", monospace',
-        fontSize: '12px',
-        color: 'var(--color-harbour-stone)',
-        opacity: 0.72,
-        lineHeight: 1.65,
-        margin: 0,
-      }}>{children}</p>
+      <p className="font-mono text-md text-harbour-stone opacity-72 leading-body m-0">{children}</p>
     ),
-    h2: ({ children }: any) => null,
-    h3: ({ children }: any) => null,
+    h2: () => null,
+    h3: () => null,
     blockquote: ({ children }: any) => (
-      <p style={{
-        fontFamily: '"IBM Plex Mono", monospace',
-        fontSize: '12px',
-        color: 'var(--color-harbour-stone)',
-        opacity: 0.72,
-        lineHeight: 1.65,
-        margin: 0,
-        fontStyle: 'italic',
-      }}>{children}</p>
+      <p className="font-mono text-md text-harbour-stone opacity-72 leading-body italic m-0">{children}</p>
     ),
   },
   marks: {
-    strong: ({ children }: any) => <strong style={{ fontWeight: 600 }}>{children}</strong>,
-    em: ({ children }: any) => <em style={{ fontStyle: 'italic' }}>{children}</em>,
+    strong: ({ children }: any) => <strong className="font-semibold">{children}</strong>,
+    em: ({ children }: any) => <em className="italic">{children}</em>,
     link: ({ children }: any) => <span>{children}</span>,
   },
   list: {
-    bullet: ({ children }: any) => <ul style={{ margin: 0, paddingLeft: '12px' }}>{children}</ul>,
-    number: ({ children }: any) => <ol style={{ margin: 0, paddingLeft: '12px' }}>{children}</ol>,
+    bullet: ({ children }: any) => <ul className="m-0 pl-3">{children}</ul>,
+    number: ({ children }: any) => <ol className="m-0 pl-3">{children}</ol>,
   },
   listItem: {
-    bullet: ({ children }: any) => <li style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-harbour-stone)', opacity: 0.72 }}>{children}</li>,
-    number: ({ children }: any) => <li style={{ fontFamily: '"IBM Plex Mono", monospace', fontSize: '12px', color: 'var(--color-harbour-stone)', opacity: 0.72 }}>{children}</li>,
+    bullet: ({ children }: any) => <li className="font-mono text-md text-harbour-stone opacity-72">{children}</li>,
+    number: ({ children }: any) => <li className="font-mono text-md text-harbour-stone opacity-72">{children}</li>,
   },
   types: {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
