@@ -72,11 +72,9 @@ export default async function ExploreIslayPage() {
     introText: page?.scopeIntro || "Islay is a 25-mile island off Scotland's west coast with more to explore than most visitors expect. These guides are written by hosts who have lived and worked here — covering whisky distilleries, beaches, walking routes, wildlife, food and drink, villages, family activities, and day trips to neighbouring Jura.",
     sectionHeading: "A local family's guide to things to do on Islay",
     cardLinkPrefix: '/explore-islay/',
-    cardLinkSuffix: 'Read guide →',
     emptyStateMessage: 'Guide pages coming soon.',
-    backLink: { href: '/', label: 'Back to Our Properties' },
+    backLink: { href: '/accommodation', label: 'Portbahn Islay — self-catering accommodation on Islay' },
     fallbackImages: FALLBACK_IMAGES,
-    spokeIndex: EXPLORE_SPOKES,
     schemaType: 'CollectionPage' as const,
     schemaData: {
       name: 'Explore the Isle of Islay — Things to See and Do',

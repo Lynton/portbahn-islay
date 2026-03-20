@@ -81,7 +81,7 @@ export default async function AccommodationPage() {
     emptyStateMessage: 'Properties coming soon.',
     backLink: {
       href: '/',
-      label: 'Back to Homepage',
+      label: 'Portbahn Islay — holiday homes on the Isle of Islay',
     },
     schemaType: 'CollectionPage' as const,
     schemaData: {

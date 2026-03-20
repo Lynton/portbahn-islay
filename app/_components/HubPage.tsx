@@ -116,23 +116,27 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                   const cardSlug = typeof card.slug === 'string' ? card.slug : card.slug?.current;
                   return (
                     <Link key={card._id} href={`${config.cardLinkPrefix}${cardSlug}`} className="block group">
-                      <div className="hover-card bg-machair-sand border border-washed-timber overflow-hidden">
-                        {(card.heroImage || config.fallbackImages?.[cardSlug || '']) && (
-                          <div className="relative h-[220px] overflow-hidden bg-harbour-stone">
-                            {card.heroImage ? (
+                      <div className="hover-card bg-machair-sand border border-washed-timber overflow-hidden flex flex-col h-full">
+                        {/* Fixed-height image */}
+                        <div className="relative h-[200px] overflow-hidden bg-harbour-stone shrink-0">
+                          {(card.heroImage || config.fallbackImages?.[cardSlug || '']) ? (
+                            card.heroImage ? (
                               <Image src={urlFor(card.heroImage).width(600).height(400).url()} alt={card.heroImage.alt || cardTitle} fill className="object-cover transition-transform duration-400" />
                             ) : (
                               // eslint-disable-next-line @next/next/no-img-element
                               <img src={config.fallbackImages![cardSlug || '']} alt={cardTitle} className="w-full h-full object-cover" />
-                            )}
-                          </div>
-                        )}
-                        <div className="p-5 pb-[22px]">
+                            )
+                          ) : null}
+                        </div>
+                        {/* Card body — flex-grow to fill remaining space */}
+                        <div className="p-5 pb-5 flex flex-col flex-grow">
                           <h2 className="font-serif font-bold text-[1.25rem] text-harbour-stone leading-snug tracking-snug mb-2">{cardTitle}</h2>
                           {cardDescription && (
-                            <p className="typo-body-sm opacity-65 mb-3.5 line-clamp-2">{cardDescription}</p>
+                            <p className="typo-body-sm opacity-65 mb-4 line-clamp-3 flex-grow">{cardDescription}</p>
                           )}
-                          <span className="typo-cta">{config.cardLinkSuffix || 'Read more →'}</span>
+                          <span className="typo-cta mt-auto">
+                            {config.cardLinkSuffix || `${cardTitle} guide →`}
+                          </span>
                         </div>
                       </div>
                     </Link>
@@ -146,20 +150,6 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
             <div className="py-12 text-center">
               <p className="font-mono text-xl text-harbour-stone opacity-60">{config.emptyStateMessage || 'Content coming soon.'}</p>
             </div>
-          )}
-
-          {/* Static spoke index — always in server HTML for crawlers/AI retrieval */}
-          {config.spokeIndex && config.spokeIndex.length > 0 && (
-            <nav aria-label="All guides" className="mt-12 pt-8 border-t border-washed-timber">
-              <h2 className="font-serif font-bold text-harbour-stone mb-4" style={{ fontSize: 'clamp(1.25rem, 2vw, 1.75rem)' }}>All guides</h2>
-              <ul className="flex flex-col gap-2">
-                {config.spokeIndex.map((spoke) => (
-                  <li key={spoke.slug} style={{ listStyle: 'none' }}>
-                    <Link href={`${config.cardLinkPrefix}${spoke.slug}`} className="font-mono text-lg text-kelp-edge underline underline-offset-[3px]">{spoke.title}</Link>
-                  </li>
-                ))}
-              </ul>
-            </nav>
           )}
 
           <div className="pt-8 border-t border-washed-timber">

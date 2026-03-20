@@ -87,8 +87,8 @@ export default async function TravelToIslayPage() {
     cardLinkPrefix: '/islay-travel/',
     emptyStateMessage: 'Travel guide pages coming soon.',
     backLink: {
-      href: '/',
-      label: 'Back to Our Properties',
+      href: '/accommodation',
+      label: 'Portbahn Islay — self-catering accommodation on Islay',
     },
     schemaType: 'CollectionPage' as const,
     schemaData: {

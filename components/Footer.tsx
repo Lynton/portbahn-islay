@@ -62,7 +62,7 @@ export default function Footer() {
           </p>
           <div className="flex flex-col gap-2">
             {['Airbnb Superhost · Since 2017', 'Isle of Islay, Scotland'].map((cred) => (
-              <span key={cred} className="font-mono text-2xs tracking-widest uppercase" style={{ color: 'rgba(255,255,250,0.3)' }}>{cred}</span>
+              <span key={cred} className="font-mono text-2xs tracking-widest uppercase" style={{ color: 'rgba(255,255,250,0.45)' }}>{cred}</span>
             ))}
           </div>
         </div>
@@ -71,7 +71,7 @@ export default function Footer() {
         <div className="grid grid-cols-4 gap-10">
           {FOOTER_COLS.map((col) => (
             <div key={col.label}>
-              <p className="font-mono text-sm tracking-spread uppercase mb-[18px] pb-3" style={{ color: 'rgba(255,255,250,0.45)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+              <p className="font-mono text-sm tracking-spread uppercase mb-[18px] pb-3" style={{ color: 'rgba(255,255,250,0.6)', borderBottom: '1px solid rgba(255,255,255,0.12)' }}>
                 {col.label}
               </p>
               <ul className="m-0 p-0" style={{ listStyle: 'none' }}>
@@ -89,11 +89,11 @@ export default function Footer() {
       </div>
 
       {/* Base bar */}
-      <div className="max-w-[1400px] mx-auto flex justify-between items-center px-12 py-5 font-mono text-sm tracking-wide" style={{ borderTop: '1px solid rgba(255,255,255,0.07)', color: 'rgba(255,255,250,0.4)' }}>
+      <div className="max-w-[1400px] mx-auto flex justify-between items-center px-12 py-5 font-mono text-sm tracking-wide" style={{ borderTop: '1px solid rgba(255,255,255,0.12)', color: 'rgba(255,255,250,0.55)' }}>
         <span>&copy; {currentYear} Portbahn Islay. All rights reserved.</span>
         <div className="flex gap-6">
-          <Link href="/privacy" className="transition-colors duration-200 hover:text-sea-spray" style={{ color: 'rgba(255,255,250,0.3)' }}>Privacy</Link>
-          <Link href="/terms" className="transition-colors duration-200 hover:text-sea-spray" style={{ color: 'rgba(255,255,250,0.3)' }}>Terms</Link>
+          <Link href="/privacy" className="transition-colors duration-200 hover:text-sea-spray" style={{ color: 'rgba(255,255,250,0.5)' }}>Privacy</Link>
+          <Link href="/terms" className="transition-colors duration-200 hover:text-sea-spray" style={{ color: 'rgba(255,255,250,0.5)' }}>Terms</Link>
         </div>
       </div>
     </footer>
