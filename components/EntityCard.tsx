@@ -62,6 +62,8 @@ interface SiteEntity {
 
 interface EntityCardProps {
   entity: SiteEntity;
+  /** 'sand' renders on sand background — uses shadow instead of border for contrast */
+  variant?: 'default' | 'sand';
 }
 
 // ─── Category label map ───────────────────────────────────────────────────────
@@ -140,7 +142,7 @@ function EcosystemCard({ entity }: EntityCardProps) {
 
 // ─── Main EntityCard ──────────────────────────────────────────────────────────
 
-export default function EntityCard({ entity }: EntityCardProps) {
+export default function EntityCard({ entity, variant = 'default' }: EntityCardProps) {
   // Ecosystem-linked entities: brief card + outbound link only
   if (entity.canonicalExternalUrl && entity.ecosystemSite !== 'pbi') {
     return <EcosystemCard entity={entity} />;
@@ -151,8 +153,21 @@ export default function EntityCard({ entity }: EntityCardProps) {
   const isBeach = category === 'beach';
   const isHeritage = category === 'heritage';
 
+  const cardClass = variant === 'sand'
+    ? 'p-5 bg-white'
+    : 'border border-washed-timber rounded p-5 bg-white';
+  const cardStyle: React.CSSProperties | undefined = variant === 'sand'
+    ? {
+        borderTop: '3px solid var(--color-kelp-edge)',
+        borderLeft: '1px solid var(--color-washed-timber)',
+        borderRight: '1px solid var(--color-washed-timber)',
+        borderBottom: '1px solid var(--color-washed-timber)',
+        boxShadow: '0 4px 16px rgba(0,0,0,0.06)',
+      }
+    : undefined;
+
   return (
-    <article className="border border-washed-timber rounded p-5 bg-white">
+    <article className={cardClass} style={cardStyle}>
 
       {/* Header: name + category badge */}
       <div className="flex items-start justify-between gap-4 mb-2">

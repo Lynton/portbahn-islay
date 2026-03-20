@@ -70,6 +70,30 @@ export default defineType({
       description: 'Brief intro paragraph (2-3 sentences). Appears before content blocks.',
     }),
     defineField({
+      name: 'pullQuote',
+      title: 'Pull Quote',
+      type: 'string',
+      group: 'content',
+      description: 'Short, punchy sentence for the editorial pull quote section. 60-120 chars. If empty, auto-extracted from content.',
+      validation: (Rule) => Rule.max(200).warning('Keep under 120 chars for visual balance'),
+    }),
+    defineField({
+      name: 'galleryImages',
+      title: 'Gallery Images',
+      type: 'array',
+      group: 'content',
+      of: [{
+        type: 'image',
+        options: { hotspot: true },
+        fields: [
+          { name: 'alt', type: 'string', title: 'Alt Text', validation: (Rule: any) => Rule.required() },
+          { name: 'caption', type: 'string', title: 'Caption (optional)' },
+        ],
+      }],
+      description: '2-4 images for inline breaks between content sections. First image = full-bleed with caption bar. Remaining = image pair.',
+      validation: (Rule) => Rule.max(6),
+    }),
+    defineField({
       name: 'contentBlocks',
       title: 'Content Blocks',
       type: 'array',

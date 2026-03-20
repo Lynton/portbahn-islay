@@ -11,6 +11,12 @@
 }
 
 /* ─── DESIGN TOKENS ────────────────────────────────────────────────── */
+/* Tailwind v4: @theme registers tokens. Tailwind auto-generates       */
+/* bg-*, text-*, border-* utilities from --color-*                     */
+/* font-serif / font-mono from --font-*                                */
+/* tracking-* from --tracking-*                                        */
+/* leading-* from --leading-*                                          */
+/* text-* from --text-*                                                */
 @theme {
   /* Colors */
   --color-kelp-edge:      #1F5E4D;
@@ -21,47 +27,43 @@
   --color-washed-timber:  #CFCAC2;
   --color-emerald-accent: #008060;
 
-  /* Font Families */
-  --font-family-serif: 'The Seasons', Georgia, serif;
-  --font-family-mono:  'IBM Plex Mono', 'Courier New', monospace;
+  /* Font Families → font-serif, font-mono */
+  --font-serif: 'The Seasons', Georgia, serif;
+  --font-mono:  'IBM Plex Mono', 'Courier New', monospace;
 
-  /* Spacing */
-  --spacing-xs:  0.25rem;  /* 4px  */
-  --spacing-s:   0.5rem;   /* 8px  */
-  --spacing-m:   1rem;     /* 16px */
-  --spacing-l:   2rem;     /* 32px */
-  --spacing-xl:  3rem;     /* 48px */
-  --spacing-xxl: 5rem;     /* 80px */
-}
+  /* Font Sizes → text-xs, text-sm, text-base, text-lg etc */
+  --text-2xs:  0.5rem;     /* 8px — fine print */
+  --text-xs:   0.5625rem;  /* 9px — kickers, labels */
+  --text-sm:   0.625rem;   /* 10px — section labels, captions */
+  --text-base: 0.6875rem;  /* 11px — nav items, small copy */
+  --text-md:   0.75rem;    /* 12px — card descriptions, links */
+  --text-lg:   0.8125rem;  /* 13px — body copy (compact) */
+  --text-xl:   0.875rem;   /* 14px — body copy (list items) */
+  --text-2xl:  0.9375rem;  /* 15px — body copy (standard) */
+  --text-3xl:  1rem;       /* 16px — body copy (large) */
 
-/* ─── COLOR UTILITIES ──────────────────────────────────────────────── */
-@layer utilities {
-  .bg-kelp-edge       { background-color: var(--color-kelp-edge); }
-  .bg-sound-of-islay  { background-color: var(--color-sound-of-islay); }
-  .bg-harbour-stone   { background-color: var(--color-harbour-stone); }
-  .bg-machair-sand    { background-color: var(--color-machair-sand); }
-  .bg-sea-spray       { background-color: var(--color-sea-spray); }
-  .bg-washed-timber   { background-color: var(--color-washed-timber); }
-  .bg-emerald-accent  { background-color: var(--color-emerald-accent); }
+  /* Letter Spacing → tracking-tight, tracking-normal etc */
+  --tracking-tight:  -0.02em;
+  --tracking-snug:   -0.01em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.06em;
+  --tracking-wider:   0.08em;
+  --tracking-widest:  0.10em;
+  --tracking-caps:    0.14em;
+  --tracking-spread:  0.16em;
+  --tracking-ultra:   0.20em;
 
-  .text-kelp-edge       { color: var(--color-kelp-edge); }
-  .text-sound-of-islay  { color: var(--color-sound-of-islay); }
-  .text-harbour-stone   { color: var(--color-harbour-stone); }
-  .text-machair-sand    { color: var(--color-machair-sand); }
-  .text-sea-spray       { color: var(--color-sea-spray); }
-  .text-washed-timber   { color: var(--color-washed-timber); }
-  .text-emerald-accent  { color: var(--color-emerald-accent); }
-
-  .border-kelp-edge       { border-color: var(--color-kelp-edge); }
-  .border-sound-of-islay  { border-color: var(--color-sound-of-islay); }
-  .border-harbour-stone   { border-color: var(--color-harbour-stone); }
-  .border-machair-sand    { border-color: var(--color-machair-sand); }
-  .border-sea-spray       { border-color: var(--color-sea-spray); }
-  .border-washed-timber   { border-color: var(--color-washed-timber); }
-  .border-emerald-accent  { border-color: var(--color-emerald-accent); }
-
-  /* Overflow clip — preserves position: sticky (unlike overflow: hidden) */
-  .overflow-x-clip { overflow-x: clip; }
+  /* Line Heights → leading-none, leading-tight etc */
+  --leading-none:    1;
+  --leading-tighter: 1.05;
+  --leading-tight:   1.1;
+  --leading-snug:    1.15;
+  --leading-normal:  1.2;
+  --leading-relaxed: 1.35;
+  --leading-loose:   1.4;
+  --leading-body:    1.65;
+  --leading-reading: 1.7;
+  --leading-wide:    1.75;
 }
 
 /* ─── BASE ──────────────────────────────────────────────────────────── */
@@ -70,7 +72,7 @@
 body {
   background: var(--color-sea-spray);
   color: var(--color-harbour-stone);
-  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+  font-family: var(--font-mono);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
@@ -78,57 +80,212 @@ body {
 img { display: block; max-width: 100%; }
 a   { color: inherit; text-decoration: none; }
 
-/* ─── TYPOGRAPHY UTILITIES ─────────────────────────────────────────── */
-.font-serif {
-  font-family: 'The Seasons', Georgia, serif !important;
-  font-weight: 700;
+@layer utilities {
+  .overflow-x-clip { overflow-x: clip; }
 }
 
-.font-mono {
-  font-family: 'IBM Plex Mono', 'Courier New', monospace !important;
-}
+/* ─── TYPOGRAPHY PRESETS ──────────────────────────────────────────── */
+/* Reusable patterns that replace 100+ inline style declarations.     */
+/* Use as className on elements. Each preset is a single class.       */
 
-/* ─── HEADING SCALE ─────────────────────────────────────────────────── */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'The Seasons', Georgia, serif;
-  font-weight: 700;
-  line-height: 1.05;
-  letter-spacing: -0.02em;
-}
-
-h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
-h2 { font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.1; }
-h3 { font-size: clamp(1.5rem, 2.5vw, 2.25rem); line-height: 1.2; letter-spacing: -0.01em; }
-h4 { font-size: 1.25rem; line-height: 1.3; letter-spacing: 0; }
-
-/* ─── BODY TEXT ────────────────────────────────────────────────────── */
-p {
-  font-family: 'IBM Plex Mono', 'Courier New', monospace;
-  font-size: 0.9375rem; /* 15px */
-  line-height: 1.65;
-}
-
-/* ─── NAV / LABEL SCALE ────────────────────────────────────────────── */
-/* Used via inline styles and utility classes in components */
-.nav-label {
-  font-family: 'IBM Plex Mono', 'Courier New', monospace;
-  font-size: 0.8125rem; /* 13px */
-  letter-spacing: 0.10em;
-  text-transform: uppercase;
-}
-
-.section-label {
-  font-family: 'IBM Plex Mono', 'Courier New', monospace;
-  font-size: 0.625rem; /* 10px */
-  letter-spacing: 0.16em;
+/* Kicker label — "Explore Islay", "Accommodation", "Featured" etc */
+.typo-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-ultra);
   text-transform: uppercase;
   color: var(--color-kelp-edge);
 }
 
+/* Section label — slightly larger kicker, used in property pages */
+.typo-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-spread);
+  text-transform: uppercase;
+  color: var(--color-kelp-edge);
+}
+
+/* Caption — teal bar labels, location tags */
+.typo-caption {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-washed-timber);
+}
+
+/* Nav text — breadcrumbs, small links */
+.typo-nav {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-widest);
+  color: rgba(255,254,250,0.65);
+}
+
+/* Body copy — standard paragraph text */
+.typo-body {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  line-height: var(--leading-reading);
+  color: var(--color-harbour-stone);
+}
+
+/* Body small — card descriptions, compact copy */
+.typo-body-sm {
+  font-family: var(--font-mono);
+  font-size: var(--text-md);
+  line-height: 1.6;
+  color: var(--color-harbour-stone);
+}
+
+/* Mono link — CTA text, "View property →", "Read more →" */
+.typo-cta {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-kelp-edge);
+}
+
+/* Heading — page titles (serif, large) */
+.typo-h1 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2.75rem, 6vw, 4.5rem);
+  line-height: 0.98;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-harbour-stone);
+}
+
+/* Section heading — content block titles */
+.typo-h2 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-snug);
+  color: var(--color-harbour-stone);
+}
+
+/* Sub-heading — FAQ questions, card titles */
+.typo-h3 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: var(--leading-normal);
+  color: var(--color-harbour-stone);
+}
+
+/* Card title */
+.typo-card-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.25rem, 2vw, 1.6rem);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-snug);
+  color: var(--color-harbour-stone);
+}
+
+/* Pull quote — large editorial serif */
+.typo-pull-quote {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  line-height: 1.25;
+  font-style: italic;
+}
+
+/* Spread heading — sticky left-column heading */
+.typo-spread-heading {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.08;
+  letter-spacing: var(--tracking-snug);
+  color: var(--color-harbour-stone);
+}
+
+/* Offset quote — aside blockquote */
+.typo-offset-quote {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.625rem, 3vw, 2.375rem);
+  line-height: var(--leading-normal);
+  color: var(--color-harbour-stone);
+}
+
+/* Review score — giant number */
+.typo-score {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 72px;
+  line-height: var(--leading-none);
+  color: var(--color-sea-spray);
+}
+
+/* Review quote */
+.typo-review-quote {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 19px;
+  line-height: 1.45;
+  font-style: italic;
+  color: var(--color-sea-spray);
+}
+
+/* Fact value */
+.typo-fact-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xl);
+  color: var(--color-harbour-stone);
+}
+
+/* Fact label */
+.typo-fact-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-kelp-edge);
+}
+
+/* CTA button — emerald background */
+.typo-btn {
+  display: inline-block;
+  background: var(--color-emerald-accent);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  padding: 14px 48px;
+  text-decoration: none;
+}
+
+/* ─── HEADING SCALE (element defaults) ─────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  line-height: var(--leading-tighter);
+  letter-spacing: var(--tracking-tight);
+}
+
+h1 { font-size: clamp(2.5rem, 6vw, 5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.25rem); line-height: var(--leading-tight); }
+h3 { font-size: clamp(1.5rem, 2.5vw, 2.25rem); line-height: var(--leading-normal); letter-spacing: var(--tracking-snug); }
+h4 { font-size: 1.25rem; line-height: 1.3; letter-spacing: 0; }
+
+/* ─── BODY TEXT (element defaults) ─────────────────────────────────── */
+p {
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  line-height: var(--leading-body);
+}
+
 /* ─── AVAILABILITY WIDGET ─────────────────────────────────────────── */
 .avail-widget {
-  position: sticky;
-  top: 80px;
+  position: sticky; top: 80px;
   border: 1px solid var(--color-washed-timber);
   border-top: 3px solid var(--color-kelp-edge);
   border-radius: 2px;
@@ -136,14 +293,11 @@ p {
   box-shadow: 0 2px 20px rgba(0,0,0,0.07);
   align-self: start;
 }
-.aw-header {
-  padding: 16px 16px 0;
-  border-bottom: 1px solid var(--color-washed-timber);
-}
-.aw-price-from { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--color-washed-timber); letter-spacing: 0.06em; }
-.aw-price-num  { font-family: 'IBM Plex Mono', monospace; font-size: 22px; color: var(--color-harbour-stone); margin: 0 2px; }
-.aw-price-unit { font-family: 'IBM Plex Mono', monospace; font-size: 9px; color: var(--color-washed-timber); }
-.aw-min-stay   { font-family: 'IBM Plex Mono', monospace; font-size: 8.5px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--color-kelp-edge); }
+.aw-header { padding: 16px 16px 0; border-bottom: 1px solid var(--color-washed-timber); }
+.aw-price-from { font-family: var(--font-mono); font-size: 9px; color: var(--color-washed-timber); letter-spacing: 0.06em; }
+.aw-price-num  { font-family: var(--font-mono); font-size: 22px; color: var(--color-harbour-stone); margin: 0 2px; }
+.aw-price-unit { font-family: var(--font-mono); font-size: 9px; color: var(--color-washed-timber); }
+.aw-min-stay   { font-family: var(--font-mono); font-size: 8.5px; letter-spacing: 0.10em; text-transform: uppercase; color: var(--color-kelp-edge); }
 .aw-cal        { padding: 10px 16px 8px; }
 .aw-cal-nav    { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 .aw-cal-nav button {
@@ -152,13 +306,13 @@ p {
   padding: 2px 6px; line-height: 1; transition: opacity 0.15s;
 }
 .aw-cal-nav button:hover:not(:disabled) { opacity: 1; }
-.aw-month { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; color: var(--color-harbour-stone); }
+.aw-month { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; color: var(--color-harbour-stone); }
 .aw-day-labels { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 2px; }
-.aw-day-labels span { font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-align: center; color: var(--color-washed-timber); padding: 2px 0; }
+.aw-day-labels span { font-family: var(--font-mono); font-size: 10px; text-align: center; color: var(--color-washed-timber); padding: 2px 0; }
 .aw-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
 .aw-grid b, .aw-grid em {
   font-style: normal; font-weight: normal;
-  font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+  font-family: var(--font-mono); font-size: 12px;
   text-align: center; padding: 5px 0; cursor: pointer; display: block;
 }
 .aw-grid em { cursor: default; color: var(--color-washed-timber); opacity: 0.4; }
@@ -168,7 +322,7 @@ p {
 .aw-ci { color: var(--color-kelp-edge); background: rgba(0,128,96,0.18); position: relative; }
 .aw-ci::after { content: ''; display: block; width: 3px; height: 3px; background: var(--color-kelp-edge); border-radius: 50%; margin: 1px auto 0; }
 .aw-legend { display: flex; gap: 10px; padding: 6px 16px 8px; border-top: 1px solid var(--color-washed-timber); }
-.aw-leg { font-family: 'IBM Plex Mono', monospace; font-size: 8px; color: var(--color-washed-timber); display: flex; align-items: center; gap: 5px; }
+.aw-leg { font-family: var(--font-mono); font-size: 8px; color: var(--color-washed-timber); display: flex; align-items: center; gap: 5px; }
 .aw-leg::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 2px; }
 .aw-leg-a::before  { background: rgba(0,128,96,0.06); border: 1px solid rgba(0,128,96,0.25); }
 .aw-leg-x::before  { background: rgba(180,40,40,0.07); border: 1px solid rgba(180,40,40,0.2); }
@@ -176,54 +330,21 @@ p {
 .aw-cta {
   display: block; margin: 0 16px 12px;
   background: var(--color-emerald-accent); color: #fff;
-  font-family: 'IBM Plex Mono', monospace; font-size: 10.5px;
+  font-family: var(--font-mono); font-size: 10.5px;
   letter-spacing: 0.14em; text-transform: uppercase;
   text-align: center; padding: 13px; text-decoration: none;
   transition: opacity 0.2s;
 }
 .aw-cta:hover { opacity: 0.85; }
 
-/* ─── GUIDE PAGE GRID ───────────────────────────────────────────────── */
-.guide-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-}
-@media (min-width: 768px) {
-  .guide-grid {
-    grid-template-columns: minmax(0, 1fr) 260px;
-    column-gap: 48px;
-  }
-}
-@media (min-width: 1024px) {
-  .guide-grid {
-    grid-template-columns: minmax(0, 1fr) 300px;
-  }
-}
-
 /* ─── PROPERTY PAGE GRID ────────────────────────────────────────────── */
-.property-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-}
-@media (min-width: 768px) {
-  .property-grid {
-    grid-template-columns: minmax(0, 1fr) 340px;
-    column-gap: 40px;
-  }
-}
-@media (min-width: 1280px) {
-  .property-grid {
-    grid-template-columns: minmax(0, 1fr) 400px;
-    column-gap: 48px;
-  }
-}
+.property-grid { display: grid; grid-template-columns: 1fr; }
+@media (min-width: 768px)  { .property-grid { grid-template-columns: minmax(0, 1fr) 340px; column-gap: 40px; } }
+@media (min-width: 1280px) { .property-grid { grid-template-columns: minmax(0, 1fr) 400px; column-gap: 48px; } }
 
-/* ─── CONCEPT-1B SECTION LAYOUTS ───────────────────────────────────────── */
-
-/* Title frame */
+/* ─── CONCEPT-1B SECTION LAYOUTS (property pages) ──────────────────── */
 .c1b-title-frame { padding: 64px 48px 56px; }
 
-/* Editorial spread — image 60fr / text panel 40fr */
 .c1b-spread { display: grid; grid-template-columns: 60fr 40fr; min-height: 70vh; }
 .c1b-spread-img { overflow: hidden; }
 .c1b-spread-img img { width: 100%; height: 100%; object-fit: cover; }
@@ -233,14 +354,12 @@ p {
   display: flex; flex-direction: column; justify-content: center;
 }
 
-/* Caption bar */
 .c1b-caption-bar {
   background: var(--color-sound-of-islay);
   padding: 20px 48px;
   display: flex; justify-content: space-between; align-items: center;
 }
 
-/* Overview — 3-col centred body with aside + offset quote */
 .c1b-overview {
   background: var(--color-sea-spray);
   padding: 120px 48px;
@@ -249,49 +368,38 @@ p {
 .c1b-overview-aside { padding-top: 8px; }
 .c1b-overview-offset { padding: 80px 0 0 48px; align-self: start; }
 
-/* Gallery row — 1fr 1.4fr 1fr */
-.c1b-gallery-row {
-  display: grid; grid-template-columns: 1fr 1.4fr 1fr;
-  gap: 3px; background: var(--color-harbour-stone);
-}
+.c1b-gallery-row { display: grid; grid-template-columns: 1fr 1.4fr 1fr; gap: 3px; background: var(--color-harbour-stone); }
 .c1b-gallery-row-cell { overflow: hidden; }
 
-/* Spaces */
 .c1b-spaces { background: var(--color-machair-sand); padding: 100px 48px; }
 .c1b-spaces-header { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; margin-bottom: 64px; }
 .c1b-spaces-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; }
 
-/* Bedroom strip */
 .c1b-bedroom-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; background: var(--color-harbour-stone); }
 .c1b-bedroom-cell { position: relative; overflow: hidden; }
 
-/* Image pair */
 .c1b-image-pair { display: grid; grid-template-columns: 3fr 2fr; gap: 3px; background: var(--color-harbour-stone); height: 65vh; }
 
-/* Reviews — 3-col teal */
 .c1b-reviews {
   background: var(--color-sound-of-islay);
   padding: 100px 48px;
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 64px;
 }
 
-/* Location */
 .c1b-location {
   background: var(--color-sea-spray);
   padding: 100px 48px;
   display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
 }
 
-/* Good to know */
 .c1b-good-to-know { background: var(--color-machair-sand); padding: 80px 48px; }
 .c1b-expectations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
 
-/* Explore Islay */
 .c1b-explore { background: var(--color-sea-spray); padding: 100px 48px; }
 .c1b-explore-header { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-bottom: 64px; align-items: end; }
 .c1b-explore-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; background: var(--color-harbour-stone); }
 
-/* ─── RESPONSIVE ──────────────────────────────────────────────────────────── */
+/* ─── C1B RESPONSIVE ──────────────────────────────────────────────── */
 @media (max-width: 900px) {
   .c1b-title-frame { padding: 56px 28px 48px; }
   .c1b-spread { grid-template-columns: 1fr; }
@@ -329,55 +437,95 @@ p {
   .c1b-spaces-grid { grid-template-columns: 1fr; }
 }
 
-/* ─── HOVER UTILITIES (server-component safe — no JS handlers needed) ─ */
+/* ─── GUIDE PAGE SECTIONS ──────────────────────────────────────────── */
+.g-entities { background: var(--color-machair-sand); padding: 100px 48px; }
+.g-entities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 1280px; margin: 0 auto; }
+
+.g-faqs { background: var(--color-sound-of-islay); padding: 100px 48px; }
+.g-faqs-inner { max-width: 900px; margin: 0 auto; }
+.g-faq-item { border-left: 3px solid rgba(255,254,250,0.25); padding-left: 24px; }
+
+.g-stay { background: var(--color-sea-spray); padding: 80px 48px; }
+.g-stay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1280px; margin: 0 auto; }
+.g-stay-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; max-width: 1280px; margin: 0 auto; }
+
+.g-related { background: var(--color-machair-sand); padding: 48px; }
+.g-related-inner { max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+
+.g-content { max-width: 720px; margin: 0 auto; padding: 80px 48px; }
+
+.g-pull-quote { padding: 72px 48px; background: var(--color-sea-spray); }
+.g-pull-quote blockquote {
+  max-width: 760px; margin: 0 auto; text-align: center;
+  font-family: var(--font-serif); font-weight: 700;
+  font-size: clamp(1.5rem, 3vw, 2.25rem); line-height: 1.25;
+  color: var(--color-harbour-stone); font-style: italic;
+}
+
+.g-block { padding: 80px 48px; }
+.g-block-inner { max-width: 720px; margin: 0 auto; }
+
+.g-layout-overview {
+  padding: 100px 48px;
+  display: grid; grid-template-columns: 60px 1fr 280px; gap: 0;
+  max-width: 1280px; margin: 0 auto;
+}
+.g-layout-overview-label {
+  padding-top: 8px; writing-mode: vertical-lr; transform: rotate(180deg);
+  font-family: var(--font-mono); font-size: var(--text-sm);
+  letter-spacing: var(--tracking-spread); text-transform: uppercase;
+  color: var(--color-kelp-edge);
+}
+.g-layout-overview-body { max-width: 580px; }
+.g-layout-overview-aside { padding: 60px 0 0 48px; align-self: start; }
+
+.g-layout-spread { padding: 100px 48px; max-width: 1280px; margin: 0 auto; }
+.g-layout-spread-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+
+.g-section-header { max-width: 1280px; margin: 0 auto 40px; }
+
+/* ─── GUIDE RESPONSIVE ────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .g-entities, .g-faqs, .g-stay { padding: 72px 28px; }
+  .g-related { padding: 36px 28px; }
+  .g-content { padding: 56px 28px; }
+  .g-block { padding: 56px 28px; }
+  .g-stay-grid { grid-template-columns: 1fr; }
+  .g-stay-cards { grid-template-columns: 1fr; gap: 16px; }
+  .g-pull-quote { padding: 56px 28px; }
+  .g-layout-overview { grid-template-columns: 1fr; padding: 72px 28px; }
+  .g-layout-overview-label { display: none; }
+  .g-layout-overview-aside { padding: 40px 0 0 0; }
+  .g-layout-spread { padding: 72px 28px; }
+  .g-layout-spread-grid { grid-template-columns: 1fr; gap: 32px; }
+}
+@media (max-width: 560px) {
+  .g-entities, .g-faqs, .g-stay { padding: 56px 20px; }
+  .g-related { padding: 28px 20px; }
+  .g-content { padding: 40px 20px; }
+  .g-block { padding: 40px 20px; }
+  .g-pull-quote { padding: 40px 20px; }
+  .g-layout-overview { padding: 56px 20px; }
+  .g-layout-spread { padding: 56px 20px; }
+}
+
+/* ─── HOVER UTILITIES ─────────────────────────────────────────────── */
 .hover-card { transition: box-shadow 0.2s ease; }
 .hover-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.09); }
-
 .hover-opacity { transition: opacity 0.2s; }
 .hover-opacity:hover { opacity: 0.85; }
-
 .hover-fade { transition: opacity 0.2s; }
 .hover-fade:hover { opacity: 0.75; }
-
 .hover-dim { opacity: 0.7; transition: opacity 0.15s; }
 .hover-dim:hover { opacity: 1; }
 
-/* ─── REACT DATEPICKER (kept for any remaining usage) ──────────────── */
-.react-datepicker {
-  font-family: 'IBM Plex Mono', 'Courier New', monospace !important;
-  border: 1px solid var(--color-washed-timber) !important;
-  border-radius: 0 !important;
-}
-.react-datepicker__header {
-  background-color: var(--color-sea-spray) !important;
-  border-bottom: 1px solid var(--color-washed-timber) !important;
-  padding-top: 0.75rem !important;
-}
-.react-datepicker__current-month {
-  font-family: 'The Seasons', Georgia, serif !important;
-  font-size: 1rem !important;
-  color: var(--color-harbour-stone) !important;
-  font-weight: 700 !important;
-}
-.react-datepicker__day-name,
-.react-datepicker__day {
-  font-family: 'IBM Plex Mono', 'Courier New', monospace !important;
-  color: var(--color-harbour-stone) !important;
-  border-radius: 0 !important;
-}
-.react-datepicker__day:hover {
-  background-color: var(--color-machair-sand) !important;
-}
-.react-datepicker__day--selected,
-.react-datepicker__day--in-selecting-range,
-.react-datepicker__day--in-range,
-.react-datepicker__day--keyboard-selected {
-  background-color: var(--color-emerald-accent) !important;
-  color: var(--color-sea-spray) !important;
-}
-.react-datepicker__day--disabled {
-  color: var(--color-washed-timber) !important;
-  cursor: not-allowed !important;
-}
+/* ─── REACT DATEPICKER ────────────────────────────────────────────── */
+.react-datepicker { font-family: var(--font-mono) !important; border: 1px solid var(--color-washed-timber) !important; border-radius: 0 !important; }
+.react-datepicker__header { background-color: var(--color-sea-spray) !important; border-bottom: 1px solid var(--color-washed-timber) !important; padding-top: 0.75rem !important; }
+.react-datepicker__current-month { font-family: var(--font-serif) !important; font-size: 1rem !important; color: var(--color-harbour-stone) !important; font-weight: 700 !important; }
+.react-datepicker__day-name, .react-datepicker__day { font-family: var(--font-mono) !important; color: var(--color-harbour-stone) !important; border-radius: 0 !important; }
+.react-datepicker__day:hover { background-color: var(--color-machair-sand) !important; }
+.react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range, .react-datepicker__day--keyboard-selected { background-color: var(--color-emerald-accent) !important; color: var(--color-sea-spray) !important; }
+.react-datepicker__day--disabled { color: var(--color-washed-timber) !important; cursor: not-allowed !important; }
 .react-datepicker__navigation { top: 0.75rem !important; }
 .react-datepicker__navigation-icon::before { border-color: var(--color-harbour-stone) !important; }

@@ -67,7 +67,7 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
 
         {/* ── HERO ──────────────────────────────────────────────── */}
         {page?.heroImage && (
-          <div className="w-full relative overflow-hidden" style={{ height: '45vh', maxHeight: '480px' }}>
+          <div className="w-full relative overflow-hidden" style={{ height: '55vh', minHeight: '380px', maxHeight: '540px' }}>
             <Image
               src={urlFor(page.heroImage).width(1600).height(640).url()}
               alt={page.heroImage.alt || page?.title || 'Portbahn Islay'}
