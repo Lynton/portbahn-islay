@@ -48,112 +48,36 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer style={{ background: 'var(--color-sound-of-islay)' }}>
+    <footer className="bg-sound-of-islay">
       {/* Main footer grid */}
-      <div
-        style={{
-          padding: '88px 48px 64px',
-          display: 'grid',
-          gridTemplateColumns: '220px 1fr',
-          gap: '80px',
-          alignItems: 'start',
-          maxWidth: '1400px',
-          margin: '0 auto',
-        }}
-      >
+      <div className="max-w-[1400px] mx-auto grid items-start px-12" style={{ padding: '88px 48px 64px', gridTemplateColumns: '220px 1fr', gap: '80px' }}>
+
         {/* Brand column */}
         <div>
-          <div
-            style={{
-              fontFamily: '"The Seasons", Georgia, serif',
-              fontWeight: 700,
-              fontSize: 'clamp(36px, 5vw, 52px)',
-              lineHeight: 1.0,
-              letterSpacing: '-0.02em',
-              color: 'var(--color-sea-spray)',
-              marginBottom: '20px',
-            }}
-          >
-            Portbahn
-            <br />
-            Islay
+          <div className="font-serif font-bold text-sea-spray tracking-tight mb-5" style={{ fontSize: 'clamp(36px, 5vw, 52px)', lineHeight: 1.0 }}>
+            Portbahn<br />Islay
           </div>
-          <p
-            style={{
-              fontFamily: '"IBM Plex Mono", monospace',
-              fontSize: '11px',
-              lineHeight: 1.8,
-              color: 'var(--color-washed-timber)',
-              marginBottom: '28px',
-            }}
-          >
-            Three self-catering
-            <br />
-            holiday properties.
-            <br />
-            Bruichladdich, Islay.
+          <p className="font-mono text-base text-washed-timber leading-loose mb-7">
+            Three self-catering<br />holiday properties.<br />Bruichladdich, Islay.
           </p>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-            {[
-              'Airbnb Superhost · Since 2017',
-              'Isle of Islay, Scotland',
-            ].map((cred) => (
-              <span
-                key={cred}
-                style={{
-                  fontFamily: '"IBM Plex Mono", monospace',
-                  fontSize: '8px',
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,255,250,0.3)',
-                }}
-              >
-                {cred}
-              </span>
+          <div className="flex flex-col gap-2">
+            {['Airbnb Superhost · Since 2017', 'Isle of Islay, Scotland'].map((cred) => (
+              <span key={cred} className="font-mono text-2xs tracking-widest uppercase" style={{ color: 'rgba(255,255,250,0.3)' }}>{cred}</span>
             ))}
           </div>
         </div>
 
         {/* Link columns */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: '40px',
-          }}
-        >
+        <div className="grid grid-cols-4 gap-10">
           {FOOTER_COLS.map((col) => (
             <div key={col.label}>
-              <p
-                style={{
-                  fontFamily: '"IBM Plex Mono", monospace',
-                  fontSize: '10px',
-                  letterSpacing: '0.16em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,255,250,0.45)',
-                  marginBottom: '18px',
-                  paddingBottom: '12px',
-                  borderBottom: '1px solid rgba(255,255,255,0.08)',
-                }}
-              >
+              <p className="font-mono text-sm tracking-spread uppercase mb-[18px] pb-3" style={{ color: 'rgba(255,255,250,0.45)', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
                 {col.label}
               </p>
-              <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+              <ul className="m-0 p-0" style={{ listStyle: 'none' }}>
                 {col.links.map((link) => (
                   <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      style={{
-                        fontFamily: '"IBM Plex Mono", monospace',
-                        fontSize: '13px',
-                        color: 'var(--color-washed-timber)',
-                        display: 'block',
-                        padding: '7px 0',
-                        transition: 'color 0.2s',
-                      }}
-                      onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--color-sea-spray)')}
-                      onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'var(--color-washed-timber)')}
-                    >
+                    <Link href={link.href} className="block py-[7px] font-mono text-lg text-washed-timber transition-colors duration-200 hover:text-sea-spray">
                       {link.label}
                     </Link>
                   </li>
@@ -165,39 +89,11 @@ export default function Footer() {
       </div>
 
       {/* Base bar */}
-      <div
-        style={{
-          padding: '20px 48px',
-          borderTop: '1px solid rgba(255,255,255,0.07)',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          maxWidth: '1400px',
-          margin: '0 auto',
-          fontFamily: '"IBM Plex Mono", monospace',
-          fontSize: '10px',
-          color: 'rgba(255,255,250,0.4)',
-          letterSpacing: '0.05em',
-        }}
-      >
+      <div className="max-w-[1400px] mx-auto flex justify-between items-center px-12 py-5 font-mono text-sm tracking-wide" style={{ borderTop: '1px solid rgba(255,255,255,0.07)', color: 'rgba(255,255,250,0.4)' }}>
         <span>&copy; {currentYear} Portbahn Islay. All rights reserved.</span>
-        <div style={{ display: 'flex', gap: '24px' }}>
-          <Link
-            href="/privacy"
-            style={{ color: 'rgba(255,255,250,0.3)', transition: 'color 0.2s' }}
-            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--color-sea-spray)')}
-            onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'rgba(255,255,250,0.3)')}
-          >
-            Privacy
-          </Link>
-          <Link
-            href="/terms"
-            style={{ color: 'rgba(255,255,250,0.3)', transition: 'color 0.2s' }}
-            onMouseEnter={e => ((e.currentTarget as HTMLElement).style.color = 'var(--color-sea-spray)')}
-            onMouseLeave={e => ((e.currentTarget as HTMLElement).style.color = 'rgba(255,255,250,0.3)')}
-          >
-            Terms
-          </Link>
+        <div className="flex gap-6">
+          <Link href="/privacy" className="transition-colors duration-200 hover:text-sea-spray" style={{ color: 'rgba(255,255,250,0.3)' }}>Privacy</Link>
+          <Link href="/terms" className="transition-colors duration-200 hover:text-sea-spray" style={{ color: 'rgba(255,255,250,0.3)' }}>Terms</Link>
         </div>
       </div>
     </footer>
