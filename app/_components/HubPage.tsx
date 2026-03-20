@@ -135,7 +135,7 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                             <p className="typo-body-sm opacity-65 mb-4 line-clamp-3 flex-grow">{cardDescription}</p>
                           )}
                           <span className="typo-cta mt-auto">
-                            {config.cardLinkSuffix || `${cardTitle} guide →`}
+                            {config.cardLinkSuffix || 'Full guide →'}
                           </span>
                         </div>
                       </div>

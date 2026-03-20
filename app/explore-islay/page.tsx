@@ -73,7 +73,7 @@ export default async function ExploreIslayPage() {
     sectionHeading: "A local family's guide to things to do on Islay",
     cardLinkPrefix: '/explore-islay/',
     emptyStateMessage: 'Guide pages coming soon.',
-    backLink: { href: '/accommodation', label: 'Portbahn Islay — self-catering accommodation on Islay' },
+    backLink: { href: '/accommodation', label: 'Explore our holiday accommodation' },
     fallbackImages: FALLBACK_IMAGES,
     schemaType: 'CollectionPage' as const,
     schemaData: {

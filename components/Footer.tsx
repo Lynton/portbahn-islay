@@ -77,7 +77,7 @@ export default function Footer() {
               <ul className="m-0 p-0" style={{ listStyle: 'none' }}>
                 {col.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="block py-[7px] font-mono text-lg text-washed-timber transition-colors duration-200 hover:text-sea-spray">
+                    <Link href={link.href} className="block py-[7px] font-mono transition-colors duration-200 hover:text-sea-spray" style={{ fontSize: '13px', color: 'rgba(255,254,250,0.7)' }}>
                       {link.label}
                     </Link>
                   </li>
