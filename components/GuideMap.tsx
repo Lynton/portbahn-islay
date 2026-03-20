@@ -3,12 +3,9 @@
 /**
  * GuideMap — foundation component for entity map rendering on guide pages.
  *
- * Phase 1 (current): renders an iframe Google Maps embed using a search query
- * covering all entity names, or a direct lat/lng when coordinates are available.
- * Falls back to a static text "map" (entity list with Maps links) when no API key.
- *
- * Phase 2 (future, v0 UI): swap to Mapbox GL JS or Leaflet with coloured category
- * pins, click-to-expand tooltips, and automatic bounds fitting.
+ * Currently renders entity list with Google Maps links.
+ * TODO: swap to Mapbox GL JS or Leaflet with category pins and tooltips
+ * when coordinates are populated across entities.
  *
  * PROPS:
  *   entities — pre-resolved siteEntity documents (already filtered from guide page query)
@@ -52,9 +49,8 @@ export default function GuideMap({ entities, pageTitle }: GuideMapProps) {
     (e) => e.location?.googleMapsUrl
   );
 
-  // If we have coordinates → could render a proper map (Phase 2)
-  // For now: render a compact "Where to find them" list with map links
-  // This is intentionally lightweight — full map UI is deferred to v0 phase
+  // TODO: render proper embedded map when coordinates are populated
+  // For now: compact "Where to find them" list with Google Maps links
 
   if (withCoords.length === 0 && withMapLinks.length === 0) {
     // Only village names — don't render the section at all
