@@ -196,7 +196,7 @@ export default async function PropertyPage({ params }: PageProps) {
                     className="w-full block object-cover" style={{ height: '75vh', objectPosition: 'center 40%' }} />
                 </div>
                 <div className="c1b-caption-bar">
-                  <span className="font-serif font-bold text-lg text-sea-spray italic">{(galleryImages[1] as any)?.alt || `${property.name} — ${property.location || 'Isle of Islay'}`}</span>
+                  <span className="typo-caption-serif">{(galleryImages[1] as any)?.alt || `${property.name} — ${property.location || 'Isle of Islay'}`}</span>
                   {property.location && <span className="typo-caption shrink-0 ml-6">{property.location}</span>}
                 </div>
               </section>

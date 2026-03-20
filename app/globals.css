@@ -234,6 +234,52 @@ a   { color: inherit; text-decoration: none; }
   color: var(--color-sea-spray);
 }
 
+/* ── Light-on-dark variants (teal/dark backgrounds) ────────────── */
+
+/* Heading on teal — FAQ section, review section */
+.typo-h2-light {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: var(--leading-tighter);
+  color: var(--color-sea-spray);
+}
+
+/* Sub-heading on teal — FAQ questions */
+.typo-h3-light {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+  line-height: var(--leading-normal);
+  color: var(--color-sea-spray);
+}
+
+/* Body text on teal — FAQ answers */
+.typo-body-light {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  line-height: var(--leading-wide);
+  color: rgba(255,254,250,0.75);
+}
+
+/* Kicker on teal — section labels on dark bg */
+.typo-kicker-light {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-ultra);
+  text-transform: uppercase;
+  color: rgba(255,254,250,0.55);
+}
+
+/* Caption bar — serif italic on teal */
+.typo-caption-serif {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 18px;
+  font-style: italic;
+  color: var(--color-sea-spray);
+}
+
 /* Fact value */
 .typo-fact-value {
   font-family: var(--font-mono);

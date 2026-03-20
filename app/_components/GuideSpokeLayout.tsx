@@ -41,7 +41,7 @@ function ImageBreak({ image, caption, page }: { image: any; caption?: string; pa
       </div>
       {caption && (
         <div className="c1b-caption-bar">
-          <span className="font-serif text-lg text-sea-spray italic">{caption}</span>
+          <span className="typo-caption-serif">{caption}</span>
           <span className="typo-caption ml-6 shrink-0">Isle of Islay</span>
         </div>
       )}
@@ -291,30 +291,25 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
         {faqs.length > 0 && (
           <section className="g-faqs" id="faqs">
             <div className="g-faqs-inner">
-              <p className="typo-kicker mb-3" style={{ color: 'rgba(255,254,250,0.55)' }}>Common questions</p>
-              <h2 className="font-serif font-bold text-sea-spray mb-12" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.05 }}>
-                {page.title}
-              </h2>
+              <p className="typo-kicker-light mb-3">Common questions</p>
+              <h2 className="typo-h2-light mb-12">{page.title}</h2>
               <div className="flex flex-col gap-9">
                 {faqs.map((faq) => (
                   <div key={faq._id} className="g-faq-item">
-                    <h3 className="font-serif font-bold text-sea-spray mb-2.5" style={{ fontSize: 'clamp(1.1rem, 2vw, 1.35rem)', lineHeight: 1.2 }}>
-                      {faq.question}
-                    </h3>
+                    <h3 className="typo-h3-light mb-2.5">{faq.question}</h3>
                     <div>
                       <PortableText value={faq.answer} components={{
                         ...portableTextComponents,
                         block: { ...portableTextComponents.block,
-                          normal: ({ children }: any) => <p className="font-mono text-lg leading-wide mb-4" style={{ color: 'rgba(255,254,250,0.75)' }}>{children}</p>,
+                          normal: ({ children }: any) => <p className="typo-body-light mb-4">{children}</p>,
                         },
                         marks: { ...portableTextComponents.marks,
                           link: ({ children, value }: any) => {
                             const href = value?.href || '';
-                            const cls = 'underline underline-offset-[3px] hover-light';
-                            const style = { color: 'rgba(255,254,250,0.9)' };
+                            const cls = 'underline underline-offset-[3px] hover-light text-sea-spray/90';
                             return href.startsWith('http')
-                              ? <a href={href} target="_blank" rel="noopener noreferrer" className={cls} style={style}>{children}</a>
-                              : <Link href={href} className={cls} style={style}>{children}</Link>;
+                              ? <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>
+                              : <Link href={href} className={cls}>{children}</Link>;
                           },
                         },
                       }} />
