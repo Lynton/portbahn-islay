@@ -113,6 +113,13 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
   });
   if (entities.length > 0) quickNav.push({ label: entityHeading || 'Places & Listings', anchor: 'entities' });
   if (faqs.length > 0) quickNav.push({ label: 'Common Questions', anchor: 'faqs' });
+  // Deduplicate by anchor (same heading in block + editorial = one nav item)
+  const seen = new Set<string>();
+  const uniqueNav = quickNav.filter((item) => {
+    if (seen.has(item.anchor)) return false;
+    seen.add(item.anchor);
+    return true;
+  });
 
   // PortableText with anchored headings
   const anchoredComponents = {
@@ -230,11 +237,11 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                     </div>
                     <div className="g-layout-overview-aside">
                       {/* On this page — full quick nav */}
-                      {quickNav.length > 0 && (
+                      {uniqueNav.length > 0 && (
                         <nav>
                           <p className="typo-kicker mb-4" style={{ letterSpacing: 'var(--tracking-caps)' }}>On this page</p>
                           <ul className="flex flex-col gap-2" style={{ listStyle: 'none' }}>
-                            {quickNav.map((item) => (
+                            {uniqueNav.map((item) => (
                               <li key={item.anchor}>
                                 <a href={`#${item.anchor}`} className="hover-link font-mono text-base text-harbour-stone opacity-70">{item.label}</a>
                               </li>
