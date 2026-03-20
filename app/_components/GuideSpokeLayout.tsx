@@ -7,19 +7,12 @@ import SchemaMarkup from '@/components/SchemaMarkup';
 import type { SchemaType } from '@/lib/schema-markup';
 import EntityCard from '@/components/EntityCard';
 import GuideMap from '@/components/GuideMap';
+import PropertyCardGrid from '@/components/PropertyCardGrid';
 import { portableTextComponents } from '@/lib/portable-text';
+import type { PropertyData } from '@/lib/queries';
 
-// ── Types ──────────────────────────────────────────────────────────────
 type PTBlock = { _type: string; children?: Array<{ text?: string }> };
 interface FaqItem { _id: string; question: string; answer: PTBlock[]; }
-
-interface PropertyCard {
-  _id: string; name: string; slug: string | { current: string };
-  location: string | { address?: string; nearestTown?: string };
-  heroImage?: { alt?: string; asset: { _ref: string } };
-  sleeps?: number; bedrooms?: number; bathrooms?: number; petFriendly?: boolean;
-  kitchenDining?: string[]; livingAreas?: string[]; outdoorFeatures?: string[];
-}
 
 export interface GuideSpokeConfig {
   hubLabel: string;           // "Explore Islay" or "Travel to Islay"
@@ -32,7 +25,7 @@ export interface GuideSpokeConfig {
 interface GuideSpokeLayoutProps {
   page: any;
   slug: string;
-  properties: PropertyCard[];
+  properties: PropertyData[];
   config: GuideSpokeConfig;
 }
 
@@ -311,45 +304,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
             <p className="typo-kicker mb-3">Accommodation</p>
             <h2 className="typo-h2">Stay on Islay</h2>
           </div>
-          <div className="g-stay-cards">
-            {(properties as PropertyCard[]).map((p) => {
-              const imageUrl = p.heroImage ? urlFor(p.heroImage).width(1200).height(800).url() : '';
-              const locationText = typeof p.location === 'string' ? p.location : (p.location?.address || p.location?.nearestTown || 'Bruichladdich, Islay');
-              const propSlug = typeof p.slug === 'string' ? p.slug : p.slug?.current;
-              const bullets: string[] = [];
-              if (p.sleeps) bullets.push(`Sleeps ${p.sleeps}`);
-              if (p.bedrooms) bullets.push(`${p.bedrooms} bedrooms`);
-              if (p.bathrooms) bullets.push(`${p.bathrooms} bathroom${p.bathrooms > 1 ? 's' : ''}`);
-              if (p.petFriendly) bullets.push('Dogs welcome');
-              if (p.petFriendly === false) bullets.push('Pet-free');
-              const highlights: string[] = [];
-              if (p.outdoorFeatures?.includes('sea_views') || p.outdoorFeatures?.includes('sea_views_outdoor')) highlights.push('Sea views');
-              if (p.outdoorFeatures?.includes('walled_garden')) highlights.push('Walled garden');
-              if (p.outdoorFeatures?.includes('bird_reserves')) highlights.push('Bird hides');
-              if (p.outdoorFeatures?.includes('private_garden')) highlights.push('Private garden');
-              if (p.outdoorFeatures?.includes('woodland')) highlights.push('Woodland grounds');
-              if (p.livingAreas?.includes('conservatory')) highlights.push('Conservatory');
-              const unique = [...new Set(highlights)].slice(0, 3);
-              return (
-                <Link key={p._id} href={`/accommodation/${propSlug}`} className="block hover-opacity">
-                  <div className="bg-harbour-stone relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
-                    {imageUrl && <Image src={imageUrl} alt={p.heroImage?.alt || p.name} fill className="object-cover" />}
-                  </div>
-                  <div className="bg-machair-sand p-5 pb-6">
-                    <p className="typo-kicker mb-2">{locationText}</p>
-                    <h3 className="typo-card-title mb-2.5">{p.name}</h3>
-                    <p className="font-mono text-base text-harbour-stone opacity-60 mb-2.5">{bullets.join(' · ')}</p>
-                    {unique.length > 0 && (
-                      <ul className="flex flex-wrap gap-1.5 mb-3.5" style={{ listStyle: 'none' }}>
-                        {unique.map((h) => <li key={h} className="font-mono text-xs tracking-wide text-kelp-edge bg-sea-spray px-2.5 py-1">{h}</li>)}
-                      </ul>
-                    )}
-                    <span className="typo-cta">View property →</span>
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
+          <PropertyCardGrid properties={properties} showHighlights />
           <div className="max-w-[1280px] mx-auto mt-7 text-center">
             <Link href="/availability" className="typo-btn hover-opacity">Check Availability</Link>
           </div>

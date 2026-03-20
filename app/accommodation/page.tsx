@@ -2,17 +2,7 @@ import { cache } from 'react';
 import { Metadata } from 'next';
 import HubPage from '@/app/_components/HubPage';
 import { client } from '@/sanity/lib/client';
-
-interface Property {
-  _id: string;
-  name: string;
-  slug: { current: string };
-  heroImage?: {
-    alt?: string;
-    asset: { _ref: string };
-  };
-  headline?: string;
-}
+import { getProperties } from '@/lib/queries';
 
 // Revalidate every 60 seconds
 export const revalidate = 60;
@@ -63,20 +53,6 @@ const getAccommodationPage = cache(async () => {
   });
 });
 
-// Get all properties for the hub
-const getProperties = cache(async () => {
-  const query = `*[_type == "property" && !(_id in path("drafts.**"))] | order(name asc) {
-    _id,
-    name,
-    slug,
-    headline,
-    heroImage
-  }`;
-
-  return await client.fetch(query, {}, {
-    next: { revalidate: 60 },
-  });
-});
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getAccommodationPage();
@@ -112,7 +88,7 @@ export default async function AccommodationPage() {
       name: 'Self-Catering Family Holiday Homes in Bruichladdich',
       description: page?.seoDescription || 'Three unique self-catering holiday properties in Bruichladdich, Islay - real family homes with personality.',
       url: '/accommodation',
-      hasPart: properties.map((p: Property) => ({
+      hasPart: properties.map((p: any) => ({
         type: 'Accommodation',
         url: `/accommodation/${p.slug.current}`,
         name: p.name

@@ -3,23 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import { PortableText } from '@portabletext/react';
-
-interface Property {
-  _id: string;
-  name: string;
-  slug: { current: string } | string;
-  location?: string | { address?: string; nearestTown?: string };
-  overview?: Array<{ _type: string; children?: Array<{ text?: string }> }>;
-  sleeps?: number;
-  bedrooms?: number;
-  heroImage?: { alt?: string; asset: { _ref: string } };
-}
 import SchemaMarkup from '@/components/SchemaMarkup';
 import MultiPropertyMap from '@/components/MultiPropertyMap';
+import PropertyCardGrid from '@/components/PropertyCardGrid';
 import BlockRenderer from '@/components/BlockRenderer';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
 import { portableTextComponents } from '@/lib/portable-text';
+import { getProperties } from '@/lib/queries';
 
 const getHomepage = cache(async () => {
   const query = `*[_type == "homepage"][0]{
@@ -32,9 +23,6 @@ const getHomepage = cache(async () => {
   return await client.fetch(query);
 });
 
-const getProperties = cache(async () => {
-  return await client.fetch(`*[_type == "property"]{ _id, name, slug, location, overview, sleeps, bedrooms, heroImage }`);
-});
 
 export async function generateMetadata(): Promise<Metadata> {
   const homepage = await getHomepage();
@@ -98,24 +86,8 @@ export default async function Home() {
               <h2 className="typo-h2" style={{ fontSize: 'clamp(1.75rem, 3vw, 2.75rem)' }}>Our Accommodation</h2>
             </div>
 
-            <div className="grid grid-cols-3 gap-[3px] mb-16">
-              {(properties as Property[]).map((p) => {
-                const imageUrl = p.heroImage ? urlFor(p.heroImage).width(1200).height(800).url() : '';
-                const locationText = typeof p.location === 'string' ? p.location : (p.location?.address || p.location?.nearestTown || 'Bruichladdich, Islay');
-                const slug = typeof p.slug === 'string' ? p.slug : p.slug?.current;
-                return (
-                  <Link key={p._id} href={`/accommodation/${slug}`} className="block hover-opacity">
-                    <div className="bg-harbour-stone relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
-                      {imageUrl && <Image src={imageUrl} alt={p.name} fill className="object-cover" />}
-                    </div>
-                    <div className="bg-machair-sand p-5 pb-6">
-                      <p className="typo-kicker mb-2">{locationText}</p>
-                      <h3 className="typo-card-title mb-2.5">{p.name}</h3>
-                      <p className="font-mono text-base text-harbour-stone opacity-60">Sleeps {p.sleeps ?? '—'} · {p.bedrooms ?? '—'} bedrooms</p>
-                    </div>
-                  </Link>
-                );
-              })}
+            <div className="mb-16">
+              <PropertyCardGrid properties={properties} />
             </div>
 
             <div className="px-12">

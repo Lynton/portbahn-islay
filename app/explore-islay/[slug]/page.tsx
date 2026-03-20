@@ -2,6 +2,7 @@ import { cache } from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { client } from '@/sanity/lib/client';
+import { getProperties } from '@/lib/queries';
 import GuideSpokeLayout, { type GuideSpokeConfig } from '@/app/_components/GuideSpokeLayout';
 
 export const revalidate = 60;
@@ -66,13 +67,6 @@ const getGuidePage = cache(async (slug: string) => {
   return await client.fetch(query, { slug }, { cache: 'no-store' });
 });
 
-const getProperties = cache(async () => {
-  return await client.fetch(`*[_type == "property"]{
-    _id, name, slug, location, heroImage,
-    sleeps, bedrooms, bathrooms, petFriendly,
-    kitchenDining, livingAreas, outdoorFeatures
-  }`);
-});
 
 export async function generateStaticParams() {
   const query = `*[_type == "guidePage" && defined(slug.current) && !(slug.current in $travelSlugs)]{ "slug": slug.current }`;

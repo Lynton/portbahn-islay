@@ -16,7 +16,7 @@ interface HubPageProps {
     _id: string;
     title?: string;
     name?: string;
-    slug?: { current: string };
+    slug?: { current: string } | string;
     introduction?: string;
     headline?: string;
     heroImage?: { alt?: string; asset: { _ref: string } };
@@ -113,7 +113,7 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                 {cards.map((card) => {
                   const cardTitle = card.title || card.name || 'Untitled';
                   const cardDescription = card.introduction || card.headline;
-                  const cardSlug = card.slug?.current;
+                  const cardSlug = typeof card.slug === 'string' ? card.slug : card.slug?.current;
                   return (
                     <Link key={card._id} href={`${config.cardLinkPrefix}${cardSlug}`} className="block group">
                       <div className="hover-card bg-machair-sand border border-washed-timber overflow-hidden">

@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Metadata } from 'next';
 import SchemaMarkup from '@/components/SchemaMarkup';
+import { getProperties } from '@/lib/queries';
 import BlockRenderer from '@/components/BlockRenderer';
 import { client } from '@/sanity/lib/client';
 import { urlFor } from '@/sanity/lib/image';
@@ -52,28 +53,6 @@ const getAboutPage = cache(async () => {
   });
 });
 
-const getProperties = cache(async () => {
-  const query = `*[_type == "property" && !(_id in path("drafts.**"))] | order(name asc) {
-    _id,
-    name,
-    slug,
-    headline,
-    heroImage,
-    sleeps,
-    bedrooms,
-    petFriendly,
-    totalReviewCount,
-    reviewHighlights[]{
-      quote,
-      source,
-      rating
-    }
-  }`;
-
-  return await client.fetch(query, {}, {
-    next: { revalidate: 60 },
-  });
-});
 
 interface ReviewHighlight {
   quote: string;
@@ -81,18 +60,8 @@ interface ReviewHighlight {
   rating?: number;
 }
 
-interface Property {
-  _id: string;
-  name: string;
-  slug: { current: string };
-  headline?: string;
-  heroImage?: { alt?: string; asset: { _ref: string } };
-  sleeps?: number;
-  bedrooms?: number;
-  petFriendly?: boolean;
-  totalReviewCount?: number;
-  reviewHighlights?: ReviewHighlight[];
-}
+// Property type from shared queries — import used below
+import type { PropertyData } from '@/lib/queries';
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getAboutPage();
@@ -163,8 +132,8 @@ export default async function AboutUsPage() {
           {/* Guest Quotes — personal service (only from properties with their own reviews) */}
           {(() => {
             const allQuotes = (properties || [])
-              .filter((p: Property) => (p.totalReviewCount ?? 0) > 0)
-              .flatMap((p: Property) =>
+              .filter((p: PropertyData) => (p.totalReviewCount ?? 0) > 0)
+              .flatMap((p: PropertyData) =>
                 (p.reviewHighlights || []).map((r: ReviewHighlight) => ({
                   ...r,
                   propertyName: p.name,
@@ -204,10 +173,10 @@ export default async function AboutUsPage() {
                 The Homes We Manage
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {properties.map((property: Property) => (
+                {properties.map((property: PropertyData) => (
                   <Link
                     key={property._id}
-                    href={`/accommodation/${property.slug?.current}`}
+                    href={`/accommodation/${typeof property.slug === 'string' ? property.slug : property.slug?.current}`}
                     className="group bg-white rounded-lg overflow-hidden shadow-sm border border-washed-timber hover:shadow-md transition-shadow"
                   >
                     {property.heroImage && (
