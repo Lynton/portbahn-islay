@@ -20,10 +20,17 @@ Allow: /
 User-agent: *
 Allow: /
 
-# Disallow private areas
+# Disallow private areas (but allow markdown content API)
+Allow: /api/md/
 Disallow: /api/
 Disallow: /studio/
 Disallow: /_next/static/
+
+# AI content discovery
+# https://llmstxt.org/
+# /llms.txt      — structured index of all content with markdown links
+# /llms-full.txt — complete site content as a single markdown document
+# /api/md/{section}/{slug} — individual pages as markdown
 
 # Sitemap
 Sitemap: https://portbahn-islay.vercel.app/sitemap.xml

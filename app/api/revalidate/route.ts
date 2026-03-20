@@ -5,8 +5,9 @@
  * Use after Sanity content changes to force pages to re-fetch immediately.
  *
  * Usage:
- *   GET /api/revalidate?secret=<REVALIDATE_SECRET>&path=/explore-islay
- *   GET /api/revalidate?secret=<REVALIDATE_SECRET>&path=all
+ *   GET  /api/revalidate?secret=<REVALIDATE_SECRET>&path=/explore-islay
+ *   GET  /api/revalidate?secret=<REVALIDATE_SECRET>&path=all
+ *   POST /api/revalidate?secret=<REVALIDATE_SECRET>&path=all  (for Sanity webhooks)
  *
  * Set REVALIDATE_SECRET in Vercel environment variables and .env.local.
  */
@@ -42,9 +43,11 @@ const ALL_PATHS = [
   '/islay-travel/getting-around-islay',
   '/about-us',
   '/contact',
+  '/llms.txt',
+  '/llms-full.txt',
 ];
 
-export async function GET(request: NextRequest) {
+function handleRevalidate(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get('secret');
   const path = request.nextUrl.searchParams.get('path');
 
@@ -69,4 +72,13 @@ export async function GET(request: NextRequest) {
   } catch (err) {
     return NextResponse.json({ message: 'Error revalidating', error: String(err) }, { status: 500 });
   }
+}
+
+export async function GET(request: NextRequest) {
+  return handleRevalidate(request);
+}
+
+// POST handler for Sanity webhooks
+export async function POST(request: NextRequest) {
+  return handleRevalidate(request);
 }
