@@ -29,6 +29,8 @@ interface HubPageProps {
     cardLinkSuffix?: string;
     emptyStateMessage?: string;
     backLink: { href: string; label: string };
+    fallbackImages?: Record<string, string>;
+    spokeIndex?: Array<{ slug: string; title: string }>;
     schemaType: 'CollectionPage';
     schemaData: {
       name: string;
@@ -115,9 +117,14 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                   return (
                     <Link key={card._id} href={`${config.cardLinkPrefix}${cardSlug}`} className="block group">
                       <div className="hover-card bg-machair-sand border border-washed-timber overflow-hidden">
-                        {card.heroImage && (
-                          <div className="relative h-[220px] overflow-hidden">
-                            <Image src={urlFor(card.heroImage).width(600).height(400).url()} alt={card.heroImage.alt || cardTitle} fill className="object-cover transition-transform duration-400" />
+                        {(card.heroImage || config.fallbackImages?.[cardSlug || '']) && (
+                          <div className="relative h-[220px] overflow-hidden bg-harbour-stone">
+                            {card.heroImage ? (
+                              <Image src={urlFor(card.heroImage).width(600).height(400).url()} alt={card.heroImage.alt || cardTitle} fill className="object-cover transition-transform duration-400" />
+                            ) : (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img src={config.fallbackImages![cardSlug || '']} alt={cardTitle} className="w-full h-full object-cover" />
+                            )}
                           </div>
                         )}
                         <div className="p-5 pb-[22px]">
@@ -139,6 +146,20 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
             <div className="py-12 text-center">
               <p className="font-mono text-xl text-harbour-stone opacity-60">{config.emptyStateMessage || 'Content coming soon.'}</p>
             </div>
+          )}
+
+          {/* Static spoke index — always in server HTML for crawlers/AI retrieval */}
+          {config.spokeIndex && config.spokeIndex.length > 0 && (
+            <nav aria-label="All guides" className="mt-12 pt-8 border-t border-washed-timber">
+              <h2 className="font-serif font-bold text-harbour-stone mb-4" style={{ fontSize: 'clamp(1.25rem, 2vw, 1.75rem)' }}>All guides</h2>
+              <ul className="flex flex-col gap-2">
+                {config.spokeIndex.map((spoke) => (
+                  <li key={spoke.slug} style={{ listStyle: 'none' }}>
+                    <Link href={`${config.cardLinkPrefix}${spoke.slug}`} className="font-mono text-lg text-kelp-edge underline underline-offset-[3px]">{spoke.title}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           )}
 
           <div className="pt-8 border-t border-washed-timber">
