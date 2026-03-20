@@ -56,6 +56,7 @@ const getGuidePage = cache(async (slug: string) => {
       block->{ _id, blockId, title, entityType, canonicalHome, fullContent, teaserContent, keyFacts }
     }[defined(block._id)],
     extendedEditorial,
+    "editorialHeadings": extendedEditorial[style in ["h2","h3"]].children[0].text,
     "featuredEntities": featuredEntities[defined(@->_id)]->{
       _id, entityId, name, category, schemaOrgType, island, status, shortDescription,
       editorialNote, importantNote, canonicalExternalUrl, ecosystemSite,

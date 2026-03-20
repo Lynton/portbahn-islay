@@ -81,6 +81,40 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
 
   const relatedGuides = config.relatedGuides.filter((g) => g.slug !== slug).slice(0, 6);
 
+  // Slugify heading text for anchor IDs
+  const toAnchor = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+  // Build quick nav items from all heading sources
+  const quickNav: Array<{ label: string; anchor: string }> = [];
+  // Content block titles (skip first — it's the overview section they're already in)
+  blocks.slice(1).forEach((b: any) => {
+    const title = b.customHeading || b.block.title;
+    if (title) quickNav.push({ label: title, anchor: `block-${b.block.blockId?.current || b.block._id}` });
+  });
+  // Extended editorial headings
+  (page.editorialHeadings || []).forEach((h: string) => {
+    if (h) quickNav.push({ label: h, anchor: toAnchor(h) });
+  });
+  // Entities and FAQs
+  if (entities.length > 0) quickNav.push({ label: 'Places & Listings', anchor: 'entities' });
+  if (faqs.length > 0) quickNav.push({ label: 'Common Questions', anchor: 'faqs' });
+
+  // Custom PortableText for extended editorial — adds id to h2/h3
+  const editorialComponents = {
+    ...portableTextComponents,
+    block: {
+      ...portableTextComponents.block,
+      h2: ({ children }: any) => {
+        const text = typeof children === 'string' ? children : (Array.isArray(children) ? children.join('') : '');
+        return <h2 id={toAnchor(text)} className="typo-h2 mt-12 mb-4">{children}</h2>;
+      },
+      h3: ({ children }: any) => {
+        const text = typeof children === 'string' ? children : (Array.isArray(children) ? children.join('') : '');
+        return <h3 id={toAnchor(text)} className="font-serif font-bold text-[1.25rem] text-harbour-stone leading-snug mt-8 mb-3">{children}</h3>;
+      },
+    },
+  };
+
   // Entity section heading — contextual, not generic
   const entityHeading = (() => {
     if (entities.length === 0) return '';
@@ -108,7 +142,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
           { name: page.title, url: `${config.urlPrefix}${slug}` },
         ]}
       />
-      <main className="min-h-screen bg-sea-spray">
+      <main id="top" className="min-h-screen bg-sea-spray">
 
         {/* ── HERO ───────────────────────────────────────────────────── */}
         {(page.heroImage || config.fallbackImages[slug]) && (
@@ -195,24 +229,16 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                       {keyFactsEl}
                     </div>
                     <div className="g-layout-overview-aside">
-                      {/* On this page — anchor nav */}
-                      {(blocks.length > 1 || entities.length > 0 || faqs.length > 0) && (
+                      {/* On this page — full quick nav */}
+                      {quickNav.length > 0 && (
                         <nav>
                           <p className="typo-kicker mb-4" style={{ letterSpacing: 'var(--tracking-caps)' }}>On this page</p>
-                          <ul className="flex flex-col gap-2.5" style={{ listStyle: 'none' }}>
-                            {blocks.slice(1).map((b: any) => (
-                              <li key={b.block._id}>
-                                <a href={`#block-${b.block.blockId?.current || b.block._id}`} className="hover-link font-mono text-base text-harbour-stone opacity-70">
-                                  {b.customHeading || b.block.title}
-                                </a>
+                          <ul className="flex flex-col gap-2" style={{ listStyle: 'none' }}>
+                            {quickNav.map((item) => (
+                              <li key={item.anchor}>
+                                <a href={`#${item.anchor}`} className="hover-link font-mono text-base text-harbour-stone opacity-70">{item.label}</a>
                               </li>
                             ))}
-                            {entities.length > 0 && (
-                              <li><a href="#entities" className="hover-link font-mono text-base text-harbour-stone opacity-70">{entityHeading}</a></li>
-                            )}
-                            {faqs.length > 0 && (
-                              <li><a href="#faqs" className="hover-link font-mono text-base text-harbour-stone opacity-70">Common Questions</a></li>
-                            )}
                           </ul>
                         </nav>
                       )}
@@ -259,7 +285,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
               <p className="typo-kicker mb-5">Further reading</p>
               <div className="g-layout-spread-grid">
                 <div><h2 className="typo-spread-heading sticky top-[100px]">More to<br />Discover</h2></div>
-                <div><PortableText value={page.extendedEditorial} components={portableTextComponents} /></div>
+                <div><PortableText value={page.extendedEditorial} components={editorialComponents} /></div>
               </div>
             </div>
           </section>
@@ -345,6 +371,15 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
             ))}
             <Link href={config.hubPath} className="hover-link font-mono text-sm tracking-wider text-kelp-edge ml-auto shrink-0">← All guides</Link>
           </div>
+        </div>
+
+        {/* ── BACK TO TOP ──────────────────────────────────────────── */}
+        <div className="fixed bottom-6 right-6 z-50">
+          <a href="#top" className="flex items-center justify-center w-10 h-10 bg-harbour-stone/80 text-sea-spray rounded-full hover-btn" aria-label="Back to top" style={{ backdropFilter: 'blur(4px)' }}>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 3L3 8.5M8 3L13 8.5M8 3V14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
         </div>
 
       </main>
