@@ -169,14 +169,14 @@ export default function EntityCard({ entity, variant = 'default' }: EntityCardPr
   return (
     <article className={cardClass} style={cardStyle}>
 
-      {/* Header: name + category badge */}
-      <div className="flex items-start justify-between gap-4 mb-2">
+      {/* Header: category kicker + name */}
+      <div className="mb-2">
+        <p className="typo-kicker mb-1.5" style={{ letterSpacing: 'var(--tracking-caps)' }}>
+          {CATEGORY_LABELS[category] || category}
+        </p>
         <h3 className="font-serif text-xl text-harbour-stone leading-snug">
           {entity.name}
         </h3>
-        <span className="font-mono text-xs text-harbour-stone/50 shrink-0 pt-1">
-          {CATEGORY_LABELS[category] || category}
-        </span>
       </div>
 
       {/* Safety warning for beaches */}

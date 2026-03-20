@@ -153,7 +153,7 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
           )}
 
           <div className="pt-8 border-t border-washed-timber">
-            <Link href={config.backLink.href} className="font-mono text-md tracking-wide text-kelp-edge underline underline-offset-[3px]">
+            <Link href={config.backLink.href} className="hover-link font-mono text-md tracking-wide text-kelp-edge">
               ← {config.backLink.label}
             </Link>
           </div>

@@ -15,9 +15,9 @@ type PTBlock = { _type: string; children?: Array<{ text?: string }> };
 interface FaqItem { _id: string; question: string; answer: PTBlock[]; }
 
 export interface GuideSpokeConfig {
-  hubLabel: string;           // "Explore Islay" or "Travel to Islay"
-  hubPath: string;            // "/explore-islay" or "/islay-travel"
-  urlPrefix: string;          // "/explore-islay/" or "/islay-travel/"
+  hubLabel: string;
+  hubPath: string;
+  urlPrefix: string;
   fallbackImages: Record<string, string>;
   relatedGuides: Array<{ slug: string; title: string }>;
 }
@@ -29,7 +29,6 @@ interface GuideSpokeLayoutProps {
   config: GuideSpokeConfig;
 }
 
-// ── Helpers ────────────────────────────────────────────────────────────
 function galleryImage(page: any, index: number) { return page.galleryImages?.[index] || null; }
 
 function ImageBreak({ image, caption, page }: { image: any; caption?: string; page: any }) {
@@ -50,7 +49,6 @@ function ImageBreak({ image, caption, page }: { image: any; caption?: string; pa
   );
 }
 
-// ── Component ──────────────────────────────────────────────────────────
 export default function GuideSpokeLayout({ page, slug, properties, config }: GuideSpokeLayoutProps) {
   const schemaType = page.schemaType || 'Article';
 
@@ -83,6 +81,21 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
 
   const relatedGuides = config.relatedGuides.filter((g) => g.slug !== slug).slice(0, 6);
 
+  // Entity section heading — contextual, not generic
+  const entityHeading = (() => {
+    if (entities.length === 0) return '';
+    const categories = [...new Set(entities.map((e: any) => e.category).filter(Boolean))];
+    if (categories.length === 1) {
+      const labels: Record<string, string> = {
+        distillery: 'Distilleries', restaurant: 'Where to Eat & Drink', beach: 'Beaches',
+        'nature-reserve': 'Nature Reserves', heritage: 'Heritage Sites', route: 'Walking Routes',
+        village: 'Villages', transport: 'Transport & Services', activity: 'Activities',
+      };
+      return labels[categories[0]] || `${page.title}`;
+    }
+    return `${page.title} — Places & Services`;
+  })();
+
   let galleryIndex = 0;
   const nextGalleryImage = () => galleryImage(page, galleryIndex++);
 
@@ -113,9 +126,9 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
         {/* ── CAPTION BAR ────────────────────────────────────────────── */}
         <div className="c1b-caption-bar">
           <nav className="typo-nav">
-            <Link href="/" className="opacity-70 no-underline">Home</Link>
+            <Link href="/" className="opacity-70 no-underline hover-light">Home</Link>
             <span className="mx-2.5 opacity-35">·</span>
-            <Link href={config.hubPath} className="opacity-70 no-underline">{config.hubLabel}</Link>
+            <Link href={config.hubPath} className="opacity-70 no-underline hover-light">{config.hubLabel}</Link>
             <span className="mx-2.5 opacity-35">·</span>
             <span className="opacity-100" style={{ color: 'rgba(255,254,250,0.9)' }}>{page.title}</span>
           </nav>
@@ -147,7 +160,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
 
           const teaserCta = blockRef.version === 'teaser' && blockRef.block.canonicalHome ? (
             <p className="mt-6">
-              <Link href={blockRef.block.canonicalHome} className="font-mono text-base tracking-wide text-kelp-edge underline underline-offset-[3px]">
+              <Link href={blockRef.block.canonicalHome} className="hover-link font-mono text-base tracking-wide text-kelp-edge">
                 More about {blockRef.block.title} →
               </Link>
             </p>
@@ -182,21 +195,32 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                       {keyFactsEl}
                     </div>
                     <div className="g-layout-overview-aside">
-                      <nav>
-                        <p className="typo-kicker mb-4" style={{ letterSpacing: 'var(--tracking-caps)' }}>On this page</p>
-                        <ul className="flex flex-col gap-2.5" style={{ listStyle: 'none' }}>
-                          {blocks.slice(1).map((b: any) => (
-                            <li key={b.block._id}><span className="font-mono text-base text-harbour-stone opacity-70">{b.customHeading || b.block.title}</span></li>
-                          ))}
-                          {entities.length > 0 && <li><span className="font-mono text-base text-harbour-stone opacity-70">Essential Listings</span></li>}
-                          {faqs.length > 0 && <li><span className="font-mono text-base text-harbour-stone opacity-70">Frequently Asked</span></li>}
-                        </ul>
-                      </nav>
+                      {/* On this page — anchor nav */}
+                      {(blocks.length > 1 || entities.length > 0 || faqs.length > 0) && (
+                        <nav>
+                          <p className="typo-kicker mb-4" style={{ letterSpacing: 'var(--tracking-caps)' }}>On this page</p>
+                          <ul className="flex flex-col gap-2.5" style={{ listStyle: 'none' }}>
+                            {blocks.slice(1).map((b: any) => (
+                              <li key={b.block._id}>
+                                <a href={`#block-${b.block.blockId?.current || b.block._id}`} className="hover-link font-mono text-base text-harbour-stone opacity-70">
+                                  {b.customHeading || b.block.title}
+                                </a>
+                              </li>
+                            ))}
+                            {entities.length > 0 && (
+                              <li><a href="#entities" className="hover-link font-mono text-base text-harbour-stone opacity-70">{entityHeading}</a></li>
+                            )}
+                            {faqs.length > 0 && (
+                              <li><a href="#faqs" className="hover-link font-mono text-base text-harbour-stone opacity-70">Common Questions</a></li>
+                            )}
+                          </ul>
+                        </nav>
+                      )}
                     </div>
                   </div>
                 </section>
               ) : (
-                <section className={bgClass} data-block-id={blockRef.block.blockId?.current}>
+                <section className={bgClass} id={`block-${blockRef.block.blockId?.current || blockRef.block._id}`} data-block-id={blockRef.block.blockId?.current}>
                   <div className="g-layout-spread">
                     {blockRef.block.entityType && <p className="typo-kicker mb-5">{blockRef.block.entityType}</p>}
                     <div className="g-layout-spread-grid">
@@ -249,10 +273,10 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
 
         {/* ── ENTITIES ───────────────────────────────────────────────── */}
         {entities.length > 0 && (
-          <section className="g-entities">
+          <section className="g-entities" id="entities">
             <div className="g-section-header">
-              <p className="typo-kicker mb-3">Featured</p>
-              <h2 className="typo-h2 mb-4">Essential Listings</h2>
+              <p className="typo-kicker mb-3">{page.title}</p>
+              <h2 className="typo-h2 mb-4">{entityHeading}</h2>
               <GuideMap entities={entities} pageTitle={page.title} />
             </div>
             <div className="g-entities-grid">
@@ -265,14 +289,18 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
 
         {/* ── FAQs ───────────────────────────────────────────────────── */}
         {faqs.length > 0 && (
-          <section className="g-faqs">
+          <section className="g-faqs" id="faqs">
             <div className="g-faqs-inner">
               <p className="typo-kicker mb-3" style={{ color: 'rgba(255,254,250,0.55)' }}>Common questions</p>
-              <h2 className="typo-h2 text-sea-spray mb-12">Frequently Asked</h2>
+              <h2 className="font-serif font-bold text-sea-spray mb-12" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.05 }}>
+                {page.title}
+              </h2>
               <div className="flex flex-col gap-9">
                 {faqs.map((faq) => (
                   <div key={faq._id} className="g-faq-item">
-                    <h3 className="typo-h3 text-sea-spray mb-2.5">{faq.question}</h3>
+                    <h3 className="font-serif font-bold text-sea-spray mb-2.5" style={{ fontSize: 'clamp(1.1rem, 2vw, 1.35rem)', lineHeight: 1.2 }}>
+                      {faq.question}
+                    </h3>
                     <div>
                       <PortableText value={faq.answer} components={{
                         ...portableTextComponents,
@@ -282,7 +310,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                         marks: { ...portableTextComponents.marks,
                           link: ({ children, value }: any) => {
                             const href = value?.href || '';
-                            const cls = 'underline underline-offset-[3px]';
+                            const cls = 'underline underline-offset-[3px] hover-light';
                             const style = { color: 'rgba(255,254,250,0.9)' };
                             return href.startsWith('http')
                               ? <a href={href} target="_blank" rel="noopener noreferrer" className={cls} style={style}>{children}</a>
@@ -320,7 +348,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                 {i < relatedGuides.length - 1 && <span className="mx-1 text-washed-timber">·</span>}
               </span>
             ))}
-            <Link href={config.hubPath} className="typo-cta ml-auto shrink-0" style={{ textTransform: 'none', letterSpacing: 'var(--tracking-wider)' }}>← All guides</Link>
+            <Link href={config.hubPath} className="hover-link font-mono text-sm tracking-wider text-kelp-edge ml-auto shrink-0">← All guides</Link>
           </div>
         </div>
 

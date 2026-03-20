@@ -27,7 +27,7 @@ export const portableTextComponents = {
     em: ({ children }: any) => <em className="italic">{children}</em>,
     link: ({ children, value }: any) => {
       const href = value?.href || '';
-      const cls = 'text-emerald-accent underline underline-offset-[3px]';
+      const cls = 'text-emerald-accent underline underline-offset-[3px] hover:opacity-75 transition-opacity';
       return href.startsWith('http') ? (
         <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>
       ) : (
