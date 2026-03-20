@@ -68,6 +68,7 @@
 
 /* ─── BASE ──────────────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
 body {
   background: var(--color-sea-spray);
@@ -484,21 +485,24 @@ p {
 }
 
 /* ─── GUIDE PAGE SECTIONS ──────────────────────────────────────────── */
+/* All guide sections use consistent 48px horizontal padding and 1280px max.
+   Content width varies WITHIN this container — the left edge stays aligned. */
+
 .g-entities { background: var(--color-machair-sand); padding: 100px 48px; }
-.g-entities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 1280px; margin: 0 auto; }
+.g-entities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; max-width: 1280px; }
 
 .g-faqs { background: var(--color-sound-of-islay); padding: 100px 48px; }
-.g-faqs-inner { max-width: 900px; margin: 0 auto; }
+.g-faqs-inner { max-width: 760px; }
 .g-faq-item { border-left: 3px solid rgba(255,254,250,0.25); padding-left: 24px; }
 
 .g-stay { background: var(--color-sea-spray); padding: 80px 48px; }
-.g-stay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1280px; margin: 0 auto; }
-.g-stay-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; max-width: 1280px; margin: 0 auto; }
+.g-stay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1280px; }
+.g-stay-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; max-width: 1280px; }
 
 .g-related { background: var(--color-machair-sand); padding: 48px; }
-.g-related-inner { max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
+.g-related-inner { max-width: 1280px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }
 
-.g-content { max-width: 720px; margin: 0 auto; padding: 80px 48px; }
+.g-content { max-width: 720px; padding: 80px 48px; }
 
 .g-pull-quote { padding: 72px 48px; background: var(--color-sea-spray); }
 .g-pull-quote blockquote {
@@ -509,12 +513,12 @@ p {
 }
 
 .g-block { padding: 80px 48px; }
-.g-block-inner { max-width: 720px; margin: 0 auto; }
+.g-block-inner { max-width: 720px; }
 
 .g-layout-overview {
   padding: 100px 48px;
   display: grid; grid-template-columns: 60px 1fr 280px; gap: 0 24px;
-  max-width: 1280px; margin: 0 auto;
+  max-width: 1280px;
 }
 .g-layout-overview-label {
   padding-top: 8px; writing-mode: vertical-lr; transform: rotate(180deg);
@@ -522,13 +526,13 @@ p {
   letter-spacing: var(--tracking-spread); text-transform: uppercase;
   color: var(--color-kelp-edge);
 }
-.g-layout-overview-body { max-width: 580px; }
-.g-layout-overview-aside { padding: 60px 0 0 48px; align-self: start; }
+.g-layout-overview-body { max-width: 620px; }
+.g-layout-overview-aside { padding: 60px 0 0 48px; align-self: start; position: sticky; top: 80px; }
 
-.g-layout-spread { padding: 100px 48px; max-width: 1280px; margin: 0 auto; }
+.g-layout-spread { padding: 100px 48px; max-width: 1280px; }
 .g-layout-spread-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
 
-.g-section-header { max-width: 1280px; margin: 0 auto 40px; }
+.g-section-header { max-width: 1280px; margin-bottom: 40px; }
 
 /* ─── GUIDE RESPONSIVE ────────────────────────────────────────────── */
 @media (max-width: 900px) {
@@ -579,7 +583,7 @@ p {
 
 /* Links on dark/teal backgrounds — brightens to white */
 .hover-light { transition: color 0.2s; }
-.hover-light:hover { color: var(--color-sea-spray); }
+.hover-light:hover { color: var(--color-sea-spray) !important; }
 
 /* Legacy aliases */
 .hover-opacity { transition: opacity 0.2s; }
