@@ -11,8 +11,31 @@ import PropertyCardGrid from '@/components/PropertyCardGrid';
 import { portableTextComponents } from '@/lib/portable-text';
 import type { PropertyData } from '@/lib/queries';
 
-type PTBlock = { _type: string; children?: Array<{ text?: string }> };
+type PTBlock = { _type: string; style?: string; children?: Array<{ text?: string }> };
 interface FaqItem { _id: string; question: string; answer: PTBlock[]; }
+
+/** Split a PortableText array into sections at h3 boundaries.
+ *  Returns: { intro: PTBlock[], sections: { heading: string, content: PTBlock[] }[] }
+ *  Content before the first h3 is the intro. Each h3 starts a new section. */
+function splitAtH3(blocks: PTBlock[]): { intro: PTBlock[]; sections: { heading: string; content: PTBlock[] }[] } {
+  const intro: PTBlock[] = [];
+  const sections: { heading: string; content: PTBlock[] }[] = [];
+  let current: { heading: string; content: PTBlock[] } | null = null;
+
+  for (const block of blocks) {
+    if (block._type === 'block' && block.style === 'h3') {
+      if (current) sections.push(current);
+      const text = (block.children || []).map(c => c.text || '').join('');
+      current = { heading: text, content: [] };
+    } else if (current) {
+      current.content.push(block);
+    } else {
+      intro.push(block);
+    }
+  }
+  if (current) sections.push(current);
+  return { intro, sections };
+}
 
 export interface GuideSpokeConfig {
   hubLabel: string;
@@ -206,9 +229,10 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
           <div className="min-w-0">
             {blocks.map((blockRef: any, index: number) => {
               const heading = blockRef.customHeading || blockRef.block.title;
-              const content = blockRef.version === 'full' ? blockRef.block.fullContent : blockRef.block.teaserContent;
+              const content: PTBlock[] = blockRef.version === 'full' ? (blockRef.block.fullContent || []) : (blockRef.block.teaserContent || []);
               const showKeyFacts = blockRef.showKeyFacts && blockRef.block.keyFacts?.length > 0;
               const isFirst = index === 0;
+              const kicker = blockRef.block.entityType || (isFirst ? 'Guide' : config.hubLabel);
 
               const teaserCta = blockRef.version === 'teaser' && blockRef.block.canonicalHome ? (
                 <p className="mt-6">
@@ -232,24 +256,26 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                 </div>
               ) : null;
 
-              const breakImg = isFirst ? nextGalleryImage() : ((index < blocks.length - 1) ? nextGalleryImage() : null);
+              // Split content at h3 boundaries for visual section treatment
+              const { intro, sections } = splitAtH3(content);
+              const hasSections = sections.length > 0;
 
               return (
                 <React.Fragment key={blockRef.block._id || index}>
+                  {/* Lead section: block heading + intro content (before first h3) */}
                   <div className={`guide-block${isFirst ? ' guide-block-lead' : ''}`} id={`block-${blockRef.block.blockId?.current || blockRef.block._id}`} data-block-id={blockRef.block.blockId?.current}>
-                    <p className={isFirst ? 'typo-label mb-6' : 'typo-kicker mb-5'}>
-                      {blockRef.block.entityType || (isFirst ? 'Guide' : config.hubLabel)}
-                    </p>
+                    <p className={isFirst ? 'typo-label mb-6' : 'typo-kicker mb-5'}>{kicker}</p>
                     {heading && <h2 className={isFirst ? 'typo-h2 mb-8' : 'typo-h2 mb-6'}>{heading}</h2>}
                     <div className="guide-block-body">
-                      {content && content.length > 0 && <PortableText value={content} components={anchoredComponents} />}
-                      {teaserCta}
-                      {keyFactsEl}
+                      {intro.length > 0 && <PortableText value={intro} components={anchoredComponents} />}
+                      {!hasSections && teaserCta}
+                      {!hasSections && keyFactsEl}
                     </div>
                   </div>
 
+                  {/* 60:40 image spread + pullquote after lead block */}
                   {isFirst && (() => {
-                    const img = breakImg || page.heroImage;
+                    const img = nextGalleryImage() || page.heroImage;
                     if (!img || !pullQuote) return img ? <ImageBreak image={img} page={page} /> : null;
                     return (
                       <div className="grid my-2 overflow-hidden" style={{ gridTemplateColumns: '60fr 40fr', minHeight: '45vh' }}>
@@ -268,6 +294,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                     );
                   })()}
 
+                  {/* Gallery pair after lead block */}
                   {isFirst && (() => {
                     const img1 = nextGalleryImage();
                     const img2 = nextGalleryImage();
@@ -288,19 +315,65 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                     );
                   })()}
 
-                  {!isFirst && breakImg && <ImageBreak image={breakImg} page={page} />}
+                  {/* h3 sub-sections — each rendered as its own visual block */}
+                  {sections.map((section, sIdx) => {
+                    const isLastSection = sIdx === sections.length - 1;
+                    const sectionImg = nextGalleryImage();
+                    return (
+                      <React.Fragment key={`${blockRef.block._id}-s${sIdx}`}>
+                        <div className="guide-block" id={toAnchor(section.heading)}>
+                          <p className="typo-kicker mb-5">{kicker}</p>
+                          <h2 className="typo-h2 mb-6">{section.heading}</h2>
+                          <div className="guide-block-body">
+                            {section.content.length > 0 && <PortableText value={section.content} components={anchoredComponents} />}
+                            {isLastSection && teaserCta}
+                            {isLastSection && keyFactsEl}
+                          </div>
+                        </div>
+                        {sectionImg && !isLastSection && <ImageBreak image={sectionImg} page={page} />}
+                      </React.Fragment>
+                    );
+                  })}
+
+                  {/* Image break between blocks (non-lead, non-sectioned) */}
+                  {!isFirst && !hasSections && (() => {
+                    const img = nextGalleryImage();
+                    return img ? <ImageBreak image={img} page={page} /> : null;
+                  })()}
                 </React.Fragment>
               );
             })}
 
             {/* ── EXTENDED EDITORIAL ────────────────────────────────────── */}
-            {page.extendedEditorial && page.extendedEditorial.length > 0 && (
-              <div className="guide-block">
-                <div className="guide-block-body">
-                  <PortableText value={page.extendedEditorial} components={anchoredComponents} />
-                </div>
-              </div>
-            )}
+            {page.extendedEditorial && page.extendedEditorial.length > 0 && (() => {
+              const { intro: edIntro, sections: edSections } = splitAtH3(page.extendedEditorial);
+              return (
+                <>
+                  {edIntro.length > 0 && (
+                    <div className="guide-block">
+                      <div className="guide-block-body">
+                        <PortableText value={edIntro} components={anchoredComponents} />
+                      </div>
+                    </div>
+                  )}
+                  {edSections.map((section, sIdx) => {
+                    const sectionImg = nextGalleryImage();
+                    return (
+                      <React.Fragment key={`ed-s${sIdx}`}>
+                        {sIdx > 0 && sectionImg && <ImageBreak image={sectionImg} page={page} />}
+                        <div className="guide-block" id={toAnchor(section.heading)}>
+                          <p className="typo-kicker mb-5">{page.title}</p>
+                          <h2 className="typo-h2 mb-6">{section.heading}</h2>
+                          <div className="guide-block-body">
+                            {section.content.length > 0 && <PortableText value={section.content} components={anchoredComponents} />}
+                          </div>
+                        </div>
+                      </React.Fragment>
+                    );
+                  })}
+                </>
+              );
+            })()}
 
             {blocks.length <= 1 && pullQuote && !page.galleryImages?.length && (
               <div className="guide-pull-quote">
