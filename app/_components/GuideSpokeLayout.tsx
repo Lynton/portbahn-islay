@@ -33,19 +33,14 @@ function galleryImage(page: any, index: number) { return page.galleryImages?.[in
 
 function ImageBreak({ image, caption, page }: { image: any; caption?: string; page: any }) {
   return (
-    <div>
-      <div className="overflow-hidden">
-        <Image src={urlFor(image).width(1600).height(900).url()} alt={image.alt || page.title}
-          width={1600} height={900} className="w-full object-cover block"
-          style={{ height: '50vh', maxHeight: '460px', objectPosition: 'center 40%' }} />
-      </div>
+    <figure className="guide-image-break">
+      <Image src={urlFor(image).width(1200).height(700).url()} alt={image.alt || page.title}
+        width={1200} height={700} className="w-full object-cover block"
+        style={{ aspectRatio: '12/7' }} />
       {caption && (
-        <div className="c1b-caption-bar">
-          <span className="typo-caption-serif">{caption}</span>
-          <span className="typo-caption ml-6 shrink-0">Isle of Islay</span>
-        </div>
+        <figcaption className="font-mono text-sm text-washed-timber mt-3 pb-2">{caption}</figcaption>
       )}
-    </div>
+    </figure>
   );
 }
 
@@ -113,6 +108,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
   });
   if (entities.length > 0) quickNav.push({ label: entityHeading || 'Places & Listings', anchor: 'entities' });
   if (faqs.length > 0) quickNav.push({ label: 'Common Questions', anchor: 'faqs' });
+  quickNav.push({ label: 'Stay on Islay', anchor: 'stay' });
   // Deduplicate by anchor (same heading in block + editorial = one nav item)
   const seen = new Set<string>();
   const uniqueNav = quickNav.filter((item) => {
@@ -183,7 +179,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
             <h1 className="typo-h1 mb-7">{page.title}</h1>
             {page.introduction && (
               <div className="max-w-[640px]">
-                {page.introduction.split('\n\n').filter(Boolean).slice(0, 2).map((para: string, i: number) => (
+                {page.introduction.split('\n\n').filter(Boolean).map((para: string, i: number) => (
                   <p key={i} className="typo-body opacity-75 mb-4">{para}</p>
                 ))}
               </div>
@@ -191,118 +187,161 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
           </div>
         </section>
 
-        {/* ── CONTENT BLOCKS ─────────────────────────────────────────── */}
-        {blocks.map((blockRef: any, index: number) => {
-          const heading = blockRef.customHeading || blockRef.block.title;
-          const content = blockRef.version === 'full' ? blockRef.block.fullContent : blockRef.block.teaserContent;
-          const showKeyFacts = blockRef.showKeyFacts && blockRef.block.keyFacts?.length > 0;
-          const isFirst = index === 0;
-          const bgClass = index % 2 === 0 ? 'bg-sea-spray' : 'bg-machair-sand';
-
-          const teaserCta = blockRef.version === 'teaser' && blockRef.block.canonicalHome ? (
-            <p className="mt-6">
-              <Link href={blockRef.block.canonicalHome} className="hover-link font-mono text-base tracking-wide text-kelp-edge">
-                More about {blockRef.block.title} →
-              </Link>
-            </p>
-          ) : null;
-
-          const keyFactsEl = showKeyFacts ? (
-            <div className={`mt-8 p-6 border-l-[3px] border-kelp-edge ${index % 2 === 0 ? 'bg-machair-sand' : 'bg-sea-spray'}`}>
-              <p className="typo-kicker mb-4" style={{ letterSpacing: 'var(--tracking-caps)' }}>Key Facts</p>
-              <dl className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-4">
-                {blockRef.block.keyFacts.map((fact: any, idx: number) => (
-                  <div key={idx}>
-                    <dt className="font-mono text-sm text-harbour-stone opacity-55 mb-1">{fact.fact}</dt>
-                    <dd className="font-mono text-lg text-harbour-stone font-semibold">{fact.value}</dd>
-                  </div>
-                ))}
-              </dl>
+        {/* ── MOBILE NAV (horizontal, below title frame) ────────────── */}
+        {uniqueNav.length > 0 && (
+          <nav className="guide-mobile-nav bg-sea-spray py-6 border-b border-washed-timber">
+            <p className="typo-kicker mb-3">On this page</p>
+            <div className="flex flex-wrap gap-x-5 gap-y-2">
+              {uniqueNav.map((item) => (
+                <a key={item.anchor} href={`#${item.anchor}`} className="hover-link font-mono text-base text-harbour-stone opacity-70">{item.label}</a>
+              ))}
             </div>
-          ) : null;
+          </nav>
+        )}
 
-          const breakImg = (index < blocks.length - 1) ? nextGalleryImage() : null;
+        {/* ── 2-COL GRID: Content + Sidebar ────────────────────────── */}
+        <div className="guide-grid">
 
-          return (
-            <React.Fragment key={blockRef.block._id || index}>
-              {isFirst ? (
-                <section className="bg-sea-spray" id={`block-${blockRef.block.blockId?.current || blockRef.block._id}`} data-block-id={blockRef.block.blockId?.current}>
-                  <div className="g-layout-overview">
-                    <div className="g-layout-overview-label">{blockRef.block.entityType || 'Guide'}</div>
-                    <div className="g-layout-overview-body">
-                      {heading && <h2 className="typo-h2 mb-8">{heading}</h2>}
-                      {content && content.length > 0 && <div><PortableText value={content} components={anchoredComponents} /></div>}
+          {/* ── CONTENT COLUMN (LHC) ─────────────────────────────────── */}
+          <div className="min-w-0">
+            {blocks.map((blockRef: any, index: number) => {
+              const heading = blockRef.customHeading || blockRef.block.title;
+              const content = blockRef.version === 'full' ? blockRef.block.fullContent : blockRef.block.teaserContent;
+              const showKeyFacts = blockRef.showKeyFacts && blockRef.block.keyFacts?.length > 0;
+              const isFirst = index === 0;
+
+              const teaserCta = blockRef.version === 'teaser' && blockRef.block.canonicalHome ? (
+                <p className="mt-6">
+                  <Link href={blockRef.block.canonicalHome} className="hover-link font-mono text-base tracking-wide text-kelp-edge">
+                    More about {blockRef.block.title} →
+                  </Link>
+                </p>
+              ) : null;
+
+              const keyFactsEl = showKeyFacts ? (
+                <div className="guide-key-facts">
+                  <p className="typo-label mb-5">Key Facts</p>
+                  <dl>
+                    {blockRef.block.keyFacts.map((fact: any, idx: number) => (
+                      <div key={idx} className="border-t border-washed-timber pt-3 pb-1">
+                        <dt className="typo-caption mb-1">{fact.fact}</dt>
+                        <dd className="font-mono text-xl text-harbour-stone font-semibold">{fact.value}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              ) : null;
+
+              const breakImg = isFirst ? nextGalleryImage() : ((index < blocks.length - 1) ? nextGalleryImage() : null);
+
+              return (
+                <React.Fragment key={blockRef.block._id || index}>
+                  <div className={`guide-block${isFirst ? ' guide-block-lead' : ''}`} id={`block-${blockRef.block.blockId?.current || blockRef.block._id}`} data-block-id={blockRef.block.blockId?.current}>
+                    <p className={isFirst ? 'typo-label mb-6' : 'typo-kicker mb-5'}>
+                      {blockRef.block.entityType || (isFirst ? 'Guide' : config.hubLabel)}
+                    </p>
+                    {heading && <h2 className={isFirst ? 'typo-h2 mb-8' : 'typo-h2 mb-6'}>{heading}</h2>}
+                    <div className="guide-block-body">
+                      {content && content.length > 0 && <PortableText value={content} components={anchoredComponents} />}
                       {teaserCta}
                       {keyFactsEl}
                     </div>
-                    <div className="g-layout-overview-aside">
-                      {/* On this page — full quick nav */}
-                      {uniqueNav.length > 0 && (
-                        <nav>
-                          <p className="typo-kicker mb-4" style={{ letterSpacing: 'var(--tracking-caps)' }}>On this page</p>
-                          <ul className="flex flex-col gap-2" style={{ listStyle: 'none' }}>
-                            {uniqueNav.map((item) => (
-                              <li key={item.anchor}>
-                                <a href={`#${item.anchor}`} className="hover-link font-mono text-base text-harbour-stone opacity-70">{item.label}</a>
-                              </li>
-                            ))}
-                          </ul>
-                        </nav>
-                      )}
-                    </div>
                   </div>
-                </section>
-              ) : (
-                <section className={bgClass} id={`block-${blockRef.block.blockId?.current || blockRef.block._id}`} data-block-id={blockRef.block.blockId?.current}>
-                  <div className="g-layout-spread">
-                    {blockRef.block.entityType && <p className="typo-kicker mb-5">{blockRef.block.entityType}</p>}
-                    <div className="g-layout-spread-grid">
-                      <div>{heading && <h2 className="typo-spread-heading sticky top-[100px]">{heading}</h2>}</div>
-                      <div>
-                        {content && content.length > 0 && <PortableText value={content} components={anchoredComponents} />}
-                        {teaserCta}
-                        {keyFactsEl}
+
+                  {isFirst && (() => {
+                    const img = breakImg || page.heroImage;
+                    if (!img || !pullQuote) return img ? <ImageBreak image={img} page={page} /> : null;
+                    return (
+                      <div className="grid my-2 overflow-hidden" style={{ gridTemplateColumns: '60fr 40fr', minHeight: '45vh' }}>
+                        <div className="overflow-hidden">
+                          <Image src={urlFor(img).width(900).height(700).url()} alt={img.alt || page.title}
+                            width={900} height={700} className="w-full h-full object-cover" />
+                        </div>
+                        <div className="bg-machair-sand flex flex-col justify-center" style={{ padding: '56px 36px' }}>
+                          <p className="typo-label mb-5">{page.title}</p>
+                          <blockquote className="font-serif font-bold italic text-harbour-stone border-l-[3px] border-kelp-edge pl-5"
+                            style={{ fontSize: 'clamp(1.15rem, 2vw, 1.5rem)', lineHeight: '1.3' }}>
+                            &ldquo;{pullQuote}&rdquo;
+                          </blockquote>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </section>
-              )}
+                    );
+                  })()}
 
-              {isFirst && (() => {
-                const img = breakImg || (blocks.length > 1 ? page.heroImage : null);
-                if (!img) return null;
-                return <ImageBreak image={img} caption={img.caption || img.alt || `${page.title} — Isle of Islay`} page={page} />;
-              })()}
+                  {isFirst && (() => {
+                    const img1 = nextGalleryImage();
+                    const img2 = nextGalleryImage();
+                    if (!img1) return null;
+                    return (
+                      <div className="grid gap-[3px] bg-harbour-stone my-2" style={{ gridTemplateColumns: img2 ? '3fr 2fr' : '1fr' }}>
+                        <div className="overflow-hidden">
+                          <Image src={urlFor(img1).width(800).height(500).url()} alt={img1.alt || page.title}
+                            width={800} height={500} className="w-full object-cover" style={{ height: '320px' }} />
+                        </div>
+                        {img2 && (
+                          <div className="overflow-hidden">
+                            <Image src={urlFor(img2).width(600).height(500).url()} alt={img2.alt || page.title}
+                              width={600} height={500} className="w-full object-cover" style={{ height: '320px' }} />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
 
-              {isFirst && blocks.length > 1 && pullQuote && (
-                <div className="g-pull-quote bg-sound-of-islay">
-                  <blockquote className="text-sea-spray">&ldquo;{pullQuote}&rdquo;</blockquote>
+                  {!isFirst && breakImg && <ImageBreak image={breakImg} page={page} />}
+                </React.Fragment>
+              );
+            })}
+
+            {/* ── EXTENDED EDITORIAL ────────────────────────────────────── */}
+            {page.extendedEditorial && page.extendedEditorial.length > 0 && (
+              <div className="guide-block">
+                <div className="guide-block-body">
+                  <PortableText value={page.extendedEditorial} components={anchoredComponents} />
                 </div>
-              )}
-
-              {!isFirst && breakImg && <ImageBreak image={breakImg} page={page} />}
-            </React.Fragment>
-          );
-        })}
-
-        {/* ── EXTENDED EDITORIAL ──────────────────────────────────────── */}
-        {page.extendedEditorial && page.extendedEditorial.length > 0 && (
-          <section className={blocks.length % 2 === 0 ? 'bg-sea-spray' : 'bg-machair-sand'}>
-            <div className="g-layout-spread">
-              <p className="typo-kicker mb-5">Further reading</p>
-              <div className="g-layout-spread-grid">
-                <div><h2 className="typo-spread-heading sticky top-[100px]">More to<br />Discover</h2></div>
-                <div><PortableText value={page.extendedEditorial} components={anchoredComponents} /></div>
               </div>
-            </div>
-          </section>
-        )}
+            )}
 
-        {blocks.length <= 1 && pullQuote && (
-          <div className="g-pull-quote bg-sound-of-islay">
-            <blockquote className="text-sea-spray">&ldquo;{pullQuote}&rdquo;</blockquote>
+            {blocks.length <= 1 && pullQuote && !page.galleryImages?.length && (
+              <div className="guide-pull-quote">
+                <blockquote className="text-harbour-stone">&ldquo;{pullQuote}&rdquo;</blockquote>
+              </div>
+            )}
           </div>
-        )}
+
+          {/* ── STICKY SIDEBAR (RHC) ─────────────────────────────────── */}
+          <aside className="guide-sidebar">
+            {/* On this page — persistent sticky nav */}
+            {uniqueNav.length > 0 && (
+              <nav className="mb-6">
+                <p className="typo-kicker mb-4">On this page</p>
+                <ul className="flex flex-col gap-2">
+                  {uniqueNav.map((item) => (
+                    <li key={item.anchor}>
+                      <a href={`#${item.anchor}`} className="hover-link font-mono text-base text-harbour-stone opacity-70">{item.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            )}
+
+            {/* Related guides — sidebar version */}
+            {relatedGuides.length > 0 && (
+              <div className="pt-4 border-t border-washed-timber">
+                <p className="typo-kicker mb-4">More Guides</p>
+                <ul className="flex flex-col gap-2.5 list-none">
+                  {relatedGuides.slice(0, 4).map((g) => (
+                    <li key={g.slug}>
+                      <Link href={`${config.urlPrefix}${g.slug}`} className="hover-link font-mono text-base text-harbour-stone opacity-70">{g.title}</Link>
+                    </li>
+                  ))}
+                </ul>
+                <Link href={config.hubPath} className="hover-link font-mono text-sm tracking-wider text-kelp-edge mt-4 inline-block">← All guides</Link>
+              </div>
+            )}
+          </aside>
+
+        </div>
 
         {/* ── ENTITIES ───────────────────────────────────────────────── */}
         {entities.length > 0 && (
@@ -355,13 +394,13 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
         )}
 
         {/* ── STAY ON ISLAY ──────────────────────────────────────────── */}
-        <section className="g-stay">
+        <section className="g-stay" id="stay">
           <div className="g-section-header">
             <p className="typo-kicker mb-3">Accommodation</p>
             <h2 className="typo-h2">Stay on Islay</h2>
           </div>
-          <PropertyCardGrid properties={properties} showHighlights />
-          <div className="max-w-[1280px] mx-auto mt-7 text-center">
+          <PropertyCardGrid properties={properties} showHighlights showBjrCard />
+          <div className="max-w-[1280px] mx-auto mt-7 text-center flex items-center justify-center gap-6">
             <Link href="/availability" className="typo-btn hover-btn">Check Availability</Link>
           </div>
         </section>

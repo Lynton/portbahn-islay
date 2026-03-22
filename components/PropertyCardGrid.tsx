@@ -34,9 +34,11 @@ interface Props {
   properties: PropertyData[];
   /** Show amenity highlight tags below bullets */
   showHighlights?: boolean;
+  /** Show Bothan Jura Retreat cross-promo card as 4th card */
+  showBjrCard?: boolean;
 }
 
-export default function PropertyCardGrid({ properties, showHighlights = false }: Props) {
+export default function PropertyCardGrid({ properties, showHighlights = false, showBjrCard = false }: Props) {
   return (
     <div className="g-stay-cards">
       {properties.map((p) => {
@@ -65,6 +67,23 @@ export default function PropertyCardGrid({ properties, showHighlights = false }:
           </Link>
         );
       })}
+
+      {showBjrCard && (
+        <a href="https://www.bothanjuraretreat.co.uk" target="_blank" rel="noopener noreferrer" className="block hover-card">
+          <div className="bg-harbour-stone relative overflow-hidden" style={{ aspectRatio: '4/3' }} />
+          <div className="bg-sound-of-islay p-5 pb-6">
+            <p className="font-mono text-2xs tracking-ultra uppercase text-emerald-accent mb-2">Stay on Jura</p>
+            <h3 className="typo-card-title text-sea-spray/90 mb-2.5">Bothan Jura Retreat</h3>
+            <p className="font-mono text-base text-sea-spray/60 mb-2.5">4 units · Sleeps 2 each · Dogs welcome</p>
+            <ul className="flex flex-wrap gap-1.5 mb-3.5" style={{ listStyle: 'none' }}>
+              <li className="font-mono text-xs tracking-wide text-emerald-accent bg-sound-of-islay border border-emerald-accent/30 px-2.5 py-1">Hot tubs</li>
+              <li className="font-mono text-xs tracking-wide text-emerald-accent bg-sound-of-islay border border-emerald-accent/30 px-2.5 py-1">Wood-fired sauna</li>
+              <li className="font-mono text-xs tracking-wide text-emerald-accent bg-sound-of-islay border border-emerald-accent/30 px-2.5 py-1">Paps of Jura</li>
+            </ul>
+            <span className="font-mono text-sm tracking-wider uppercase text-emerald-accent">bothanjuraretreat.co.uk →</span>
+          </div>
+        </a>
+      )}
     </div>
   );
 }
