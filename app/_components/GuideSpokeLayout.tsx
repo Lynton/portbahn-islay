@@ -140,7 +140,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
     return true;
   });
 
-  // PortableText with anchored headings
+  // PortableText with anchored headings + editorial list styling
   const anchoredComponents = {
     ...portableTextComponents,
     block: {
@@ -153,6 +153,14 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
         const text = typeof children === 'string' ? children : (Array.isArray(children) ? children.join('') : '');
         return <h3 id={toAnchor(text)} className="font-serif font-bold text-[1.25rem] text-harbour-stone leading-snug mt-8 mb-3">{children}</h3>;
       },
+    },
+    list: {
+      bullet: ({ children }: any) => <ul className="guide-editorial-list">{children}</ul>,
+      number: ({ children }: any) => <ol className="guide-editorial-list guide-editorial-list--numbered">{children}</ol>,
+    },
+    listItem: {
+      bullet: ({ children }: any) => <li className="guide-editorial-list-item">{children}</li>,
+      number: ({ children }: any) => <li className="guide-editorial-list-item">{children}</li>,
     },
   };
 

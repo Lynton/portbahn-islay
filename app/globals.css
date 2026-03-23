@@ -534,6 +534,41 @@ p {
 .guide-key-facts { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--color-washed-timber); }
 .guide-key-facts dl { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px 32px; }
 
+/* ─── EDITORIAL LIST (2-col grid with ruled borders) ─────────────── */
+.guide-editorial-list {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  padding: 0;
+  margin: 0 0 20px;
+}
+.guide-editorial-list-item {
+  padding: 16px 20px 16px 0;
+  border-bottom: 1px solid var(--color-washed-timber);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-harbour-stone);
+  opacity: 0.75;
+}
+.guide-editorial-list-item:nth-child(even) {
+  padding: 16px 0 16px 20px;
+}
+.guide-editorial-list-item a {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--color-harbour-stone);
+  text-decoration: none;
+  opacity: 1;
+}
+.guide-editorial-list-item a:hover {
+  color: var(--color-emerald-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .guide-image-break { margin: 8px 0; overflow: hidden; }
 .guide-image-break img { display: block; width: 100%; }
 
@@ -558,6 +593,8 @@ p {
   .g-stay-cards { grid-template-columns: 1fr; }
   .guide-block { padding: 40px 0; }
   .guide-mobile-nav { padding: 0 20px; }
+  .guide-editorial-list { grid-template-columns: 1fr; }
+  .guide-editorial-list-item:nth-child(even) { padding: 16px 20px 16px 0; }
 }
 
 /* ─── HOVER SYSTEM ────────────────────────────────────────────────── */
