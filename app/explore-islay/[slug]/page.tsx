@@ -51,8 +51,12 @@ interface PageProps { params: Promise<{ slug: string }>; }
 const getGuidePage = cache(async (slug: string) => {
   const query = `*[_type == "guidePage" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
     _id, title, slug, heroImage, introduction, pullQuote, galleryImages, schemaType,
+    layoutHints,
+    "keyFactSets": keyFactSets[defined(@->_id)]->{
+      _id, factSetId, title, category, facts
+    },
     "contentBlocks": contentBlocks[defined(block._ref)]{
-      _key, version, showKeyFacts, customHeading,
+      _key, version, showKeyFacts, customHeading, customKicker, displayStyle,
       block->{
         _id, blockId, title, entityType, canonicalHome, fullContent, teaserContent, keyFacts,
         "contentHeadings": fullContent[style in ["h2","h3"]].children[0].text
@@ -63,7 +67,7 @@ const getGuidePage = cache(async (slug: string) => {
     "featuredEntities": featuredEntities[defined(@->_id)]->{
       _id, entityId, name, category, schemaOrgType, island, status, shortDescription,
       editorialNote, importantNote, canonicalExternalUrl, ecosystemSite,
-      location, contact, openingHours, attributes, tags
+      location, contact, openingHours, attributes, peatExpressions, tags
     },
     "faqBlocks": faqBlocks[defined(@->_id)]->{_id, question, answer},
     seoTitle, seoDescription

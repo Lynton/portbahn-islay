@@ -1,64 +1,7 @@
 import Link from 'next/link';
+import type { SiteEntity } from '@/lib/types';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
-
-interface OpeningHoursEntry {
-  label: string;
-  opens?: string;
-  closes?: string;
-  notes?: string;
-}
-
-interface SiteEntity {
-  _id: string;
-  entityId: { current: string };
-  name: string;
-  category: string;
-  schemaOrgType?: string;
-  island?: string;
-  status?: string;
-  shortDescription?: string;
-  editorialNote?: string;
-  importantNote?: string;
-  canonicalExternalUrl?: string;
-  ecosystemSite?: string;
-  location?: {
-    address?: string;
-    village?: string;
-    distanceFromBruichladdich?: string;
-    googleMapsUrl?: string;
-  };
-  contact?: {
-    phone?: string;
-    email?: string;
-    website?: string;
-    bookingUrl?: string;
-    instagram?: string;
-  };
-  openingHours?: OpeningHoursEntry[];
-  attributes?: {
-    safeForSwimming?: boolean;
-    requiresBooking?: boolean;
-    bookingAdvice?: string;
-    priceRange?: string;
-    familyFriendly?: boolean;
-    peatLevel?: string;
-    hasCafe?: boolean;
-    yearFounded?: number;
-    yearReopened?: number;
-    distanceMiles?: number;
-    distanceKm?: number;
-    durationMinutes?: number;
-    difficulty?: string;
-    accessibilityNotes?: string;
-    startPointParking?: string;
-    heritagePeriod?: string;
-    accessRestrictions?: string;
-    eventMonth?: string;
-    eventDuration?: string;
-  };
-  tags?: string[];
-}
 
 interface EntityCardProps {
   entity: SiteEntity;

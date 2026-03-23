@@ -8,10 +8,26 @@ import type { SchemaType } from '@/lib/schema-markup';
 import EntityCard from '@/components/EntityCard';
 import GuideMap from '@/components/GuideMap';
 import PropertyCardGrid from '@/components/PropertyCardGrid';
+import PeatSpectrum from '@/components/PeatSpectrum';
+import AttributeMatrix, { MATRIX_COLUMNS } from '@/components/AttributeMatrix';
+import HistoryTimeline from '@/components/HistoryTimeline';
+import SeasonalCalendar from '@/components/SeasonalCalendar';
+import KeyFactSetDisplay from '@/components/KeyFactSetDisplay';
 import { portableTextComponents } from '@/lib/portable-text';
 import type { PropertyData } from '@/lib/queries';
+import type { EntityDisplayStyle, KeyFactSet } from '@/lib/types';
 
 type PTBlock = { _type: string; style?: string; children?: Array<{ text?: string }> };
+
+/** Maps guide page slugs to the AttributeMatrix column set to use */
+const SLUG_TO_MATRIX: Record<string, string> = {
+  'islay-beaches': 'beach',
+  'islay-villages': 'village',
+  'walking': 'walking',
+  'dog-friendly-islay': 'dog-friendly',
+  'getting-around-islay': 'transport',
+  'ferry-to-islay': 'ferry',
+};
 interface FaqItem { _id: string; question: string; answer: PTBlock[]; }
 
 /** Split a PortableText array into sections at h3 boundaries.
@@ -352,6 +368,13 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
               );
             })}
 
+            {/* ── KEY FACT SETS ────────────────────────────────────────── */}
+            {page.keyFactSets && page.keyFactSets.length > 0 && (
+              <div className="guide-block">
+                <KeyFactSetDisplay factSets={page.keyFactSets as KeyFactSet[]} />
+              </div>
+            )}
+
             {/* ── EXTENDED EDITORIAL ────────────────────────────────────── */}
             {page.extendedEditorial && page.extendedEditorial.length > 0 && (() => {
               const { intro: edIntro, sections: edSections } = splitAtH3(page.extendedEditorial);
@@ -425,18 +448,48 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
         </div>
 
         {/* ── ENTITIES ───────────────────────────────────────────────── */}
-        {entities.length > 0 && (
-          <section className="g-entities" id="entities">
-            <div className="g-section-header">
-              <p className="typo-kicker mb-3">{page.title}</p>
-              <h2 className="typo-h2 mb-4">{entityHeading}</h2>
-              <GuideMap entities={entities} pageTitle={page.title} />
-            </div>
-            <div className="g-entities-grid">
-              {entities.map((entity) => <EntityCard key={entity._id} entity={entity} variant="sand" />)}
-            </div>
-          </section>
-        )}
+        {entities.length > 0 && (() => {
+          const displayStyle: EntityDisplayStyle = page.layoutHints?.entityDisplayStyle || 'grid';
+          const matrixKey = SLUG_TO_MATRIX[slug];
+          const matrixColumns = matrixKey ? MATRIX_COLUMNS[matrixKey] : undefined;
+
+          return (
+            <section className="g-entities" id="entities">
+              <div className="g-section-header">
+                <p className="typo-kicker mb-3">{page.title}</p>
+                <h2 className="typo-h2 mb-4">{entityHeading}</h2>
+                <GuideMap entities={entities} pageTitle={page.title} />
+              </div>
+
+              {/* Display style switcher */}
+              {displayStyle === 'spectrum' && (
+                <div className="max-w-[1280px]">
+                  <PeatSpectrum entities={entities} />
+                </div>
+              )}
+              {displayStyle === 'matrix' && matrixColumns && (
+                <div className="max-w-[1280px]">
+                  <AttributeMatrix entities={entities} columns={matrixColumns} />
+                </div>
+              )}
+              {displayStyle === 'timeline' && (
+                <div className="max-w-[760px]">
+                  <HistoryTimeline entities={entities} />
+                </div>
+              )}
+              {displayStyle === 'calendar' && (
+                <div className="max-w-[1280px]">
+                  <SeasonalCalendar entities={entities} />
+                </div>
+              )}
+
+              {/* Entity cards grid — always shown (as detail cards below infographic, or as primary for 'grid' style) */}
+              <div className={`g-entities-grid${displayStyle !== 'grid' ? ' mt-12' : ''}`}>
+                {entities.map((entity) => <EntityCard key={entity._id} entity={entity} variant="sand" />)}
+              </div>
+            </section>
+          );
+        })()}
 
         {faqs.length > 0 && (() => { const img = nextGalleryImage(); return img ? <ImageBreak image={img} page={page} /> : null; })()}
 
