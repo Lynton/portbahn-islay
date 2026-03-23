@@ -95,6 +95,10 @@ export default function EntityCard({ entity, variant = 'default' }: EntityCardPr
   const isRoute = category === 'route';
   const isBeach = category === 'beach';
   const isHeritage = category === 'heritage';
+  const isDistillery = category === 'distillery';
+  const isFood = category === 'restaurant' || category === 'cafe';
+  const isTransport = category === 'transport';
+  const isVillage = category === 'village';
 
   const cardClass = variant === 'sand'
     ? 'p-5 bg-white'
@@ -189,6 +193,128 @@ export default function EntityCard({ entity, variant = 'default' }: EntityCardPr
         <p className="font-mono text-xs text-harbour-stone/60 mb-2">
           {attributes.accessibilityNotes}
         </p>
+      )}
+
+      {/* Distillery: tour info + café */}
+      {isDistillery && (attributes?.tourPriceStandard || attributes?.tourDuration) && (
+        <div className="flex flex-wrap gap-3 mb-3">
+          {attributes.tourPriceStandard && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">
+              Tour: {attributes.tourPriceStandard}
+            </span>
+          )}
+          {attributes.tourDuration && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">
+              {attributes.tourDuration}
+            </span>
+          )}
+          {attributes.hasCafe && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">
+              Café on site
+            </span>
+          )}
+          {attributes.yearFounded && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">
+              Est. {attributes.yearFounded}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Food & drink: cuisine + dog-friendly */}
+      {isFood && (attributes?.cuisineType || attributes?.dogFriendlyVenue != null) && (
+        <div className="flex flex-wrap gap-3 mb-3">
+          {attributes?.cuisineType && attributes.cuisineType !== 'shop' && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone capitalize">
+              {attributes.cuisineType.replace('-', ' ')}
+            </span>
+          )}
+          {attributes?.dogFriendlyVenue === true && (
+            <span className="font-mono text-xs bg-emerald-accent/15 px-2 py-1 rounded text-emerald-accent">
+              Dog-friendly
+            </span>
+          )}
+          {attributes?.priceRange && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">
+              {attributes.priceRange}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Beach: attribute pills */}
+      {isBeach && (
+        <div className="flex flex-wrap gap-2 mb-3">
+          {attributes?.sandType && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone capitalize">
+              {attributes.sandType} sand
+            </span>
+          )}
+          {attributes?.surfSuitable && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">Surf</span>
+          )}
+          {attributes?.sheltered && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">Sheltered</span>
+          )}
+          {attributes?.rockPools && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">Rock pools</span>
+          )}
+          {attributes?.dogsAllowed && (
+            <span className="font-mono text-xs bg-emerald-accent/15 px-2 py-1 rounded text-emerald-accent">Dogs welcome</span>
+          )}
+        </div>
+      )}
+
+      {/* Transport: mode + route summary */}
+      {isTransport && attributes?.routeSummary && (
+        <div className="mb-3">
+          {attributes.transportMode && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone capitalize mr-2 mb-1 inline-block">
+              {attributes.transportMode.replace('-', ' ')}
+            </span>
+          )}
+          {attributes.frequency && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone mr-2 mb-1 inline-block">
+              {attributes.frequency}
+            </span>
+          )}
+          <p className="font-mono text-xs text-harbour-stone/60 mt-2">{attributes.routeSummary}</p>
+        </div>
+      )}
+
+      {/* Village: services */}
+      {isVillage && (attributes?.hasShop != null || attributes?.population) && (
+        <div className="flex flex-wrap gap-2 mb-3">
+          {attributes?.hasShop && <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">Shop</span>}
+          {attributes?.hasPub && <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">Pub</span>}
+          {attributes?.hasFuel && <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">Fuel</span>}
+          {attributes?.hasATM && <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">ATM</span>}
+          {attributes?.hasPostOffice && <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">Post Office</span>}
+          {attributes?.population && <span className="font-mono text-xs text-harbour-stone/50">Pop. {attributes.population}</span>}
+        </div>
+      )}
+
+      {/* Route: dog-friendly + terrain badges */}
+      {isRoute && (attributes?.terrainType || attributes?.dogFriendlyRoute != null) && (
+        <div className="flex flex-wrap gap-2 mb-3">
+          {attributes?.terrainType && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone capitalize">{attributes.terrainType}</span>
+          )}
+          {attributes?.dogFriendlyRoute && (
+            <span className="font-mono text-xs bg-emerald-accent/15 px-2 py-1 rounded text-emerald-accent">Dog-friendly</span>
+          )}
+          {attributes?.circular && (
+            <span className="font-mono text-xs bg-sea-spray px-2 py-1 rounded text-harbour-stone">Circular</span>
+          )}
+        </div>
+      )}
+
+      {/* Heritage: significance + century date */}
+      {isHeritage && attributes?.centuryDate && (
+        <p className="font-mono text-xs font-semibold text-kelp-edge mb-1">{attributes.centuryDate}</p>
+      )}
+      {isHeritage && attributes?.significanceNote && (
+        <p className="font-mono text-xs text-harbour-stone/60 mb-2">{attributes.significanceNote}</p>
       )}
 
       {/* Booking callout */}

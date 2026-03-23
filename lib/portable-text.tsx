@@ -57,6 +57,55 @@ export const portableTextComponents = {
   },
 };
 
+// Restricted version for v2 canonical blocks — text + links only.
+// Headings render as paragraphs, bold/italic stripped, lists as plain text.
+// Use this for content stored with restricted PT schema.
+export const restrictedPortableTextComponents = {
+  block: {
+    normal: ({ children }: any) => (
+      <p className="font-mono text-lg text-harbour-stone leading-wide opacity-85 mb-5">{children}</p>
+    ),
+    h2: ({ children }: any) => (
+      <p className="font-mono text-lg text-harbour-stone leading-wide opacity-85 mb-5">{children}</p>
+    ),
+    h3: ({ children }: any) => (
+      <p className="font-mono text-lg text-harbour-stone leading-wide opacity-85 mb-5">{children}</p>
+    ),
+    blockquote: ({ children }: any) => (
+      <p className="font-mono text-lg text-harbour-stone leading-wide opacity-85 mb-5">{children}</p>
+    ),
+  },
+  marks: {
+    strong: ({ children }: any) => <>{children}</>,
+    em: ({ children }: any) => <>{children}</>,
+    link: ({ children, value }: any) => {
+      const href = value?.href || '';
+      const cls = 'text-emerald-accent underline underline-offset-[3px] hover:opacity-75 transition-opacity';
+      return href.startsWith('http') ? (
+        <a href={href} target="_blank" rel="noopener noreferrer" className={cls}>{children}</a>
+      ) : (
+        <Link href={href} className={cls}>{children}</Link>
+      );
+    },
+  },
+  list: {
+    bullet: ({ children }: any) => <div className="mb-5">{children}</div>,
+    number: ({ children }: any) => <div className="mb-5">{children}</div>,
+  },
+  listItem: {
+    bullet: ({ children }: any) => (
+      <p className="font-mono text-lg text-harbour-stone leading-wide opacity-85 mb-2">{children}</p>
+    ),
+    number: ({ children }: any) => (
+      <p className="font-mono text-lg text-harbour-stone leading-wide opacity-85 mb-2">{children}</p>
+    ),
+  },
+  types: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    break: (_props: any) => <hr className="my-10 border-t border-washed-timber" />,
+  },
+};
+
 // Compact version for hub page teasers — suppresses headings, smaller text
 export const compactPortableTextComponents = {
   block: {

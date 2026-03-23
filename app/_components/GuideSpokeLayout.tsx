@@ -256,7 +256,9 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
               const content: PTBlock[] = blockRef.version === 'full' ? (blockRef.block.fullContent || []) : (blockRef.block.teaserContent || []);
               const showKeyFacts = blockRef.showKeyFacts && blockRef.block.keyFacts?.length > 0;
               const isFirst = index === 0;
-              const kicker = blockRef.block.entityType || (isFirst ? 'Guide' : config.hubLabel);
+              const kicker = blockRef.customKicker || blockRef.block.entityType || (isFirst ? 'Guide' : config.hubLabel);
+              const displayStyle: string = blockRef.displayStyle || 'default';
+              const isCallout = displayStyle === 'callout-teal' || displayStyle === 'callout-sand';
 
               const teaserCta = blockRef.version === 'teaser' && blockRef.block.canonicalHome ? (
                 <p className="mt-6">
@@ -287,11 +289,43 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
               return (
                 <React.Fragment key={blockRef.block._id || index}>
                   {/* Lead section: block heading + intro content (before first h3) */}
-                  <div className={`guide-block${isFirst ? ' guide-block-lead' : ''}`} id={`block-${blockRef.block.blockId?.current || blockRef.block._id}`} data-block-id={blockRef.block.blockId?.current}>
-                    <p className={isFirst ? 'typo-label mb-6' : 'typo-kicker mb-5'}>{kicker}</p>
-                    {heading && <h2 className={isFirst ? 'typo-h2 mb-8' : 'typo-h2 mb-6'}>{heading}</h2>}
+                  <div
+                    className={`guide-block${isFirst ? ' guide-block-lead' : ''}${isCallout ? ' guide-block-callout' : ''}`}
+                    id={`block-${blockRef.block.blockId?.current || blockRef.block._id}`}
+                    data-block-id={blockRef.block.blockId?.current}
+                    style={displayStyle === 'callout-teal' ? {
+                      backgroundColor: 'var(--color-sound-of-islay)',
+                      padding: '48px 40px',
+                      borderRadius: '4px',
+                      margin: '8px 0',
+                    } : displayStyle === 'callout-sand' ? {
+                      backgroundColor: 'var(--color-machair-sand)',
+                      padding: '48px 40px',
+                      borderRadius: '4px',
+                      borderLeft: '4px solid var(--color-kelp-edge)',
+                      margin: '8px 0',
+                    } : undefined}
+                  >
+                    <p className={
+                      displayStyle === 'callout-teal' ? 'typo-kicker-light mb-5'
+                      : isFirst ? 'typo-label mb-6'
+                      : 'typo-kicker mb-5'
+                    }>{kicker}</p>
+                    {heading && <h2 className={
+                      displayStyle === 'callout-teal' ? 'typo-h2-light mb-6'
+                      : isFirst ? 'typo-h2 mb-8'
+                      : 'typo-h2 mb-6'
+                    }>{heading}</h2>}
                     <div className="guide-block-body">
-                      {intro.length > 0 && <PortableText value={intro} components={anchoredComponents} />}
+                      {intro.length > 0 && <PortableText value={intro} components={
+                        displayStyle === 'callout-teal' ? {
+                          ...anchoredComponents,
+                          block: {
+                            ...anchoredComponents.block,
+                            normal: ({ children }: any) => <p className="typo-body-light mb-4">{children}</p>,
+                          },
+                        } : anchoredComponents
+                      } />}
                       {!hasSections && teaserCta}
                       {!hasSections && keyFactsEl}
                     </div>
