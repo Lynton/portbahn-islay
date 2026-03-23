@@ -2,6 +2,7 @@
 import canonicalBlock from './documents/canonicalBlock';
 import faqCanonicalBlock from './documents/faqCanonicalBlock';
 import guidePage from './documents/guidePage';
+import keyFactSet from './documents/keyFactSet';
 import { siteEntity } from './documents/siteEntity';
 
 // Objects
@@ -30,6 +31,7 @@ export const schemaTypes = [
   canonicalBlock,
   faqCanonicalBlock,
   guidePage,
+  keyFactSet,
   siteEntity,
 
   // Objects

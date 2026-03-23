@@ -196,46 +196,144 @@ export const siteEntity = defineType({
       title: 'Attributes',
       type: 'object',
       fields: [
-        // Beaches
-        defineField({ name: 'safeForSwimming', title: 'Safe for Swimming', type: 'boolean', description: 'Beaches only.' }),
-        // All
+        // ── General ──
         defineField({ name: 'requiresBooking', title: 'Booking Required', type: 'boolean' }),
         defineField({ name: 'bookingAdvice', title: 'Booking Advice', type: 'string' }),
         defineField({ name: 'priceRange', title: 'Price Range', type: 'string', description: 'E.g. "£", "££", "£££".' }),
         defineField({ name: 'familyFriendly', title: 'Family Friendly', type: 'boolean' }),
-        // Distilleries
+
+        // ── Distilleries ──
         defineField({
           name: 'peatLevel',
-          title: 'Peat Level',
+          title: 'Peat Level (simple)',
           type: 'string',
           options: { list: ['heavily-peated', 'medium-peated', 'lightly-peated', 'unpeated', 'mixed'] },
-          description: 'Distilleries only.',
+          description: 'Single peat level for simple filtering. For multi-expression distilleries (Bruichladdich), use peatExpressions[] instead.',
         }),
         defineField({ name: 'yearFounded', title: 'Year Founded', type: 'number', description: 'Distilleries only.' }),
         defineField({ name: 'yearReopened', title: 'Year Reopened', type: 'number', description: 'Port Ellen: 2024.' }),
         defineField({ name: 'hasCafe', title: 'Has Café / Restaurant', type: 'boolean', description: 'Distilleries with on-site food.' }),
-        // Events
-        defineField({ name: 'eventMonth', title: 'Event Month', type: 'string', description: 'Events only. E.g. "May".' }),
-        defineField({ name: 'eventDuration', title: 'Event Duration', type: 'string', description: 'E.g. "~10 days".' }),
-        // Routes
-        defineField({ name: 'distanceKm', title: 'Distance (km)', type: 'number', description: 'Walking routes only.' }),
-        defineField({ name: 'distanceMiles', title: 'Distance (miles)', type: 'number', description: 'Walking routes only.' }),
-        defineField({ name: 'durationMinutes', title: 'Duration (minutes)', type: 'number', description: 'Approximate. Walking routes only.' }),
+        defineField({ name: 'tourPriceStandard', title: 'Standard Tour Price', type: 'string', description: 'E.g. "£10–15". Distilleries only.' }),
+        defineField({ name: 'tourPricePremium', title: 'Premium Tour Price', type: 'string', description: 'E.g. "£40–80+". Distilleries only.' }),
+        defineField({ name: 'tourDuration', title: 'Tour Duration', type: 'string', description: 'E.g. "45–60 minutes". Distilleries only.' }),
+
+        // ── Beaches ──
+        defineField({ name: 'safeForSwimming', title: 'Safe for Swimming', type: 'boolean' }),
+        defineField({ name: 'surfSuitable', title: 'Suitable for Surfing', type: 'boolean' }),
+        defineField({ name: 'dogsAllowed', title: 'Dogs Allowed', type: 'boolean' }),
+        defineField({ name: 'dogsSeasonalRestriction', title: 'Dog Seasonal Restriction', type: 'string', description: 'E.g. "May–Sep on-lead". Null if no restriction.' }),
+        defineField({ name: 'sheltered', title: 'Sheltered', type: 'boolean' }),
+        defineField({ name: 'rockPools', title: 'Rock Pools', type: 'boolean' }),
+        defineField({
+          name: 'sandType',
+          title: 'Sand Type',
+          type: 'string',
+          options: { list: ['golden', 'white', 'shingle', 'mixed'] },
+        }),
+
+        // ── Villages ──
+        defineField({ name: 'hasShop', title: 'Has Shop', type: 'boolean' }),
+        defineField({ name: 'hasPub', title: 'Has Pub', type: 'boolean' }),
+        defineField({ name: 'hasFuel', title: 'Has Fuel', type: 'boolean' }),
+        defineField({ name: 'hasATM', title: 'Has ATM', type: 'boolean' }),
+        defineField({ name: 'hasPostOffice', title: 'Has Post Office', type: 'boolean' }),
+        defineField({ name: 'population', title: 'Population', type: 'string', description: 'Approximate. E.g. "~300".' }),
+
+        // ── Food & Drink ──
+        defineField({
+          name: 'cuisineType',
+          title: 'Cuisine Type',
+          type: 'string',
+          options: { list: ['seafood', 'pub', 'cafe', 'takeaway', 'distillery-cafe', 'hotel-restaurant', 'shop'] },
+        }),
+        defineField({ name: 'reservationRequired', title: 'Reservation Required', type: 'boolean' }),
+        defineField({ name: 'dogFriendlyVenue', title: 'Dog-Friendly Venue', type: 'boolean' }),
+
+        // ── Heritage ──
+        defineField({ name: 'heritagePeriod', title: 'Heritage Period', type: 'string', description: 'E.g. "Iron Age", "12th–16th century", "World War I".' }),
+        defineField({ name: 'centuryDate', title: 'Century / Date', type: 'string', description: 'For timeline display. E.g. "8th century", "1779", "1983–2024".' }),
+        defineField({ name: 'significanceNote', title: 'Significance Note', type: 'string', description: 'One-line. E.g. "Best-preserved Celtic cross in Scotland".' }),
+        defineField({ name: 'accessRestrictions', title: 'Access Restrictions', type: 'string', description: 'E.g. "Private property — viewable from public track only".' }),
+
+        // ── Wildlife / Nature Reserve ──
+        defineField({ name: 'bestMonths', title: 'Best Months', type: 'array', of: [{ type: 'string' }], description: 'For seasonal calendar. E.g. ["Oct", "Nov", "Dec"].' }),
+        defineField({ name: 'keySpecies', title: 'Key Species', type: 'array', of: [{ type: 'string' }], description: 'E.g. ["barnacle geese", "golden eagle", "otter"].' }),
+        defineField({
+          name: 'habitatType',
+          title: 'Habitat Type',
+          type: 'string',
+          options: { list: ['wetland', 'coastal', 'moorland', 'woodland', 'mixed'] },
+        }),
+
+        // ── Routes / Walking ──
+        defineField({ name: 'distanceKm', title: 'Distance (km)', type: 'number' }),
+        defineField({ name: 'distanceMiles', title: 'Distance (miles)', type: 'number' }),
+        defineField({ name: 'durationMinutes', title: 'Duration (minutes)', type: 'number' }),
         defineField({
           name: 'difficulty',
           title: 'Difficulty',
           type: 'string',
           options: { list: ['easy', 'moderate', 'strenuous'] },
-          description: 'Walking routes only.',
         }),
-        defineField({ name: 'circular', title: 'Circular Route', type: 'boolean', description: 'Walking routes only.' }),
-        defineField({ name: 'accessibilityNotes', title: 'Accessibility Notes', type: 'string', description: 'E.g. "Flat tarmac, suitable for all abilities including pushchairs."' }),
-        defineField({ name: 'startPointParking', title: 'Start Point / Parking', type: 'string', description: 'Postcode or grid reference + brief description. E.g. "PA42 7AU — car park at end of Oa road."' }),
-        defineField({ name: 'routeHighlights', title: 'Route Highlights', type: 'text', description: 'Key waypoints, views, or features. Plain text.' }),
-        // Heritage
-        defineField({ name: 'heritagePeriod', title: 'Heritage Period', type: 'string', description: 'Heritage sites only. E.g. "Iron Age", "12th–16th century", "World War I".' }),
-        defineField({ name: 'accessRestrictions', title: 'Access Restrictions', type: 'string', description: 'E.g. "Private property — viewable from public track only" (Barnhill). Or visitor centre hours.' }),
+        defineField({ name: 'circular', title: 'Circular Route', type: 'boolean' }),
+        defineField({
+          name: 'terrainType',
+          title: 'Terrain Type',
+          type: 'string',
+          options: { list: ['coastal', 'moorland', 'woodland', 'mixed'] },
+        }),
+        defineField({ name: 'dogFriendlyRoute', title: 'Dog-Friendly Route', type: 'boolean' }),
+        defineField({ name: 'accessibilityNotes', title: 'Accessibility Notes', type: 'string' }),
+        defineField({ name: 'startPointParking', title: 'Start Point / Parking', type: 'string' }),
+        defineField({ name: 'routeHighlights', title: 'Route Highlights', type: 'text' }),
+
+        // ── Transport ──
+        defineField({
+          name: 'transportMode',
+          title: 'Transport Mode',
+          type: 'string',
+          options: { list: ['ferry', 'bus', 'taxi', 'bike-hire', 'flight', 'car-hire'] },
+        }),
+        defineField({ name: 'operator', title: 'Operator', type: 'string', description: 'E.g. "CalMac", "Loganair", "Islay Coaches".' }),
+        defineField({ name: 'frequency', title: 'Frequency', type: 'string', description: 'E.g. "hourly", "2× daily", "seasonal".' }),
+        defineField({ name: 'routeSummary', title: 'Route Summary', type: 'string', description: 'E.g. "Kennacraig → Port Askaig (2 hours)".' }),
+
+        // ── Events ──
+        defineField({ name: 'eventMonth', title: 'Event Month', type: 'string' }),
+        defineField({ name: 'eventDuration', title: 'Event Duration', type: 'string' }),
       ],
+    }),
+
+    // ─── Peat Expressions (distilleries — handles multi-brand e.g. Bruichladdich) ──
+    defineField({
+      name: 'peatExpressions',
+      title: 'Peat Expressions',
+      type: 'array',
+      description: 'For peat spectrum infographic. Most distilleries have one entry. Bruichladdich has three (Laddie, Port Charlotte, Octomore).',
+      of: [{
+        type: 'object',
+        fields: [
+          defineField({ name: 'name', title: 'Expression Name', type: 'string', description: 'E.g. "Octomore", "The Laddie", or distillery name if single expression.', validation: (Rule) => Rule.required() }),
+          defineField({
+            name: 'peatLevel',
+            title: 'Peat Level',
+            type: 'string',
+            options: { list: [
+              { title: 'Unpeated', value: 'unpeated' },
+              { title: 'Light', value: 'light' },
+              { title: 'Medium', value: 'medium' },
+              { title: 'Heavy', value: 'heavy' },
+              { title: 'Extreme', value: 'extreme' },
+            ]},
+            validation: (Rule) => Rule.required(),
+          }),
+          defineField({ name: 'ppmRange', title: 'PPM Range', type: 'string', description: 'E.g. "0", "40–50", "80–300+".' }),
+          defineField({ name: 'description', title: 'Description', type: 'string', description: 'One-liner for spectrum display.' }),
+        ],
+        preview: {
+          select: { title: 'name', subtitle: 'peatLevel' },
+        },
+      }],
     }),
 
     // ─── Tags ────────────────────────────────────────────────────────

@@ -40,6 +40,28 @@ export default defineType({
       description: 'Override the block title with a custom heading for this page',
       placeholder: 'e.g., "How to Get to Islay"',
     }),
+    defineField({
+      name: 'customKicker',
+      title: 'Custom Kicker Label (Optional)',
+      type: 'string',
+      description: 'Override the kicker label for this block on this page (e.g., "Our Recommendation", "Practical")',
+      placeholder: 'e.g., "Our Recommendation"',
+    }),
+    defineField({
+      name: 'displayStyle',
+      title: 'Display Style',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Default', value: 'default' },
+          { title: 'Callout — Teal', value: 'callout-teal' },
+          { title: 'Callout — Sand', value: 'callout-sand' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'default',
+      description: 'Visual treatment for this block section',
+    }),
   ],
   preview: {
     select: {
