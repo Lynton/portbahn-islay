@@ -13,6 +13,7 @@ import AttributeMatrix, { MATRIX_COLUMNS } from '@/components/AttributeMatrix';
 import HistoryTimeline from '@/components/HistoryTimeline';
 import SeasonalCalendar from '@/components/SeasonalCalendar';
 import KeyFactSetDisplay from '@/components/KeyFactSetDisplay';
+import DistilleryClusters from '@/components/DistilleryClusters';
 import { portableTextComponents } from '@/lib/portable-text';
 import type { PropertyData } from '@/lib/queries';
 import type { EntityDisplayStyle, KeyFactSet } from '@/lib/types';
@@ -499,6 +500,9 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
               {displayStyle === 'spectrum' && (
                 <div className="max-w-[1280px]">
                   <PeatSpectrum entities={entities} />
+                  <div className="mt-12">
+                    <DistilleryClusters entities={entities} />
+                  </div>
                 </div>
               )}
               {displayStyle === 'matrix' && matrixColumns && (

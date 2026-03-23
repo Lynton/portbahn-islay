@@ -216,6 +216,17 @@ export const siteEntity = defineType({
         defineField({ name: 'tourPriceStandard', title: 'Standard Tour Price', type: 'string', description: 'E.g. "£10–15". Distilleries only.' }),
         defineField({ name: 'tourPricePremium', title: 'Premium Tour Price', type: 'string', description: 'E.g. "£40–80+". Distilleries only.' }),
         defineField({ name: 'tourDuration', title: 'Tour Duration', type: 'string', description: 'E.g. "45–60 minutes". Distilleries only.' }),
+        defineField({
+          name: 'distilleryCluster',
+          title: 'Distillery Cluster',
+          type: 'string',
+          description: 'Geographic grouping for cluster card display.',
+          options: { list: [
+            { title: 'South Coast', value: 'south-coast' },
+            { title: 'North Coast', value: 'north-coast' },
+            { title: 'Rhinns (Walking Distance)', value: 'rhinns' },
+          ] },
+        }),
 
         // ── Beaches ──
         defineField({ name: 'safeForSwimming', title: 'Safe for Swimming', type: 'boolean' }),

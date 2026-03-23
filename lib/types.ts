@@ -61,6 +61,7 @@ export interface SiteEntity {
     tourPriceStandard?: string;
     tourPricePremium?: string;
     tourDuration?: string;
+    distilleryCluster?: 'south-coast' | 'north-coast' | 'rhinns';
     // Beach
     safeForSwimming?: boolean;
     surfSuitable?: boolean;
