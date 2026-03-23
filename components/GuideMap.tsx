@@ -1,99 +1,208 @@
 'use client';
 
-/**
- * GuideMap — foundation component for entity map rendering on guide pages.
- *
- * Currently renders entity list with Google Maps links.
- * TODO: swap to Mapbox GL JS or Leaflet with category pins and tooltips
- * when coordinates are populated across entities.
- *
- * PROPS:
- *   entities — pre-resolved siteEntity documents (already filtered from guide page query)
- *   pageTitle — used for the placeholder heading
- *
- * The component gracefully renders nothing if no entities have location data.
- */
+import { useEffect, useRef, useState } from 'react';
+import type { SiteEntity } from '@/lib/types';
 
-interface EntityLocation {
-  _id: string;
-  name: string;
-  category: string;
-  location?: {
-    coordinates?: { lat: number; lng: number };
-    googleMapsUrl?: string;
-    village?: string;
-    distanceFromBruichladdich?: string;
-  };
-}
+// ─── Category colours for map pins ───────────────────────────────────────────
+
+const CATEGORY_COLOURS: Record<string, string> = {
+  distillery: '#1B6B5A',
+  restaurant: '#D97706',
+  cafe: '#D97706',
+  beach: '#0EA5E9',
+  'nature-reserve': '#16A34A',
+  heritage: '#7C3AED',
+  route: '#EA580C',
+  village: '#6B7280',
+  transport: '#2563EB',
+  activity: '#EC4899',
+  attraction: '#8B5CF6',
+  event: '#F59E0B',
+  accommodation: '#1B6B5A',
+  other: '#6B7280',
+};
+
+const CATEGORY_LABELS: Record<string, string> = {
+  distillery: 'Distillery',
+  restaurant: 'Restaurant',
+  cafe: 'Café',
+  beach: 'Beach',
+  'nature-reserve': 'Nature Reserve',
+  heritage: 'Heritage',
+  route: 'Walking Route',
+  village: 'Village',
+  transport: 'Transport',
+  activity: 'Activity',
+  attraction: 'Attraction',
+  event: 'Event',
+  accommodation: 'Accommodation',
+  other: 'Other',
+};
+
+// ─── Props ───────────────────────────────────────────────────────────────────
 
 interface GuideMapProps {
-  entities: EntityLocation[];
+  entities: SiteEntity[];
   pageTitle: string;
 }
 
-// Entities with a googleMapsUrl are useful for the link list even without coordinates
-function hasMapData(e: EntityLocation): boolean {
-  return !!(e.location?.coordinates || e.location?.googleMapsUrl || e.location?.village);
-}
+// ─── Component ───────────────────────────────────────────────────────────────
 
 export default function GuideMap({ entities, pageTitle }: GuideMapProps) {
-  const mappableEntities = entities.filter(hasMapData);
-
-  if (mappableEntities.length === 0) return null;
+  const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<any>(null);
+  const [mapReady, setMapReady] = useState(false);
 
   const withCoords = entities.filter(
     (e) => e.location?.coordinates?.lat && e.location?.coordinates?.lng
   );
 
-  const withMapLinks = entities.filter(
-    (e) => e.location?.googleMapsUrl
-  );
+  // Don't render if no entities have coordinates
+  if (withCoords.length === 0) return null;
 
-  // TODO: render proper embedded map when coordinates are populated
-  // For now: compact "Where to find them" list with Google Maps links
-
-  if (withCoords.length === 0 && withMapLinks.length === 0) {
-    // Only village names — don't render the section at all
-    return null;
-  }
+  // Calculate map bounds
+  const lats = withCoords.map((e) => e.location!.coordinates!.lat);
+  const lngs = withCoords.map((e) => e.location!.coordinates!.lng);
+  const centerLat = (Math.min(...lats) + Math.max(...lats)) / 2;
+  const centerLng = (Math.min(...lngs) + Math.max(...lngs)) / 2;
 
   return (
     <section className="mb-12">
-      <h2 className="font-serif text-2xl text-harbour-stone mb-4">
-        Where to find them
-      </h2>
-      <p className="font-mono text-sm text-harbour-stone/60 mb-5">
-        {pageTitle} — locations on Islay
-      </p>
-
-      {/* Map links list — shown when coordinates aren't populated yet */}
-      {withMapLinks.length > 0 && (
-        <div className="border border-washed-timber rounded p-5 bg-white">
-          <ul className="space-y-2">
-            {withMapLinks.map((entity) => (
-              <li key={entity._id} className="flex items-start gap-3">
-                <span className="font-mono text-xs text-harbour-stone/50 shrink-0 mt-0.5 w-24">
-                  {entity.category}
-                </span>
-                <a
-                  href={entity.location!.googleMapsUrl!}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="font-mono text-sm text-emerald-accent hover:underline"
-                >
-                  {entity.name}
-                  {entity.location?.distanceFromBruichladdich
-                    ? ` — ${entity.location.distanceFromBruichladdich}`
-                    : ''}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <p className="font-mono text-xs text-harbour-stone/40 mt-4">
-            Full interactive map coming in site redesign.
-          </p>
+      <div className="grid gap-8 mb-6" style={{ gridTemplateColumns: '1fr 1fr', alignItems: 'end', maxWidth: '1280px' }}>
+        <div>
+          <p className="typo-label mb-3">Locations</p>
+          <h3 className="font-serif font-bold text-harbour-stone" style={{ fontSize: 'clamp(1.15rem, 2vw, 1.4rem)' }}>
+            Find the {pageTitle.split(/['']s?\s/)[1] || 'Places'}
+          </h3>
         </div>
-      )}
+        <p className="font-mono text-sm text-harbour-stone/60 mb-0">
+          {withCoords.length} location{withCoords.length !== 1 ? 's' : ''} on Islay
+        </p>
+      </div>
+
+      {/* Map container */}
+      <LeafletMap
+        entities={withCoords}
+        centerLat={centerLat}
+        centerLng={centerLng}
+      />
+
+      {/* Distance list below map */}
+      <div className="grid gap-0 mt-6" style={{ gridTemplateColumns: '1fr 1fr', maxWidth: '1280px' }}>
+        {withCoords.map((entity, i) => (
+          <div
+            key={entity._id}
+            className="flex justify-between items-baseline"
+            style={{
+              padding: i % 2 === 0 ? '10px 16px 10px 0' : '10px 0 10px 16px',
+              borderBottom: i < withCoords.length - 2 ? '1px solid var(--color-washed-timber)' : undefined,
+            }}
+          >
+            <span className="font-mono text-sm text-harbour-stone">{entity.name}</span>
+            {entity.location?.distanceFromBruichladdich && (
+              <span className="font-mono text-xs text-kelp-edge">{entity.location.distanceFromBruichladdich}</span>
+            )}
+          </div>
+        ))}
+      </div>
     </section>
+  );
+}
+
+// ─── Leaflet map (loaded client-side only) ───────────────────────────────────
+
+function LeafletMap({
+  entities,
+  centerLat,
+  centerLng,
+}: {
+  entities: SiteEntity[];
+  centerLat: number;
+  centerLng: number;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<any>(null);
+
+  useEffect(() => {
+    if (!containerRef.current || mapRef.current) return;
+
+    // Dynamic import to avoid SSR issues
+    import('leaflet').then((L) => {
+      // Import Leaflet CSS
+      if (!document.querySelector('link[href*="leaflet"]')) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+        document.head.appendChild(link);
+      }
+
+      const map = L.map(containerRef.current!, {
+        scrollWheelZoom: false,
+        attributionControl: true,
+      }).setView([centerLat, centerLng], 10);
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+        maxZoom: 16,
+      }).addTo(map);
+
+      // Add entity markers
+      entities.forEach((entity) => {
+        const { lat, lng } = entity.location!.coordinates!;
+        const colour = CATEGORY_COLOURS[entity.category] || '#6B7280';
+        const label = CATEGORY_LABELS[entity.category] || entity.category;
+
+        const icon = L.divIcon({
+          className: '',
+          html: `<div style="
+            width: 14px; height: 14px;
+            background: ${colour};
+            border: 2px solid #fff;
+            border-radius: 50%;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+          "></div>`,
+          iconSize: [14, 14],
+          iconAnchor: [7, 7],
+        });
+
+        const distance = entity.location?.distanceFromBruichladdich
+          ? `<br><span style="opacity:0.6">${entity.location.distanceFromBruichladdich}</span>`
+          : '';
+
+        const popup = `
+          <div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px; line-height: 1.5;">
+            <span style="font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: ${colour};">${label}</span><br>
+            <strong>${entity.name}</strong>
+            ${distance}
+          </div>
+        `;
+
+        L.marker([lat, lng], { icon }).addTo(map).bindPopup(popup);
+      });
+
+      // Fit bounds if multiple markers
+      if (entities.length > 1) {
+        const bounds = L.latLngBounds(
+          entities.map((e) => [e.location!.coordinates!.lat, e.location!.coordinates!.lng] as [number, number])
+        );
+        map.fitBounds(bounds, { padding: [40, 40], maxZoom: 13 });
+      }
+
+      mapRef.current = map;
+    });
+
+    return () => {
+      if (mapRef.current) {
+        mapRef.current.remove();
+        mapRef.current = null;
+      }
+    };
+  }, [entities, centerLat, centerLng]);
+
+  return (
+    <div
+      ref={containerRef}
+      style={{ height: '480px', borderRadius: '2px', background: 'var(--color-machair-sand)' }}
+    />
   );
 }
