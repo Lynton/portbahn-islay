@@ -124,10 +124,20 @@ function LeafletMap({
   const mapRef = useRef<any>(null);
 
   useEffect(() => {
-    if (!containerRef.current || mapRef.current) return;
+    if (!containerRef.current) return;
+
+    let cancelled = false;
+
+    // Clean up any existing map on the container (React strict mode double-mount)
+    if (mapRef.current) {
+      mapRef.current.remove();
+      mapRef.current = null;
+    }
 
     // Dynamic import to avoid SSR issues
     import('leaflet').then((L) => {
+      if (cancelled || !containerRef.current) return;
+
       // Import Leaflet CSS
       if (!document.querySelector('link[href*="leaflet"]')) {
         const link = document.createElement('link');
@@ -136,7 +146,7 @@ function LeafletMap({
         document.head.appendChild(link);
       }
 
-      const map = L.map(containerRef.current!, {
+      const map = L.map(containerRef.current, {
         scrollWheelZoom: false,
         attributionControl: true,
       }).setView([centerLat, centerLng], 10);
@@ -192,6 +202,7 @@ function LeafletMap({
     });
 
     return () => {
+      cancelled = true;
       if (mapRef.current) {
         mapRef.current.remove();
         mapRef.current = null;
