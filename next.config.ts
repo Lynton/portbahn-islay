@@ -103,6 +103,64 @@ const nextConfig: NextConfig = {
         destination: '/islay-travel/planning-your-trip',
         permanent: true,
       },
+      // ── Lodgify legacy URLs (current live site portbahnislay.co.uk) ──
+      // These ensure SEO equity transfers when switching from Lodgify to Next.js
+      {
+        source: '/en/2473312/all-properties',
+        destination: '/accommodation',
+        permanent: true,
+      },
+      {
+        source: '/en/2473314/contact-us',
+        destination: '/contact',
+        permanent: true,
+      },
+      {
+        source: '/en/2473378/portbahn-islay',
+        destination: '/accommodation/portbahn-house',
+        permanent: true,
+      },
+      {
+        source: '/en/2473399/shorefield-islay',
+        destination: '/accommodation/shorefield-eco-house',
+        permanent: true,
+      },
+      {
+        source: '/en/2474022/islay',
+        destination: '/explore-islay',
+        permanent: true,
+      },
+      {
+        source: '/en/2474023/bothanjuraretreat',
+        destination: '/explore-islay/visit-jura',
+        permanent: true,
+      },
+      {
+        source: '/en/2487599/bruichladdich',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/en/2487600/faq-islay',
+        destination: '/islay-travel/planning-your-trip',
+        permanent: true,
+      },
+      {
+        source: '/en/3895376/travel',
+        destination: '/islay-travel',
+        permanent: true,
+      },
+      {
+        source: '/en/5132129/curlew-cottage-islay',
+        destination: '/accommodation/curlew-cottage',
+        permanent: true,
+      },
+      // Catch-all for any other /en/ Lodgify paths
+      {
+        source: '/en/:path*',
+        destination: '/',
+        permanent: true,
+      },
     ];
   },
 };
