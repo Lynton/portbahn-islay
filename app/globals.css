@@ -523,7 +523,7 @@ p {
 .guide-grid { display: grid; grid-template-columns: 1fr; padding: 0 48px; max-width: 1280px; }
 @media (min-width: 900px) { .guide-grid { grid-template-columns: minmax(0, 1fr) 260px; column-gap: 48px; } }
 
-.guide-sidebar { display: none; padding: 20px 24px 40px; align-self: start; position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; background: var(--color-machair-sand); border-left: 1px solid var(--color-washed-timber); }
+.guide-sidebar { display: none; padding: 20px 0 40px 0; align-self: start; position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; }
 @media (min-width: 900px) { .guide-sidebar { display: block; } }
 
 .guide-mobile-nav { display: block; padding: 0 48px 0; }
