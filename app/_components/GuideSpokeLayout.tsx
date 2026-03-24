@@ -560,9 +560,15 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                 </div>
               )}
 
-              {/* Entity cards grid — always shown (as detail cards below infographic, or as primary for 'grid' style) */}
+              {/* Entity cards grid — compact for spectrum/matrix pages, full for grid pages */}
               <div className={`g-entities-grid${displayStyle !== 'grid' ? ' mt-12' : ''}`}>
-                {entities.map((entity) => <EntityCard key={entity._id} entity={entity} variant="sand" />)}
+                {entities.map((entity) => (
+                  <EntityCard
+                    key={entity._id}
+                    entity={entity}
+                    variant={displayStyle === 'spectrum' ? 'compact' : 'sand'}
+                  />
+                ))}
               </div>
             </section>
           );

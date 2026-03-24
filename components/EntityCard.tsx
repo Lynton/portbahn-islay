@@ -5,8 +5,9 @@ import type { SiteEntity } from '@/lib/types';
 
 interface EntityCardProps {
   entity: SiteEntity;
-  /** 'sand' renders on sand background — uses shadow instead of border for contrast */
-  variant?: 'default' | 'sand';
+  /** 'sand' renders on sand background — uses shadow instead of border for contrast.
+   *  'compact' renders a slim contact card (name + key stats + contact links, no description). */
+  variant?: 'default' | 'sand' | 'compact';
 }
 
 // ─── Category label map ───────────────────────────────────────────────────────
@@ -99,6 +100,80 @@ export default function EntityCard({ entity, variant = 'default' }: EntityCardPr
   const isFood = category === 'restaurant' || category === 'cafe';
   const isTransport = category === 'transport';
   const isVillage = category === 'village';
+
+  // ── Compact variant: visitor centre / contact card ──────────────────────────
+  if (variant === 'compact') {
+    const CompactWrapper = contact?.website ? 'a' : 'div';
+    const compactProps = contact?.website ? {
+      href: contact.website,
+      target: '_blank' as const,
+      rel: 'noopener noreferrer',
+    } : {};
+
+    // Strip " Distillery" suffix for compact display
+    const displayName = entity.name.replace(/ Distillery$/, '');
+
+    return (
+      <CompactWrapper
+        {...compactProps}
+        className="block hover-card transition-shadow bg-white p-4"
+        style={{
+          borderTop: '3px solid var(--color-kelp-edge)',
+          border: '1px solid var(--color-washed-timber)',
+          borderTopWidth: '3px',
+          borderTopColor: 'var(--color-kelp-edge)',
+          textDecoration: 'none',
+          color: 'inherit',
+          cursor: contact?.website ? 'pointer' : 'default',
+        }}
+      >
+        {/* Name */}
+        <h3 className="font-serif font-bold text-harbour-stone mb-2" style={{ fontSize: '1.05rem', lineHeight: '1.25' }}>
+          {displayName}
+        </h3>
+
+        {/* Key stats line */}
+        <div className="flex flex-wrap gap-x-3 gap-y-1 mb-3">
+          {location?.distanceFromBruichladdich && (
+            <span className="font-mono text-2xs text-washed-timber">{location.distanceFromBruichladdich}</span>
+          )}
+          {isDistillery && attributes?.tourPriceStandard && (
+            <span className="font-mono text-2xs text-washed-timber">Tours {attributes.tourPriceStandard}</span>
+          )}
+          {isDistillery && attributes?.hasCafe && (
+            <span className="font-mono text-2xs text-emerald-accent font-semibold">Café</span>
+          )}
+          {attributes?.requiresBooking && (
+            <span className="font-mono text-2xs text-washed-timber">Book ahead</span>
+          )}
+        </div>
+
+        {/* Contact links */}
+        <div className="flex flex-wrap gap-x-4 gap-y-1">
+          {contact?.phone && (
+            <span className="font-mono text-xs text-harbour-stone/60" onClick={(e) => e.stopPropagation()}>
+              <a href={`tel:${contact.phone}`} className="hover-link">{contact.phone}</a>
+            </span>
+          )}
+          {contact?.website && (
+            <span className="font-mono text-xs text-kelp-edge">Website →</span>
+          )}
+          {contact?.bookingUrl && contact.bookingUrl !== contact.website && (
+            <span className="font-mono text-xs text-harbour-stone/60" onClick={(e) => e.stopPropagation()}>
+              <a href={contact.bookingUrl} target="_blank" rel="noopener noreferrer" className="hover-link">Book tour</a>
+            </span>
+          )}
+          {location?.googleMapsUrl && (
+            <span className="font-mono text-xs text-harbour-stone/60" onClick={(e) => e.stopPropagation()}>
+              <a href={location.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="hover-link">Map</a>
+            </span>
+          )}
+        </div>
+      </CompactWrapper>
+    );
+  }
+
+  // ── Full card (default / sand variant) ──────────────────────────────────────
 
   const cardClass = variant === 'sand'
     ? 'p-5 bg-white'
