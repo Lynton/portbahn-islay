@@ -113,8 +113,15 @@ export default function EntityCard({ entity, variant = 'default' }: EntityCardPr
       }
     : undefined;
 
+  const Wrapper = contact?.website ? 'a' : 'div';
+  const wrapperProps = contact?.website ? {
+    href: contact.website,
+    target: '_blank' as const,
+    rel: 'noopener noreferrer',
+  } : {};
+
   return (
-    <article className={cardClass} style={cardStyle}>
+    <Wrapper {...wrapperProps} className={`${cardClass} block hover-card transition-shadow`} style={{ ...cardStyle, textDecoration: 'none', color: 'inherit', cursor: contact?.website ? 'pointer' : 'default' }}>
 
       {/* Header: category kicker + name */}
       <div className="mb-2">
@@ -122,11 +129,7 @@ export default function EntityCard({ entity, variant = 'default' }: EntityCardPr
           {CATEGORY_LABELS[category] || category}
         </p>
         <h3 className="font-serif text-xl text-harbour-stone leading-snug">
-          {contact?.website ? (
-            <a href={contact.website} target="_blank" rel="noopener noreferrer" className="hover-link">{entity.name}</a>
-          ) : (
-            entity.name
-          )}
+          {entity.name}
         </h3>
       </div>
 
@@ -400,6 +403,6 @@ export default function EntityCard({ entity, variant = 'default' }: EntityCardPr
           {importantNote}
         </p>
       )}
-    </article>
+    </Wrapper>
   );
 }
