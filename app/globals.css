@@ -523,7 +523,7 @@ p {
 .guide-grid { display: grid; grid-template-columns: 1fr; padding: 0 48px; max-width: 1280px; }
 @media (min-width: 900px) { .guide-grid { grid-template-columns: minmax(0, 1fr) 260px; column-gap: 48px; } }
 
-.guide-sidebar { display: none; padding: 20px 0 40px 0; align-self: start; position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; }
+.guide-sidebar { display: none; padding: 20px 24px 40px; align-self: start; position: sticky; top: 80px; max-height: calc(100vh - 100px); overflow-y: auto; background: var(--color-machair-sand); border-left: 1px solid var(--color-washed-timber); }
 @media (min-width: 900px) { .guide-sidebar { display: block; } }
 
 .guide-mobile-nav { display: block; padding: 0 48px 0; }
@@ -531,6 +531,8 @@ p {
 
 .guide-block { padding: 72px 0 80px; border-top: 1px solid var(--color-washed-timber); }
 .guide-block:first-child { padding-top: 80px; border-top: none; }
+/* Alternating background on even blocks — breaks up text wall */
+.guide-block:nth-child(even):not(.guide-block-callout) { background: var(--color-machair-sand); margin: 0 -48px; padding-left: 48px; padding-right: 48px; }
 .guide-block-body { max-width: 640px; }
 
 .guide-key-facts { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--color-washed-timber); }
@@ -585,6 +587,7 @@ p {
   .g-stay-cards { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .guide-grid { padding: 0 28px; }
   .guide-block { padding: 56px 0; }
+  .guide-block:nth-child(even):not(.guide-block-callout) { margin: 0 -28px; padding-left: 28px; padding-right: 28px; }
   .guide-mobile-nav { padding: 0 28px; }
 }
 @media (max-width: 560px) {
@@ -594,6 +597,7 @@ p {
   .guide-grid { padding: 0 20px; }
   .g-stay-cards { grid-template-columns: 1fr; }
   .guide-block { padding: 40px 0; }
+  .guide-block:nth-child(even):not(.guide-block-callout) { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
   .guide-mobile-nav { padding: 0 20px; }
   .guide-editorial-list { grid-template-columns: 1fr; }
   .guide-editorial-list-item:nth-child(even) { padding: 16px 20px 16px 0; }
