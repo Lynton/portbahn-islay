@@ -415,60 +415,22 @@ export default function EntityCard({ entity, variant = 'default' }: EntityCardPr
         </div>
       )}
 
-      {/* Key practical links */}
+      {/* Key practical info */}
       <div className="mt-4 flex flex-wrap gap-4 items-center">
-
-        {/* Distance */}
         {location?.distanceFromBruichladdich && (
           <span className="font-mono text-xs text-harbour-stone/60">
             {location.distanceFromBruichladdich}
           </span>
         )}
-
-        {/* Phone — clickable on mobile */}
         {contact?.phone && (
-          <a
-            href={`tel:${contact.phone.replace(/\s/g, '')}`}
-            className="font-mono text-sm text-emerald-accent hover:underline"
-          >
+          <span className="font-mono text-xs text-harbour-stone/60">
             {contact.phone}
-          </a>
+          </span>
         )}
-
-        {/* Website */}
         {contact?.website && (
-          <a
-            href={contact.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-sm text-emerald-accent hover:underline"
-          >
-            Website
-          </a>
-        )}
-
-        {/* Booking URL (if separate from website) */}
-        {contact?.bookingUrl && contact.bookingUrl !== contact.website && (
-          <a
-            href={contact.bookingUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-sm text-emerald-accent hover:underline"
-          >
-            Book
-          </a>
-        )}
-
-        {/* Google Maps link */}
-        {location?.googleMapsUrl && (
-          <a
-            href={location.googleMapsUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-sm text-emerald-accent hover:underline"
-          >
-            View on map
-          </a>
+          <span className="font-mono text-xs text-kelp-edge">
+            Website →
+          </span>
         )}
       </div>
 
