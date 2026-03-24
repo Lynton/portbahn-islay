@@ -353,25 +353,11 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                     );
                   })()}
 
-                  {/* Gallery pair after lead block */}
+                  {/* Single gallery image after lead block (second image saved for mid-page) */}
                   {isFirst && (() => {
                     const img1 = nextGalleryImage();
-                    const img2 = nextGalleryImage();
                     if (!img1) return null;
-                    return (
-                      <div className="grid gap-[3px] bg-harbour-stone my-2" style={{ gridTemplateColumns: img2 ? '3fr 2fr' : '1fr' }}>
-                        <div className="overflow-hidden">
-                          <Image src={urlFor(img1).width(800).height(500).url()} alt={img1.alt || page.title}
-                            width={800} height={500} className="w-full object-cover" style={{ height: '320px' }} />
-                        </div>
-                        {img2 && (
-                          <div className="overflow-hidden">
-                            <Image src={urlFor(img2).width(600).height(500).url()} alt={img2.alt || page.title}
-                              width={600} height={500} className="w-full object-cover" style={{ height: '320px' }} />
-                          </div>
-                        )}
-                      </div>
-                    );
+                    return <ImageBreak image={img1} page={page} />;
                   })()}
 
                   {/* h3 sub-sections — each rendered as its own visual block */}
@@ -402,12 +388,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                     return (
                       <div className="guide-block" id="infographic">
                         {infographicStyle === 'spectrum' && (
-                          <>
-                            <PeatSpectrum entities={entities} />
-                            <div className="mt-12">
-                              <DistilleryClusters entities={entities} />
-                            </div>
-                          </>
+                          <PeatSpectrum entities={entities} />
                         )}
                         {infographicStyle === 'matrix' && matrixCols && (
                           <AttributeMatrix entities={entities} columns={matrixCols} />
@@ -422,8 +403,36 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                     );
                   })()}
 
+                  {/* Distillery clusters after planning block (index 3) — only for spectrum pages */}
+                  {index === 3 && (page.layoutHints?.entityDisplayStyle === 'spectrum') && entities.length > 0 && (
+                    <div className="guide-block" id="clusters">
+                      <DistilleryClusters entities={entities} />
+                    </div>
+                  )}
+
+                  {/* Gallery pair mid-page (after 3rd block) */}
+                  {index === 2 && (() => {
+                    const img1 = nextGalleryImage();
+                    const img2 = nextGalleryImage();
+                    if (!img1) return null;
+                    return (
+                      <div className="grid gap-[3px] bg-harbour-stone my-2" style={{ gridTemplateColumns: img2 ? '3fr 2fr' : '1fr' }}>
+                        <div className="overflow-hidden">
+                          <Image src={urlFor(img1).width(800).height(500).url()} alt={img1.alt || page.title}
+                            width={800} height={500} className="w-full object-cover" style={{ height: '320px' }} />
+                        </div>
+                        {img2 && (
+                          <div className="overflow-hidden">
+                            <Image src={urlFor(img2).width(600).height(500).url()} alt={img2.alt || page.title}
+                              width={600} height={500} className="w-full object-cover" style={{ height: '320px' }} />
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })()}
+
                   {/* Image break between blocks (non-lead, non-sectioned) */}
-                  {!isFirst && !hasSections && (() => {
+                  {!isFirst && index !== 2 && !hasSections && (() => {
                     const img = nextGalleryImage();
                     return img ? <ImageBreak image={img} page={page} /> : null;
                   })()}

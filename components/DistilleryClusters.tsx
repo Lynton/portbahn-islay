@@ -117,6 +117,13 @@ export default function DistilleryClusters({ entities }: DistilleryClustersProps
           </div>
         ))}
       </div>
+
+      {/* Link to map */}
+      <p className="mt-4">
+        <a href="#entities" className="hover-link font-mono text-sm tracking-wide text-kelp-edge">
+          View on map ↓
+        </a>
+      </p>
     </div>
   );
 }

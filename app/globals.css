@@ -498,6 +498,8 @@ p {
 .g-stay { background: var(--color-sea-spray); padding: 80px 48px; }
 .g-stay-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1280px; }
 .g-stay-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; max-width: 1280px; }
+.g-stay-cards > a { display: flex; flex-direction: column; }
+.g-stay-cards > a > div:last-child { flex: 1; }
 
 .g-related { background: var(--color-machair-sand); padding: 48px; }
 .g-related-inner { max-width: 1280px; display: flex; flex-wrap: wrap; align-items: center; gap: 24px; }

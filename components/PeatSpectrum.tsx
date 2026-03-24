@@ -4,20 +4,12 @@ import type { SiteEntity, PeatExpression } from '@/lib/types';
 
 const PEAT_LEVELS = ['unpeated', 'light', 'medium', 'heavy', 'extreme'] as const;
 
-const PEAT_COLOURS: Record<string, { bg: string; text: string; border: string }> = {
-  unpeated: { bg: '#f5f0e8', text: 'var(--color-harbour-stone)', border: '#d4c9b5' },
-  light:    { bg: '#e8dcc8', text: 'var(--color-harbour-stone)', border: '#c4b49a' },
-  medium:   { bg: '#c4a87a', text: '#fff', border: '#a88e60' },
-  heavy:    { bg: '#7a5c3a', text: '#fff', border: '#5e4529' },
-  extreme:  { bg: '#2c1810', text: '#fff', border: '#1a0e08' },
-};
-
-const PEAT_LABELS: Record<string, string> = {
-  unpeated: 'Unpeated',
-  light: 'Lightly Peated',
-  medium: 'Medium Peated',
-  heavy: 'Heavily Peated',
-  extreme: 'Extreme',
+const PEAT_CONFIG: Record<string, { label: string; zone: string; bg: string; text: string; kicker: string }> = {
+  unpeated: { label: 'Unpeated', zone: '0 ppm', bg: '#f5f0e8', text: 'var(--color-harbour-stone)', kicker: 'var(--color-washed-timber)' },
+  light:    { label: 'Lightly Peated', zone: '5–20 ppm', bg: '#e8dcc8', text: 'var(--color-harbour-stone)', kicker: 'var(--color-washed-timber)' },
+  medium:   { label: 'Medium', zone: '20–40 ppm', bg: '#c4a87a', text: '#fff', kicker: 'rgba(255,255,255,0.5)' },
+  heavy:    { label: 'Heavily Peated', zone: '40–55 ppm', bg: '#7a5c3a', text: '#fff', kicker: 'rgba(255,255,255,0.5)' },
+  extreme:  { label: 'Off the Scale', zone: '80–300+ ppm', bg: 'var(--color-sound-of-islay)', text: '#fff', kicker: 'var(--color-emerald-accent)' },
 };
 
 // ─── Component ───────────────────────────────────────────────────────────────
@@ -48,74 +40,77 @@ export default function PeatSpectrum({ entities }: PeatSpectrumProps) {
 
   if (expressions.length === 0) return null;
 
-  // Group by peat level
-  const grouped = PEAT_LEVELS.map((level) => ({
-    level,
-    label: PEAT_LABELS[level],
-    colours: PEAT_COLOURS[level],
-    expressions: expressions.filter((e) => e.peatLevel === level),
-  })).filter((g) => g.expressions.length > 0);
+  // Group by peat level — only show levels that have expressions
+  const grouped = PEAT_LEVELS
+    .map((level) => ({
+      level,
+      config: PEAT_CONFIG[level],
+      expressions: expressions.filter((e) => e.peatLevel === level),
+    }))
+    .filter((g) => g.expressions.length > 0);
 
   return (
     <div className="peat-spectrum">
-      <p className="typo-kicker mb-5">Peat Spectrum</p>
-      <h3 className="font-serif font-bold text-harbour-stone mb-8" style={{ fontSize: 'clamp(1.15rem, 2vw, 1.4rem)' }}>
-        From Unpeated to Extreme
-      </h3>
+      <p className="typo-label mb-3">At a Glance</p>
+      <h3 className="typo-h2 mb-3">Peat &amp; Flavour Spectrum</h3>
+      <p className="font-mono text-lg text-harbour-stone opacity-75 mb-8" style={{ maxWidth: '560px' }}>
+        Every Islay distillery sits somewhere on the peat spectrum — from gentle and unpeated to intensely smoky.
+      </p>
 
-      {/* Spectrum bar */}
-      <div className="flex rounded overflow-hidden mb-8" style={{ height: '8px' }}>
+      {/* Spectrum gradient bar */}
+      <div className="flex rounded overflow-hidden mb-1" style={{ height: '8px' }}>
         {PEAT_LEVELS.map((level) => (
-          <div
-            key={level}
-            className="flex-1"
-            style={{ backgroundColor: PEAT_COLOURS[level].bg }}
-          />
+          <div key={level} className="flex-1" style={{ backgroundColor: PEAT_CONFIG[level].bg }} />
         ))}
       </div>
 
-      {/* Grouped expressions */}
-      <div className="flex flex-col gap-6">
-        {grouped.map((group) => (
-          <div key={group.level}>
-            {/* Level header */}
-            <div className="flex items-center gap-3 mb-3">
-              <span
-                className="inline-block w-3 h-3 rounded-full shrink-0"
-                style={{ backgroundColor: group.colours.bg, border: `1px solid ${group.colours.border}` }}
-              />
-              <span className="font-mono text-xs uppercase tracking-widest text-harbour-stone/60">
-                {group.label}
-              </span>
-            </div>
+      {/* Zone labels */}
+      <div className="flex mb-8">
+        {PEAT_LEVELS.map((level) => (
+          <div key={level} className="flex-1">
+            <p className="font-mono text-2xs uppercase tracking-wider" style={{ color: 'var(--color-washed-timber)' }}>
+              {PEAT_CONFIG[level].label}
+            </p>
+          </div>
+        ))}
+      </div>
 
-            {/* Expression cards */}
-            <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))' }}>
+      {/* Vertical columns — one per peat level */}
+      <div className="grid gap-[3px]" style={{ gridTemplateColumns: `repeat(${grouped.length}, 1fr)`, background: 'var(--color-harbour-stone)' }}>
+        {grouped.map((group) => (
+          <div
+            key={group.level}
+            style={{
+              backgroundColor: group.config.bg,
+              color: group.config.text,
+              padding: '20px 16px',
+            }}
+          >
+            <p className="font-mono font-semibold mb-3" style={{
+              fontSize: '9px',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              color: group.config.kicker,
+            }}>
+              {group.config.label} · {group.config.zone}
+            </p>
+
+            <div className="flex flex-col gap-3">
               {group.expressions.map((expr) => (
-                <div
-                  key={expr._key}
-                  className="rounded p-4"
-                  style={{
-                    backgroundColor: group.colours.bg,
-                    color: group.colours.text,
-                    border: `1px solid ${group.colours.border}`,
-                  }}
-                >
-                  <p className="font-serif font-bold text-lg leading-tight mb-1">
+                <div key={expr._key}>
+                  <p className="font-serif font-bold mb-0.5" style={{ fontSize: '14px' }}>
                     {expr.distilleryWebsite ? (
-                      <a href={expr.distilleryWebsite} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                      <a href={expr.distilleryWebsite} target="_blank" rel="noopener noreferrer" className="hover:underline" style={{ color: 'inherit', textDecoration: 'none' }}>
                         {expr.name}
                       </a>
                     ) : (
                       expr.name
                     )}
                   </p>
-                  <p className="font-mono text-xs opacity-70 mb-2">{expr.distilleryName}</p>
-                  {expr.ppmRange && (
-                    <p className="font-mono text-sm font-semibold">{expr.ppmRange} PPM</p>
-                  )}
                   {expr.description && (
-                    <p className="font-mono text-xs opacity-70 mt-1">{expr.description}</p>
+                    <p className="font-mono opacity-60" style={{ fontSize: '10px', lineHeight: '1.4' }}>
+                      {expr.description}
+                    </p>
                   )}
                 </div>
               ))}
