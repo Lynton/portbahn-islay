@@ -48,7 +48,7 @@ const getTravelGuidePage = cache(async (slug: string) => {
       _id, factSetId, title, category, facts
     },
     "contentBlocks": contentBlocks[defined(block._ref)]{
-      _key, version, showKeyFacts, customHeading, customKicker, displayStyle,
+      _key, version, showKeyFacts, showInfographic, customHeading, customKicker, displayStyle,
       block->{
         _id, blockId, title, entityType, canonicalHome, fullContent, teaserContent, keyFacts,
         "contentHeadings": fullContent[style in ["h2","h3"]].children[0].text

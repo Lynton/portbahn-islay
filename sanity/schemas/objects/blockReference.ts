@@ -62,6 +62,13 @@ export default defineType({
       initialValue: 'default',
       description: 'Visual treatment for this block section',
     }),
+    defineField({
+      name: 'showInfographic',
+      title: 'Show Infographic After This Block',
+      type: 'boolean',
+      initialValue: false,
+      description: 'Render the page\'s infographic components (PeatSpectrum, AttributeMatrix, etc.) inline after this block, within the content flow.',
+    }),
   ],
   preview: {
     select: {

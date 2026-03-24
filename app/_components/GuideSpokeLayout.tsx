@@ -394,6 +394,34 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                     );
                   })}
 
+                  {/* Inline infographic — renders page's infographic components within content flow */}
+                  {blockRef.showInfographic && entities.length > 0 && (() => {
+                    const infographicStyle: EntityDisplayStyle = page.layoutHints?.entityDisplayStyle || 'grid';
+                    const matrixKey = SLUG_TO_MATRIX[slug];
+                    const matrixCols = matrixKey ? MATRIX_COLUMNS[matrixKey] : undefined;
+                    return (
+                      <div className="guide-block" id="infographic">
+                        {infographicStyle === 'spectrum' && (
+                          <>
+                            <PeatSpectrum entities={entities} />
+                            <div className="mt-12">
+                              <DistilleryClusters entities={entities} />
+                            </div>
+                          </>
+                        )}
+                        {infographicStyle === 'matrix' && matrixCols && (
+                          <AttributeMatrix entities={entities} columns={matrixCols} />
+                        )}
+                        {infographicStyle === 'timeline' && (
+                          <HistoryTimeline entities={entities} />
+                        )}
+                        {infographicStyle === 'calendar' && (
+                          <SeasonalCalendar entities={entities} />
+                        )}
+                      </div>
+                    );
+                  })()}
+
                   {/* Image break between blocks (non-lead, non-sectioned) */}
                   {!isFirst && !hasSections && (() => {
                     const img = nextGalleryImage();
@@ -487,6 +515,8 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
           const displayStyle: EntityDisplayStyle = page.layoutHints?.entityDisplayStyle || 'grid';
           const matrixKey = SLUG_TO_MATRIX[slug];
           const matrixColumns = matrixKey ? MATRIX_COLUMNS[matrixKey] : undefined;
+          // Skip infographic here if it was already rendered inline via showInfographic on a block
+          const infographicRenderedInline = blocks.some((b: any) => b.showInfographic);
 
           return (
             <section className="g-entities" id="entities">
@@ -496,8 +526,8 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                 <GuideMap entities={entities} pageTitle={page.title} />
               </div>
 
-              {/* Display style switcher */}
-              {displayStyle === 'spectrum' && (
+              {/* Display style switcher — skip if already rendered inline */}
+              {!infographicRenderedInline && displayStyle === 'spectrum' && (
                 <div className="max-w-[1280px]">
                   <PeatSpectrum entities={entities} />
                   <div className="mt-12">
@@ -505,17 +535,17 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                   </div>
                 </div>
               )}
-              {displayStyle === 'matrix' && matrixColumns && (
+              {!infographicRenderedInline && displayStyle === 'matrix' && matrixColumns && (
                 <div className="max-w-[1280px]">
                   <AttributeMatrix entities={entities} columns={matrixColumns} />
                 </div>
               )}
-              {displayStyle === 'timeline' && (
+              {!infographicRenderedInline && displayStyle === 'timeline' && (
                 <div className="max-w-[760px]">
                   <HistoryTimeline entities={entities} />
                 </div>
               )}
-              {displayStyle === 'calendar' && (
+              {!infographicRenderedInline && displayStyle === 'calendar' && (
                 <div className="max-w-[1280px]">
                   <SeasonalCalendar entities={entities} />
                 </div>
