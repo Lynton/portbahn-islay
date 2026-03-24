@@ -24,6 +24,7 @@
   --color-harbour-stone:  #2B2C2E;
   --color-machair-sand:   #F1ECE4;
   --color-sea-spray:      #FFFEFA;
+  --color-drift-sand:     #F7F5F1;  /* subtle warm grey — alternating block bg only */
   --color-washed-timber:  #CFCAC2;
   --color-emerald-accent: #008060;
 
@@ -532,7 +533,7 @@ p {
 .guide-block { padding: 72px 0 80px; border-top: 1px solid var(--color-washed-timber); }
 .guide-block:first-child { padding-top: 80px; border-top: none; }
 /* Alternating background on even blocks — breaks up text wall */
-.guide-block:nth-child(even):not(.guide-block-callout) { background: var(--color-machair-sand); margin: 0 -48px 0 -48px; padding-left: 48px; padding-right: 48px; border-radius: 4px; }
+.guide-block:nth-child(even):not(.guide-block-callout) { background: var(--color-drift-sand); margin: 0 -48px 0 -48px; padding-left: 48px; padding-right: 48px; border-radius: 4px; }
 @media (min-width: 900px) { .guide-block:nth-child(even):not(.guide-block-callout) { margin-right: 0; padding-right: 0; } }
 .guide-block-body { max-width: 640px; }
 
