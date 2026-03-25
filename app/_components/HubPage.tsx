@@ -182,11 +182,11 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                   );
                 })}
 
-                {/* BJR cross-promo card */}
+                {/* BJR cross-promo card — featured size to match first card */}
                 {config.showBjrCard && (
-                  <a href="https://www.bothanjuraretreat.co.uk" target="_blank" rel="noopener noreferrer" className="block group">
+                  <a href="https://www.bothanjuraretreat.co.uk" target="_blank" rel="noopener noreferrer" className="block group hub-card-featured">
                     <div className="hover-card overflow-hidden flex flex-col h-full" style={{ backgroundColor: 'var(--color-sound-of-islay)' }}>
-                      <div className="relative h-[200px] overflow-hidden bg-harbour-stone shrink-0" />
+                      <div className="relative h-[280px] overflow-hidden bg-harbour-stone shrink-0" />
                       <div className="p-5 pb-5 flex flex-col flex-grow">
                         <p className="font-mono text-2xs tracking-ultra uppercase text-emerald-accent mb-2">Stay on Jura</p>
                         <h2 className="font-serif font-bold text-sea-spray/90 leading-snug tracking-snug mb-2 text-[1.15rem]">Bothan Jura Retreat</h2>
