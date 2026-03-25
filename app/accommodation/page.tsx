@@ -75,14 +75,21 @@ export default async function AccommodationPage() {
       { label: 'Accommodation' },
     ],
     introText: page?.scopeIntro || 'We offer three unique self-catering holiday properties in Bruichladdich. Portbahn House is our family home. Shorefield is the Jacksons\' creation - they built it, planted every tree, created the bird hides. Curlew Cottage is Alan\'s family retreat. These aren\'t purpose-built rentals - they\'re real family homes with personality.',
+    statsLine: '3 properties in Bruichladdich · Sleeps 6–8 · Dogs welcome at 2 properties',
     sectionHeading: 'Self-Catering Family Holiday Homes in Bruichladdich',
     cardLinkPrefix: '/accommodation/',
     cardLinkSuffix: 'View property →',
+    cardKickers: {
+      'portbahn-house': 'Sleeps 8',
+      'shorefield-eco-house': 'Eco House',
+      'curlew-cottage': 'Pet-Free',
+    },
     emptyStateMessage: 'Properties coming soon.',
     backLink: {
       href: '/',
       label: 'Portbahn Islay homepage',
     },
+    crossLink: { href: '/explore-islay', label: 'Explore things to do on Islay' },
     schemaType: 'CollectionPage' as const,
     schemaData: {
       name: 'Self-Catering Family Holiday Homes in Bruichladdich',

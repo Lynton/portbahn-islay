@@ -12,6 +12,7 @@ const NAV_ITEMS = [
       { label: 'Portbahn House',      href: '/accommodation/portbahn-house' },
       { label: 'Shorefield Eco House', href: '/accommodation/shorefield-eco-house' },
       { label: 'Curlew Cottage',       href: '/accommodation/curlew-cottage' },
+      { label: 'Bothan Jura Retreat',  href: 'https://www.bothanjuraretreat.co.uk', external: true },
     ],
   },
   {
@@ -124,7 +125,7 @@ export default function Header() {
                     </div>
                   ) : (
                     item.dropdown.map((d) => (
-                      <DropdownLink key={d.href} href={d.href} label={d.label} active={pathname === d.href} />
+                      <DropdownLink key={d.href} href={d.href} label={d.label} active={pathname === d.href} external={(d as any).external} />
                     ))
                   )}
                   <div className="h-px bg-washed-timber mx-3 my-1.5 opacity-40" />
@@ -211,7 +212,20 @@ export default function Header() {
   );
 }
 
-function DropdownLink({ href, label, active }: { href: string; label: string; active: boolean }) {
+function DropdownLink({ href, label, active, external }: { href: string; label: string; active: boolean; external?: boolean }) {
+  if (external) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-between py-2 px-[18px] font-mono text-md transition-colors duration-100 text-emerald-accent hover:bg-sound-of-islay/5"
+      >
+        <span>{label}</span>
+        <span className="text-2xs tracking-wide opacity-50 uppercase">Jura ↗</span>
+      </a>
+    );
+  }
   return (
     <Link
       href={href}
