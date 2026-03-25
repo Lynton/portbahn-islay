@@ -54,7 +54,10 @@ export default function PropertyCardGrid({ properties, showHighlights = false, s
               {imageUrl && <Image src={imageUrl} alt={p.heroImage?.alt || p.name} fill className="object-cover" />}
             </div>
             <div className="bg-machair-sand p-5 pb-6">
-              <p className="typo-kicker mb-2">{locationText}</p>
+              <div className="flex items-center justify-between mb-2">
+                <p className="typo-kicker">{locationText}</p>
+                <span className="font-mono text-2xs tracking-wide text-washed-timber uppercase">Islay</span>
+              </div>
               <h3 className="typo-card-title mb-2.5">{p.name}</h3>
               <p className="font-mono text-base text-harbour-stone opacity-60 mb-2.5">{bullets.join(' · ')}</p>
               {highlights.length > 0 && (

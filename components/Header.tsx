@@ -9,10 +9,10 @@ const NAV_ITEMS = [
     label: 'ACCOMMODATION',
     href: '/accommodation',
     dropdown: [
-      { label: 'Portbahn House',      href: '/accommodation/portbahn-house' },
-      { label: 'Shorefield Eco House', href: '/accommodation/shorefield-eco-house' },
-      { label: 'Curlew Cottage',       href: '/accommodation/curlew-cottage' },
-      { label: 'Bothan Jura Retreat',  href: 'https://www.bothanjuraretreat.co.uk', external: true },
+      { label: 'Portbahn House',      href: '/accommodation/portbahn-house', island: 'Islay' },
+      { label: 'Shorefield Eco House', href: '/accommodation/shorefield-eco-house', island: 'Islay' },
+      { label: 'Curlew Cottage',       href: '/accommodation/curlew-cottage', island: 'Islay' },
+      { label: 'Bothan Jura Retreat',  href: 'https://www.bothanjuraretreat.co.uk', external: true, island: 'Jura' },
     ],
   },
   {
@@ -125,7 +125,7 @@ export default function Header() {
                     </div>
                   ) : (
                     item.dropdown.map((d) => (
-                      <DropdownLink key={d.href} href={d.href} label={d.label} active={pathname === d.href} external={(d as any).external} />
+                      <DropdownLink key={d.href} href={d.href} label={d.label} active={pathname === d.href} external={(d as any).external} island={(d as any).island} />
                     ))
                   )}
                   <div className="h-px bg-washed-timber mx-3 my-1.5 opacity-40" />
@@ -193,19 +193,22 @@ export default function Header() {
               <div className="bg-machair-sand py-1 pb-3">
                 {item.dropdown.map((d) => {
                   const isExternal = (d as any).external;
+                  const island = (d as any).island;
                   if (isExternal) {
                     return (
                       <a key={d.href} href={d.href} target="_blank" rel="noopener noreferrer"
-                        className="flex items-center justify-between py-2.5 px-8 font-mono text-md text-emerald-accent">
-                        <span>{d.label}</span>
-                        <span className="text-2xs opacity-50 uppercase">Jura ↗</span>
+                        className="flex items-center justify-between py-2.5 px-8 font-mono text-md"
+                        style={{ backgroundColor: 'var(--color-sound-of-islay)', color: 'var(--color-sea-spray)' }}>
+                        <span className="opacity-90">{d.label}</span>
+                        <span className="text-2xs uppercase text-emerald-accent">{island || 'Jura'} ↗</span>
                       </a>
                     );
                   }
                   return (
                     <Link key={d.href} href={d.href}
-                      className={`block py-2.5 px-8 font-mono text-md text-harbour-stone ${pathname === d.href ? 'opacity-100 font-semibold' : 'opacity-75'}`}>
-                      {d.label}
+                      className={`flex items-center justify-between py-2.5 px-8 font-mono text-md text-harbour-stone ${pathname === d.href ? 'opacity-100 font-semibold' : 'opacity-75'}`}>
+                      <span>{d.label}</span>
+                      {island && <span className="text-2xs tracking-wide opacity-35 uppercase">{island}</span>}
                     </Link>
                   );
                 })}
@@ -224,17 +227,18 @@ export default function Header() {
   );
 }
 
-function DropdownLink({ href, label, active, external }: { href: string; label: string; active: boolean; external?: boolean }) {
+function DropdownLink({ href, label, active, external, island }: { href: string; label: string; active: boolean; external?: boolean; island?: string }) {
   if (external) {
     return (
       <a
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center justify-between py-2 px-[18px] font-mono text-md transition-colors duration-100 text-emerald-accent hover:bg-sound-of-islay/5"
+        className="flex items-center justify-between py-2 px-[18px] font-mono text-md transition-colors duration-100"
+        style={{ backgroundColor: 'var(--color-sound-of-islay)', color: 'var(--color-sea-spray)' }}
       >
-        <span>{label}</span>
-        <span className="text-2xs tracking-wide opacity-50 uppercase">Jura ↗</span>
+        <span className="opacity-90">{label}</span>
+        <span className="text-2xs tracking-wide uppercase text-emerald-accent">{island || 'Jura'} ↗</span>
       </a>
     );
   }
@@ -245,7 +249,7 @@ function DropdownLink({ href, label, active, external }: { href: string; label: 
       style={{ background: active ? 'rgba(31,94,77,0.06)' : undefined }}
     >
       <span>{label}</span>
-      {active && <span className="text-2xs tracking-wide opacity-45 uppercase">← here</span>}
+      <span className="text-2xs tracking-wide opacity-35 uppercase">{active ? '← here' : (island || '')}</span>
     </Link>
   );
 }
