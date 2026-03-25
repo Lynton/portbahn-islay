@@ -20,6 +20,15 @@ interface HubPageProps {
     introduction?: string;
     headline?: string;
     heroImage?: { alt?: string; asset: { _ref: string } };
+    // Enriched property fields (optional — only present for accommodation cards)
+    sleeps?: number;
+    bedrooms?: number;
+    bathrooms?: number;
+    petFriendly?: boolean;
+    nearestDistillery?: string;
+    reviewScore?: number;
+    totalReviewCount?: number;
+    outdoorFeatures?: string[];
   }>;
   config: {
     breadcrumbs: Array<{ label: string; href?: string }>;
@@ -142,9 +151,29 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                           )}
                           <h2 className={`font-serif font-bold text-harbour-stone leading-snug tracking-snug mb-2${isFeatured ? ' text-[1.4rem]' : ' text-[1.15rem]'}`}>{cardTitle}</h2>
                           {cardDescription && (
-                            <p className="font-mono text-sm text-harbour-stone/60 mb-4 line-clamp-2 flex-grow" style={{ lineHeight: '1.5' }}>{cardDescription}</p>
+                            <p className="font-mono text-sm text-harbour-stone/60 mb-3 line-clamp-2" style={{ lineHeight: '1.5' }}>{cardDescription}</p>
                           )}
-                          <span className="typo-cta mt-auto">
+
+                          {/* Enriched property info (when available) */}
+                          {card.sleeps && (
+                            <div className="mb-3">
+                              <p className="font-mono text-xs text-harbour-stone/60 mb-1">
+                                {[
+                                  card.sleeps && `Sleeps ${card.sleeps}`,
+                                  card.bedrooms && `${card.bedrooms} bedrooms`,
+                                  card.petFriendly ? 'Dogs welcome' : card.petFriendly === false ? 'Pet-free' : null,
+                                ].filter(Boolean).join(' · ')}
+                              </p>
+                              {card.nearestDistillery && (
+                                <p className="font-mono text-xs text-harbour-stone/50">{card.nearestDistillery}</p>
+                              )}
+                              {card.totalReviewCount && card.totalReviewCount > 0 && card.reviewScore && (
+                                <p className="font-mono text-xs text-kelp-edge mt-1">★ {card.reviewScore}/5 · {card.totalReviewCount}+ reviews</p>
+                              )}
+                            </div>
+                          )}
+
+                          <span className="typo-cta mt-auto flex-shrink-0">
                             {config.cardLinkSuffix || 'Full guide →'}
                           </span>
                         </div>
