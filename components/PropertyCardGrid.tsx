@@ -63,9 +63,11 @@ export default function PropertyCardGrid({ properties, showHighlights = false, s
               {p.nearestDistillery && (
                 <p className="font-mono text-xs text-harbour-stone/50 mb-2">{p.nearestDistillery}</p>
               )}
-              {p.totalReviewCount && p.totalReviewCount > 0 && p.reviewScore && (
+              {p.totalReviewCount && p.totalReviewCount > 0 && p.reviewScore ? (
                 <p className="font-mono text-xs text-kelp-edge mb-2.5">★ {p.reviewScore}/5 · {p.totalReviewCount}+ reviews</p>
-              )}
+              ) : p.totalReviewCount === 0 ? (
+                <p className="font-mono text-xs text-kelp-edge mb-2.5">New property 2026</p>
+              ) : null}
               {highlights.length > 0 && (
                 <ul className="flex flex-wrap gap-1.5 mb-3.5" style={{ listStyle: 'none' }}>
                   {highlights.map((h) => <li key={h} className="font-mono text-xs tracking-wide text-kelp-edge bg-sea-spray px-2.5 py-1">{h}</li>)}
@@ -79,7 +81,9 @@ export default function PropertyCardGrid({ properties, showHighlights = false, s
 
       {showBjrCard && (
         <a href="https://www.bothanjuraretreat.co.uk" target="_blank" rel="noopener noreferrer" className="block hover-card">
-          <div className="bg-harbour-stone relative overflow-hidden" style={{ aspectRatio: '4/3' }} />
+          <div className="bg-harbour-stone relative overflow-hidden" style={{ aspectRatio: '4/3' }}>
+            <Image src="https://cdn.sanity.io/images/t25lpmnm/production/646fadaef633ef1620002c0647475d5f529f0732-4000x3000.jpg?w=1200&h=800&fit=crop" alt="Aerial view of Bothan Jura Retreat at Knockrome, Isle of Jura" fill className="object-cover" />
+          </div>
           <div className="bg-sound-of-islay p-5 pb-6">
             <p className="font-mono text-2xs tracking-ultra uppercase text-emerald-accent mb-2">Stay on Jura</p>
             <h3 className="typo-card-title text-sea-spray/90 mb-2.5">Bothan Jura Retreat</h3>

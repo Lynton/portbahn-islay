@@ -167,9 +167,11 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                               {card.nearestDistillery && (
                                 <p className="font-mono text-xs text-harbour-stone/50">{card.nearestDistillery}</p>
                               )}
-                              {card.totalReviewCount && card.totalReviewCount > 0 && card.reviewScore && (
+                              {card.totalReviewCount && card.totalReviewCount > 0 && card.reviewScore ? (
                                 <p className="font-mono text-xs text-kelp-edge mt-1">★ {card.reviewScore}/5 · {card.totalReviewCount}+ reviews</p>
-                              )}
+                              ) : card.totalReviewCount === 0 ? (
+                                <p className="font-mono text-xs text-kelp-edge mt-1">New property 2026</p>
+                              ) : null}
                             </div>
                           )}
 
@@ -186,7 +188,9 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                 {config.showBjrCard && (
                   <a href="https://www.bothanjuraretreat.co.uk" target="_blank" rel="noopener noreferrer" className="block group hub-card-featured">
                     <div className="hover-card overflow-hidden flex flex-col h-full" style={{ backgroundColor: 'var(--color-sound-of-islay)' }}>
-                      <div className="relative h-[280px] overflow-hidden bg-harbour-stone shrink-0" />
+                      <div className="relative h-[280px] overflow-hidden bg-harbour-stone shrink-0">
+                        <Image src="https://cdn.sanity.io/images/t25lpmnm/production/646fadaef633ef1620002c0647475d5f529f0732-4000x3000.jpg?w=900&h=560&fit=crop" alt="Aerial view of Bothan Jura Retreat at Knockrome, Isle of Jura" fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
+                      </div>
                       <div className="p-5 pb-5 flex flex-col flex-grow">
                         <p className="font-mono text-2xs tracking-ultra uppercase text-emerald-accent mb-2">Stay on Jura</p>
                         <h2 className="font-serif font-bold text-sea-spray/90 leading-snug tracking-snug mb-2 text-[1.15rem]">Bothan Jura Retreat</h2>
