@@ -148,25 +148,13 @@ export default function EntityCard({ entity, variant = 'default' }: EntityCardPr
           )}
         </div>
 
-        {/* Contact links */}
+        {/* Contact info (plain text — card is already clickable) */}
         <div className="flex flex-wrap gap-x-4 gap-y-1">
           {contact?.phone && (
-            <span className="font-mono text-xs text-harbour-stone/60" onClick={(e) => e.stopPropagation()}>
-              <a href={`tel:${contact.phone}`} className="hover-link">{contact.phone}</a>
-            </span>
+            <span className="font-mono text-xs text-harbour-stone/60">{contact.phone}</span>
           )}
           {contact?.website && (
             <span className="font-mono text-xs text-kelp-edge">Website →</span>
-          )}
-          {contact?.bookingUrl && contact.bookingUrl !== contact.website && (
-            <span className="font-mono text-xs text-harbour-stone/60" onClick={(e) => e.stopPropagation()}>
-              <a href={contact.bookingUrl} target="_blank" rel="noopener noreferrer" className="hover-link">Book tour</a>
-            </span>
-          )}
-          {location?.googleMapsUrl && (
-            <span className="font-mono text-xs text-harbour-stone/60" onClick={(e) => e.stopPropagation()}>
-              <a href={location.googleMapsUrl} target="_blank" rel="noopener noreferrer" className="hover-link">Map</a>
-            </span>
           )}
         </div>
       </CompactWrapper>

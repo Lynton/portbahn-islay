@@ -54,7 +54,7 @@ export default function PropertyCardGrid({ properties, showHighlights = false, s
               {imageUrl && <Image src={imageUrl} alt={p.heroImage?.alt || p.name} fill className="object-cover" />}
             </div>
             <div className="bg-machair-sand p-5 pb-6">
-              <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center justify-between mb-2 min-h-[2.5rem]">
                 <p className="typo-kicker">{locationText}</p>
                 <span className="font-mono text-2xs tracking-wide text-washed-timber uppercase">Islay</span>
               </div>
@@ -85,8 +85,11 @@ export default function PropertyCardGrid({ properties, showHighlights = false, s
             <Image src="https://cdn.sanity.io/images/t25lpmnm/production/646fadaef633ef1620002c0647475d5f529f0732-4000x3000.jpg?w=1200&h=800&fit=crop" alt="Aerial view of Bothan Jura Retreat at Knockrome, Isle of Jura" fill className="object-cover" />
           </div>
           <div className="bg-sound-of-islay p-5 pb-6">
-            <p className="font-mono text-2xs tracking-ultra uppercase text-emerald-accent mb-2">Stay on Jura</p>
-            <h3 className="typo-card-title text-sea-spray/90 mb-2.5">Bothan Jura Retreat</h3>
+            <div className="flex items-center justify-between mb-2 min-h-[2.5rem]">
+              <p className="typo-kicker !text-emerald-accent">Stay on Jura</p>
+              <span className="font-mono text-2xs tracking-wide text-emerald-accent/50 uppercase">Jura</span>
+            </div>
+            <h3 className="typo-card-title !text-sea-spray/90 mb-2.5">Bothan Jura Retreat</h3>
             <p className="font-mono text-base text-sea-spray/60 mb-2.5">4 units · Sleeps 2 each · Dogs welcome</p>
             <ul className="flex flex-wrap gap-1.5 mb-3.5" style={{ listStyle: 'none' }}>
               <li className="font-mono text-xs tracking-wide text-emerald-accent bg-sound-of-islay border border-emerald-accent/30 px-2.5 py-1">Hot tubs</li>

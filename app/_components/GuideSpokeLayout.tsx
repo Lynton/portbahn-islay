@@ -204,7 +204,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
               // eslint-disable-next-line @next/next/no-img-element
               <img src={config.fallbackImages[slug]} alt={page.title} className="w-full h-full object-cover" />
             )}
-            <div className="absolute inset-0" style={{ background: 'linear-gradient(to bottom, rgba(15,58,74,0.05) 0%, rgba(15,58,74,0.45) 100%)' }} />
+            {/* gradient overlay removed — hero images have Lightroom vignette baked in */}
           </div>
         )}
 
