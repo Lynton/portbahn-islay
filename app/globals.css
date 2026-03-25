@@ -520,6 +520,11 @@ p {
   border-left: 3px solid var(--color-kelp-edge); padding-left: 24px;
 }
 
+/* ─── HUB CARD GRID (featured first card spans 2 cols on desktop) ──── */
+.hub-card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+@media (min-width: 720px) { .hub-card-featured { grid-column: span 2; } }
+@media (max-width: 719px) { .hub-card-featured { grid-column: span 1; } }
+
 /* ─── GUIDE 2-COL GRID (content + sticky sidebar) ─────────────────── */
 .guide-grid { display: grid; grid-template-columns: 1fr; padding: 0 48px; max-width: 1280px; }
 @media (min-width: 900px) { .guide-grid { grid-template-columns: minmax(0, 1fr) 260px; column-gap: 48px; } }

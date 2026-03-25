@@ -24,11 +24,14 @@ interface HubPageProps {
   config: {
     breadcrumbs: Array<{ label: string; href?: string }>;
     introText: string;
+    statsLine?: string;
     sectionHeading: string;
     cardLinkPrefix: string;
     cardLinkSuffix?: string;
+    cardKickers?: Record<string, string>;
     emptyStateMessage?: string;
     backLink: { href: string; label: string };
+    crossLink?: { href: string; label: string };
     fallbackImages?: Record<string, string>;
     spokeIndex?: Array<{ slug: string; title: string }>;
     schemaType: 'CollectionPage';
@@ -97,6 +100,9 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
             {config.introText.split('\n\n').filter(Boolean).map((para, i) => (
               <p key={i} className="typo-body opacity-75 max-w-[680px] mb-4">{para}</p>
             ))}
+            {config.statsLine && (
+              <p className="font-mono text-sm text-kelp-edge tracking-wide mt-6 opacity-80">{config.statsLine}</p>
+            )}
           </div>
         </section>
 
@@ -109,30 +115,33 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                 <h2 className="typo-h2" style={{ fontSize: 'clamp(1.5rem, 2.5vw, 2.25rem)' }}>{config.sectionHeading}</h2>
               </div>
 
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 mb-14">
-                {cards.map((card) => {
+              <div className="hub-card-grid mb-14">
+                {cards.map((card, index) => {
                   const cardTitle = card.title || card.name || 'Untitled';
                   const cardDescription = card.introduction || card.headline;
                   const cardSlug = typeof card.slug === 'string' ? card.slug : card.slug?.current;
+                  const kicker = config.cardKickers?.[cardSlug || ''];
+                  const isFeatured = index === 0;
                   return (
-                    <Link key={card._id} href={`${config.cardLinkPrefix}${cardSlug}`} className="block group">
-                      <div className="hover-card bg-machair-sand border border-washed-timber overflow-hidden flex flex-col h-full">
-                        {/* Fixed-height image */}
-                        <div className="relative h-[200px] overflow-hidden bg-harbour-stone shrink-0">
+                    <Link key={card._id} href={`${config.cardLinkPrefix}${cardSlug}`} className={`block group${isFeatured ? ' hub-card-featured' : ''}`}>
+                      <div className="hover-card bg-white border border-washed-timber overflow-hidden flex flex-col h-full">
+                        <div className={`relative overflow-hidden bg-harbour-stone shrink-0${isFeatured ? ' h-[280px]' : ' h-[200px]'}`}>
                           {(card.heroImage || config.fallbackImages?.[cardSlug || '']) ? (
                             card.heroImage ? (
-                              <Image src={urlFor(card.heroImage).width(600).height(400).url()} alt={card.heroImage.alt || cardTitle} fill className="object-cover transition-transform duration-400" />
+                              <Image src={urlFor(card.heroImage).width(isFeatured ? 900 : 600).height(isFeatured ? 560 : 400).url()} alt={card.heroImage.alt || cardTitle} fill className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                             ) : (
                               // eslint-disable-next-line @next/next/no-img-element
-                              <img src={config.fallbackImages![cardSlug || '']} alt={cardTitle} className="w-full h-full object-cover" />
+                              <img src={config.fallbackImages![cardSlug || '']} alt={cardTitle} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]" />
                             )
                           ) : null}
                         </div>
-                        {/* Card body — flex-grow to fill remaining space */}
                         <div className="p-5 pb-5 flex flex-col flex-grow">
-                          <h2 className="font-serif font-bold text-[1.25rem] text-harbour-stone leading-snug tracking-snug mb-2">{cardTitle}</h2>
+                          {kicker && (
+                            <p className="typo-kicker mb-2">{kicker}</p>
+                          )}
+                          <h2 className={`font-serif font-bold text-harbour-stone leading-snug tracking-snug mb-2${isFeatured ? ' text-[1.4rem]' : ' text-[1.15rem]'}`}>{cardTitle}</h2>
                           {cardDescription && (
-                            <p className="typo-body-sm opacity-65 mb-4 line-clamp-3 flex-grow">{cardDescription}</p>
+                            <p className="font-mono text-sm text-harbour-stone/60 mb-4 line-clamp-2 flex-grow" style={{ lineHeight: '1.5' }}>{cardDescription}</p>
                           )}
                           <span className="typo-cta mt-auto">
                             {config.cardLinkSuffix || 'Full guide →'}
@@ -152,10 +161,15 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
             </div>
           )}
 
-          <div className="pt-8 border-t border-washed-timber">
+          <div className="pt-8 border-t border-washed-timber flex flex-wrap gap-6">
             <Link href={config.backLink.href} className="hover-link font-mono text-md tracking-wide text-kelp-edge">
               ← {config.backLink.label}
             </Link>
+            {config.crossLink && (
+              <Link href={config.crossLink.href} className="hover-link font-mono text-md tracking-wide text-kelp-edge">
+                {config.crossLink.label} →
+              </Link>
+            )}
           </div>
         </div>
       </main>
