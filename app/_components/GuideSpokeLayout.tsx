@@ -386,7 +386,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
                     const matrixKey = SLUG_TO_MATRIX[slug];
                     const matrixCols = matrixKey ? MATRIX_COLUMNS[matrixKey] : undefined;
                     return (
-                      <div className="guide-block" id="infographic">
+                      <div className="guide-block" id="infographic" style={{ background: 'var(--color-drift-sand)', margin: '0 -48px', padding: '72px 48px 80px', borderRadius: '4px' }}>
                         {infographicStyle === 'spectrum' && (
                           <PeatSpectrum entities={entities} />
                         )}
@@ -405,7 +405,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
 
                   {/* Distillery clusters after planning block (index 3) — only for spectrum pages */}
                   {index === 3 && (page.layoutHints?.entityDisplayStyle === 'spectrum') && entities.length > 0 && (
-                    <div className="guide-block" id="clusters">
+                    <div className="guide-block" id="clusters" style={{ background: 'var(--color-drift-sand)', margin: '0 -48px', padding: '72px 48px 80px', borderRadius: '4px' }}>
                       <DistilleryClusters entities={entities} />
                     </div>
                   )}

@@ -533,11 +533,12 @@ p {
 .guide-block { padding: 72px 0 80px; border-top: 1px solid var(--color-washed-timber); }
 .guide-block:first-child { padding-top: 80px; border-top: none; }
 /* Alternating background on even blocks — breaks up text wall */
-.guide-block:nth-child(even):not(.guide-block-callout) { background: var(--color-drift-sand); margin: 0 -48px 0 -48px; padding-left: 48px; padding-right: 48px; border-radius: 4px; }
-@media (min-width: 900px) { .guide-block:nth-child(even):not(.guide-block-callout) { margin-right: 0; padding-right: 0; } }
+/* Alternating block bg removed — content blocks stay light.
+   Colour differentiation comes from: FAQs (teal), infographics (drift-sand),
+   callout-sand, callout-teal, key facts, and editorial list grids. */
 .guide-block-body { max-width: 640px; }
 
-.guide-key-facts { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--color-washed-timber); }
+.guide-key-facts { margin-top: 40px; padding: 32px; background: var(--color-drift-sand); border-radius: 4px; }
 .guide-key-facts dl { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 24px 32px; }
 
 /* ─── EDITORIAL LIST (2-col grid with ruled borders) ─────────────── */
@@ -546,8 +547,10 @@ p {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
-  padding: 0;
+  padding: 16px;
   margin: 0 0 20px;
+  background: var(--color-drift-sand);
+  border-radius: 4px;
 }
 .guide-editorial-list-item {
   padding: 16px 20px 16px 0;
@@ -589,7 +592,6 @@ p {
   .g-stay-cards { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .guide-grid { padding: 0 28px; }
   .guide-block { padding: 56px 0; }
-  .guide-block:nth-child(even):not(.guide-block-callout) { margin: 0 -28px; padding-left: 28px; padding-right: 28px; }
   .guide-mobile-nav { padding: 0 28px; }
 }
 @media (max-width: 560px) {
@@ -599,7 +601,6 @@ p {
   .guide-grid { padding: 0 20px; }
   .g-stay-cards { grid-template-columns: 1fr; }
   .guide-block { padding: 40px 0; }
-  .guide-block:nth-child(even):not(.guide-block-callout) { margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
   .guide-mobile-nav { padding: 0 20px; }
   .guide-editorial-list { grid-template-columns: 1fr; }
   .guide-editorial-list-item:nth-child(even) { padding: 16px 20px 16px 0; }
