@@ -191,12 +191,24 @@ export default function Header() {
 
             {mobileExpanded === item.label && (
               <div className="bg-machair-sand py-1 pb-3">
-                {item.dropdown.map((d) => (
-                  <Link key={d.href} href={d.href}
-                    className={`block py-2.5 px-8 font-mono text-md text-harbour-stone ${pathname === d.href ? 'opacity-100 font-semibold' : 'opacity-75'}`}>
-                    {d.label}
-                  </Link>
-                ))}
+                {item.dropdown.map((d) => {
+                  const isExternal = (d as any).external;
+                  if (isExternal) {
+                    return (
+                      <a key={d.href} href={d.href} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center justify-between py-2.5 px-8 font-mono text-md text-emerald-accent">
+                        <span>{d.label}</span>
+                        <span className="text-2xs opacity-50 uppercase">Jura ↗</span>
+                      </a>
+                    );
+                  }
+                  return (
+                    <Link key={d.href} href={d.href}
+                      className={`block py-2.5 px-8 font-mono text-md text-harbour-stone ${pathname === d.href ? 'opacity-100 font-semibold' : 'opacity-75'}`}>
+                      {d.label}
+                    </Link>
+                  );
+                })}
               </div>
             )}
           </div>

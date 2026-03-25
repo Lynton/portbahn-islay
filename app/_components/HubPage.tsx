@@ -32,6 +32,7 @@ interface HubPageProps {
     emptyStateMessage?: string;
     backLink: { href: string; label: string };
     crossLink?: { href: string; label: string };
+    showBjrCard?: boolean;
     fallbackImages?: Record<string, string>;
     spokeIndex?: Array<{ slug: string; title: string }>;
     schemaType: 'CollectionPage';
@@ -151,6 +152,25 @@ export default function HubPage({ page, cards, config }: HubPageProps) {
                     </Link>
                   );
                 })}
+
+                {/* BJR cross-promo card */}
+                {config.showBjrCard && (
+                  <a href="https://www.bothanjuraretreat.co.uk" target="_blank" rel="noopener noreferrer" className="block group">
+                    <div className="hover-card overflow-hidden flex flex-col h-full" style={{ backgroundColor: 'var(--color-sound-of-islay)' }}>
+                      <div className="relative h-[200px] overflow-hidden bg-harbour-stone shrink-0" />
+                      <div className="p-5 pb-5 flex flex-col flex-grow">
+                        <p className="font-mono text-2xs tracking-ultra uppercase text-emerald-accent mb-2">Stay on Jura</p>
+                        <h2 className="font-serif font-bold text-sea-spray/90 leading-snug tracking-snug mb-2 text-[1.15rem]">Bothan Jura Retreat</h2>
+                        <p className="font-mono text-sm text-sea-spray/50 mb-4 flex-grow" style={{ lineHeight: '1.5' }}>
+                          4 units with hot tubs and saunas at the foot of the Paps of Jura. Sleeps 2 per unit. Dogs welcome.
+                        </p>
+                        <span className="font-mono text-sm tracking-wider uppercase text-emerald-accent mt-auto">
+                          bothanjuraretreat.co.uk →
+                        </span>
+                      </div>
+                    </div>
+                  </a>
+                )}
               </div>
             </>
           )}

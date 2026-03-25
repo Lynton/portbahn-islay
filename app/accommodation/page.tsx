@@ -79,6 +79,7 @@ export default async function AccommodationPage() {
     sectionHeading: 'Self-Catering Family Holiday Homes in Bruichladdich',
     cardLinkPrefix: '/accommodation/',
     cardLinkSuffix: 'View property →',
+    showBjrCard: true,
     cardKickers: {
       'portbahn-house': 'Sleeps 8',
       'shorefield-eco-house': 'Eco House',

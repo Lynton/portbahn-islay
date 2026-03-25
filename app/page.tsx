@@ -87,7 +87,7 @@ export default async function Home() {
             </div>
 
             <div className="mb-16">
-              <PropertyCardGrid properties={properties} />
+              <PropertyCardGrid properties={properties} showBjrCard />
             </div>
 
             <div className="px-12">
