@@ -21,6 +21,8 @@ export interface PropertyData {
   livingAreas?: string[];
   outdoorFeatures?: string[];
   totalReviewCount?: number;
+  reviewScore?: number;
+  nearestDistillery?: string;
   reviewHighlights?: Array<{ quote: string; source: string; rating?: number }>;
 }
 
@@ -30,6 +32,9 @@ export const getProperties = cache(async (): Promise<PropertyData[]> => {
     _id, name, slug, location, heroImage, headline,
     sleeps, bedrooms, bathrooms, petFriendly,
     kitchenDining, livingAreas, outdoorFeatures,
-    totalReviewCount, reviewHighlights[]{ quote, source, rating }
+    totalReviewCount,
+    "reviewScore": reviewScores.airbnbScore,
+    "nearestDistillery": nearbyAttractions[0],
+    reviewHighlights[]{ quote, source, rating }
   }`);
 });

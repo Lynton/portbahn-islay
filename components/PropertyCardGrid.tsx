@@ -46,7 +46,7 @@ export default function PropertyCardGrid({ properties, showHighlights = false, s
         const locationText = typeof p.location === 'string' ? p.location : (p.location?.address || p.location?.nearestTown || 'Bruichladdich, Islay');
         const propSlug = typeof p.slug === 'string' ? p.slug : p.slug?.current;
         const bullets = buildBullets(p);
-        const highlights = showHighlights ? buildHighlights(p) : [];
+        const highlights = buildHighlights(p);
 
         return (
           <Link key={p._id} href={`/accommodation/${propSlug}`} className="block hover-card">
@@ -59,7 +59,13 @@ export default function PropertyCardGrid({ properties, showHighlights = false, s
                 <span className="font-mono text-2xs tracking-wide text-washed-timber uppercase">Islay</span>
               </div>
               <h3 className="typo-card-title mb-2.5">{p.name}</h3>
-              <p className="font-mono text-base text-harbour-stone opacity-60 mb-2.5">{bullets.join(' · ')}</p>
+              <p className="font-mono text-base text-harbour-stone opacity-60 mb-2">{bullets.join(' · ')}</p>
+              {p.nearestDistillery && (
+                <p className="font-mono text-xs text-harbour-stone/50 mb-2">{p.nearestDistillery}</p>
+              )}
+              {p.totalReviewCount && p.totalReviewCount > 0 && p.reviewScore && (
+                <p className="font-mono text-xs text-kelp-edge mb-2.5">★ {p.reviewScore}/5 · {p.totalReviewCount}+ reviews</p>
+              )}
               {highlights.length > 0 && (
                 <ul className="flex flex-wrap gap-1.5 mb-3.5" style={{ listStyle: 'none' }}>
                   {highlights.map((h) => <li key={h} className="font-mono text-xs tracking-wide text-kelp-edge bg-sea-spray px-2.5 py-1">{h}</li>)}
