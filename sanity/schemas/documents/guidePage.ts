@@ -47,6 +47,20 @@ export default defineType({
       description: 'URL path for this page (e.g., "islay-distilleries" → /islay-distilleries)',
     }),
     defineField({
+      name: 'site',
+      title: 'Site',
+      type: 'string',
+      group: 'content',
+      options: {
+        list: [
+          { title: 'PBI (Portbahn Islay)', value: 'pbi' },
+          { title: 'BJR (Bothan Jura Retreat)', value: 'bjr' },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+      initialValue: 'pbi',
+    }),
+    defineField({
       name: 'heroImage',
       title: 'Hero Image',
       type: 'image',

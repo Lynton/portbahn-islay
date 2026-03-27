@@ -54,6 +54,21 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'sites',
+      title: 'Sites',
+      type: 'array',
+      group: 'identity',
+      of: [{ type: 'string' }],
+      options: {
+        list: [
+          { title: 'PBI (Portbahn Islay)', value: 'pbi' },
+          { title: 'BJR (Bothan Jura Retreat)', value: 'bjr' },
+        ],
+      },
+      description: 'Which sites use this block. Blocks can appear on multiple sites.',
+      initialValue: ['pbi'],
+    }),
+    defineField({
       name: 'canonicalHome',
       title: 'Canonical Home (Page Slug)',
       type: 'string',

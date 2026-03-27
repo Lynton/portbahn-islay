@@ -45,6 +45,20 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'site',
+      title: 'Site',
+      type: 'string',
+      group: 'content',
+      options: {
+        list: [
+          { title: 'PBI (Portbahn Islay)', value: 'pbi' },
+          { title: 'BJR (Bothan Jura Retreat)', value: 'bjr' },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+      initialValue: 'pbi',
+    }),
+    defineField({
       name: 'propertyType',
       title: 'Property Type',
       type: 'string',
@@ -54,6 +68,8 @@ export default defineType({
           { title: 'House', value: 'house' },
           { title: 'Cottage', value: 'cottage' },
           { title: 'Apartment', value: 'apartment' },
+          { title: 'Cabin', value: 'cabin' },
+          { title: 'Hut', value: 'hut' },
         ],
       },
     }),

@@ -29,6 +29,19 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'site',
+      title: 'Site',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'PBI (Portbahn Islay)', value: 'pbi' },
+          { title: 'BJR (Bothan Jura Retreat)', value: 'bjr' },
+        ],
+      },
+      validation: (Rule) => Rule.required(),
+      initialValue: 'pbi',
+    }),
+    defineField({
       name: 'category',
       title: 'Category',
       type: 'string',

@@ -10,6 +10,20 @@ export const baseSingletonFields = [
     validation: (Rule) => Rule.required(),
   }),
   defineField({
+    name: 'site',
+    title: 'Site',
+    type: 'string',
+    group: 'content',
+    options: {
+      list: [
+        { title: 'PBI (Portbahn Islay)', value: 'pbi' },
+        { title: 'BJR (Bothan Jura Retreat)', value: 'bjr' },
+      ],
+    },
+    validation: (Rule) => Rule.required(),
+    initialValue: 'pbi',
+  }),
+  defineField({
     name: 'scopeIntro',
     title: 'Scope Intro (page definition)',
     type: 'text',
