@@ -45,11 +45,32 @@ Portbahn Islay is a holiday rental website for three properties in Bruichladdich
 
 ---
 
-## Current State (2026-03-20)
+## Current State (2026-03-28)
 
 **Active build: PBI (Portbahn Islay)**
 
 All pages built. Canonical block system live. Guide pages redesigned with Phaidon/Taschen editorial layouts. CSS fully migrated to Tailwind v4 with design system tokens and typography presets. UI is designed and built iteratively in CC — v0 is not used.
+
+### Recent work (2026-03-28) — branch `claude/fix-mobile-calendar-y2HTZ`
+
+**Mobile calendar redesign:**
+- `MultiPropertyCalendar.tsx` — on mobile (<768px), replaced unusable horizontal property×days grid with traditional vertical month calendars per property (7-col week layout, Mon–Sun). Desktop/tablet unchanged.
+- All modals (`MultiPropertyCalendar`, `PropertyCalendar`, `BookingCalendar`, `MobileAvailBar`) — added ESC-to-close, scroll lock (`body.overflow = hidden`), responsive padding for narrow phones, `role="dialog"` + `aria-modal` + `aria-label`, 44px min touch targets on close buttons.
+- `MultiPropertyCalendar.fetchAvailability` — changed from sequential `for` loop to `Promise.allSettled()` (~3x faster).
+- `BookingCalendar.tsx` — replaced hardcoded date range (2026-01-01 to 2026-06-30) with dynamic 6-month window from today.
+- Desktop grid auto-scrolls to today's column on load.
+
+**Schema.org markup fixes:**
+- Removed `TouristAttraction` from guide spoke pages — guide pages are Articles, not attractions themselves.
+- Removed dead `generateTouristAttraction()` and `generateHowTo()` functions.
+- Removed broken `/logo.png` reference (file doesn't exist).
+- Added `telephone`, `email`, `contactPoint` to Organization/LocalBusiness schemas (from Sanity contactPage).
+- Added `checkinTime`/`checkoutTime` to Accommodation schema (from Sanity property fields).
+- Full postal address added: Bruichladdich, Isle of Islay, PA49 7UN.
+- Centralised `BUSINESS_NAME` constant.
+- Standardised all base URL fallbacks from `portbahn-islay.vercel.app` to `portbahnislay.co.uk` across sitemap.ts, llms.txt, llms-full.txt, api/md route, public/robots.txt.
+
+**Go-live note:** `app/layout.tsx` and `app/robots.ts` gate indexing behind `NEXT_PUBLIC_SITE_URL=https://portbahnislay.co.uk`. Set that env var in Vercel Production to activate schema URLs, sitemap, and robots for the live domain.
 
 **Start here:**
 1. Read `~/dev/ecosystem/PROJECT-STATUS.md` — cross-environment status
