@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { format, addMonths, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isBefore, startOfDay, isToday } from 'date-fns';
+import { format, addMonths, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isBefore, startOfDay, isToday, getDay } from 'date-fns';
 
 interface Property {
   slug: string;
@@ -45,6 +45,16 @@ export default function MultiPropertyCalendar() {
     { slug: 'shorefield-eco-house', name: 'Shorefield Eco House', lodgifyPropertyId: 360241 },
     { slug: 'curlew-cottage', name: 'Curlew Cottage', lodgifyPropertyId: 629317 },
   ]);
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
 
   // Fetch property details including maxGuests
   useEffect(() => {
@@ -370,6 +380,94 @@ export default function MultiPropertyCalendar() {
     window.location.href = checkoutUrl;
   };
 
+  const renderMobileMonth = (monthDate: Date) => {
+    const monthStart = startOfMonth(monthDate);
+    const monthEnd = endOfMonth(monthDate);
+    const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
+    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+    // Build week rows (Mon=0 ... Sun=6)
+    const weeks: (Date | null)[][] = [];
+    let currentWeek: (Date | null)[] = [];
+    // Pad start: getDay returns 0=Sun,1=Mon..6=Sat → convert to Mon-based
+    const firstDayIndex = (getDay(monthStart) + 6) % 7; // 0=Mon
+    for (let i = 0; i < firstDayIndex; i++) currentWeek.push(null);
+    for (const day of days) {
+      currentWeek.push(day);
+      if (currentWeek.length === 7) {
+        weeks.push(currentWeek);
+        currentWeek = [];
+      }
+    }
+    if (currentWeek.length > 0) {
+      while (currentWeek.length < 7) currentWeek.push(null);
+      weeks.push(currentWeek);
+    }
+
+    return (
+      <div key={format(monthDate, 'yyyy-MM')} className="mb-10">
+        <h2 className="text-xl font-serif mb-4">{format(monthDate, 'MMMM yyyy')}</h2>
+
+        {properties.map((property) => (
+          <div key={property.slug} className="mb-6">
+            <Link
+              href={`/accommodation/${property.slug}`}
+              className="block font-mono text-sm font-semibold mb-2 hover:text-[#4F9EA9] transition-colors"
+            >
+              {property.name}
+            </Link>
+
+            {/* Day name headers */}
+            <div className="grid grid-cols-7 gap-px bg-[#E8E7D5]">
+              {dayNames.map((d) => (
+                <div key={d} className="bg-[#FFFCF7] text-center font-mono text-[10px] text-[#C8C6BF] py-1">
+                  {d}
+                </div>
+              ))}
+
+              {/* Calendar cells */}
+              {weeks.flat().map((day, idx) => {
+                if (!day) {
+                  return <div key={`empty-${idx}`} className="bg-[#FFFCF7] aspect-square" />;
+                }
+
+                const dateStr = format(day, 'yyyy-MM-dd');
+                const status = availability[property.slug]?.[dateStr] || 'available';
+                const isAvailable = status === 'available';
+                const isSelected =
+                  selectedDate.checkIn &&
+                  selectedDate.property?.slug === property.slug &&
+                  isSameDay(day, selectedDate.checkIn);
+                const isCurrentDate = isToday(day);
+
+                return (
+                  <button
+                    key={day.toISOString()}
+                    onClick={() => handleDateClick(day, property, isAvailable)}
+                    disabled={!isAvailable}
+                    className={`
+                      aspect-square flex items-center justify-center relative font-mono text-xs
+                      ${isAvailable ? 'bg-white hover:bg-[#F3F1E7] cursor-pointer' : 'bg-[#f7d9d9] cursor-not-allowed'}
+                      ${isSelected ? 'ring-2 ring-[#4F9EA9] ring-inset' : ''}
+                    `}
+                    style={isCurrentDate ? { boxShadow: 'inset 0 0 0 2px #008060' } : {}}
+                  >
+                    {isCurrentDate && (
+                      <span className="absolute top-0.5 left-0.5 w-1.5 h-1.5 bg-[#008060] rounded-full" />
+                    )}
+                    <span className={isAvailable ? '' : 'text-[#C45508]'}>
+                      {isAvailable ? format(day, 'd') : '—'}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   const renderMonth = (monthDate: Date) => {
     const monthStart = startOfMonth(monthDate);
     const monthEnd = endOfMonth(monthDate);
@@ -450,8 +548,8 @@ export default function MultiPropertyCalendar() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Controls */}
-      <div className="flex items-center justify-between mb-8 gap-4">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center justify-between mb-8 gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <select
             value={format(currentMonth, 'yyyy-MM')}
             onChange={(e) => setCurrentMonth(new Date(e.target.value + '-01'))}
@@ -467,7 +565,7 @@ export default function MultiPropertyCalendar() {
             })}
           </select>
 
-          <div className="flex gap-2">
+          <div className="hidden md:flex gap-2">
             <button
               onClick={() => setMonthsToShow(1)}
               className={`px-4 py-2 font-mono text-sm border border-[#C8C6BF] rounded ${
@@ -488,9 +586,20 @@ export default function MultiPropertyCalendar() {
         </div>
       </div>
 
+      {/* Legend (mobile) */}
+      {isMobile && (
+        <div className="flex items-center gap-4 mb-4 font-mono text-xs text-[#C8C6BF]">
+          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-white border border-[#E8E7D5]" /> Available</span>
+          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-[#f7d9d9]" /> Booked</span>
+          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 border-2 border-[#008060]" /> Today</span>
+        </div>
+      )}
+
       {/* Calendar grid */}
       {loading ? (
         <div className="text-center py-12 font-mono text-[#C8C6BF]">Loading availability...</div>
+      ) : isMobile ? (
+        months.map((month) => renderMobileMonth(month))
       ) : (
         months.map((month) => renderMonth(month))
       )}
