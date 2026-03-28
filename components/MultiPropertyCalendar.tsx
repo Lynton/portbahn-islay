@@ -92,40 +92,32 @@ export default function MultiPropertyCalendar() {
 
   const fetchAvailability = useCallback(async () => {
     setLoading(true);
-    const availData: AvailabilityData = {};
+    const start = format(currentMonth, 'yyyy-MM-dd');
+    const end = format(addMonths(currentMonth, monthsToShow), 'yyyy-MM-dd');
 
-    for (const property of properties) {
-      const start = format(currentMonth, 'yyyy-MM-dd');
-      const end = format(addMonths(currentMonth, monthsToShow), 'yyyy-MM-dd');
-
-      try {
+    const results = await Promise.allSettled(
+      properties.map(async (property) => {
         const res = await fetch(
           `/api/avail_ics?property=${property.slug}&start=${start}&end=${end}`
         );
-
         if (!res.ok) {
           const errorText = await res.text();
-          console.error(`API error for ${property.name}:`, {
-            status: res.status,
-            errorText,
-          });
-          continue;
+          console.error(`API error for ${property.name}:`, { status: res.status, errorText });
+          return { slug: property.slug, dates: null };
         }
-
         const data = await res.json();
+        return { slug: property.slug, dates: data.dates };
+      })
+    );
 
-        // Transform dates array into availability object
-        if (data.dates && Array.isArray(data.dates)) {
-          const propertyAvailability: { [date: string]: 'available' | 'booked' } = {};
-          data.dates.forEach((item: { date: string; available: boolean }) => {
-            propertyAvailability[item.date] = item.available ? 'available' : 'booked';
-          });
-          availData[property.slug] = propertyAvailability;
-        } else {
-          console.warn(`No dates array found in response for ${property.name}`, data);
-        }
-      } catch (error) {
-        console.error(`Error fetching availability for ${property.name}:`, error);
+    const availData: AvailabilityData = {};
+    for (const result of results) {
+      if (result.status === 'fulfilled' && result.value.dates && Array.isArray(result.value.dates)) {
+        const propertyAvailability: { [date: string]: 'available' | 'booked' } = {};
+        result.value.dates.forEach((item: { date: string; available: boolean }) => {
+          propertyAvailability[item.date] = item.available ? 'available' : 'booked';
+        });
+        availData[result.value.slug] = propertyAvailability;
       }
     }
 
@@ -137,6 +129,20 @@ export default function MultiPropertyCalendar() {
   useEffect(() => {
     fetchAvailability();
   }, [fetchAvailability]);
+
+  // ESC to close + scroll lock
+  useEffect(() => {
+    if (!showModal) return;
+    document.body.style.overflow = 'hidden';
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowModal(false);
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showModal]);
 
   const handleDateClick = async (date: Date, property: Property, isAvailable: boolean) => {
     if (!isAvailable) return;
@@ -606,8 +612,17 @@ export default function MultiPropertyCalendar() {
 
       {/* Booking modal */}
       {showModal && selectedDate.property && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-3 sm:p-4"
+          onClick={() => setShowModal(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Book ${selectedDate.property.name}`}
+        >
+          <div
+            className="bg-white rounded-lg w-full max-w-md p-4 sm:p-6 max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex justify-between items-start mb-4">
               <div>
                 <h3 className="text-xl font-serif">{selectedDate.property.name}</h3>
@@ -617,7 +632,8 @@ export default function MultiPropertyCalendar() {
               </div>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-2xl leading-none text-[#C8C6BF] hover:text-[#312F32]"
+                className="text-2xl leading-none text-[#C8C6BF] hover:text-[#312F32] min-w-[44px] min-h-[44px] flex items-center justify-center"
+                aria-label="Close booking modal"
               >
                 ×
               </button>

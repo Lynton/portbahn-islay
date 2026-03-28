@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PropertyCalendar from './PropertyCalendar';
 
 interface MobileAvailBarProps {
@@ -23,6 +23,19 @@ export default function MobileAvailBar({
   minimumStay,
 }: MobileAvailBarProps) {
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    document.body.style.overflow = 'hidden';
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [open]);
 
   return (
     <>
@@ -100,6 +113,9 @@ export default function MobileAvailBar({
       {/* Slide-up panel */}
       <div
         className="fixed left-0 right-0 z-[201] md:hidden"
+        role="dialog"
+        aria-modal={open ? 'true' : undefined}
+        aria-label="Check availability"
         style={{
           bottom: 0,
           background: 'var(--color-sea-spray)',
@@ -128,6 +144,7 @@ export default function MobileAvailBar({
           </p>
           <button
             onClick={() => setOpen(false)}
+            aria-label="Close availability panel"
             style={{
               fontFamily: '"IBM Plex Mono", monospace',
               fontSize: '18px',
@@ -136,7 +153,11 @@ export default function MobileAvailBar({
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              padding: '4px 8px',
+              minWidth: '44px',
+              minHeight: '44px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
               lineHeight: 1,
               transition: 'opacity 0.15s',
             }}
