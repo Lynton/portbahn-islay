@@ -286,21 +286,37 @@ function BookingModal({
   onConfirm: () => void;
   onClose: () => void;
 }) {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
+
   return (
     <div
       style={{
         position: 'fixed', inset: 0,
         background: 'rgba(43,44,46,0.55)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        zIndex: 500, padding: '16px',
+        zIndex: 500, padding: '12px',
       }}
       onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Book ${propertyName}`}
     >
       <div
         style={{
           background: 'var(--color-sea-spray)',
-          maxWidth: '400px', width: '100%', padding: '32px',
+          maxWidth: '400px', width: '100%', padding: '24px',
           boxShadow: '0 8px 40px rgba(0,0,0,0.18)',
+          maxHeight: '90vh', overflowY: 'auto',
         }}
         onClick={e => e.stopPropagation()}
       >
@@ -321,9 +337,12 @@ function BookingModal({
           </div>
           <button
             onClick={onClose}
+            aria-label="Close booking modal"
             style={{
               background: 'none', border: 'none', cursor: 'pointer',
-              fontSize: '22px', color: 'var(--color-washed-timber)', lineHeight: 1, padding: '0 4px',
+              fontSize: '22px', color: 'var(--color-washed-timber)', lineHeight: 1,
+              minWidth: '44px', minHeight: '44px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
             ×

@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
-import { format, addMonths, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isBefore, startOfDay, isToday } from 'date-fns';
+import { format, addMonths, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isBefore, startOfDay, isToday, getDay } from 'date-fns';
 
 interface Property {
   slug: string;
@@ -46,6 +46,16 @@ export default function MultiPropertyCalendar() {
     { slug: 'curlew-cottage', name: 'Curlew Cottage', lodgifyPropertyId: 629317 },
   ]);
 
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
+
   // Fetch property details including maxGuests
   useEffect(() => {
     async function fetchProperties() {
@@ -82,40 +92,32 @@ export default function MultiPropertyCalendar() {
 
   const fetchAvailability = useCallback(async () => {
     setLoading(true);
-    const availData: AvailabilityData = {};
+    const start = format(currentMonth, 'yyyy-MM-dd');
+    const end = format(addMonths(currentMonth, monthsToShow), 'yyyy-MM-dd');
 
-    for (const property of properties) {
-      const start = format(currentMonth, 'yyyy-MM-dd');
-      const end = format(addMonths(currentMonth, monthsToShow), 'yyyy-MM-dd');
-
-      try {
+    const results = await Promise.allSettled(
+      properties.map(async (property) => {
         const res = await fetch(
           `/api/avail_ics?property=${property.slug}&start=${start}&end=${end}`
         );
-
         if (!res.ok) {
           const errorText = await res.text();
-          console.error(`API error for ${property.name}:`, {
-            status: res.status,
-            errorText,
-          });
-          continue;
+          console.error(`API error for ${property.name}:`, { status: res.status, errorText });
+          return { slug: property.slug, dates: null };
         }
-
         const data = await res.json();
+        return { slug: property.slug, dates: data.dates };
+      })
+    );
 
-        // Transform dates array into availability object
-        if (data.dates && Array.isArray(data.dates)) {
-          const propertyAvailability: { [date: string]: 'available' | 'booked' } = {};
-          data.dates.forEach((item: { date: string; available: boolean }) => {
-            propertyAvailability[item.date] = item.available ? 'available' : 'booked';
-          });
-          availData[property.slug] = propertyAvailability;
-        } else {
-          console.warn(`No dates array found in response for ${property.name}`, data);
-        }
-      } catch (error) {
-        console.error(`Error fetching availability for ${property.name}:`, error);
+    const availData: AvailabilityData = {};
+    for (const result of results) {
+      if (result.status === 'fulfilled' && result.value.dates && Array.isArray(result.value.dates)) {
+        const propertyAvailability: { [date: string]: 'available' | 'booked' } = {};
+        result.value.dates.forEach((item: { date: string; available: boolean }) => {
+          propertyAvailability[item.date] = item.available ? 'available' : 'booked';
+        });
+        availData[result.value.slug] = propertyAvailability;
       }
     }
 
@@ -127,6 +129,20 @@ export default function MultiPropertyCalendar() {
   useEffect(() => {
     fetchAvailability();
   }, [fetchAvailability]);
+
+  // ESC to close + scroll lock
+  useEffect(() => {
+    if (!showModal) return;
+    document.body.style.overflow = 'hidden';
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setShowModal(false);
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showModal]);
 
   const handleDateClick = async (date: Date, property: Property, isAvailable: boolean) => {
     if (!isAvailable) return;
@@ -370,6 +386,110 @@ export default function MultiPropertyCalendar() {
     window.location.href = checkoutUrl;
   };
 
+  const renderMobileMonth = (monthDate: Date) => {
+    const monthStart = startOfMonth(monthDate);
+    const monthEnd = endOfMonth(monthDate);
+    const days = eachDayOfInterval({ start: monthStart, end: monthEnd });
+    const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+    // Build week rows (Mon=0 ... Sun=6)
+    const weeks: (Date | null)[][] = [];
+    let currentWeek: (Date | null)[] = [];
+    // Pad start: getDay returns 0=Sun,1=Mon..6=Sat → convert to Mon-based
+    const firstDayIndex = (getDay(monthStart) + 6) % 7; // 0=Mon
+    for (let i = 0; i < firstDayIndex; i++) currentWeek.push(null);
+    for (const day of days) {
+      currentWeek.push(day);
+      if (currentWeek.length === 7) {
+        weeks.push(currentWeek);
+        currentWeek = [];
+      }
+    }
+    if (currentWeek.length > 0) {
+      while (currentWeek.length < 7) currentWeek.push(null);
+      weeks.push(currentWeek);
+    }
+
+    return (
+      <div key={format(monthDate, 'yyyy-MM')} className="mb-10">
+        <h2 className="text-xl font-serif mb-4">{format(monthDate, 'MMMM yyyy')}</h2>
+
+        {properties.map((property) => (
+          <div key={property.slug} className="mb-6">
+            <Link
+              href={`/accommodation/${property.slug}`}
+              className="block font-mono text-sm font-semibold mb-2 hover:text-[#4F9EA9] transition-colors"
+            >
+              {property.name}
+            </Link>
+
+            {/* Day name headers */}
+            <div className="grid grid-cols-7 gap-px bg-[#E8E7D5]">
+              {dayNames.map((d) => (
+                <div key={d} className="bg-[#FFFCF7] text-center font-mono text-[10px] text-[#C8C6BF] py-1">
+                  {d}
+                </div>
+              ))}
+
+              {/* Calendar cells */}
+              {weeks.flat().map((day, idx) => {
+                if (!day) {
+                  return <div key={`empty-${idx}`} className="bg-[#FFFCF7] aspect-square" />;
+                }
+
+                const dateStr = format(day, 'yyyy-MM-dd');
+                const status = availability[property.slug]?.[dateStr] || 'available';
+                const isAvailable = status === 'available';
+                const isSelected =
+                  selectedDate.checkIn &&
+                  selectedDate.property?.slug === property.slug &&
+                  isSameDay(day, selectedDate.checkIn);
+                const isCurrentDate = isToday(day);
+
+                return (
+                  <button
+                    key={day.toISOString()}
+                    onClick={() => handleDateClick(day, property, isAvailable)}
+                    disabled={!isAvailable}
+                    className={`
+                      aspect-square flex items-center justify-center relative font-mono text-xs
+                      ${isAvailable ? 'bg-white hover:bg-[#F3F1E7] cursor-pointer' : 'bg-[#f7d9d9] cursor-not-allowed'}
+                      ${isSelected ? 'ring-2 ring-[#4F9EA9] ring-inset' : ''}
+                    `}
+                    style={isCurrentDate ? { boxShadow: 'inset 0 0 0 2px #008060' } : {}}
+                  >
+                    {isCurrentDate && (
+                      <span className="absolute top-0.5 left-0.5 w-1.5 h-1.5 bg-[#008060] rounded-full" />
+                    )}
+                    <span className={isAvailable ? (isCurrentDate ? 'text-[#008060] font-bold' : '') : 'text-[#C45508]'}>
+                      {isAvailable ? format(day, 'd') : '—'}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const todayRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll desktop grid to today's column after loading
+  useEffect(() => {
+    if (!loading && todayRef.current) {
+      const scrollContainer = todayRef.current.closest('.overflow-x-auto');
+      if (scrollContainer) {
+        const containerRect = scrollContainer.getBoundingClientRect();
+        const todayRect = todayRef.current.getBoundingClientRect();
+        // Scroll so today is roughly 1/3 from left edge
+        const scrollLeft = todayRect.left - containerRect.left + scrollContainer.scrollLeft - containerRect.width / 3;
+        scrollContainer.scrollTo({ left: Math.max(0, scrollLeft), behavior: 'smooth' });
+      }
+    }
+  }, [loading]);
+
   const renderMonth = (monthDate: Date) => {
     const monthStart = startOfMonth(monthDate);
     const monthEnd = endOfMonth(monthDate);
@@ -384,14 +504,20 @@ export default function MultiPropertyCalendar() {
             {/* Header row with day numbers */}
             <div className="flex border-b border-[#C8C6BF]">
               <div className="w-48 min-w-[192px] flex-shrink-0 p-4 font-mono text-sm font-semibold">Property</div>
-              {days.map((day) => (
-                <div
-                  key={day.toISOString()}
-                  className="w-12 min-w-[48px] flex-shrink-0 h-12 p-2 text-center font-mono text-xs flex items-center justify-center"
-                >
-                  {format(day, 'dd')}
-                </div>
-              ))}
+              {days.map((day) => {
+                const isCurrentDate = isToday(day);
+                return (
+                  <div
+                    key={day.toISOString()}
+                    ref={isCurrentDate ? todayRef : undefined}
+                    className={`w-12 min-w-[48px] flex-shrink-0 h-12 p-2 text-center font-mono text-xs flex items-center justify-center ${
+                      isCurrentDate ? 'font-bold text-[#008060]' : ''
+                    }`}
+                  >
+                    {format(day, 'dd')}
+                  </div>
+                );
+              })}
             </div>
 
             {/* Property rows */}
@@ -450,8 +576,8 @@ export default function MultiPropertyCalendar() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       {/* Controls */}
-      <div className="flex items-center justify-between mb-8 gap-4">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center justify-between mb-8 gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <select
             value={format(currentMonth, 'yyyy-MM')}
             onChange={(e) => setCurrentMonth(new Date(e.target.value + '-01'))}
@@ -467,7 +593,7 @@ export default function MultiPropertyCalendar() {
             })}
           </select>
 
-          <div className="flex gap-2">
+          <div className="hidden md:flex gap-2">
             <button
               onClick={() => setMonthsToShow(1)}
               className={`px-4 py-2 font-mono text-sm border border-[#C8C6BF] rounded ${
@@ -488,17 +614,37 @@ export default function MultiPropertyCalendar() {
         </div>
       </div>
 
+      {/* Legend (mobile) */}
+      {isMobile && (
+        <div className="flex items-center gap-4 mb-4 font-mono text-xs text-[#C8C6BF]">
+          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-white border border-[#E8E7D5]" /> Available</span>
+          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 bg-[#f7d9d9]" /> Booked</span>
+          <span className="flex items-center gap-1"><span className="inline-block w-3 h-3 border-2 border-[#008060]" /> Today</span>
+        </div>
+      )}
+
       {/* Calendar grid */}
       {loading ? (
         <div className="text-center py-12 font-mono text-[#C8C6BF]">Loading availability...</div>
+      ) : isMobile ? (
+        months.map((month) => renderMobileMonth(month))
       ) : (
         months.map((month) => renderMonth(month))
       )}
 
       {/* Booking modal */}
       {showModal && selectedDate.property && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-3 sm:p-4"
+          onClick={() => setShowModal(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-label={`Book ${selectedDate.property.name}`}
+        >
+          <div
+            className="bg-white rounded-lg w-full max-w-md p-4 sm:p-6 max-h-[90vh] overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex justify-between items-start mb-4">
               <div>
                 <h3 className="text-xl font-serif">{selectedDate.property.name}</h3>
@@ -508,7 +654,8 @@ export default function MultiPropertyCalendar() {
               </div>
               <button
                 onClick={() => setShowModal(false)}
-                className="text-2xl leading-none text-[#C8C6BF] hover:text-[#312F32]"
+                className="text-2xl leading-none text-[#C8C6BF] hover:text-[#312F32] min-w-[44px] min-h-[44px] flex items-center justify-center"
+                aria-label="Close booking modal"
               >
                 ×
               </button>

@@ -28,12 +28,12 @@ export default function AvailabilityPage() {
       <main className="min-h-screen bg-[#FFFCF7]">
         <Breadcrumbs items={breadcrumbs} />
 
-        <div className="bg-white border-b border-washed-timber">
-          <div className="max-w-7xl mx-auto px-4 py-12">
-            <h1 className="text-4xl md:text-5xl font-serif text-harbour-stone mb-4">
+        <div className="bg-white border-b border-washed-timber overflow-hidden">
+          <div className="max-w-7xl mx-auto px-4 py-8 md:py-12">
+            <h1 className="text-3xl md:text-5xl font-serif text-harbour-stone mb-4">
               Availability
             </h1>
-            <p className="font-mono text-harbour-stone/60 max-w-2xl">
+            <p className="font-mono text-sm md:text-base text-harbour-stone/60 max-w-2xl">
               View availability across all three properties. Select a date to check pricing and book your stay in Bruichladdich, Isle of Islay.
             </p>
           </div>

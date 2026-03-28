@@ -1,10 +1,10 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import { enGB } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
-import { format, differenceInDays } from 'date-fns';
+import { format, differenceInDays, addMonths } from 'date-fns';
 
 registerLocale('enGB', enGB);
 
@@ -62,8 +62,8 @@ export default function BookingCalendar({
   useEffect(() => {
     const fetchAvailability = async () => {
       try {
-        const start = '2026-01-01';
-        const end = '2026-06-30';
+        const start = format(new Date(), 'yyyy-MM-dd');
+        const end = format(addMonths(new Date(), 6), 'yyyy-MM-dd');
         // If icsUrl is provided, use it directly; otherwise use property slug lookup
         const url = icsUrl
           ? `/api/avail_ics?icsUrl=${encodeURIComponent(icsUrl)}&start=${start}&end=${end}`
@@ -212,8 +212,8 @@ export default function BookingCalendar({
           startDate={startDate}
           endDate={endDate}
           selectsRange
-          minDate={new Date('2026-01-01')}
-          maxDate={new Date('2026-06-30')}
+          minDate={new Date()}
+          maxDate={addMonths(new Date(), 6)}
           excludeDates={getBlockedDates()}
           filterDate={(date) => isDateAvailable(date)}
           inline
@@ -225,15 +225,15 @@ export default function BookingCalendar({
 
       {/* Booking Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-sea-spray border border-washed-timber p-8 max-w-md w-full max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-start mb-6">
-              <h3 className="font-serif text-3xl text-harbour-stone">
+        <BookingModalWrapper onClose={() => setShowModal(false)} propertyName={propertyName}>
+          <div className="flex justify-between items-start mb-6">
+              <h3 className="font-serif text-2xl sm:text-3xl text-harbour-stone">
                 Booking Details
               </h3>
               <button
                 onClick={() => setShowModal(false)}
-                className="font-mono text-base text-harbour-stone hover:text-emerald-accent"
+                className="font-mono text-base text-harbour-stone hover:text-emerald-accent min-w-[44px] min-h-[44px] flex items-center justify-center"
+                aria-label="Close booking modal"
               >
                 ×
               </button>
@@ -325,12 +325,47 @@ export default function BookingCalendar({
                 )}
               </>
             )}
-          </div>
-        </div>
+        </BookingModalWrapper>
       )}
     </>
   );
 }
 
+function BookingModalWrapper({
+  onClose,
+  propertyName,
+  children,
+}: {
+  onClose: () => void;
+  propertyName: string;
+  children: React.ReactNode;
+}) {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [onClose]);
 
-
+  return (
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 sm:p-4"
+      onClick={onClose}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`Book ${propertyName}`}
+    >
+      <div
+        className="bg-sea-spray border border-washed-timber p-5 sm:p-8 w-full max-w-md max-h-[90vh] overflow-y-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {children}
+      </div>
+    </div>
+  );
+}
