@@ -33,4 +33,4 @@ Disallow: /_next/static/
 # /api/md/{section}/{slug} — individual pages as markdown
 
 # Sitemap
-Sitemap: https://portbahn-islay.vercel.app/sitemap.xml
+Sitemap: https://portbahnislay.co.uk/sitemap.xml

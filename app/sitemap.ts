@@ -4,7 +4,7 @@ import { client } from '@/sanity/lib/client';
 // Use production domain when set; fall back to Vercel preview URL.
 // Note: sitemap is only linked from robots.txt on production, so preview
 // deployments will serve this but it won't be submitted to search engines.
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahn-islay.vercel.app';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahnislay.co.uk';
 
 // Travel spokes belong under /islay-travel/ — kept separate from /explore-islay/ cluster
 const TRAVEL_SLUGS = [

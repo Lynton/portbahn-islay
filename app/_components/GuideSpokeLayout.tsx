@@ -100,7 +100,7 @@ export default function GuideSpokeLayout({ page, slug, properties, config }: Gui
     url: `${config.urlPrefix}${slug}`, slug: { current: slug }, title: page.title,
     seoDescription: page.seoDescription, heroImage: page.heroImage, faqBlocks: faqsForSchema,
   };
-  const schemaTypes: SchemaType[] = [schemaType as SchemaType, 'TouristAttraction', 'BreadcrumbList'];
+  const schemaTypes: SchemaType[] = [schemaType as SchemaType, 'BreadcrumbList'];
   if (faqsForSchema.length > 0) schemaTypes.push('FAQPage');
 
   const entities: any[] = page.featuredEntities ?? [];

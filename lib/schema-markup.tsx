@@ -1,7 +1,8 @@
 import { urlFor } from '@/sanity/lib/image';
 
-// Base URL for the site
+// Base URL and business constants
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahnislay.co.uk';
+const BUSINESS_NAME = 'Portbahn Islay';
 
 function getCanonicalUrl(pathOrUrl?: string): string {
   if (!pathOrUrl) return BASE_URL;
@@ -21,8 +22,6 @@ export type SchemaType =
   | 'Offer'
   | 'Article'
   | 'BreadcrumbList'
-  | 'TouristAttraction'
-  | 'HowTo'
   | 'WebPage'
   | 'CollectionPage'
   | 'FAQPage';
@@ -102,25 +101,37 @@ function mapAmenitiesToSchema(property: any): any[] {
 
 // Generate Organization schema
 function generateOrganization(data?: any) {
-  void data;
-  return {
+  const org: any = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'Portbahn Islay',
+    name: BUSINESS_NAME,
     url: BASE_URL,
-    logo: `${BASE_URL}/logo.png`, // Update with actual logo URL
     description: 'Self-catering holiday rental properties on the Isle of Islay, Scotland',
     address: {
       '@type': 'PostalAddress',
-      addressRegion: 'Scotland',
+      addressLocality: 'Bruichladdich',
+      addressRegion: 'Isle of Islay, Scotland',
+      postalCode: 'PA49 7UN',
       addressCountry: 'GB',
     },
     sameAs: [
-      // Add social media URLs here when available
-      // 'https://www.facebook.com/portbahnislay',
-      // 'https://www.instagram.com/portbahnislay',
+      'https://www.instagram.com/portbahnislay',
     ],
   };
+
+  // Add contact info if available from data
+  if (data?.email) org.email = data.email;
+  if (data?.phone) {
+    org.telephone = data.phone;
+    org.contactPoint = {
+      '@type': 'ContactPoint',
+      contactType: 'Customer Service',
+      telephone: data.phone,
+      ...(data.email && { email: data.email }),
+    };
+  }
+
+  return org;
 }
 
 // Generate LocalBusiness/VacationRental schema
@@ -132,18 +143,18 @@ function generateVacationRental(data: any) {
     longitude: data.longitude,
   } : undefined;
 
-  return {
+  const business: any = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     '@id': `${BASE_URL}#business`,
-    name: 'Portbahn Islay',
+    name: BUSINESS_NAME,
     description: data.tagline || 'Self-catering holiday rental properties on the Isle of Islay, Scotland',
     url: BASE_URL,
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Isle of Islay',
-      addressRegion: 'Scotland',
-      postalCode: 'PA42', // General Islay postcode
+      addressLocality: 'Bruichladdich',
+      addressRegion: 'Isle of Islay, Scotland',
+      postalCode: 'PA49 7UN',
       addressCountry: 'GB',
     },
     geo,
@@ -152,6 +163,11 @@ function generateVacationRental(data: any) {
       name: 'Isle of Islay, Scotland',
     },
   };
+
+  if (data?.email) business.email = data.email;
+  if (data?.phone) business.telephone = data.phone;
+
+  return business;
 }
 
 // Generate Place schema for Isle of Islay
@@ -301,6 +317,9 @@ function generateAccommodation(property: any) {
     } : undefined,
     amenityFeature: amenityFeatures.length > 0 ? amenityFeatures : undefined,
     petAllowed: property.petFriendly === true ? true : false,
+    // Check-in / check-out times (from Sanity property schema)
+    ...(property.checkInTime && { checkinTime: property.checkInTime }),
+    ...(property.checkOutTime && { checkoutTime: property.checkOutTime }),
     // Add knowsAbout if primaryDifferentiator exists
     ...(property.entityFraming?.primaryDifferentiator && {
       knowsAbout: property.entityFraming.primaryDifferentiator
@@ -495,15 +514,11 @@ function generateArticle(article: any) {
     description: article.seoDescription || article.summary,
     author: {
       '@type': 'Organization',
-      name: 'Portbahn Islay',
+      name: BUSINESS_NAME,
     },
     publisher: {
       '@type': 'Organization',
-      name: 'Portbahn Islay',
-      logo: {
-        '@type': 'ImageObject',
-        url: `${BASE_URL}/logo.png`,
-      },
+      name: BUSINESS_NAME,
     },
     datePublished: article.publishedAt,
     dateModified: article.updatedAt || article.publishedAt,
@@ -512,69 +527,6 @@ function generateArticle(article: any) {
       '@type': 'WebPage',
       '@id': canonicalUrl,
     },
-    isPartOf: {
-      '@type': 'WebSite',
-      '@id': BASE_URL,
-    },
-  };
-}
-
-// Generate TouristAttraction schema (for Explore Islay page)
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function generateTouristAttraction(data: any) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'TouristAttraction',
-    '@id': data?.url ? getCanonicalUrl(data.url) : getCanonicalUrl('/explore-islay'),
-    name: data?.name || 'Isle of Islay',
-    description: data?.description || 'Scottish island renowned for nine whisky distilleries, pristine beaches, abundant wildlife, and dramatic coastal landscapes',
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 55.7,
-      longitude: -6.2,
-    },
-    address: {
-      '@type': 'PostalAddress',
-      addressRegion: 'Argyll and Bute',
-      addressCountry: 'GB',
-    },
-  };
-}
-
-// Generate HowTo schema (for Getting Here page)
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function generateHowTo(data: any) {
-  const canonicalUrl = getCanonicalUrl(data?.url || '/islay-travel');
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'HowTo',
-    '@id': canonicalUrl,
-    name: data?.name || 'How to Get to the Isle of Islay',
-    description: data?.description || 'Complete guide to reaching Islay by CalMac ferry or Loganair flight',
-    totalTime: 'PT6H',
-    step: [
-      {
-        '@type': 'HowToStep',
-        name: 'Book CalMac Ferry',
-        text: 'Book ferry from Kennacraig to Port Ellen or Port Askaig 12 weeks in advance',
-        url: 'https://www.calmac.co.uk',
-      },
-      {
-        '@type': 'HowToStep',
-        name: 'Drive to Kennacraig',
-        text: 'Drive 3 hours from Glasgow to Kennacraig ferry terminal on Kintyre Peninsula',
-      },
-      {
-        '@type': 'HowToStep',
-        name: 'Take Ferry Crossing',
-        text: 'Board CalMac ferry for 2 hour 20 minute crossing to Islay',
-      },
-      {
-        '@type': 'HowToStep',
-        name: 'Drive to Bruichladdich',
-        text: 'Drive 35-40 minutes from ferry port to Bruichladdich',
-      },
-    ],
     isPartOf: {
       '@type': 'WebSite',
       '@id': BASE_URL,
@@ -703,12 +655,6 @@ export function generateSchemaMarkup(
         break;
       case 'Article':
         schemas.push(generateArticle(data));
-        break;
-      case 'TouristAttraction':
-        schemas.push(generateTouristAttraction(data));
-        break;
-      case 'HowTo':
-        schemas.push(generateHowTo(data));
         break;
       case 'WebPage':
         schemas.push(generateWebPage(data, BASE_URL));

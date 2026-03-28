@@ -14,7 +14,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { client } from '@/sanity/lib/client';
 import { toMarkdown } from '@/lib/portable-text-to-markdown';
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahn-islay.vercel.app';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahnislay.co.uk';
 
 const TRAVEL_SLUGS = [
   'ferry-to-islay',

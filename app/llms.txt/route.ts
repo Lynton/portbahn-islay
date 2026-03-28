@@ -10,7 +10,7 @@
 import { NextResponse } from 'next/server';
 import { client } from '@/sanity/lib/client';
 
-const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahn-islay.vercel.app';
+const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://portbahnislay.co.uk';
 
 const TRAVEL_SLUGS = [
   'ferry-to-islay',

@@ -33,6 +33,7 @@ const getProperty = cache(async (slug: string) => {
     locationIntro, location, nearbyAttractions[],
     petFriendly, latitude, longitude, postcode,
     dailyRate, weeklyRate, lodgifyPropertyId, lodgifyRoomId,
+    checkInTime, checkOutTime,
     seoTitle, seoDescription, googleBusinessUrl, googlePlaceId
   }`;
   return await client.fetch(query, { slug });

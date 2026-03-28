@@ -13,19 +13,22 @@ import { portableTextComponents } from '@/lib/portable-text';
 import { getProperties } from '@/lib/queries';
 
 const getHomepage = cache(async () => {
-  const query = `*[_type == "homepage"][0]{
-    _id, heroImage, title, tagline, introText,
-    contentBlocks[]{ version, showKeyFacts, customHeading,
-      block->{ _id, blockId, title, entityType, canonicalHome, fullContent, teaserContent, keyFacts }
+  const query = `{
+    "homepage": *[_type == "homepage"][0]{
+      _id, heroImage, title, tagline, introText,
+      contentBlocks[]{ version, showKeyFacts, customHeading,
+        block->{ _id, blockId, title, entityType, canonicalHome, fullContent, teaserContent, keyFacts }
+      },
+      seoTitle, seoDescription
     },
-    seoTitle, seoDescription
+    "contact": *[_type == "contactPage" && !(_id in path("drafts.**"))][0]{ email, phone }
   }`;
   return await client.fetch(query);
 });
 
 
 export async function generateMetadata(): Promise<Metadata> {
-  const homepage = await getHomepage();
+  const { homepage } = await getHomepage();
   return {
     title: homepage?.seoTitle || homepage?.title || 'Portbahn Islay',
     description: homepage?.seoDescription || homepage?.tagline || 'Holiday rental properties on Islay, Scotland',
@@ -33,14 +36,21 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const homepage = await getHomepage();
+  const { homepage, contact } = await getHomepage();
   const properties = await getProperties();
 
   return (
     <>
       <SchemaMarkup
         type={['WebPage', 'Organization', 'LocalBusiness', 'Place', 'BreadcrumbList']}
-        data={{ ...homepage, url: '/', name: homepage?.seoTitle || homepage?.title || 'Portbahn Islay', description: homepage?.seoDescription || homepage?.tagline || 'Holiday rental properties on Islay, Scotland' }}
+        data={{
+          ...homepage,
+          url: '/',
+          name: homepage?.seoTitle || homepage?.title || 'Portbahn Islay',
+          description: homepage?.seoDescription || homepage?.tagline || 'Holiday rental properties on Islay, Scotland',
+          email: contact?.email,
+          phone: contact?.phone,
+        }}
         breadcrumbs={[{ name: 'Home', url: '/' }]}
       />
 
