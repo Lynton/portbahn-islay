@@ -43,8 +43,8 @@ export default function PropertyCalendar({
   const fetchAvailability = useCallback(async () => {
     setLoading(true);
     try {
-      const start = format(currentMonth, 'yyyy-MM-dd');
-      const end = format(addMonths(currentMonth, 2), 'yyyy-MM-dd');
+      const start = format(startOfMonth(currentMonth), 'yyyy-MM-dd');
+      const end = format(endOfMonth(addMonths(currentMonth, 1)), 'yyyy-MM-dd');
       const res = await fetch(
         `/api/avail_ics?property=${propertySlug}&start=${start}&end=${end}`
       );
@@ -231,7 +231,7 @@ export function CalendarGrid({
       ))}
       {days.map((day) => {
         const dateStr = format(day, 'yyyy-MM-dd');
-        const status = availability[dateStr] ?? 'available';
+        const status = availability[dateStr] ?? 'booked';
         const isAvail = status === 'available';
         const isPast = isBefore(day, startOfDay(new Date()));
         const isCI = selectedCheckIn ? isSameDay(day, selectedCheckIn) : false;

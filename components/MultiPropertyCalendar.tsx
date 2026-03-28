@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
-import { format, addMonths, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isBefore, startOfDay, isToday } from 'date-fns';
+import { format, addMonths, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isBefore, startOfDay, isToday, getDay } from 'date-fns';
 
 interface Property {
   slug: string;
@@ -85,8 +85,8 @@ export default function MultiPropertyCalendar() {
     const availData: AvailabilityData = {};
 
     for (const property of properties) {
-      const start = format(currentMonth, 'yyyy-MM-dd');
-      const end = format(addMonths(currentMonth, monthsToShow), 'yyyy-MM-dd');
+      const start = format(startOfMonth(currentMonth), 'yyyy-MM-dd');
+      const end = format(endOfMonth(addMonths(currentMonth, monthsToShow - 1)), 'yyyy-MM-dd');
 
       try {
         const res = await fetch(
@@ -407,7 +407,7 @@ export default function MultiPropertyCalendar() {
                 </div>
                 {days.map((day) => {
                   const dateStr = format(day, 'yyyy-MM-dd');
-                  const status = availability[property.slug]?.[dateStr] || 'available';
+                  const status = availability[property.slug]?.[dateStr] || 'booked';
                   const isAvailable = status === 'available';
                   const isSelected =
                     selectedDate.checkIn &&

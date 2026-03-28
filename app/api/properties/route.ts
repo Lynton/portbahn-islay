@@ -124,8 +124,8 @@ export async function GET(request: NextRequest) {
         sleepsSource: 'sanity',
       });
     } else {
-      // Fetch all properties
-      const query = `*[_type == "property"]{
+      // Fetch all PBI properties (filter to those with Lodgify integration)
+      const query = `*[_type == "property" && defined(lodgifyPropertyId)]{
         _id,
         name,
         slug,
