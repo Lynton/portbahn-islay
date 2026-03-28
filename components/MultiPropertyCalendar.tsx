@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import Link from 'next/link';
 import { format, addMonths, addDays, startOfMonth, endOfMonth, eachDayOfInterval, isSameDay, isBefore, startOfDay, isToday, getDay } from 'date-fns';
 
@@ -461,7 +461,7 @@ export default function MultiPropertyCalendar() {
                     {isCurrentDate && (
                       <span className="absolute top-0.5 left-0.5 w-1.5 h-1.5 bg-[#008060] rounded-full" />
                     )}
-                    <span className={isAvailable ? '' : 'text-[#C45508]'}>
+                    <span className={isAvailable ? (isCurrentDate ? 'text-[#008060] font-bold' : '') : 'text-[#C45508]'}>
                       {isAvailable ? format(day, 'd') : '—'}
                     </span>
                   </button>
@@ -473,6 +473,22 @@ export default function MultiPropertyCalendar() {
       </div>
     );
   };
+
+  const todayRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll desktop grid to today's column after loading
+  useEffect(() => {
+    if (!loading && todayRef.current) {
+      const scrollContainer = todayRef.current.closest('.overflow-x-auto');
+      if (scrollContainer) {
+        const containerRect = scrollContainer.getBoundingClientRect();
+        const todayRect = todayRef.current.getBoundingClientRect();
+        // Scroll so today is roughly 1/3 from left edge
+        const scrollLeft = todayRect.left - containerRect.left + scrollContainer.scrollLeft - containerRect.width / 3;
+        scrollContainer.scrollTo({ left: Math.max(0, scrollLeft), behavior: 'smooth' });
+      }
+    }
+  }, [loading]);
 
   const renderMonth = (monthDate: Date) => {
     const monthStart = startOfMonth(monthDate);
@@ -488,14 +504,20 @@ export default function MultiPropertyCalendar() {
             {/* Header row with day numbers */}
             <div className="flex border-b border-[#C8C6BF]">
               <div className="w-48 min-w-[192px] flex-shrink-0 p-4 font-mono text-sm font-semibold">Property</div>
-              {days.map((day) => (
-                <div
-                  key={day.toISOString()}
-                  className="w-12 min-w-[48px] flex-shrink-0 h-12 p-2 text-center font-mono text-xs flex items-center justify-center"
-                >
-                  {format(day, 'dd')}
-                </div>
-              ))}
+              {days.map((day) => {
+                const isCurrentDate = isToday(day);
+                return (
+                  <div
+                    key={day.toISOString()}
+                    ref={isCurrentDate ? todayRef : undefined}
+                    className={`w-12 min-w-[48px] flex-shrink-0 h-12 p-2 text-center font-mono text-xs flex items-center justify-center ${
+                      isCurrentDate ? 'font-bold text-[#008060]' : ''
+                    }`}
+                  >
+                    {format(day, 'dd')}
+                  </div>
+                );
+              })}
             </div>
 
             {/* Property rows */}
