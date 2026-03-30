@@ -23,6 +23,7 @@ export default defineType({
   icon: BookIcon,
   groups: [
     { name: 'content', title: 'Content', default: true },
+    { name: 'ai-search', title: 'AI & Search' },
     { name: 'seo', title: 'SEO & AI' },
   ],
   fields: [
@@ -194,6 +195,58 @@ export default defineType({
           type: 'boolean',
           initialValue: true,
         }),
+      ],
+    }),
+    // AI & SEARCH OPTIMIZATION
+    defineField({
+      name: 'entityFraming',
+      title: 'Entity Framing',
+      type: 'object',
+      group: 'ai-search',
+      description: `Define what this page IS (and is NOT) for AI systems.
+
+🔴 CRITICAL: Helps AI correctly categorize and cite this page.
+
+✓ DO: Be factual, specific, boring
+✗ DON'T: Use marketing language or vague adjectives`,
+      options: {
+        collapsible: true,
+        collapsed: true,
+      },
+      fields: [
+        {
+          name: 'whatItIs',
+          type: 'string',
+          title: 'What It Is',
+          description: `One factual sentence: [Category] + [Topic] + [Location]
+
+✓ DO: "A travel guide to Isle of Islay, Scotland, covering ferry routes and flight options"
+✗ DON'T: "Your ultimate island adventure resource"`,
+          placeholder: 'A comprehensive guide to [topic] on Isle of Islay',
+          validation: (Rule: any) => Rule.max(150).warning('Keep to one factual sentence'),
+        },
+        {
+          name: 'whatItIsNot',
+          type: 'array',
+          of: [{ type: 'string' }],
+          title: 'What It Is NOT',
+          description: `Prevent common misconceptions (max 3).
+
+✓ DO: "Not a booking platform", "Not real-time ferry schedules"
+✗ DON'T: "Not for everyone"`,
+          validation: (Rule: any) => Rule.max(3),
+        },
+        {
+          name: 'primaryDifferentiator',
+          type: 'string',
+          title: 'Primary Differentiator',
+          description: `ONE unique factual characteristic.
+
+✓ DO: "Only guide covering all 10 Islay distilleries with local host insights"
+✗ DON'T: "The best guide with amazing tips"`,
+          placeholder: 'One unique factual characteristic',
+          validation: (Rule: any) => Rule.max(150),
+        },
       ],
     }),
     defineField({

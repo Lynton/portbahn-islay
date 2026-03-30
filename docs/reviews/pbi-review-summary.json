@@ -1,0 +1,45 @@
+{
+  "totalReviews": 381,
+  "PB-airbnb": {
+    "property": "Portbahn House",
+    "platform": "airbnb",
+    "overallRating": 4.97,
+    "totalReviewCount": 156,
+    "parsedCount": 156
+  },
+  "SHF-airbnb": {
+    "property": "Shorefield Eco House",
+    "platform": "airbnb",
+    "overallRating": 4.97,
+    "totalReviewCount": 86,
+    "parsedCount": 86
+  },
+  "PB-bookingcom": {
+    "property": "Portbahn House",
+    "platform": "bookingcom",
+    "overallRating": 9.5,
+    "totalReviewCount": 33,
+    "parsedCount": 33
+  },
+  "SHF-bookingcom": {
+    "property": "Shorefield Eco House",
+    "platform": "bookingcom",
+    "overallRating": 9.2,
+    "totalReviewCount": 57,
+    "parsedCount": 57
+  },
+  "PB-google": {
+    "property": "Portbahn House",
+    "platform": "google",
+    "overallRating": 5,
+    "totalReviewCount": 37,
+    "parsedCount": 36
+  },
+  "SHF-google": {
+    "property": "Shorefield Eco House",
+    "platform": "google",
+    "overallRating": 5,
+    "totalReviewCount": 13,
+    "parsedCount": 13
+  }
+}
