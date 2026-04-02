@@ -1,0 +1,101 @@
+{
+  "_id": "editorial-block-visit-jura-planning-your-jura-visit",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "visit-jura-planning-your-jura-visit"
+  },
+  "title": "Planning Your Jura Visit",
+  "canonicalHome": "/explore-islay/visit-jura",
+  "fullContent": [
+    {
+      "_key": "i4xt39f53",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "kua21mynj",
+          "_type": "span",
+          "marks": [],
+          "text": "A Jura day trip is one of the most consistent highlights our guests report from their Islay stays - and it is genuinely easy to do. The logistics are simple: drive 30 minutes to Port Askaig, walk on to the ferry (no booking needed for foot passengers), cross in 5 minutes, and you're on Jura. For a comfortable day, leave by 9:30 in the morning and plan to be back at Port Askaig by 8pm or later if you book the 21:30 sailing. That gives you a full day on the island. We'd recommend it for at least one day of any stay of 5 nights or more."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "x6ex86yqk",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "ju5vmsc1e",
+          "_type": "span",
+          "marks": [],
+          "text": "For guests with a car, the question is not whether to go but how long to stay. A day covers "
+        },
+        {
+          "_key": "q6uv8qehb",
+          "_type": "span",
+          "marks": [
+            "0iqoell8s"
+          ],
+          "text": "Jura Distillery"
+        },
+        {
+          "_key": "s0cofp0bn",
+          "_type": "span",
+          "marks": [],
+          "text": ", lunch, Small Isles Bay, and if you push north, a view of Ardlussa. A two-night stay adds Barnhill, the Corryvreckan, a Pap climb if conditions are right, and the slower experience of Jura at its own pace. We're here either way and can help with planning when you book."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "0iqoell8s",
+          "_type": "link",
+          "href": "https://www.jurawhisky.com"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "7e37NsiOqlBE",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "piOUEAC0oz-p",
+          "_type": "span",
+          "text": "The Character Difference"
+        }
+      ]
+    },
+    {
+      "_key": "229srda7u",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "xpkpe5cj3",
+          "_type": "span",
+          "marks": [],
+          "text": "Block 13 describes Jura as \"all Highland\" compared to Islay's \"gentle borders feel\" - and that description holds. Jura's landscape is more dramatic, more vertical, and more remote-feeling than Islay's. The single road gives you no choice about the route. The hills are always in view. The deer are everywhere. The silence is more total. For guests who've spent a week on Islay and are ready for something sharper, Jura delivers that contrast immediately - you feel it on the ferry crossing."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "nwa3mqu6u",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "1gk7tbwgw",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay has villages, distilleries, a functioning community with shops and restaurants. Jura has Craighouse, a handful of scattered farms, and the long single-track north. Both are worth experiencing. If we had to advise a first-time Hebrides visitor, we'd say: base on Islay, day trip to Jura, consider returning to Jura for longer once you know what you're coming back to."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from visit-jura extendedEditorial"
+}

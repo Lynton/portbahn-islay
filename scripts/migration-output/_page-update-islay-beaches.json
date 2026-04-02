@@ -1,0 +1,26 @@
+{
+  "pageId": "guide-islay-beaches",
+  "slug": "islay-beaches",
+  "newBlockRefs": [
+    {
+      "_key": "SYbS-Vmh8zyf",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-islay-beaches-beach-planning-singing-sands"
+      },
+      "version": "full",
+      "customKicker": "Planning"
+    },
+    {
+      "_key": "GfCRbc2pIKP9",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-islay-beaches-swimming-coastal-walks"
+      },
+      "version": "full",
+      "customKicker": "Activities"
+    }
+  ]
+}

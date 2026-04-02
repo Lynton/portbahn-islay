@@ -1,0 +1,167 @@
+{
+  "_id": "editorial-block-food-and-drink-dining-on-islay-practical-notes",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "food-and-drink-dining-on-islay-practical-notes"
+  },
+  "title": "Dining on Islay — Practical Notes",
+  "canonicalHome": "/explore-islay/food-and-drink",
+  "fullContent": [
+    {
+      "_key": "6ygym9dfj",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "3iaa8uevg",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay's restaurants are small, popular, and on an island — there is no overflow option if your first choice is full. Our firm advice: plan your restaurant evenings before you leave home. The Lochindaal Seafood Kitchen requires 24 hours' notice for the full platter and is worth planning your whole day around — don't just turn up. The Port Charlotte Hotel restaurant fills on music nights (Wednesday and Sunday); book ahead if you want a table rather than eating at the bar. "
+        },
+        {
+          "_key": "9f070tj9f",
+          "_type": "span",
+          "marks": [
+            "661o5h5st"
+          ],
+          "text": "An Tigh Seinnse"
+        },
+        {
+          "_key": "25mnybogw",
+          "_type": "span",
+          "marks": [],
+          "text": " in Portnahaven is tiny and gets busy regardless of season. Even the distillery cafés can fill at peak lunchtimes in summer."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "661o5h5st",
+          "_type": "link",
+          "href": "https://maps.app.goo.gl/Ec4m6CxY1YW1DJJ28"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "i0l1yfgl7",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "6tskhte44",
+          "_type": "span",
+          "marks": [],
+          "text": "Most venues can be booked by phone or a direct message. Online booking exists at some but not all. When in doubt, call. And if you struggle to get through to anyone, ask us — we know these venues well and can often help."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "5zwZBcDhIITy",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "ekcXyiiy8ZsB",
+          "_type": "span",
+          "text": "Opening Hours: A Reality Check"
+        }
+      ]
+    },
+    {
+      "_key": "246o4crbg",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "wdgufsd4p",
+          "_type": "span",
+          "marks": [],
+          "text": "Many Islay venues operate reduced or seasonal hours, particularly November to March. Opening days and times can change, and smaller venues occasionally close without much notice if the chef is unavailable or supplies don't arrive on the ferry. Our practical advice: check before you drive anywhere. The Port Charlotte Hotel is the most reliably open year-round. Distillery cafés operate during distillery visiting hours — check ahead in winter, when those hours may be reduced or paused entirely."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "d4u9ulspx",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "8sru7dphz",
+          "_type": "span",
+          "marks": [],
+          "text": "If you're planning a specific meal on a specific night, particularly for a celebration or a special occasion, tell us when you book and we'll help you get it right."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "2tz6kkw3u",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "f7d7y2myt",
+          "_type": "span",
+          "marks": [
+            "1dv6rv3g5"
+          ],
+          "text": "RSPB Loch Gruinart"
+        },
+        {
+          "_key": "p5aonz8tt",
+          "_type": "span",
+          "marks": [],
+          "text": " combines naturally with an early start — the dawn barnacle geese flight at the RSPB reserve is one of the most extraordinary wildlife experiences in Scotland, and the "
+        },
+        {
+          "_key": "2sa6tfotl",
+          "_type": "span",
+          "marks": [
+            "iyhovw65l"
+          ],
+          "text": "Oyster Shed"
+        },
+        {
+          "_key": "8hbv1h8zg",
+          "_type": "span",
+          "marks": [],
+          "text": " opens from 10am for the best oysters on the island. That combination makes one of the best half-days on Islay. See the "
+        },
+        {
+          "_key": "xylzqxucq",
+          "_type": "span",
+          "marks": [
+            "t9ayuf416"
+          ],
+          "text": "wildlife guide"
+        },
+        {
+          "_key": "fnrujmuz1",
+          "_type": "span",
+          "marks": [],
+          "text": " for geese timings and reserve access details."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "1dv6rv3g5",
+          "_type": "link",
+          "href": "https://www.rspb.org.uk/reserves-and-events/reserves-a-z/loch-gruinart"
+        },
+        {
+          "_key": "iyhovw65l",
+          "_type": "link",
+          "href": "https://maps.app.goo.gl/AxkjF3pTQdVvwRhG7"
+        },
+        {
+          "_key": "t9ayuf416",
+          "_type": "link",
+          "href": "/explore-islay/islay-wildlife"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from food-and-drink extendedEditorial"
+}

@@ -1,0 +1,26 @@
+{
+  "pageId": "guide-family-holidays",
+  "slug": "family-holidays",
+  "newBlockRefs": [
+    {
+      "_key": "fysRwW_jDgNW",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-family-holidays-planning-your-family-week"
+      },
+      "version": "full",
+      "customKicker": "Planning"
+    },
+    {
+      "_key": "Sp5X8ETKlOMt",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-family-holidays-family-activities"
+      },
+      "version": "full",
+      "customKicker": "Activities"
+    }
+  ]
+}

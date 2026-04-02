@@ -1,0 +1,191 @@
+{
+  "_id": "editorial-block-islay-villages-islay-villages-getting-oriented",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "islay-villages-islay-villages-getting-oriented"
+  },
+  "title": "Islay Villages — Getting Oriented",
+  "canonicalHome": "/explore-islay/islay-villages",
+  "fullContent": [
+    {
+      "_key": "bkdqtdb7w",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "dbpdhnwmk",
+          "_type": "span",
+          "marks": [],
+          "text": "Most guests staying in our Bruichladdich properties spend the first day or two on the Rhinns peninsula — the hammer-shaped landmass that forms the western side of Islay and is home to Bruichladdich, Port Charlotte, and Portnahaven. The Rhinns runs roughly north to south, with Bruichladdich and Port Charlotte on the eastern shore of Loch Indaal and Portnahaven at the foot. The peninsula has a different pace from the rest of the island — quieter roads, fewer visitors, and the particular feeling of being at the edge of things. Port Charlotte is the most visited village on the Rhinns; Portnahaven is the most remote."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "hmnyxukj2",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "dyrspqpds",
+          "_type": "span",
+          "marks": [],
+          "text": "For the rest of the island, Bowmore is the natural hub — most practical errands (Co-op, pharmacy, bank) happen there, and "
+        },
+        {
+          "_key": "7mipnxfu2",
+          "_type": "span",
+          "marks": [
+            "mqmtvoi3m"
+          ],
+          "text": "Bowmore Distillery"
+        },
+        {
+          "_key": "f9fd3x2nh",
+          "_type": "span",
+          "marks": [],
+          "text": " on the main street makes it a natural stop on any distillery day. Bridgend, at the head of Loch Indaal where the main island roads meet, is a useful refuelling and provisions point rather than a destination in itself — the petrol pump at Bridgend Village Stores is important to know about on an island with limited options. Port Askaig on the north coast is a functional stop: ferry terminal, Port Askaig Hotel bar, and the turning for Caol Ila and Bunnahabhain distilleries. Port Ellen on the south coast is the island's other major port and the anchor for any south coast day."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "mqmtvoi3m",
+          "_type": "link",
+          "href": "https://www.bowmore.com"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "U4vokwSAQwDQ",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "XidYkik70WG1",
+          "_type": "span",
+          "text": "Port Charlotte: The Rhinns' Best Village"
+        }
+      ]
+    },
+    {
+      "_key": "gjtnlnbnu",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "j16or7vmk",
+          "_type": "span",
+          "marks": [],
+          "text": "Port Charlotte was built as a planned village in the early 19th century — neat white-painted terraces running back from the shore of Loch Indaal. It has more going on than its size suggests: the "
+        },
+        {
+          "_key": "zkpyscjae",
+          "_type": "span",
+          "marks": [
+            "vo7nzh1hf"
+          ],
+          "text": "Museum of Islay Life"
+        },
+        {
+          "_key": "ot36dz18z",
+          "_type": "span",
+          "marks": [],
+          "text": " is one of the better small local museums in the Hebrides, the Port Charlotte Hotel has a log fire, 300+ malt whiskies, and live music on Wednesday and Sunday evenings, and "
+        },
+        {
+          "_key": "59jdje4wa",
+          "_type": "span",
+          "marks": [
+            "ywhidsce9"
+          ],
+          "text": "Lochindaal Seafood Kitchen"
+        },
+        {
+          "_key": "18pz4yd7l",
+          "_type": "span",
+          "marks": [],
+          "text": " is our top restaurant recommendation on the island. The village beach is safe for swimming and usually empty. If you do only one other village from our properties, Port Charlotte should be it."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "vo7nzh1hf",
+          "_type": "link",
+          "href": "https://www.islaymuseum.org"
+        },
+        {
+          "_key": "ywhidsce9",
+          "_type": "link",
+          "href": "/explore-islay/food-and-drink"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "bGBFzgO-cjXk",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "1x9Ih9B-CxpK",
+          "_type": "span",
+          "text": "Bowmore: Main Town, Main Services"
+        }
+      ]
+    },
+    {
+      "_key": "epf2o2ujx",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "8sukde90o",
+          "_type": "span",
+          "marks": [],
+          "text": "Bowmore is Islay's main town — the largest concentration of shops and services on the island, and the most reliable year-round. The Co-op is the main supermarket; Peatzeria does good wood-fired pizza; Islay's Plaice does fish and chips. The "
+        },
+        {
+          "_key": "crz0uvs1e",
+          "_type": "span",
+          "marks": [
+            "wj5a2sxww"
+          ],
+          "text": "Mactaggart Leisure Centre"
+        },
+        {
+          "_key": "rnetbdci7",
+          "_type": "span",
+          "marks": [],
+          "text": " has a swimming pool — useful for families or a rainy afternoon. "
+        },
+        {
+          "_key": "gf88utg9m",
+          "_type": "span",
+          "marks": [
+            "idnez4q3f"
+          ],
+          "text": "Bowmore Distillery"
+        },
+        {
+          "_key": "4f9wlkeyz",
+          "_type": "span",
+          "marks": [],
+          "text": " sits at the foot of the main street and claims to be Islay's oldest distillery (1779). At the top of the street, the Round Church (Kilarrow Parish Church, 1767) is small, unusual, and worth five minutes — the local tradition holds it was built round so the Devil could find no corner to hide in. Bowmore is not a picturesque village in the way Port Charlotte is, but it is an honest and useful town."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "wj5a2sxww",
+          "_type": "link",
+          "href": "https://www.mactaggartleisurecentre.co.uk"
+        },
+        {
+          "_key": "idnez4q3f",
+          "_type": "link",
+          "href": "https://www.bowmore.com"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from islay-villages extendedEditorial"
+}

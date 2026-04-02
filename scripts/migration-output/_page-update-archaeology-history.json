@@ -1,0 +1,26 @@
+{
+  "pageId": "guide-archaeology-history",
+  "slug": "archaeology-history",
+  "newBlockRefs": [
+    {
+      "_key": "_IcTdK1xfLCo",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-archaeology-history-planning-your-heritage-day"
+      },
+      "version": "full",
+      "customKicker": "Planning"
+    },
+    {
+      "_key": "b7qFNw_Nx6MV",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-archaeology-history-islay-s-heritage-sites-in-detail"
+      },
+      "version": "full",
+      "customKicker": "Detail"
+    }
+  ]
+}

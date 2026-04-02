@@ -1,0 +1,36 @@
+{
+  "pageId": "guide-ferry-to-islay",
+  "slug": "ferry-to-islay",
+  "newBlockRefs": [
+    {
+      "_key": "ET00QevkTjhm",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-ferry-to-islay-routes-booking-the-crossing"
+      },
+      "version": "full",
+      "customKicker": "Routes"
+    },
+    {
+      "_key": "yNMroiLsezC4",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-ferry-to-islay-cancellations-getting-to-kennacraig"
+      },
+      "version": "full",
+      "customKicker": "Practical"
+    },
+    {
+      "_key": "MeOnpiP-UcAd",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-ferry-to-islay-continuing-to-jura"
+      },
+      "version": "full",
+      "customKicker": "Onward"
+    }
+  ]
+}

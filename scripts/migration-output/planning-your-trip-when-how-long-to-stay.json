@@ -1,0 +1,185 @@
+{
+  "_id": "editorial-block-planning-your-trip-when-how-long-to-stay",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "planning-your-trip-when-how-long-to-stay"
+  },
+  "title": "When & How Long to Stay",
+  "canonicalHome": "/islay-travel/planning-your-trip",
+  "fullContent": [
+    {
+      "_key": "e9a213f0c4",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "8476d0f1cd",
+          "_type": "span",
+          "marks": [],
+          "text": "There's no wrong season on Islay — but each is genuinely different."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "c58f24815e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "32cd22a1b4",
+          "_type": "span",
+          "marks": [],
+          "text": "Spring (April - May): Quiet roads, green hills, and dramatic shifting light. Lambing season. Good for walks, wildlife, and distillery visits without the summer rush. Late May means Fèis Ìle — see below if your dates overlap."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "96c93e34ab",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "9c30280f92",
+          "_type": "span",
+          "marks": [],
+          "text": "Summer (June - August): Peak season. The best chance of sustained sunshine and longest days. Summer weekdays are noticeably quieter than weekends."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "67988a0a8d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "bc32774fdd",
+          "_type": "span",
+          "marks": [],
+          "text": "Autumn (September - October): The barnacle geese arrive — around 30,000 of them on the Rhinns of Islay from late September. The light turns golden. Crowds thin after the school holidays. Many guests tell us autumn is their favourite season on Islay."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "e1b45a70b3",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "6b325f2d41",
+          "_type": "span",
+          "marks": [],
+          "text": "Winter (November - March): Raw, honest, and beautiful in a way that Islay's summer visitors rarely see. Some businesses close or reduce hours. Ferry disruptions are more likely in strong southwest winds. If you visit in winter, you get Islay to yourself."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "HcPK0ASPxusJ",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "_12guawQl3uI",
+          "_type": "span",
+          "text": "Fèis Ìle — The Islay Whisky Festival"
+        }
+      ]
+    },
+    {
+      "_key": "5b507335dc",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0a942d408a",
+          "_type": "span",
+          "marks": [],
+          "text": "Fèis Ìle is Islay's annual whisky festival, held in late May. Each of the island's 10 distilleries runs its own open day, with exclusive releases, tastings, live music, and events. Bruichladdich's Fèis Ìle open day is consistently one of the most popular and sells out within hours of release."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b5e89810c0",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "93899515bf",
+          "_type": "span",
+          "marks": [],
+          "text": "If you're planning to attend: treat this like a major festival. Book your ferry 12+ weeks ahead. Book accommodation at the same time — the island fills completely. Pre-book distillery events as soon as they're announced. Not visiting for whisky? Fèis Ìle week is worth avoiding for a quieter trip — the island is at full capacity throughout."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "3vt6RwNmvX6U",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "U0k6N_VMU0zA",
+          "_type": "span",
+          "text": "How Long to Stay"
+        }
+      ]
+    },
+    {
+      "_key": "901bba0719",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "cbb7307a05",
+          "_type": "span",
+          "marks": [],
+          "text": "Our honest advice: three nights is the minimum to feel the pace, a week is better, and it's never quite enough."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "d1c4ab7a67",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "13c6993ff3",
+          "_type": "span",
+          "marks": [],
+          "text": "A week gives you real time to explore: the Rhinns and west coast, the south Islay whisky coast from Port Ellen to Ardbeg, Bowmore and the centre of the island, and a day trip to Jura. Three nights means you'll just be finding your rhythm when it's time to pack."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "d0e9e47df4",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "dc683bda34",
+          "_type": "span",
+          "marks": [],
+          "text": "If a long weekend is all you have — go. Just start planning your return trip on the ferry home."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from planning-your-trip extendedEditorial"
+}

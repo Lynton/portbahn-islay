@@ -1,0 +1,26 @@
+{
+  "pageId": "guide-visit-jura",
+  "slug": "visit-jura",
+  "newBlockRefs": [
+    {
+      "_key": "CXAQHPi_Ci8c",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-visit-jura-planning-your-jura-visit"
+      },
+      "version": "full",
+      "customKicker": "Planning"
+    },
+    {
+      "_key": "m0uhcV2MVwdc",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-visit-jura-jura-practical-notes"
+      },
+      "version": "full",
+      "customKicker": "Practical"
+    }
+  ]
+}

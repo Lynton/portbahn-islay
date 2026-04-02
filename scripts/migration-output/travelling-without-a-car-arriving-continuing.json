@@ -1,0 +1,81 @@
+{
+  "_id": "editorial-block-travelling-without-a-car-arriving-continuing",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "travelling-without-a-car-arriving-continuing"
+  },
+  "title": "Arriving & Continuing",
+  "canonicalHome": "/islay-travel/travelling-without-a-car",
+  "fullContent": [
+    {
+      "_key": "8d0a326db8",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "9ce6db33a4",
+          "_type": "span",
+          "marks": [],
+          "text": "Port Askaig and Port Ellen both receive foot passengers. If you're arriving without a car and with luggage, taxi services operate at both ports."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "f86603f44a",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c4b2f78e25",
+          "_type": "span",
+          "marks": [],
+          "text": "For getting around the island once you've arrived — taxis, local buses, and bike hire — see our "
+        },
+        {
+          "_key": "36bca6211a",
+          "_type": "span",
+          "marks": [
+            "fddafd2a8f"
+          ],
+          "text": "on-island transport guide →"
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "fddafd2a8f",
+          "_type": "link",
+          "href": "/islay-travel/getting-around-islay"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "pK6CtM5pRNL3",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "hfgVhYX9opey",
+          "_type": "span",
+          "text": "Continuing to Jura"
+        }
+      ]
+    },
+    {
+      "_key": "be55ff46c7",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "007b618a49",
+          "_type": "span",
+          "marks": [],
+          "text": "From Port Askaig, foot passengers and cyclists can take the Jura Passenger Ferry to Feolin on Jura — a 5-minute crossing, no booking required for foot passengers. Bikes are welcome."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from travelling-without-a-car extendedEditorial"
+}

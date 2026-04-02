@@ -1,0 +1,301 @@
+{
+  "_id": "editorial-block-getting-around-islay-transport-options-on-islay",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "getting-around-islay-transport-options-on-islay"
+  },
+  "title": "Transport Options on Islay",
+  "canonicalHome": "/islay-travel/getting-around-islay",
+  "fullContent": [
+    {
+      "_key": "385aacb8e7",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "75b8941ec1",
+          "_type": "span",
+          "marks": [],
+          "text": "Scotland's drink-drive limit is lower than England's — 50mg per 100ml versus 80mg — and for a full distillery day on Islay, the only sensible approach is not to drive at all. That's not a limitation; it's an invitation. Islay has taxis, bike hire, and properties within walking distance of distilleries. You can do a proper whisky day and not get behind a wheel."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "R9vCjXw3pHnM",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "dFvHw0HfqyI-",
+          "_type": "span",
+          "text": "Taxis on Islay"
+        }
+      ]
+    },
+    {
+      "_key": "1d8e21c01c",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "1948c9059f",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay's taxi services are the most practical option for distillery days — particularly for groups. Pre-book for distillery days, as the island has limited taxi capacity and drivers fill up during Fèis Ìle and peak summer. Taxis are available at Port Askaig and Port Ellen when ferries arrive."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "16a8b23a0e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "fed2c4fc45",
+          "_type": "span",
+          "marks": [],
+          "text": "Two firms we recommend: Bruichladdich Taxis — 07899 942673 or 01496 850271. Covers the Rhinns and most of the island. Attic Cabs — 07944 873323."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "P3XyQctcka_a",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "4g_N1lPmOGLT",
+          "_type": "span",
+          "text": "Local Buses — Islay Coaches"
+        }
+      ]
+    },
+    {
+      "_key": "2fdf71c9dd",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "21cdb0d765",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay Coaches operates Routes 450 and 451, connecting the main villages: Portnahaven, Port Charlotte, Bruichladdich, Bowmore, Port Ellen, Ardbeg, and Port Askaig. The service covers most of the island's settlements in a single route. Timetables are published by Argyll and Bute Council."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "5b86720d8e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c84b507c01",
+          "_type": "span",
+          "marks": [],
+          "text": "Dogs are not permitted on Islay Coaches services (assistance dogs only)."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "eIjvCMb0Vv2E",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "nkSmIzoeYMa5",
+          "_type": "span",
+          "text": "Cycling Around Islay"
+        }
+      ]
+    },
+    {
+      "_key": "00b9fb3872",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "615c42b8e3",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay has quiet roads and is well-suited to cycling. The Rhinns peninsula — where our properties are based — is flat, coastal, and beautiful by bike. Key cycling routes:"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "a38f236fda",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0d516b0b42",
+          "_type": "span",
+          "marks": [],
+          "text": "The Rhinns Loop — Bruichladdich to Port Charlotte to Portnahaven and back. Flat, scenic, around 18 miles. The road runs along the shore of Loch Indaal for most of the route."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "2b8eedb8b4",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d1dda0f237",
+          "_type": "span",
+          "marks": [],
+          "text": "The Whisky Coast — Port Ellen to Laphroaig to Lagavulin to Ardbeg to Kildalton Cross. Moderate, around 14 miles one way. The distillery trail by bike."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "88553db533",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "275a1012d3",
+          "_type": "span",
+          "marks": [],
+          "text": "Bowmore to Port Charlotte — Via Bridgend. Easy and flat, around 12 miles. Passes through the centre of the island."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "fb1c34dc50",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "2f51a3dfc9",
+          "_type": "span",
+          "marks": [],
+          "text": "RSPB Loch Gruinart — Excellent for birdwatching by bike. The reserve road is traffic-free and quiet."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "McQdZ4kFzfZa",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "wu8rpT-1SDgk",
+          "_type": "span",
+          "text": "Bike Hire"
+        }
+      ]
+    },
+    {
+      "_key": "4973a3fbf4",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "353bffa255",
+          "_type": "span",
+          "marks": [],
+          "text": "Three operators on the island, one on Jura:"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "1cc6e29705",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "598da3297b",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay Bike Hire (islay-bikehire.co.uk) — standard bicycle rental."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "a51610d60e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "148af32b39",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay E-Wheels (islayewheels.co.uk) — electric bikes with Bosch drive systems. Good for covering more ground on distillery days."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "d2b77ad282",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0f2c2b3abf",
+          "_type": "span",
+          "marks": [],
+          "text": "Jura Cycles (juracycles.com) — based on Jura, with hire options for visitors crossing on the passenger ferry from Port Askaig."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "472958d2db",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "08a64f5a37",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay Cycles — currently closed until further notice (as of early 2026). Check islaycycles.co.uk for updates before planning around them."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "50b9bfc094",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "02bcc8c261",
+          "_type": "span",
+          "marks": [],
+          "text": "Check each operator's website directly for current availability, pricing, and booking — seasonal availability varies."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from getting-around-islay extendedEditorial"
+}

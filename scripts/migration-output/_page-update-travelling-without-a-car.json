@@ -1,0 +1,26 @@
+{
+  "pageId": "guide-travelling-without-a-car",
+  "slug": "travelling-without-a-car",
+  "newBlockRefs": [
+    {
+      "_key": "QFJcTd235pT7",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-travelling-without-a-car-getting-to-islay-without-a-car"
+      },
+      "version": "full",
+      "customKicker": "Routes"
+    },
+    {
+      "_key": "2lytX55xHVQ5",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-travelling-without-a-car-arriving-continuing"
+      },
+      "version": "full",
+      "customKicker": "Onward"
+    }
+  ]
+}

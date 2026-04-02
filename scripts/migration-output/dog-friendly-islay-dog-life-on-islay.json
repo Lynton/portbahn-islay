@@ -1,0 +1,157 @@
+{
+  "_id": "editorial-block-dog-friendly-islay-dog-life-on-islay",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "dog-friendly-islay-dog-life-on-islay"
+  },
+  "title": "Dog Life on Islay",
+  "canonicalHome": "/explore-islay/dog-friendly-islay",
+  "fullContent": [
+    {
+      "_key": "ec4d6e57fa",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "a369d83e4e",
+          "_type": "span",
+          "marks": [],
+          "text": "Quiet roads, open coastline, wide beaches, and a pace of life that suits dogs as much as their owners. We welcome dogs regularly at Portbahn House and Shorefield Eco House, and our guests tell us their dogs fall in love with the place as much as they do."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "pJFuS5m6qSz-",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "Wv90JbSztR7Y",
+          "_type": "span",
+          "text": "Dog-Friendly Beaches on Islay"
+        }
+      ]
+    },
+    {
+      "_key": "a9c959b39e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "58a7f0a7af",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay has some of the finest beaches in Scotland — and there are no seasonal dog restrictions. Dogs are welcome on all beaches, year-round. Always clean up after your dog and keep them on a lead near fields, farmland, and livestock — Islay is a working farming community and this applies everywhere, not just on beaches."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "21b64a2422",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "7360eecc8c",
+          "_type": "span",
+          "marks": [],
+          "text": "Portbahn Beach — 5 minutes from Portbahn House and Shorefield Eco House via the war memorial path. Three sheltered bays with rock pools and calm water. Safe for dogs and swimming. Rarely busy even in summer."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "bd56f71d4d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0409dd8bd2",
+          "_type": "span",
+          "marks": [],
+          "text": "Port Charlotte Beach — 5 minutes by car from Bruichladdich. Wide sandy beach, shallow water. Good for dogs. The village itself is dog-friendly."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "0efa14a40d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "efe61640c2",
+          "_type": "span",
+          "marks": [],
+          "text": "Machir Bay — One of Islay's most dramatic beaches. Very open to the Atlantic. The surf is powerful — keep dogs on a lead near the water's edge."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "426bc0bbee",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "cbce1f2c49",
+          "_type": "span",
+          "marks": [],
+          "text": "Laggan Bay (Airport Beach) — A long, flat, empty beach alongside the airport runway. Rarely busy. Good for dogs."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "22picc4NyaYk",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "aaPuoEXeJyTd",
+          "_type": "span",
+          "text": "Walks with Your Dog"
+        }
+      ]
+    },
+    {
+      "_key": "3774981b80",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0baae897f7",
+          "_type": "span",
+          "marks": [],
+          "text": "Coastal path — Bruichladdich to Port Charlotte: Directly accessible from Portbahn House and Shorefield Eco House. The flat coastal cycle path runs along the shore of Loch Indaal all the way to Port Charlotte — around 40 minutes one way. Good off-lead stretches away from road sections. This is the easiest daily walk from the properties."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "561efb71a8",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "2b1c1c56bf",
+          "_type": "span",
+          "marks": [],
+          "text": "Bridgend Woods: Woodland walking through some of Islay's limited tree cover — a pleasant change from open coast. Park at Bridgend Stores or the Bridgend Hotel. Good off-lead ground in the woods. Well-suited for dogs who like sniffing around in undergrowth."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from dog-friendly-islay extendedEditorial"
+}

@@ -1,0 +1,217 @@
+{
+  "_id": "editorial-block-archaeology-history-islay-s-heritage-sites-in-detail",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "archaeology-history-islay-s-heritage-sites-in-detail"
+  },
+  "title": "Islay's Heritage Sites in Detail",
+  "canonicalHome": "/explore-islay/archaeology-history",
+  "fullContent": [
+    {
+      "_key": "0bg9vem68",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "m0305k6rf",
+          "_type": "span",
+          "marks": [
+            "zi62fnx7m"
+          ],
+          "text": "Finlaggan"
+        },
+        {
+          "_key": "7t1mvp3yl",
+          "_type": "span",
+          "marks": [],
+          "text": " is not well known outside Scotland, and even within Scotland it is undervisited. That is partly its appeal. The Lordship of the Isles, which administered its domain from the islands of Loch Finlaggan between approximately 1150 and 1493, was the last major Gaelic polity in Scotland — a maritime empire that at its height controlled the Hebrides and much of the west coast under a system of Gaelic law and administration separate from the Scottish crown. The Council of the Isles met on Eilean na Comhairle (Council Island), the smaller of Finlaggan's two islands. The larger island, Eilean Mòr, held a chapel, a great hall, and the buildings of the Lordship. After the forfeiture of the Lordship in 1493, Finlaggan was abandoned and has remained undisturbed. The visitor centre is open from Saturday 5 April, Monday to Saturday 1100–1630, closed Sunday; entry is by donation. The islands are accessible year-round via a short path and causeway."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "zi62fnx7m",
+          "_type": "link",
+          "href": "https://finlaggan.com"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "ZvsXJi15zp2a",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "R-5BP8lBbn2X",
+          "_type": "span",
+          "text": "The Kildalton Cross: Context for Visitors"
+        }
+      ]
+    },
+    {
+      "_key": "sj17m9aqc",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "6j6n6xjmt",
+          "_type": "span",
+          "marks": [],
+          "text": "The Kildalton Cross stands in the graveyard of Kildalton Church on the south-east coast of Islay, roughly 8 miles east of "
+        },
+        {
+          "_key": "8qaavzxw9",
+          "_type": "span",
+          "marks": [
+            "di49qmghb"
+          ],
+          "text": "Ardbeg"
+        },
+        {
+          "_key": "y4vg0ibvg",
+          "_type": "span",
+          "marks": [],
+          "text": ", and has stood in that location since it was carved in approximately 800 AD. It is a ringed high cross carved from a single block of blue-grey epidiorite, standing 2.65 metres high. The quality and condition of the carving — Old Testament scenes on the west face, interlaced knotwork on the east, a Virgin and Child in the central roundel — is exceptional for its age and outdoor situation. It is one of only two surviving 8th-century ringed high crosses in Scotland and is listed by "
+        },
+        {
+          "_key": "9yxrn1x4w",
+          "_type": "span",
+          "marks": [
+            "fhenwl6ug"
+          ],
+          "text": "Historic Environment Scotland"
+        },
+        {
+          "_key": "sakv29ojz",
+          "_type": "span",
+          "marks": [],
+          "text": " as a Scheduled Monument. The site is open year-round, free, and rarely crowded. The Kildalton Shoreline Walk from Port Ellen (see "
+        },
+        {
+          "_key": "y4oheshrz",
+          "_type": "span",
+          "marks": [
+            "5vjac5ivw"
+          ],
+          "text": "walking guide"
+        },
+        {
+          "_key": "wfs611nby",
+          "_type": "span",
+          "marks": [],
+          "text": ") provides the most scenic approach; driving directly from Port Ellen to Kildalton takes about 20 minutes on a single-track road."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "di49qmghb",
+          "_type": "link",
+          "href": "https://www.ardbeg.com"
+        },
+        {
+          "_key": "fhenwl6ug",
+          "_type": "link",
+          "href": "https://www.historicenvironment.scot/visit-a-place/places/kildalton-cross/"
+        },
+        {
+          "_key": "5vjac5ivw",
+          "_type": "link",
+          "href": "/explore-islay/walking"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "T1OJfn5BBv5_",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "Nv6tTe6nZPeX",
+          "_type": "span",
+          "text": "Islay Archaeology Week and Active Research"
+        }
+      ]
+    },
+    {
+      "_key": "943qwxsay",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "3el5o7gz5",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay Archaeology Week, usually held in August, is the best opportunity for visitors to access active excavations and meet the researchers. The event is organised by Islay Heritage — the local charity that also runs ongoing research excavations at Dunyvaig Castle and, until recently, at Rubha Port an t-Seilich on the east coast. Dig days typically include guided walks to current excavation sites, public talks, and volunteer taster sessions. The Council for British Archaeology Festival (2026: 18 July–2 August) may also include Islay-specific events. Check the "
+        },
+        {
+          "_key": "zf0aj57yo",
+          "_type": "span",
+          "marks": [
+            "yr964vra8"
+          ],
+          "text": "Museum of Islay Life"
+        },
+        {
+          "_key": "6ncea8huy",
+          "_type": "span",
+          "marks": [],
+          "text": " and Islay Heritage websites for the current programme closer to the date."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "yr964vra8",
+          "_type": "link",
+          "href": "https://www.islaymuseum.org"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "_sfgmu4nIEsW",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "N6LITg9MQJPu",
+          "_type": "span",
+          "text": "Access Practicalities"
+        }
+      ]
+    },
+    {
+      "_key": "bsvwctx3q",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "fsheevdvo",
+          "_type": "span",
+          "marks": [],
+          "text": "Most heritage sites on Islay are free to visit and require no booking. Finlaggan visitor centre is open from Saturday 5 April, Monday–Saturday 11:00–16:30, closed Sunday; entry is by donation (tel: +44(0)1496 840 644). The islands are accessible at any time. The American Monument is reached via a 20-minute walk from the "
+        },
+        {
+          "_key": "e5claiue1",
+          "_type": "span",
+          "marks": [
+            "ur32vhee9"
+          ],
+          "text": "RSPB The Oa"
+        },
+        {
+          "_key": "9wl7tws8w",
+          "_type": "span",
+          "marks": [],
+          "text": " reserve car park at PA42 7AU — the car park has information boards and picnic tables. Kilchoman Military Cemetery is immediately adjacent to the public road at Kilchoman Church — no walking required. The Kildalton Cross and Kildalton Chapel graveyard are accessible year-round from the road end at Kildalton. Dunyvaig Castle is viewable from the Kildalton Shoreline Walk path — do not attempt to enter the ruined structure. Bunnahabhain Stromatolites are accessible from the distillery car park: walk through the distillery buildings toward the southern end, pass the gate beyond the distillery cottages, and follow the rough coastal path toward Rubha a'Mhill — the first exposures appear approximately 50–100 metres after the gate on the exposed shoreline. Grid reference NR 4294 7021 (approx. 55.883, -6.123). Best at low tide."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "ur32vhee9",
+          "_type": "link",
+          "href": "https://www.rspb.org.uk/reserves-and-events/reserves-a-z/the-oa"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from archaeology-history extendedEditorial"
+}

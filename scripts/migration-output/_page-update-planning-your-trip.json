@@ -1,0 +1,26 @@
+{
+  "pageId": "guide-planning-your-trip",
+  "slug": "planning-your-trip",
+  "newBlockRefs": [
+    {
+      "_key": "zdHrc09eViJB",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-planning-your-trip-when-how-long-to-stay"
+      },
+      "version": "full",
+      "customKicker": "Timing"
+    },
+    {
+      "_key": "cFuqdSbpJlUU",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-planning-your-trip-what-to-pack-book"
+      },
+      "version": "full",
+      "customKicker": "Practical"
+    }
+  ]
+}

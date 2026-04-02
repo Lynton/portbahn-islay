@@ -1,0 +1,221 @@
+{
+  "_id": "editorial-block-islay-wildlife-seasonal-wildlife-guide",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "islay-wildlife-seasonal-wildlife-guide"
+  },
+  "title": "Seasonal Wildlife Guide",
+  "canonicalHome": "/explore-islay/islay-wildlife",
+  "fullContent": [
+    {
+      "_key": "w02",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w02c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay's wildlife calendar has distinct seasons, and timing your trip around one or two target species transforms the experience."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "w03",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w03c0",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "October to April (winter)"
+        },
+        {
+          "_key": "w03c1",
+          "_type": "span",
+          "marks": [],
+          "text": " is the standout season for birdwatchers. The barnacle geese arrive from Greenland in October, and at their peak there are over 30,000 at Loch Gruinart — the morning flight at dawn, when thousands lift off the loch simultaneously, is one of the most extraordinary wildlife spectacles in Britain. The sound carries for miles. This is also the best time for waders, wildfowl, and raptors on the reserve. Winter light on the Rhinns is often extraordinary — low, long, and golden even on clear days."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "w04",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w04c0",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "May to September (summer)"
+        },
+        {
+          "_key": "w04c1",
+          "_type": "span",
+          "marks": [],
+          "text": " offers different wildlife but equally rich. Basking sharks patrol the waters around the Mull of Oa and Rinns Point — Islay is one of the better spots in Scotland for seeing them from headlands in calm conditions. Minke whales occasionally appear in the Sound of Islay between June and August. Seabirds nest on the coastal cliffs at The Oa through summer; this is the best time to see choughs, one of the UK's rarest corvids, on the clifftop walks there. Sea eagles breed on Islay and can be seen year-round, but are more actively hunting over coastal areas in summer."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "w05",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w05c0",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Year-round"
+        },
+        {
+          "_key": "w05c1",
+          "_type": "span",
+          "marks": [],
+          "text": ": both eagle species, grey and common seals, occasional otters, and year-round birdwatching at Loch Gruinart and the coastal paths."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "YFoCch37urNi",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "Tkw3JWroS2Ui",
+          "_type": "span",
+          "text": "Watching the Barnacle Geese at Loch Gruinart"
+        }
+      ]
+    },
+    {
+      "_key": "w07",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w07c0",
+          "_type": "span",
+          "marks": [],
+          "text": "RSPB Loch Gruinart reserve is 20 minutes' drive from our Bruichladdich properties, accessed via the B8018 road through Kilchoman. The reserve has two hides and an information centre. The best viewing is at dawn, when the geese lift from their overnight roost on the loch — arrive before first light and wait in the hide. The experience is as much about sound as sight: the noise of 30,000 birds building to take flight, and then the overwhelming rush of wings, is unlike anything else."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "w08",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w08c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Peak numbers are typically November and December. By March the geese are preparing to leave; by April they're gone. The reserve is free to visit; parking and hides are at the end of the reserve road. If you're coming in winter, dress for cold and damp — binoculars with good low-light performance make a significant difference at dawn."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "w09",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w09c0",
+          "_type": "span",
+          "marks": [],
+          "text": "RSPB Loch Gruinart is also, separately, an oyster farm — one of the finest in Scotland, farming in the cold, clean tidal waters of the loch. Combining a dawn geese watch with fresh oysters later in the morning is one of the best day-out combinations on the island. See the "
+        },
+        {
+          "_key": "w09c1",
+          "_type": "span",
+          "marks": [
+            "w09lnk1"
+          ],
+          "text": "food and drink guide"
+        },
+        {
+          "_key": "w09c2",
+          "_type": "span",
+          "marks": [],
+          "text": " for the Loch Gruinart Oyster Shack details."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "w09lnk1",
+          "_type": "link",
+          "href": "/explore-islay/food-and-drink"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "P7_3BeAM9YFY",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "5tZ__BB0hkr7",
+          "_type": "span",
+          "text": "Watching for Otters"
+        }
+      ]
+    },
+    {
+      "_key": "w11",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w11c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay's otters are shy and elusive, but they are there. The best chance is along sheltered shorelines — the Bruichladdich to Port Charlotte coastal path runs along exactly the right kind of terrain, with rocky outcrops, seaweed beds, and shallow water where otters feed. Early morning and dusk are the productive times: an otter moving along the shore, turning rocks or diving briefly, can be spotted by a careful eye if you walk slowly and scan ahead rather than just watching your feet."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "w12",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w12c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Loch Gruinart's shoreline and the quieter stretches of the Rhinns coastline around Portnahaven are also good. The Corryvreckan channel between Jura and Scarba (accessible on a day trip to Jura) holds otters, though the primary attraction there is the whirlpool itself."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "w13",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w13c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Patience is the essential kit. Binoculars help. If you're actively looking for otters, plan a slow two-hour coastal walk rather than a brisk one."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from islay-wildlife extendedEditorial"
+}

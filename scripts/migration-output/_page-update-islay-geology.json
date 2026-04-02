@@ -1,0 +1,36 @@
+{
+  "pageId": "guide-islay-geology",
+  "slug": "islay-geology",
+  "newBlockRefs": [
+    {
+      "_key": "WymWLrQQomD0",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-islay-geology-islay-s-ancient-rocks"
+      },
+      "version": "full",
+      "customKicker": "Geology"
+    },
+    {
+      "_key": "B7X9jsN0rFV1",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-islay-geology-key-geological-sites"
+      },
+      "version": "full",
+      "customKicker": "Sites"
+    },
+    {
+      "_key": "PmAgF9VH1PtA",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-islay-geology-walks-further-reading"
+      },
+      "version": "full",
+      "customKicker": "Resources"
+    }
+  ]
+}

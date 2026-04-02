@@ -1,0 +1,26 @@
+{
+  "pageId": "guide-getting-around-islay",
+  "slug": "getting-around-islay",
+  "newBlockRefs": [
+    {
+      "_key": "1bE2CFd5hoMl",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-getting-around-islay-transport-options-on-islay"
+      },
+      "version": "full",
+      "customKicker": "Transport"
+    },
+    {
+      "_key": "YHdWgnEVLHt5",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-getting-around-islay-walking-the-jura-ferry"
+      },
+      "version": "full",
+      "customKicker": "Local Access"
+    }
+  ]
+}

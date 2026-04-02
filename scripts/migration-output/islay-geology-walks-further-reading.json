@@ -1,0 +1,212 @@
+{
+  "_id": "editorial-block-islay-geology-walks-further-reading",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "islay-geology-walks-further-reading"
+  },
+  "title": "Walks & Further Reading",
+  "canonicalHome": "/explore-islay/islay-geology",
+  "fullContent": [
+    {
+      "_key": "gWalksP1",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gWalksP1s1",
+          "_type": "span",
+          "marks": [],
+          "text": "The islaygeology.org group is the authoritative local resource for anyone wanting to explore Islay’s geology with expert guidance. They run monthly geology walks on Sundays during the summer months (June to September), as part of the weekly walk programme organised by the Islay Natural History Trust. Walks are free, though donations to the trust are welcome."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "gWalksP2",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gWalksP2s1",
+          "_type": "span",
+          "marks": [],
+          "text": "Past walks have covered everything from the Rhinns gneiss and the Portnahaven foreshore to the Ballygrant area and early evidence of human habitation. Suitable for all ages and abilities - not just for geologists. To find out about upcoming walks, contact the group at "
+        },
+        {
+          "_key": "gWalksP2s2",
+          "_type": "span",
+          "marks": [
+            "gWalksP2lk0"
+          ],
+          "text": "islaygeology@gmail.com"
+        },
+        {
+          "_key": "gWalksP2s3",
+          "_type": "span",
+          "marks": [],
+          "text": " or check the events section at "
+        },
+        {
+          "_key": "gWalksP2s4",
+          "_type": "span",
+          "marks": [
+            "gWalksP2lk1"
+          ],
+          "text": "islaygeology.org"
+        },
+        {
+          "_key": "gWalksP2s5",
+          "_type": "span",
+          "marks": [],
+          "text": "."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "gWalksP2lk0",
+          "_type": "link",
+          "href": "mailto:islaygeology@gmail.com"
+        },
+        {
+          "_key": "gWalksP2lk1",
+          "_type": "link",
+          "href": "https://islaygeology.org"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "gWalksP3",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gWalksP3s1",
+          "_type": "span",
+          "marks": [],
+          "text": "If you're visiting outside the walk season, the website hosts virtual field trips and the full catalogue of excursion routes as GPX files, downloadable for use on OS maps."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "H_8xBe5S_gZ3",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "YjOOBI-t0_as",
+          "_type": "span",
+          "text": "Further Reading and Resources"
+        }
+      ]
+    },
+    {
+      "_key": "gReadP1",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gReadP1s1",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "A Guide to the Geology of Islay"
+        },
+        {
+          "_key": "gReadP1s2",
+          "_type": "span",
+          "marks": [],
+          "text": " — published by islaygeology.org, £14.99. The 2025 edition is a substantial rewrite covering 12 varied geological excursions on Islay, ranging from easy coastal walks to longer hillier routes. Written for readers with some geological background, but accessible to interested non-specialists. Companion volumes cover Jura and Colonsay. Available from islaygeology.org."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "gReadP2",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gReadP2s1",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Professor Steven Mithen’s books"
+        },
+        {
+          "_key": "gReadP2s2",
+          "_type": "span",
+          "marks": [],
+          "text": " — Mithen is Professor of Early Prehistory at the University of Reading and has been returning to Islay for research for decades. His books aren't geology texts, but they bring the island's deep past vividly to life in a way that connects landscape, geology and human history."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "gReadB1",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gReadB1s1",
+          "_type": "span",
+          "marks": [
+            "em"
+          ],
+          "text": "To the Islands"
+        },
+        {
+          "_key": "gReadB1s2",
+          "_type": "span",
+          "marks": [],
+          "text": " — a personal memoir of 25 years of archaeological fieldwork in the Hebrides, focused on Mesolithic hunter-gatherers. A good read before you come."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "gReadB2",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gReadB2s1",
+          "_type": "span",
+          "marks": [
+            "em"
+          ],
+          "text": "Land of the Ilich"
+        },
+        {
+          "_key": "gReadB2s2",
+          "_type": "span",
+          "marks": [],
+          "text": " (Birlinn, 2021) — a broader sweep of Islay’s history from the earliest settlers to modern times, covering archaeology, geology, the clearances and the island as it is today. Worth reading on-island, by a fire, with a dram."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "gReadP3",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gReadP3s1",
+          "_type": "span",
+          "marks": [],
+          "text": "Both are in print and available as ebooks - worth ordering before you come."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from islay-geology extendedEditorial"
+}

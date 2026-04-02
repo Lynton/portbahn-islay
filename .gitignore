@@ -50,3 +50,6 @@ production.tar.gz
 # local content snapshots — exported from Sanity, not committed
 /exports/content-snapshots/
 data/exports/
+
+# Sanity Studio build artifacts
+/dist/

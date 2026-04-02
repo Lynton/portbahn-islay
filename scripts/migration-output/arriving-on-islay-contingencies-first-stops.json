@@ -1,0 +1,135 @@
+{
+  "_id": "editorial-block-arriving-on-islay-contingencies-first-stops",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "arriving-on-islay-contingencies-first-stops"
+  },
+  "title": "Contingencies & First Stops",
+  "canonicalHome": "/islay-travel/arriving-on-islay",
+  "fullContent": [
+    {
+      "_key": "56649c745a",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "a8faa4f4c2",
+          "_type": "span",
+          "marks": [],
+          "text": "Ferry cancellations happen on Islay. Southwest gales are the main cause, typically in winter and sometimes in autumn. Port Askaig is more sheltered than Port Ellen — when one route is affected, CalMac often continues to run the other. Check CalMac's website and app for real-time updates."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "1817f88ddf",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "13621e3974",
+          "_type": "span",
+          "marks": [],
+          "text": "If your outbound crossing is cancelled: contact me immediately. I've helped dozens of guests navigate this and there's always a solution. We'll find the next available sailing, adjust your check-in, and if you need to stay near Kennacraig overnight, Tarbert is 5 minutes from the terminal."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "f63efaa9d2",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "e9b57f6ea0",
+          "_type": "span",
+          "marks": [],
+          "text": "If your return crossing is cancelled: contact me immediately. We'll extend your stay at no charge while we find the next sailing. In 8+ years and over 600 guest stays, we've never had a booking collapse due to CalMac. There is always a solution — it just sometimes takes a day longer to find it. Our communication rating is 5.0/5 across 30+ reviews that specifically mention ferry support."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "AiECxInyV4Gv",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "S5HPqCkRqKEq",
+          "_type": "span",
+          "text": "Weather: What to Expect"
+        }
+      ]
+    },
+    {
+      "_key": "ffa117f1e7",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "1cd0c45e53",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay weather is changeable year-round. It rains here. It blows here. And then the light does something extraordinary and you'll understand immediately why guests keep coming back. Pack layers and waterproofs regardless of the season."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "FLPsQdXRgqQk",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "OSPhtWR875PL",
+          "_type": "span",
+          "text": "Your First Stop"
+        }
+      ]
+    },
+    {
+      "_key": "682a114a7f",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c6b891452f",
+          "_type": "span",
+          "marks": [],
+          "text": "Arriving at Port Askaig: The Port Askaig Hotel bar is steps from the ferry and looks straight across the Sound of Islay to Jura. A good place to decompress before the drive."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "97f73938ab",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "43b865d895",
+          "_type": "span",
+          "marks": [],
+          "text": "Arriving at Port Ellen: Walk along the Port Ellen seafront towards the distillery malting buildings before getting in the car. It takes 10 minutes and sets the tone properly."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "48bd700865",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "9ced0f3c8a",
+          "_type": "span",
+          "marks": [],
+          "text": "Then: Bruichladdich, your home for the week. Portbahn House and Shorefield Eco House are both a 5-minute walk from Bruichladdich Distillery along the coastal cycle path. The distillery visitor centre welcomes walk-in visitors — no booking needed, just drop in."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from arriving-on-islay extendedEditorial"
+}

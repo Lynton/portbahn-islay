@@ -288,6 +288,7 @@ npx sanity deploy # Deploy Sanity Studio
 - **Every ~25k tokens:** Provide checkpoint summary (work done, remaining tasks, suggested commit point)
 - **At ~150k tokens (75%):** Commit all work, produce session handoff doc, stop
 - **Large operations** (data generation, bulk imports): use Task tool to spawn sub-agents
+- **Session end:** Update `~/dev/_work/pbi/_context.md`, then update `~/dev/ecosystem/PROJECT-STATUS.md` (cross-site status — lives in a separate repo, easy to forget)
 
 ### Session handoff format
 ```markdown

@@ -1,0 +1,262 @@
+{
+  "_id": "editorial-block-archaeology-history-planning-your-heritage-day",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "archaeology-history-planning-your-heritage-day"
+  },
+  "title": "Planning Your Heritage Day",
+  "canonicalHome": "/explore-islay/archaeology-history",
+  "fullContent": [
+    {
+      "_key": "6y2ois18r",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "g73xj5h2e",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay's heritage sites are spread across the island, which means the best approach is to pair them with other activities on the same route rather than making each a standalone trip. Three natural combinations work well:"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "phm2xkwh6",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "m4zi5gnh6",
+          "_type": "span",
+          "marks": [],
+          "text": "The Lords of the Isles day (central Islay): "
+        },
+        {
+          "_key": "s8amcr5p3",
+          "_type": "span",
+          "marks": [
+            "d3ghbxv2e"
+          ],
+          "text": "Finlaggan"
+        },
+        {
+          "_key": "pm8qankgc",
+          "_type": "span",
+          "marks": [],
+          "text": " in central Islay is 25 minutes from our properties — half a day including the walk to Eilean Mòr and time at the visitor centre. On the same road east, "
+        },
+        {
+          "_key": "j2vwjqeou",
+          "_type": "span",
+          "marks": [
+            "py2n46sot"
+          ],
+          "text": "Bunnahabhain Distillery"
+        },
+        {
+          "_key": "a9uv4frtf",
+          "_type": "span",
+          "marks": [],
+          "text": " is 30–35 minutes north, and the stromatolite outcrops are walkable from the distillery car park. "
+        },
+        {
+          "_key": "o6m4g9xf6",
+          "_type": "span",
+          "marks": [
+            "mwdjaqwy6"
+          ],
+          "text": "Caol Ila"
+        },
+        {
+          "_key": "2242jdaoa",
+          "_type": "span",
+          "marks": [],
+          "text": " and "
+        },
+        {
+          "_key": "t1sjp13mp",
+          "_type": "span",
+          "marks": [
+            "we4jozedg"
+          ],
+          "text": "Ardnahoe"
+        },
+        {
+          "_key": "bse5udwzv",
+          "_type": "span",
+          "marks": [],
+          "text": " distilleries are on the same north coast route. Combine Finlaggan with one or two north coast distilleries for a full day that covers medieval history, geology, and whisky."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "d3ghbxv2e",
+          "_type": "link",
+          "href": "https://finlaggan.com"
+        },
+        {
+          "_key": "py2n46sot",
+          "_type": "link",
+          "href": "https://bunnahabhain.com"
+        },
+        {
+          "_key": "mwdjaqwy6",
+          "_type": "link",
+          "href": "https://www.malts.com/en-gb/distilleries/caol-ila"
+        },
+        {
+          "_key": "we4jozedg",
+          "_type": "link",
+          "href": "https://ardnahoedistillery.com"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "bmmrn5po9",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "ave7g342w",
+          "_type": "span",
+          "marks": [],
+          "text": "The south coast cluster (Kildalton): The Kildalton Shoreline Walk connects Port Ellen with "
+        },
+        {
+          "_key": "70lcth5qr",
+          "_type": "span",
+          "marks": [
+            "j2xrezfj9"
+          ],
+          "text": "Laphroaig"
+        },
+        {
+          "_key": "jipltj7ot",
+          "_type": "span",
+          "marks": [],
+          "text": ", "
+        },
+        {
+          "_key": "jupxyell5",
+          "_type": "span",
+          "marks": [
+            "517jljsho"
+          ],
+          "text": "Lagavulin"
+        },
+        {
+          "_key": "1ei9yiyim",
+          "_type": "span",
+          "marks": [],
+          "text": ", "
+        },
+        {
+          "_key": "5aijzghuf",
+          "_type": "span",
+          "marks": [
+            "no5onp10s"
+          ],
+          "text": "Ardbeg"
+        },
+        {
+          "_key": "xi14kgbtw",
+          "_type": "span",
+          "marks": [],
+          "text": ", and the Kildalton Cross in a single linear route — distilleries and an 8th-century carved cross on the same coastal walk. The cross and the ruined Kildalton Chapel are at the eastern end; Dunyvaig Castle ruins are visible from the path near Lagavulin. A south coast day combining three distilleries and two heritage sites is genuinely excellent. See the "
+        },
+        {
+          "_key": "q1bjhvbzo",
+          "_type": "span",
+          "marks": [
+            "nlzq551e7"
+          ],
+          "text": "walking guide"
+        },
+        {
+          "_key": "hwwxd6qsy",
+          "_type": "span",
+          "marks": [],
+          "text": " for the route."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "j2xrezfj9",
+          "_type": "link",
+          "href": "https://www.laphroaig.com"
+        },
+        {
+          "_key": "517jljsho",
+          "_type": "link",
+          "href": "https://www.malts.com/en-gb/distilleries/lagavulin"
+        },
+        {
+          "_key": "no5onp10s",
+          "_type": "link",
+          "href": "https://www.ardbeg.com"
+        },
+        {
+          "_key": "nlzq551e7",
+          "_type": "link",
+          "href": "/explore-islay/walking"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "9rtltq9q1",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "das4xsj6t",
+          "_type": "span",
+          "marks": [],
+          "text": "The WW1 day (west coast and Oa): "
+        },
+        {
+          "_key": "aofkr2637",
+          "_type": "span",
+          "marks": [
+            "0xot1w1qe"
+          ],
+          "text": "Kilchoman Military Cemetery"
+        },
+        {
+          "_key": "a4mozt75o",
+          "_type": "span",
+          "marks": [],
+          "text": " is on the west coast of Islay, 20 minutes from our properties — 5 minutes from "
+        },
+        {
+          "_key": "b2c43lam2",
+          "_type": "span",
+          "marks": [
+            "7je1xwa0h"
+          ],
+          "text": "Kilchoman Distillery"
+        },
+        {
+          "_key": "rebav9cw4",
+          "_type": "span",
+          "marks": [],
+          "text": " and café. The American Monument on the Oa is 35–40 minutes further south. Both sites commemorate the same 1918 disasters — the Tuscania and Otranto troopships — and visiting both in a single day gives a more complete picture of the event than either alone. Start at Kilchoman (morning, distillery and cemetery), drive south, walk the Oa to the American Monument (1–1.5 hours), and return via Port Ellen for The Copper Still café."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "0xot1w1qe",
+          "_type": "link",
+          "href": "https://kilchomandistillery.com"
+        },
+        {
+          "_key": "7je1xwa0h",
+          "_type": "link",
+          "href": "https://kilchomandistillery.com"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from archaeology-history extendedEditorial"
+}

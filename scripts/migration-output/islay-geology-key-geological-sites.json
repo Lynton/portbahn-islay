@@ -1,0 +1,153 @@
+{
+  "_id": "editorial-block-islay-geology-key-geological-sites",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "islay-geology-key-geological-sites"
+  },
+  "title": "Key Geological Sites",
+  "canonicalHome": "/explore-islay/islay-geology",
+  "fullContent": [
+    {
+      "_key": "gTilliteP1",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gTilliteP1s1",
+          "_type": "span",
+          "marks": [],
+          "text": "The Port Askaig Tillite is one of the most famous geological deposits in Britain, and it's one of the most accessible. It's exposed in the road cutting directly beside the Port Askaig ferry terminal - the same terminal where the Jura ferry departs every 20 minutes. If you've ever crossed to Jura and noticed the unusual grey-green rocky face beside the road, you've already seen it."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "gTilliteP2",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gTilliteP2s1",
+          "_type": "span",
+          "marks": [],
+          "text": "The tillite is a glacial deposit formed approximately 700 million years ago during one of the most severe glaciations in Earth's history - a period geologists refer to as Snowball Earth, when ice may have reached close to the equator. The Port Askaig deposit records 17 separate ice advances and retreats, compressed into 750 metres of rock. It's a world reference site: geologists from universities across Britain and Europe come to Port Askaig specifically to see this exposure, and geology field trips have been using it for decades."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "gTilliteP3",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gTilliteP3s1",
+          "_type": "span",
+          "marks": [],
+          "text": "For a non-geologist, the rock itself looks chaotic - mixed fragments of different sizes jumbled together without the clean layering of most sedimentary rock. That's what glacial till looks like. Once you know what you're looking at, the chaos makes sense."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "gTilliteAcc",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gTilliteAccs1",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Access: "
+        },
+        {
+          "_key": "gTilliteAccs2",
+          "_type": "span",
+          "marks": [],
+          "text": "Roadside at Port Askaig ferry terminal. No walk required - the exposure is visible from the road and pavement. Free to visit, open year-round."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "wzNX6TX-go4v",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "xNOSKE1adJ1f",
+          "_type": "span",
+          "text": "Stromatolites at Bunnahabhain — The Oldest Life in Scotland"
+        }
+      ]
+    },
+    {
+      "_key": "gStromP1",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gStromP1s1",
+          "_type": "span",
+          "marks": [],
+          "text": "On the shore below Bunnahabhain Distillery, in the rocks of the Bonahaven Dolomite, you can find stromatolites: fossilised microbial colonies approximately 650 million years old. Stromatolites are among the earliest evidence of life on Earth - mounded structures built by photosynthetic bacteria in warm, shallow Precambrian seas. The ones at Bunnahabhain are among the best examples of Precambrian life in Britain, and some of the oldest macroscopic fossils in Scotland."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "gStromP2",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gStromP2s1",
+          "_type": "span",
+          "marks": [],
+          "text": "They're not immediately obvious if you don't know what you're looking for - they appear as layered, roughly dome-shaped structures in the dolomite rock of the foreshore, with a characteristic alternating calcite and dolomite banding. The islaygeology.org guidebook describes the location precisely, and their guided walks cover this site."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "gStromP3",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gStromP3s1",
+          "_type": "span",
+          "marks": [],
+          "text": "Visiting requires some scramble across rocky foreshore at low tide. Not difficult, but wear appropriate footwear and check the tide before you go."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "gStromAcc",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gStromAccs1",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Access: "
+        },
+        {
+          "_key": "gStromAccs2",
+          "_type": "span",
+          "marks": [],
+          "text": "Foreshore south-east of Bunnahabhain Distillery. Park at the distillery (well worth combining with a visit). Walk south along the shore. Low tide recommended. The islaygeology.org guidebook maps the exact location."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from islay-geology extendedEditorial"
+}

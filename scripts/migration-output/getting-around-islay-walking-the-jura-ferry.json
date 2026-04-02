@@ -1,0 +1,101 @@
+{
+  "_id": "editorial-block-getting-around-islay-walking-the-jura-ferry",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "getting-around-islay-walking-the-jura-ferry"
+  },
+  "title": "Walking & The Jura Ferry",
+  "canonicalHome": "/islay-travel/getting-around-islay",
+  "fullContent": [
+    {
+      "_key": "6f0b102898",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "cd4d8331d3",
+          "_type": "span",
+          "marks": [],
+          "text": "If you're staying at Portbahn House or Shorefield Eco House, a significant amount of what you'll want to do is within walking distance."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "fa8e41842f",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "6ba5788efd",
+          "_type": "span",
+          "marks": [],
+          "text": "Bruichladdich Distillery: 5 minutes along the coastal cycle path. The visitor centre welcomes walk-ins without a booking."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "9524cdcf40",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "5385570e6c",
+          "_type": "span",
+          "marks": [],
+          "text": "Portbahn Beach: 5 minutes via the war memorial path — three sheltered bays with rock pools."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "151a2adc23",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c822bb890e",
+          "_type": "span",
+          "marks": [],
+          "text": "Port Charlotte: 40 minutes on foot along the coast, 5 minutes by car. The village has the Port Charlotte Hotel, a museum, and the Lochindaal Seafood Kitchen."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "z2qU3LP_VZoN",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "cUgPCZscLZOz",
+          "_type": "span",
+          "text": "The Jura Passenger Ferry"
+        }
+      ]
+    },
+    {
+      "_key": "8c7c23bf37",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "6889a9e47b",
+          "_type": "span",
+          "marks": [],
+          "text": "From Port Askaig, foot passengers and cyclists can reach Jura on the Jura Passenger Ferry — a 5-minute crossing to Feolin. No booking required for foot passengers. The crossing runs regularly throughout the day."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from getting-around-islay extendedEditorial"
+}

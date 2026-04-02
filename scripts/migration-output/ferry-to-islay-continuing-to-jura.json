@@ -1,0 +1,41 @@
+{
+  "_id": "editorial-block-ferry-to-islay-continuing-to-jura",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "ferry-to-islay-continuing-to-jura"
+  },
+  "title": "Continuing to Jura",
+  "canonicalHome": "/islay-travel/ferry-to-islay",
+  "fullContent": [
+    {
+      "_key": "44a09622f8",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b7d9d44bd0",
+          "_type": "span",
+          "marks": [],
+          "text": "From Port Askaig, foot passengers and cyclists can take the Jura Passenger Ferry to Feolin on Jura — a 5-minute crossing, no booking needed for foot passengers. Jura is worth a day trip or an evening walk from Port Askaig. "
+        },
+        {
+          "_key": "3a0d1a2e9c",
+          "_type": "span",
+          "marks": [
+            "98e270768f"
+          ],
+          "text": "Jura day trip from Islay →"
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "98e270768f",
+          "_type": "link",
+          "href": "/explore-islay/visit-jura"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from ferry-to-islay extendedEditorial"
+}

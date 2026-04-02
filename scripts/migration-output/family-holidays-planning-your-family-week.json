@@ -1,0 +1,95 @@
+{
+  "_id": "editorial-block-family-holidays-planning-your-family-week",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "family-holidays-planning-your-family-week"
+  },
+  "title": "Planning Your Family Week",
+  "canonicalHome": "/explore-islay/family-holidays",
+  "fullContent": [
+    {
+      "_key": "k02",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "k02c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Seven nights is our minimum recommendation for Islay with children — it gives you five full days without feeling rushed. The island rewards a slower pace than most holiday destinations, and that suits children enormously. A rhythm that works well: alternate a beach day with a village or rainy day activity; save at least one day for a wildlife focus; plan one longer excursion across to the south coast distilleries or north to Loch Gruinart and Ardnave Point."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "k03",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "k03c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Don't try to do everything. The children who leave Islay happiest are the ones who had time to get genuinely absorbed in one beach, one rock pool, one morning watching the geese. One of our guests captured it well — \"the kids didn't want screens all week — they were too busy with the beach, the trampoline, and counting seals.\""
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "k04",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "k04c0",
+          "_type": "span",
+          "marks": [],
+          "text": "The Port Mor playground in Port Charlotte (5-minute drive) is a reliable backup for any afternoon that's going sideways — it has sea views and is right next to the village for an ice cream."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "KzQqzIUrFPFj",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "3neD1Lb8BU1w",
+          "_type": "span",
+          "text": "What to Pack"
+        }
+      ]
+    },
+    {
+      "_key": "k06",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "k06c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Wellies and waterproofs are non-negotiable. The weather changes hourly; that's not an exaggeration. A basic rock-pooling kit (bucket, small net) transforms Portbahn Beach at low tide — there are crabs, sea anemones, whelks, and small fish in every pool. We keep binoculars in all three properties, but if you're serious about wildlife bring your own with a higher magnification for the geese and eagles. Download tide times before you arrive — the rock-pooling window is roughly two hours either side of low tide, and planning around it pays off."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "k07",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "k07c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Wetsuits aren't essential but make a genuine difference if the children want to swim. The water around Islay runs cold year-round (10–14°C). A shorty wetsuit extends paddling sessions from two minutes to forty and can transform a beach day entirely."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from family-holidays extendedEditorial"
+}

@@ -1,0 +1,26 @@
+{
+  "pageId": "guide-dog-friendly-islay",
+  "slug": "dog-friendly-islay",
+  "newBlockRefs": [
+    {
+      "_key": "p4uKLIDqKTs1",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-dog-friendly-islay-dog-life-on-islay"
+      },
+      "version": "full",
+      "customKicker": "Guide"
+    },
+    {
+      "_key": "wikjnzM3TtZx",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-dog-friendly-islay-dog-friendly-venues-practicalities"
+      },
+      "version": "full",
+      "customKicker": "Practical"
+    }
+  ]
+}

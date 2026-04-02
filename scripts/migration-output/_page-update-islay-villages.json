@@ -1,0 +1,26 @@
+{
+  "pageId": "guide-islay-villages",
+  "slug": "islay-villages",
+  "newBlockRefs": [
+    {
+      "_key": "AvFewCe684uF",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-islay-villages-islay-villages-getting-oriented"
+      },
+      "version": "full",
+      "customKicker": "Orientation"
+    },
+    {
+      "_key": "S_weW4ME_I8t",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-islay-villages-further-afield-portnahaven-to-port-ellen"
+      },
+      "version": "full",
+      "customKicker": "Further Afield"
+    }
+  ]
+}

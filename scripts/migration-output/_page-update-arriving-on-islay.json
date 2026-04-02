@@ -1,0 +1,26 @@
+{
+  "pageId": "guide-arriving-on-islay",
+  "slug": "arriving-on-islay",
+  "newBlockRefs": [
+    {
+      "_key": "YYR0nt912AVS",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-arriving-on-islay-your-first-steps-on-islay"
+      },
+      "version": "full",
+      "customKicker": "Arrival"
+    },
+    {
+      "_key": "hU9b5szAbRjD",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-arriving-on-islay-contingencies-first-stops"
+      },
+      "version": "full",
+      "customKicker": "Practical"
+    }
+  ]
+}

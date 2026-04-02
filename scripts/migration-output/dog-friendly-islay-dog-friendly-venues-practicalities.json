@@ -1,0 +1,185 @@
+{
+  "_id": "editorial-block-dog-friendly-islay-dog-friendly-venues-practicalities",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "dog-friendly-islay-dog-friendly-venues-practicalities"
+  },
+  "title": "Dog-Friendly Venues & Practicalities",
+  "canonicalHome": "/explore-islay/dog-friendly-islay",
+  "fullContent": [
+    {
+      "_key": "f99d42b468",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0e7002c14a",
+          "_type": "span",
+          "marks": [],
+          "text": "We've always had dogs — crazy working cocker spaniels — and know how tricky it can be to grab a coffee or a bite of lunch when you've got one in tow. Always confirm ahead of your visit — policies can change."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "83bcc0e1b2",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "8a29a0368c",
+          "_type": "span",
+          "marks": [],
+          "text": "Pubs: All pubs on Islay welcome dogs in their bar areas. Near our properties: Port Charlotte Hotel and An Tigh Seinnse in Portnahaven. Across the island: Bridgend Hotel (Katie's Bar) and Bowmore Hotel (Luccis Whisky Bar)."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b7e33aab5d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "3e219c695f",
+          "_type": "span",
+          "marks": [],
+          "text": "Cafés: Several cafés on Islay welcome dogs. The closest to our properties is Debbie's Coffee Shop in Bruichladdich. Others include Craigard Kitchen in Ballygrant, Labels on Shore Street in Bowmore, Little Charlotte's Café in Port Ellen, and Cafaidh Blasta at the Islay Gaelic Centre in Bowmore."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b4fa78dab7",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "1a0e75041d",
+          "_type": "span",
+          "marks": [],
+          "text": "Restaurants and food venues: Islay Oysters at Killinallan, Islay's Plaice in Bowmore, and Peatzeria are among those with dog-friendly options. A quick call ahead is worth it if you're planning a meal out."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "B_iEwe8kC8n8",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "RWY7T1pQMKhr",
+          "_type": "span",
+          "text": "Practical Notes for Dog Owners on Islay"
+        }
+      ]
+    },
+    {
+      "_key": "eb2f9c8df7",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "db8b099d5e",
+          "_type": "span",
+          "marks": [],
+          "text": "Livestock: Sheep are everywhere on Islay — on roads, in fields adjacent to paths, sometimes in unexpected places. Dogs must be on leads near livestock. Particularly important during lambing season (spring)."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "5606855972",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "46a6f7eba0",
+          "_type": "span",
+          "marks": [],
+          "text": "Ticks: Common in long grass and bracken, particularly in summer and autumn. Check your dog thoroughly after walks in moorland or woodland. Tick removal tools are worth packing."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "3846321a39",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "5987d1bcb5",
+          "_type": "span",
+          "marks": [],
+          "text": "Local vet: Beth Newman, Islay Vet — 20 Shore St, Bowmore PA43 7LB. Phone: 01496 810205."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "40c6ed1038",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "7b74ec3b53",
+          "_type": "span",
+          "marks": [],
+          "text": "Dog grooming: Woof Wash Islay — phone: 07954 085630."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "g0_iO4AP9Mra",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "uM6d5SiFDWn5",
+          "_type": "span",
+          "text": "Getting Here with Your Dog and Where to Stay"
+        }
+      ]
+    },
+    {
+      "_key": "8fcea45030",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "cf9a9d1cb6",
+          "_type": "span",
+          "marks": [],
+          "text": "Travelling to Islay with a dog? CalMac welcomes dogs on all ferries. Two of our properties — Portbahn House and Shorefield Eco House — welcome dogs. Curlew Cottage is pet-free. For the full guide to ferry policy, bus restrictions (Citylink does not allow dogs), and property options: "
+        },
+        {
+          "_key": "5d5eeb8912",
+          "_type": "span",
+          "marks": [
+            "1de81da80e"
+          ],
+          "text": "Travelling to Islay with your dog →"
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "1de81da80e",
+          "_type": "link",
+          "href": "/islay-travel/travelling-to-islay-with-your-dog"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from dog-friendly-islay extendedEditorial"
+}

@@ -1,0 +1,161 @@
+{
+  "_id": "editorial-block-arriving-on-islay-your-first-steps-on-islay",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "arriving-on-islay-your-first-steps-on-islay"
+  },
+  "title": "Your First Steps on Islay",
+  "canonicalHome": "/islay-travel/arriving-on-islay",
+  "fullContent": [
+    {
+      "_key": "2a00f342fc",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "5bd670f6a7",
+          "_type": "span",
+          "marks": [],
+          "text": "The ferry docks, the ramp goes down, and Islay is right there. After the crossing from Kennacraig, stepping onto the island has a particular quality — you're properly somewhere else now. Take a breath. The island works at its own pace, and you might as well start as you mean to go on."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "YM8Vl-kyR9fV",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "nVhuT5RqXDPR",
+          "_type": "span",
+          "text": "Port Askaig or Port Ellen — Your First Steps"
+        }
+      ]
+    },
+    {
+      "_key": "e4d78cbd7d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "58b93fd205",
+          "_type": "span",
+          "marks": [],
+          "text": "Port Askaig: Small, quiet, and beautiful — sitting right on the Sound of Islay with Jura across the water. There are no shops or services at Port Askaig itself. The Port Askaig Hotel is steps from the ferry — if you're arriving in the afternoon or evening, the bar has some of the best views on the island. From Port Askaig to Bruichladdich is around 30 minutes. Follow the only road until you reach Bridgend, take the turning signed for Bruichladdich and Port Charlotte, and follow that road all the way in."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "db54619e95",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c30dabb40d",
+          "_type": "span",
+          "marks": [],
+          "text": "Port Ellen: Larger, with more on arrival. The Co-op is in the village and is the most convenient stop for supplies before heading north. There's a pub, a café, and fuel available. If you're arriving late and need to stock up, Port Ellen is the better arrival point. From Port Ellen to Bruichladdich is also around 30 minutes — follow the main road through Bowmore and continue north to Bridgend, then take the Bruichladdich and Port Charlotte turning."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "aa6b942626",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "33c77b4e33",
+          "_type": "span",
+          "marks": [],
+          "text": "For full information on the two routes, see our "
+        },
+        {
+          "_key": "3a7edf9386",
+          "_type": "span",
+          "marks": [
+            "024e337f51"
+          ],
+          "text": "ferry guide →"
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "024e337f51",
+          "_type": "link",
+          "href": "/islay-travel/ferry-to-islay"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "88gI2ZqvwnBs",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "PdT0cj6XmbZ9",
+          "_type": "span",
+          "text": "Arriving Late"
+        }
+      ]
+    },
+    {
+      "_key": "623072bd12",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c990d9b7f6",
+          "_type": "span",
+          "marks": [],
+          "text": "If your ferry arrives in the evening — or later than planned — the Co-op in Bowmore and the Co-op in Port Ellen are both well-stocked for supplies. Petrol stations on Islay close earlier than mainland equivalents — fill up during daylight if arriving late."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "ef0e86f129",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "3ce1efbf69",
+          "_type": "span",
+          "marks": [],
+          "text": "If you're arriving late, let us know in advance and we'll make sure the heating is on, the house is warm, and there's something ready for a cup of tea when you walk in. We've done this hundreds of times — a late arrival is no problem as long as we know it's coming."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "ljUJQhphoHwe",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "LQK66YykLXu7",
+          "_type": "span",
+          "text": "Early Departures"
+        }
+      ]
+    },
+    {
+      "_key": "428ffb5c9a",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "180ec0dc58",
+          "_type": "span",
+          "marks": [],
+          "text": "If you have an early sailing home, we'll make sure everything is ready the night before — checkout paperwork, any last-minute questions answered, and the house set for a quick and easy morning. If you need to leave before a standard check-out time, just let us know in advance."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from arriving-on-islay extendedEditorial"
+}

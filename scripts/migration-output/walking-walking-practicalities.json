@@ -1,0 +1,282 @@
+{
+  "_id": "editorial-block-walking-walking-practicalities",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "walking-walking-practicalities"
+  },
+  "title": "Walking Practicalities",
+  "canonicalHome": "/explore-islay/walking",
+  "fullContent": [
+    {
+      "_key": "xm5l29quc",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "yun1o6ph7",
+          "_type": "span",
+          "marks": [],
+          "text": "Walking on Islay requires the same basic kit regardless of the route: waterproof jacket, waterproof trousers or overtrousers, and footwear with some grip underfoot. The Oa and Ardnave are particularly exposed — on those routes the wind can be significant even on a day that looks calm in Bruichladdich. The Loch Gruinart Woodland Trail and the coastal path are forgiving in almost all conditions, but the "
+        },
+        {
+          "_key": "q8rheyj0c",
+          "_type": "span",
+          "marks": [
+            "fjw7hqlkb"
+          ],
+          "text": "RSPB The Oa"
+        },
+        {
+          "_key": "x74v08lft",
+          "_type": "span",
+          "marks": [],
+          "text": " and Ardnave clifftops are not."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "fjw7hqlkb",
+          "_type": "link",
+          "href": "https://www.rspb.org.uk/reserves-and-events/reserves-a-z/the-oa"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "4e9eeb4q0",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "mi1366eck",
+          "_type": "span",
+          "marks": [],
+          "text": "For most walks in this guide, walking shoes or light boots with grip are sufficient — you do not need full hiking boots for the coastal path or Finlaggan. For the Oa circular and Ardnave, walking boots with ankle support and proper waterproofs are sensible choices. Midges are present on Islay from late May to September, particularly in calm weather near woodland and still water. A midge head net and repellent (Smidge is the most effective) are worth carrying in summer. We keep a stock of midge net and repellent at all our properties."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "cs6MEhqhdYyF",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "IiX8Y42vbwsO",
+          "_type": "span",
+          "text": "When to Come for Walking"
+        }
+      ]
+    },
+    {
+      "_key": "ecl2usd21",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w6gqm1vtn",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay walks work in all seasons, but each has its character. Summer (June to August) gives the longest days — light until 11pm in June, which means evening walks and late coastal sunsets. The trade-off is midges and the occasional tourist pressure at the most famous spots. Autumn and winter give the geese (October to April at "
+        },
+        {
+          "_key": "ja6x494ka",
+          "_type": "span",
+          "marks": [
+            "kd3rz02mn"
+          ],
+          "text": "RSPB Loch Gruinart"
+        },
+        {
+          "_key": "bsfbni461",
+          "_type": "span",
+          "marks": [],
+          "text": " and Ardnave), dramatic skies, and the island largely to yourselves. Spring (March to May) is when the island flowers and the birdlife is at its most active. We have a slight preference for shoulder seasons — late September, October, and April — when the weather can be outstanding and the island is at its quietest."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "kd3rz02mn",
+          "_type": "link",
+          "href": "https://www.rspb.org.uk/reserves-and-events/reserves-a-z/loch-gruinart"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "hsKb7sM6aPFa",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "IFhm4WZSE4rt",
+          "_type": "span",
+          "text": "Combining Walks with Other Activities"
+        }
+      ]
+    },
+    {
+      "_key": "3c11hiyu7",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "pi6z0n5yc",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay's compact size makes it easy to combine walking with distillery visits, beaches, and food stops on the same day. The most natural combinations: start at "
+        },
+        {
+          "_key": "epq6sbz1a",
+          "_type": "span",
+          "marks": [
+            "iqkoluajo"
+          ],
+          "text": "Kilchoman Distillery"
+        },
+        {
+          "_key": "ezrray7no",
+          "_type": "span",
+          "marks": [],
+          "text": " for coffee or lunch, then walk down to Machir Bay and back along the dunes (allow 1.5 hours for the walk, 1–2 hours at the distillery). Alternatively, walk the coastal path to Port Charlotte in the morning, have lunch at the "
+        },
+        {
+          "_key": "re7p0sw0j",
+          "_type": "span",
+          "marks": [
+            "gpq5uupva"
+          ],
+          "text": "Lochindaal Seafood Kitchen"
+        },
+        {
+          "_key": "za82du0yq",
+          "_type": "span",
+          "marks": [],
+          "text": ", and return in the afternoon."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "iqkoluajo",
+          "_type": "link",
+          "href": "https://kilchomandistillery.com"
+        },
+        {
+          "_key": "gpq5uupva",
+          "_type": "link",
+          "href": "/explore-islay/food-and-drink"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "disbwzihj",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "g895y0vms",
+          "_type": "span",
+          "marks": [],
+          "text": "For north Islay days, "
+        },
+        {
+          "_key": "7dsxk1xsi",
+          "_type": "span",
+          "marks": [
+            "cig12q16s"
+          ],
+          "text": "RSPB Loch Gruinart"
+        },
+        {
+          "_key": "an3b09ht6",
+          "_type": "span",
+          "marks": [],
+          "text": " and Ardnave Point share the same access road and work well together — combine both with a stop at "
+        },
+        {
+          "_key": "o18kbxqnp",
+          "_type": "span",
+          "marks": [
+            "2dbqesf1y"
+          ],
+          "text": "Ardnahoe Distillery"
+        },
+        {
+          "_key": "i23hb6903",
+          "_type": "span",
+          "marks": [],
+          "text": " on the way back for a full day that covers wildlife, walking, and whisky. "
+        },
+        {
+          "_key": "bziz9wxoo",
+          "_type": "span",
+          "marks": [
+            "nzifipyk3"
+          ],
+          "text": "Finlaggan"
+        },
+        {
+          "_key": "5sn5cht8t",
+          "_type": "span",
+          "marks": [],
+          "text": " is a natural addition to any day that includes the north coast distilleries ("
+        },
+        {
+          "_key": "z8nwottyi",
+          "_type": "span",
+          "marks": [
+            "xn4gg5ykr"
+          ],
+          "text": "Bunnahabhain"
+        },
+        {
+          "_key": "wmi379hfs",
+          "_type": "span",
+          "marks": [],
+          "text": ", "
+        },
+        {
+          "_key": "tx6xrgy7q",
+          "_type": "span",
+          "marks": [
+            "rfpo4qyln"
+          ],
+          "text": "Caol Ila"
+        },
+        {
+          "_key": "dkqc33h9b",
+          "_type": "span",
+          "marks": [],
+          "text": ", Ardnahoe) — it sits roughly on the route and the island ruins take 30–40 minutes including a proper look around."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "cig12q16s",
+          "_type": "link",
+          "href": "https://www.rspb.org.uk/reserves-and-events/reserves-a-z/loch-gruinart"
+        },
+        {
+          "_key": "2dbqesf1y",
+          "_type": "link",
+          "href": "https://ardnahoedistillery.com"
+        },
+        {
+          "_key": "nzifipyk3",
+          "_type": "link",
+          "href": "https://finlaggan.com"
+        },
+        {
+          "_key": "xn4gg5ykr",
+          "_type": "link",
+          "href": "https://bunnahabhain.com"
+        },
+        {
+          "_key": "rfpo4qyln",
+          "_type": "link",
+          "href": "https://www.malts.com/en-gb/distilleries/caol-ila"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from walking extendedEditorial"
+}

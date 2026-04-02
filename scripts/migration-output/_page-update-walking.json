@@ -1,0 +1,26 @@
+{
+  "pageId": "guide-walking",
+  "slug": "walking",
+  "newBlockRefs": [
+    {
+      "_key": "d96ZSYwuvfeq",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-walking-walking-practicalities"
+      },
+      "version": "full",
+      "customKicker": "Practical"
+    },
+    {
+      "_key": "WDviIx54_spG",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-walking-walking-with-dogs-jura"
+      },
+      "version": "full",
+      "customKicker": "Notes"
+    }
+  ]
+}

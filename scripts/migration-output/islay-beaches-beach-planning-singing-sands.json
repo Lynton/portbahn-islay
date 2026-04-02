@@ -1,0 +1,87 @@
+{
+  "_id": "editorial-block-islay-beaches-beach-planning-singing-sands",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "islay-beaches-beach-planning-singing-sands"
+  },
+  "title": "Beach Planning & Singing Sands",
+  "canonicalHome": "/explore-islay/islay-beaches",
+  "fullContent": [
+    {
+      "_key": "b02",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b02c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay's beaches reward a little planning. For rock pooling — one of the best activities at Portbahn Beach, Portnahaven, and the east coast beaches — the window is roughly two hours either side of low tide. Download tide times before you arrive; the BBC Weather app covers Islay and is reliable. Low tide at any Loch Indaal beach gives you more rock pool area and calmer paddling; at Atlantic beaches it reveals wider stretches of sand."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b03",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b03c0",
+          "_type": "span",
+          "marks": [],
+          "text": "For beach access, most of the main beaches have small car parks or roadside parking — none are far from the road. Machir Bay and Saligo Bay have car parks at the end of minor single-track roads from Kilchoman and Saligo respectively; check these are passable before heading out in anything low-slung. Ardnave Point is accessed from the B8017 road toward Loch Gruinart — park at the end of the road and walk the last few minutes across the machair to the beach."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "iRJBcJ2DB2MU",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "NLWUX81X87iV",
+          "_type": "span",
+          "text": "Singing Sands"
+        }
+      ]
+    },
+    {
+      "_key": "b05",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b05c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Singing Sands (Traigh Bhàn) is on Islay's east coast, accessed from a small car park near Ballygrant off the A846. The walk to the beach takes around 20 minutes through pasture and machair — not difficult, suitable for most ages, but not a buggy-friendly route. The beach is beautiful in its own right, quiet and rarely visited — but the remarkable thing is the sand itself. When it's dry, it squeaks distinctly underfoot. Children are instantly obsessed with it; adults aren't far behind. Time it for the end of a sunny afternoon when the sand has had time to dry out. It's one of Islay's more unexpected pleasures. See also the "
+        },
+        {
+          "_key": "b05c1",
+          "_type": "span",
+          "marks": [
+            "b05lnk1"
+          ],
+          "text": "wildlife guide"
+        },
+        {
+          "_key": "b05c2",
+          "_type": "span",
+          "marks": [],
+          "text": " if you're combining with an east coast birding day."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "b05lnk1",
+          "_type": "link",
+          "href": "/explore-islay/islay-wildlife"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from islay-beaches extendedEditorial"
+}

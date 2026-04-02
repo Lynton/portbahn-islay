@@ -1,0 +1,175 @@
+{
+  "_id": "editorial-block-ferry-to-islay-routes-booking-the-crossing",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "ferry-to-islay-routes-booking-the-crossing"
+  },
+  "title": "Routes, Booking & the Crossing",
+  "canonicalHome": "/islay-travel/ferry-to-islay",
+  "fullContent": [
+    {
+      "_key": "834a7c01a7",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "a608b8c84f",
+          "_type": "span",
+          "marks": [],
+          "text": "CalMac operates two year-round routes from Kennacraig Ferry Terminal on the Kintyre peninsula to Islay."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "9dc99afece",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "35624a95dd",
+          "_type": "span",
+          "marks": [],
+          "text": "Kennacraig to Port Askaig: 2 hours. Serves the north of the island. More sheltered in bad weather — often the last route to be cancelled when southwest gales arrive. For guests staying near Bruichladdich and the Rhinns: Port Askaig is the closer arrival point, around 30 minutes drive across the island."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "3797eef153",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "6825e00bbd",
+          "_type": "span",
+          "marks": [],
+          "text": "Kennacraig to Port Ellen: 2 hours 20 minutes. Serves the south — the whisky coast, Port Ellen village, and Islay Airport. More exposed in rough weather than the Port Askaig route."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "oTM0tm4_a0_6",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "pi5ILiQu-s1r",
+          "_type": "span",
+          "text": "Booking Your Crossing"
+        }
+      ]
+    },
+    {
+      "_key": "21856c3433",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "7ff2c56d44",
+          "_type": "span",
+          "marks": [],
+          "text": "Book as early as possible — 12 weeks ahead for summer sailings and Fèis Ìle is not excessive. The island has limited capacity and ferries fill. Foot passengers can often walk on in shoulder and off-peak seasons, but in peak season pre-booking is strongly advised. Cars must always be pre-booked — do not turn up at Kennacraig without a reservation in summer."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "fd26991f58",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "9671ffc13d",
+          "_type": "span",
+          "marks": [],
+          "text": "A practical note on Fèis Ìle: held in late May, this is Islay's busiest week by far. Sailings and standby queues fill weeks in advance. If you're attending, treat ferry booking as step one — before accommodation, before distillery events, before everything."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b-dYqS_x89u-",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "pW6I8TuyWnOo",
+          "_type": "span",
+          "text": "What to Expect on the Crossing"
+        }
+      ]
+    },
+    {
+      "_key": "20e8adcd42",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "5dd4783100",
+          "_type": "span",
+          "marks": [],
+          "text": "The approach to Kennacraig already feels like arrival. The A83 through Kintyre is one of Scotland's great coastal drives — the final stretch down from Tarbert is the warm-up act. On board, CalMac ferries have a café, comfortable seating areas, and deck access. In good weather, stand on deck — the crossing offers some of the best views in Argyll, and watching Islay appear on the horizon is one of those moments guests mention in reviews."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "ItK0RCTV7bLJ",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "SjERXd57h9Er",
+          "_type": "span",
+          "text": "Port Askaig or Port Ellen — Which Is Right for You?"
+        }
+      ]
+    },
+    {
+      "_key": "1f2c1f56b3",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b641ad833e",
+          "_type": "span",
+          "marks": [],
+          "text": "If your timetable gives you a choice, which port you arrive at depends on where you are staying."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "baac8b1616",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0301d90b9b",
+          "_type": "span",
+          "marks": [],
+          "text": "Staying near Bruichladdich and the Rhinns (Portbahn House, Shorefield Eco House): use Port Askaig. Around 30 minutes across the island — a scenic drive through moorland and across to the west coast."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "cc3f195894",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0d6bbf2416",
+          "_type": "span",
+          "marks": [],
+          "text": "Staying near Port Ellen, Bowmore, or the south Islay whisky coast: use Port Ellen. You'll be closer to Laphroaig, Lagavulin, and Ardbeg on arrival. In practice, you don't always get to choose — it depends on which sailing fits your journey. If your booking is for Port Ellen but your sailing is diverted to Port Askaig in bad weather, contact us — we can help you reroute."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from ferry-to-islay extendedEditorial"
+}

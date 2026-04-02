@@ -1,0 +1,115 @@
+{
+  "_id": "editorial-block-family-holidays-family-activities",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "family-holidays-family-activities"
+  },
+  "title": "Family Activities",
+  "canonicalHome": "/explore-islay/family-holidays",
+  "fullContent": [
+    {
+      "_key": "k09",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "k09c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Singing Sands (also known as Traigh Bhàn) is on the east coast of Islay near Ballygrant, a short walk from a small car park through low-lying pasture and machair. The beach is beautiful in its own right — quiet, rarely visited, tucked away from the main tourist circuit — but what makes it worth the expedition with children is the sand itself: it squeaks underfoot when dry. Genuinely. Kids find this extraordinary. Bring it at the end of a sunny day when the sand has had time to dry out, let them run up and down, and watch their faces. It's one of those small Islay moments that lodges in the memory. See our "
+        },
+        {
+          "_key": "k09c1",
+          "_type": "span",
+          "marks": [
+            "k09lnk1"
+          ],
+          "text": "beaches guide"
+        },
+        {
+          "_key": "k09c2",
+          "_type": "span",
+          "marks": [],
+          "text": " for directions and timing."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "k09lnk1",
+          "_type": "link",
+          "href": "/explore-islay/islay-beaches"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "eXbqbSScuQSU",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "YMgRgoLy_gR-",
+          "_type": "span",
+          "text": "Wildlife by Age"
+        }
+      ]
+    },
+    {
+      "_key": "k11",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "k11c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay's wildlife is accessible at every age, but some experiences work better than others depending on how old your children are."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "k12",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "k12c0",
+          "_type": "span",
+          "marks": [],
+          "text": "For under-5s, rock pools are the headline act — Portbahn Beach at low tide is small, safe, and endlessly interesting. The seals at Portnahaven harbour are almost always there and visible without any walking. Both experiences require no planning or specialist kit and can be done in an hour if attention spans are short."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "k13",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "k13c0",
+          "_type": "span",
+          "marks": [],
+          "text": "For children aged 5–10, the barnacle geese at RSPB Loch Gruinart (October to April, dawn) are a level up — the sound of 30,000 birds lifting off the loch is unforgettable in a way that photographs don't capture. Pair it with the nature trail at Loch Gruinart and you have a proper morning out. Golden eagles and sea eagles can be spotted year-round by scanning the hillsides and coastal cliffs from the car — a good travel game on any drive."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "k14",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "k14c0",
+          "_type": "span",
+          "marks": [],
+          "text": "For teenagers, the Kilchoman farm distillery makes a surprisingly engaging half-day — seeing the full whisky-making process from barley grown on the farm to bottle, with a café lunch, is genuinely interesting for curious minds regardless of interest in whisky itself. The coastal walk from Machir Bay north to Opera House Rocks (staying well back from the water) offers dramatic Atlantic scenery and a real sense of remoteness. Fit older teenagers can tackle the walk to the top of the Oa for views to Ireland."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from family-holidays extendedEditorial"
+}

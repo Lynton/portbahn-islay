@@ -1,0 +1,16 @@
+{
+  "pageId": "guide-food-and-drink",
+  "slug": "food-and-drink",
+  "newBlockRefs": [
+    {
+      "_key": "cy9oyRHrUImF",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-food-and-drink-dining-on-islay-practical-notes"
+      },
+      "version": "full",
+      "customKicker": "Practical"
+    }
+  ]
+}

@@ -1,0 +1,253 @@
+{
+  "_id": "editorial-block-islay-villages-further-afield-portnahaven-to-port-ellen",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "islay-villages-further-afield-portnahaven-to-port-ellen"
+  },
+  "title": "Further Afield — Portnahaven to Port Ellen",
+  "canonicalHome": "/explore-islay/islay-villages",
+  "fullContent": [
+    {
+      "_key": "4t69p6n77",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "jk5vquy5e",
+          "_type": "span",
+          "marks": [],
+          "text": "Portnahaven and Port Wemyss are two connected villages that together form a small settlement at the southern tip of the Rhinns — 20 minutes from our properties along a single-track road that gets emptier the further south you go. The harbour at Portnahaven almost always has common seals hauled out on the rocks, and "
+        },
+        {
+          "_key": "ytyn6o5ez",
+          "_type": "span",
+          "marks": [
+            "c61nwua1m"
+          ],
+          "text": "An Tigh Seinnse"
+        },
+        {
+          "_key": "0a2lnchan",
+          "_type": "span",
+          "marks": [],
+          "text": " pub serves honest home-cooked food in a genuinely tiny, genuinely local room. The combination of seals in the harbour, the pub for lunch, and the empty Atlantic coast on the way back makes this the best half-day on the Rhinns beyond Bruichladdich and Port Charlotte. Book ahead — An Tigh Seinnse seats perhaps 20 people."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "c61nwua1m",
+          "_type": "link",
+          "href": "https://maps.app.goo.gl/Ec4m6CxY1YW1DJJ28"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "x7d8Y08cl1Bd",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "DpOLP-CxyxZ3",
+          "_type": "span",
+          "text": "Port Askaig and Port Ellen: Functional Ports Worth Knowing"
+        }
+      ]
+    },
+    {
+      "_key": "r3cegh9ka",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "jehp0ze3d",
+          "_type": "span",
+          "marks": [],
+          "text": "Port Askaig is where the "
+        },
+        {
+          "_key": "06p3kh3nr",
+          "_type": "span",
+          "marks": [
+            "fg6y50qmh"
+          ],
+          "text": "CalMac"
+        },
+        {
+          "_key": "204cwcgq2",
+          "_type": "span",
+          "marks": [],
+          "text": " ferry from Kennacraig arrives in 2 hours (the faster of the two Islay crossings), and where the 5-minute crossing to Jura departs. The Port Askaig Hotel has a decent bar and is worth a stop if you're up on the north coast for distilleries. Port Ellen, on the south coast, is the longer ferry crossing (2 hours 20 minutes from Kennacraig) but puts you closer to the south coast distillery cluster — "
+        },
+        {
+          "_key": "qrghoaoks",
+          "_type": "span",
+          "marks": [
+            "hngkk5yak"
+          ],
+          "text": "Laphroaig"
+        },
+        {
+          "_key": "8rmhyf25e",
+          "_type": "span",
+          "marks": [],
+          "text": ", "
+        },
+        {
+          "_key": "076eth4gq",
+          "_type": "span",
+          "marks": [
+            "majyxvftu"
+          ],
+          "text": "Lagavulin"
+        },
+        {
+          "_key": "7eiewg0eh",
+          "_type": "span",
+          "marks": [],
+          "text": ", and "
+        },
+        {
+          "_key": "t7ch019p0",
+          "_type": "span",
+          "marks": [
+            "x78ja5q36"
+          ],
+          "text": "Ardbeg"
+        },
+        {
+          "_key": "amodg8u5r",
+          "_type": "span",
+          "marks": [],
+          "text": " are all within a 10-minute drive, and "
+        },
+        {
+          "_key": "z071leo7v",
+          "_type": "span",
+          "marks": [
+            "2tc51g31w"
+          ],
+          "text": "Port Ellen Distillery"
+        },
+        {
+          "_key": "3pvtalecm",
+          "_type": "span",
+          "marks": [],
+          "text": " reopened in 2024. The "
+        },
+        {
+          "_key": "vo0sipw3q",
+          "_type": "span",
+          "marks": [
+            "fc5qmakn1"
+          ],
+          "text": "Copper Still"
+        },
+        {
+          "_key": "z4h4m1hik",
+          "_type": "span",
+          "marks": [],
+          "text": " café by the ferry terminal is the best café on the island."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "fg6y50qmh",
+          "_type": "link",
+          "href": "https://www.calmac.co.uk"
+        },
+        {
+          "_key": "hngkk5yak",
+          "_type": "link",
+          "href": "https://www.laphroaig.com"
+        },
+        {
+          "_key": "majyxvftu",
+          "_type": "link",
+          "href": "https://www.malts.com/en-gb/distilleries/lagavulin"
+        },
+        {
+          "_key": "x78ja5q36",
+          "_type": "link",
+          "href": "https://www.ardbeg.com"
+        },
+        {
+          "_key": "2tc51g31w",
+          "_type": "link",
+          "href": "https://www.malts.com/en-gb/distilleries/port-ellen"
+        },
+        {
+          "_key": "fc5qmakn1",
+          "_type": "link",
+          "href": "/explore-islay/food-and-drink"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "nE9LI48Z10jx",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "wzlFcoNEE1BN",
+          "_type": "span",
+          "text": "What's Open When"
+        }
+      ]
+    },
+    {
+      "_key": "9hdsefjk3",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "pm2200cw4",
+          "_type": "span",
+          "marks": [],
+          "text": "One important piece of island reality: hours change by season, and some smaller businesses close entirely in winter. The Port Charlotte Hotel, Co-op Bowmore, Lochindaal Seafood Kitchen, and Islay's Plaice are the most reliably open year-round. "
+        },
+        {
+          "_key": "ctz96v1xa",
+          "_type": "span",
+          "marks": [
+            "fitgcb8rl"
+          ],
+          "text": "An Tigh Seinnse"
+        },
+        {
+          "_key": "253nqw7eg",
+          "_type": "span",
+          "marks": [],
+          "text": " in Portnahaven is open year-round. Winter hours apply from November — always book ahead and confirm current hours for winter visits. The "
+        },
+        {
+          "_key": "zp6y7dg0m",
+          "_type": "span",
+          "marks": [
+            "xvrwpierv"
+          ],
+          "text": "Museum of Islay Life"
+        },
+        {
+          "_key": "aoj4ja6ja",
+          "_type": "span",
+          "marks": [],
+          "text": " is typically open April to October. We update our house notes for each property with current opening hours for local businesses — if you're arriving in shoulder season or winter, ask us when you book and we'll tell you what's operating."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "fitgcb8rl",
+          "_type": "link",
+          "href": "https://maps.app.goo.gl/Ec4m6CxY1YW1DJJ28"
+        },
+        {
+          "_key": "xvrwpierv",
+          "_type": "link",
+          "href": "https://www.islaymuseum.org"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from islay-villages extendedEditorial"
+}

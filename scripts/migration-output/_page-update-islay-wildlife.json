@@ -1,0 +1,26 @@
+{
+  "pageId": "guide-islay-wildlife",
+  "slug": "islay-wildlife",
+  "newBlockRefs": [
+    {
+      "_key": "Mw25t9gZu3fk",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-islay-wildlife-seasonal-wildlife-guide"
+      },
+      "version": "full",
+      "customKicker": "Seasonal Guide"
+    },
+    {
+      "_key": "BxG1anvbwRCe",
+      "_type": "blockReference",
+      "block": {
+        "_type": "reference",
+        "_ref": "editorial-block-islay-wildlife-the-oa-staying-for-wildlife"
+      },
+      "version": "full",
+      "customKicker": "Reserves"
+    }
+  ]
+}

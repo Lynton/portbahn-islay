@@ -1,0 +1,179 @@
+{
+  "_id": "editorial-block-planning-your-trip-what-to-pack-book",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "planning-your-trip-what-to-pack-book"
+  },
+  "title": "What to Pack & Book",
+  "canonicalHome": "/islay-travel/planning-your-trip",
+  "fullContent": [
+    {
+      "_key": "accce0f6ba",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "5e40383cc4",
+          "_type": "span",
+          "marks": [],
+          "text": "Pack for Scottish weather — which on Islay means: always waterproofs, always layers. Even in July, a warm mid-layer for evenings is not optional. Good waterproof footwear will earn its keep every day, even if you're not doing formal hill walks."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "7944882470",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "6644f17eeb",
+          "_type": "span",
+          "marks": [],
+          "text": "Midges: present from late June through August, particularly in still, damp weather. Smidge is the most effective repellent we've found — worth packing for summer visits. The Co-op in Bowmore and the Co-op in Port Ellen are both well-stocked for everyday supplies. For anything specific — particular dietary requirements, specialist items — bring it from the mainland."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "wFDGnejz1QfU",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "9Stg7boQiF-Q",
+          "_type": "span",
+          "text": "Booking Ahead"
+        }
+      ]
+    },
+    {
+      "_key": "8b8cbcb945",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "db99a0418d",
+          "_type": "span",
+          "marks": [],
+          "text": "Three things to book as early as possible:"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "cf9c33e13b",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b3e8f9e9ad",
+          "_type": "span",
+          "marks": [],
+          "text": "Ferry: 12 weeks ahead for summer and Fèis Ìle. Non-negotiable."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "664ffa97dc",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "bef8fb01d8",
+          "_type": "span",
+          "marks": [],
+          "text": "Accommodation: Properties fill early for summer and Fèis Ìle. The same 12-week lead time applies."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "5e3c2ec162",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "cfcdb01e3c",
+          "_type": "span",
+          "marks": [],
+          "text": "Distillery tours: Book direct with each distillery. If you're staying in Bruichladdich, the distillery is a 5-minute walk — the visitor centre welcomes walk-ins without a booking. Tours need to be booked separately."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "68b2c93683",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "4b2f3f8b49",
+          "_type": "span",
+          "marks": [],
+          "text": "Restaurants: The Lochindaal Seafood Kitchen in Port Charlotte requires 24 hours' advance booking for the seafood platter — their most popular dish and worth planning around."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "bUUiD-jR5OSk",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "IUvJA_QDtTk-",
+          "_type": "span",
+          "text": "Getting Around the Island"
+        }
+      ]
+    },
+    {
+      "_key": "ee8ea4c23f",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "af3ae50e16",
+          "_type": "span",
+          "marks": [],
+          "text": "Most visitors hire a car — Islay's distilleries, beaches, and viewpoints are spread across the island and a car opens everything up. Car hire is available at the airport and in Bowmore. Travelling without a car? Islay is more manageable on foot and by bike than most Scottish islands. Taxis, local buses, and bike hire are all available."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "ba5fea6c46",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "f9807740d4",
+          "_type": "span",
+          "marks": [
+            "17c15e0baa"
+          ],
+          "text": "Getting around Islay — taxis, bikes and the distillery trail →"
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "17c15e0baa",
+          "_type": "link",
+          "href": "/islay-travel/getting-around-islay"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from planning-your-trip extendedEditorial"
+}

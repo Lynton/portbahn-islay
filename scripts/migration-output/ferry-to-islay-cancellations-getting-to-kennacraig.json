@@ -1,0 +1,185 @@
+{
+  "_id": "editorial-block-ferry-to-islay-cancellations-getting-to-kennacraig",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "ferry-to-islay-cancellations-getting-to-kennacraig"
+  },
+  "title": "Cancellations & Getting to Kennacraig",
+  "canonicalHome": "/islay-travel/ferry-to-islay",
+  "fullContent": [
+    {
+      "_key": "235682df01",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "351dab4d78",
+          "_type": "span",
+          "marks": [],
+          "text": "Ferry cancellations happen. Southwest gales are the main cause, typically in winter and occasionally in autumn. Port Askaig is more sheltered than Port Ellen — when one route is cancelled, the other is often still running. CalMac's real-time updates come through their website and app."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "90f411c8d8",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "191262bcb8",
+          "_type": "span",
+          "marks": [],
+          "text": "If your crossing is cancelled, contact me immediately. I've helped dozens of guests navigate this — we'll find the next available sailing, adjust your check-in, and if you need to stay near Kennacraig overnight, I can point you towards options in Tarbert, 5 minutes away. In 8+ years and over 600 guest stays, we've never had a booking collapse due to CalMac. There's always a solution."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "O5QuvEG81i8L",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "99w-P0ON4QuY",
+          "_type": "span",
+          "text": "Getting to Kennacraig"
+        }
+      ]
+    },
+    {
+      "_key": "b5dd4210db",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c5226d8002",
+          "_type": "span",
+          "marks": [],
+          "text": "Kennacraig Ferry Terminal is on the west coast of Kintyre, around 2.5 hours from Glasgow by car. Use the A83 — not the A82. The A83 takes you west through Arrochar, south through Inveraray and down Loch Fyne, then along the Kintyre peninsula to Kennacraig."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "924bccd20e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "885aeaabaf",
+          "_type": "span",
+          "marks": [],
+          "text": "Don't be late. CalMac releases your booking to standby if you haven't checked in at least 30 minutes before departure — even with a confirmed reservation. The A83 carries heavy lorry traffic on single-carriageway sections through Kintyre. Build in a buffer."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "606ab8a1e0",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "dffead81f6",
+          "_type": "span",
+          "marks": [],
+          "text": "Phone signal is strong from Glasgow through Loch Lomond. Once you leave the A82 at Arrochar and take the A83 west, it becomes patchy through much of Kintyre. Download your CalMac booking confirmation, directions, and offline maps before leaving Glasgow."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "0d5d3daf1f",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "bc0a1c4d4c",
+          "_type": "span",
+          "marks": [],
+          "text": "Fuel and food: fill up and do any food shopping on the mainland. Lochgilphead has a large Co-op and is the last major stop before Kennacraig. Inveraray has a Co-op too. Fill up at Lochgilphead rather than arriving on Islay on fumes."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "84aa752773",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "615ac41fbc",
+          "_type": "span",
+          "marks": [],
+          "text": "The A83 has some excellent stops if you're not in a rush — worth knowing if you're travelling with children, elderly passengers, or dogs:"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "419d1dcd73",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "7444f3935e",
+          "_type": "span",
+          "marks": [],
+          "text": "Loch Fyne Oysters (Cairndow) — exceptional deli with seafood, cheese, and local meats. The Tree Shop Garden Centre next door has good coffee and a walk good for dogs and children. It's where we always stop."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "e9ef3c043f",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "2eb7f1674d",
+          "_type": "span",
+          "marks": [],
+          "text": "Inveraray — Inveraray Jail is worth an hour and Inveraray Castle has exceptional gardens. Both have facilities."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "8543e0a73a",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "203e552d1c",
+          "_type": "span",
+          "marks": [],
+          "text": "Lochgilphead — the seafront playground is a good stretch for children and dogs. Public toilets on the seafront. Kennacraig is 30 minutes from here."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "d5d0ecaa1f",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "490411a931",
+          "_type": "span",
+          "marks": [],
+          "text": "If you arrive at Kennacraig with time to spare, Tarbert (5 minutes back up the road) has a harbour, cafés, and a much calmer wait than the terminal car park."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from ferry-to-islay extendedEditorial"
+}

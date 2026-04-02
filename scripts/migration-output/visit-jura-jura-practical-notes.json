@@ -1,0 +1,155 @@
+{
+  "_id": "editorial-block-visit-jura-jura-practical-notes",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "visit-jura-jura-practical-notes"
+  },
+  "title": "Jura Practical Notes",
+  "canonicalHome": "/explore-islay/visit-jura",
+  "fullContent": [
+    {
+      "_key": "1wd501uzx",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "j5uqa3haa",
+          "_type": "span",
+          "marks": [],
+          "text": "Getting around on Jura: The single-track road requires patience and courtesy - use the passing places correctly, pull fully off the road to let oncoming vehicles through, and never reverse from a passing place up to a car behind you. Deer on the road are a near-constant hazard, especially at dawn and dusk. Drive slowly in the early morning and evening, particularly north of Craighouse. The road deteriorates beyond Lealt - the last section to Barnhill is 4 miles of rough track that must be walked."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "44b8tk5ev",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "fptjuxlr0",
+          "_type": "span",
+          "marks": [],
+          "text": "Shopping and supplies: The Jura Hotel has a small shop at Craighouse for basics. For anything more than that, Islay is better stocked - do your main shopping on Islay before you cross. The distillery and "
+        },
+        {
+          "_key": "5my1o2bwt",
+          "_type": "span",
+          "marks": [
+            "blidq3b1b"
+          ],
+          "text": "Lussa Gin"
+        },
+        {
+          "_key": "2h6ondv7d",
+          "_type": "span",
+          "marks": [],
+          "text": " at Ardlussa both sell bottles if you want something to take home, but neither is a general provisions stop."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "blidq3b1b",
+          "_type": "link",
+          "href": "https://www.lussagin.com"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "h2w8nm5nr",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d9b25ouly",
+          "_type": "span",
+          "marks": [],
+          "text": "Mobile signal: EE and Vodafone are the most reliable networks on Jura; others are patchy north of Craighouse. This is not theoretical - guests who rely on Three or O2 have found themselves without signal. Download offline maps before you go."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "2c8azq9vo",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "of97ca8mk",
+          "_type": "span",
+          "marks": [],
+          "text": "The Tayvallich ferry: From March to September, the Jura Passenger Ferry runs twice daily between Tayvallich on the mainland and Craighouse. For mainland visitors arriving or departing via Jura, this is a genuine alternative to coming via Islay. It also makes a multi-island loop possible - arrive on Islay via "
+        },
+        {
+          "_key": "vpzil8b3c",
+          "_type": "span",
+          "marks": [
+            "vh5p6f40u"
+          ],
+          "text": "CalMac"
+        },
+        {
+          "_key": "np56zdyq7",
+          "_type": "span",
+          "marks": [],
+          "text": " from Kennacraig, spend days on Islay, cross to Jura via Port Askaig, and return to the mainland on the Tayvallich ferry. Contact us when planning and we'll help make the logistics work."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "vh5p6f40u",
+          "_type": "link",
+          "href": "https://www.calmac.co.uk"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "F5EomoedHTFm",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "aAV5OBm-P3MA",
+          "_type": "span",
+          "text": "We Live Here"
+        }
+      ]
+    },
+    {
+      "_key": "s03klp1ic",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "zqweqhndo",
+          "_type": "span",
+          "marks": [],
+          "text": "We moved to Jura in 2017 and absolutely love it. We're here through the winters, when the geese fill the skies and the deer rut echoes across the hills, and through the summers, when the light goes on until almost midnight and Corran Sands at the bottom of the "
+        },
+        {
+          "_key": "jcsahbye9",
+          "_type": "span",
+          "marks": [
+            "ol799a7yz"
+          ],
+          "text": "Bothan Jura Retreat"
+        },
+        {
+          "_key": "e15q9bueq",
+          "_type": "span",
+          "marks": [],
+          "text": " drive feels like the end of the world in the best possible way. If you want to understand what Jura is actually like - not the tourist brochure version - come and see for yourself. We're here, and we're happy to talk about it."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "ol799a7yz",
+          "_type": "link",
+          "href": "https://www.bothanjuraretreat.co.uk"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from visit-jura extendedEditorial"
+}

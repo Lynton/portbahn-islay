@@ -1,0 +1,193 @@
+{
+  "_id": "editorial-block-islay-beaches-swimming-coastal-walks",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "islay-beaches-swimming-coastal-walks"
+  },
+  "title": "Swimming & Coastal Walks",
+  "canonicalHome": "/explore-islay/islay-beaches",
+  "fullContent": [
+    {
+      "_key": "b07",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b07c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Wild swimming on Islay is wonderful — genuinely. But the water is cold year-round (10–14°C is typical, even in August), and choosing your location matters enormously."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b08",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b08c0",
+          "_type": "span",
+          "marks": [],
+          "text": "The sheltered Loch Indaal beaches are where you want to swim. Portbahn Beach has three small coves with calm water and almost no tidal flow — it's our go-to spot and you'll usually have it entirely to yourselves. Port Charlotte Beach is shallower and suits those less confident in the water. Both sites allow a quick exit if the cold hits. The east coast, particularly around Claggain Bay and Singing Sands, has calmer water than the west coast and offers excellent wild swimming in more remote settings."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b09",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b09c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Never swim at Machir Bay, Saligo Bay, or Sanaigmore. The currents at these beaches have caused serious incidents, including fatalities. They look inviting — the water can appear relatively calm on the surface — but the undertow is powerful and unpredictable. If you see a lifeguard flag system anywhere on Islay, it exists specifically because of how dangerous those beaches are."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b10",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b10c0",
+          "_type": "span",
+          "marks": [],
+          "text": "For cold water comfort, a 3mm shorty wetsuit makes wild swimming significantly more enjoyable. A dry robe or changing poncho is practical for getting changed on a beach with Atlantic wind."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "SZILgADqImlI",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "05JX0seETSw6",
+          "_type": "span",
+          "text": "Beach Walks Worth Planning For"
+        }
+      ]
+    },
+    {
+      "_key": "b12",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b12c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Islay's beaches connect to some of the island's best coastal walking. Two worth specific mention:"
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b13",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b13c0",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Machir Bay north to Opera House Rocks"
+        },
+        {
+          "_key": "b13c1",
+          "_type": "span",
+          "marks": [],
+          "text": " — Park at Machir Bay and walk north along the cliff tops (not the beach — the currents make the tide line risky even at the water's edge). The coastal scenery becomes increasingly dramatic. Eagles are frequently spotted on this stretch. A return walk of 4–5 km from the car park."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b14",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b14c0",
+          "_type": "span",
+          "marks": [
+            "strong"
+          ],
+          "text": "Ardnave Point and Loch Gruinart"
+        },
+        {
+          "_key": "b14c1",
+          "_type": "span",
+          "marks": [],
+          "text": " — Ardnave Point's dunes and beach connect directly to the RSPB Loch Gruinart nature reserve just inland. A morning or afternoon combining both gives you beach, dunes, and birdwatching in one circuit — particularly rewarding between October and April when the barnacle geese are on the loch. See the "
+        },
+        {
+          "_key": "b14c2",
+          "_type": "span",
+          "marks": [
+            "b14lnk1"
+          ],
+          "text": "wildlife guide"
+        },
+        {
+          "_key": "b14c3",
+          "_type": "span",
+          "marks": [],
+          "text": " for the geese detail."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "b14lnk1",
+          "_type": "link",
+          "href": "/explore-islay/islay-wildlife"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "206708031d",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "21c6a2ccc0",
+          "_type": "span",
+          "marks": [],
+          "text": "Ardnave Point dunes connect directly to RSPB Loch Gruinart nature reserve — combining both makes an excellent half-day. Singing Sands on the east coast is also good for quiet birdwatching. See the "
+        },
+        {
+          "_key": "3a69f40ebf",
+          "_type": "span",
+          "marks": [
+            "1db09211e2"
+          ],
+          "text": "wildlife guide"
+        },
+        {
+          "_key": "9025080146",
+          "_type": "span",
+          "marks": [],
+          "text": " for eagle spotting, barnacle geese, and otter locations around the coast."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "1db09211e2",
+          "_type": "link",
+          "href": "/explore-islay/islay-wildlife"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from islay-beaches extendedEditorial"
+}

@@ -1,0 +1,121 @@
+{
+  "_id": "editorial-block-islay-wildlife-the-oa-staying-for-wildlife",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "islay-wildlife-the-oa-staying-for-wildlife"
+  },
+  "title": "The Oa & Staying for Wildlife",
+  "canonicalHome": "/explore-islay/islay-wildlife",
+  "fullContent": [
+    {
+      "_key": "w15",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w15c0",
+          "_type": "span",
+          "marks": [],
+          "text": "The Mull of Oa is Islay's dramatic southern headland — cliff-lined, exposed, and atmospheric in any weather. The RSPB The Oa reserve here protects cliffs, coastal heath, and the best chough population on Islay. Choughs are red-billed, red-legged members of the crow family — acrobatic fliers, particularly visible in pairs or small groups along the cliff edges. Islay is one of the most reliable places in Scotland to see them."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "w16",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w16c0",
+          "_type": "span",
+          "marks": [],
+          "text": "The Oa also has a striking landmark: the American Monument on the headland cliff, commemorating the loss of American troops aboard the troopships HMS Tuscania and HMS Otranto, both sunk off the Oa in 1918. The monument, the coastal walk to reach it, and the dramatic views to the Antrim coast of Ireland on clear days make this one of Islay's most rewarding half-day excursions — the wildlife is a bonus to the landscape."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "wtkZ3HF39qeN",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "zoxnXaOG_hJ6",
+          "_type": "span",
+          "text": "Staying at Shorefield for Wildlife"
+        }
+      ]
+    },
+    {
+      "_key": "w18",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "w18c0",
+          "_type": "span",
+          "marks": [],
+          "text": "Shorefield Eco House is our wildlife property — the Jacksons built it specifically around a love of birds and nature. They created wetland ponds, planted the woodland that now surrounds the house, and installed bird hides in the garden. The binoculars and bird books in the house are from their personal collection. Guests who prioritise wildlife consistently gravitate toward Shorefield: it offers passive wildlife watching from the windows — waterfowl, seabirds, and garden birds without leaving the property — alongside the active wildlife experiences available across the island. "
+        },
+        {
+          "_key": "w18c1",
+          "_type": "span",
+          "marks": [
+            "w18lnk1"
+          ],
+          "text": "View Shorefield Eco House"
+        },
+        {
+          "_key": "w18c2",
+          "_type": "span",
+          "marks": [],
+          "text": "."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "w18lnk1",
+          "_type": "link",
+          "href": "/accommodation/shorefield-eco-house"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "afa615230e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d32e64c988",
+          "_type": "span",
+          "marks": [],
+          "text": "The coastal paths around Islay — particularly the Bruichladdich to Port Charlotte cycle path — are excellent for wildlife watching as well as swimming. See the "
+        },
+        {
+          "_key": "f5af560c78",
+          "_type": "span",
+          "marks": [
+            "f242972995"
+          ],
+          "text": "beaches guide"
+        },
+        {
+          "_key": "7f81427a30",
+          "_type": "span",
+          "marks": [],
+          "text": " for safe swimming spots, Portbahn Beach access, and Machir Bay coastal walks."
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "f242972995",
+          "_type": "link",
+          "href": "/explore-islay/islay-beaches"
+        }
+      ],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from islay-wildlife extendedEditorial"
+}

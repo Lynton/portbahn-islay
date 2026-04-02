@@ -1,0 +1,41 @@
+{
+  "_id": "editorial-block-islay-geology-islay-s-ancient-rocks",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "islay-geology-islay-s-ancient-rocks"
+  },
+  "title": "Islay's Ancient Rocks",
+  "canonicalHome": "/explore-islay/islay-geology",
+  "fullContent": [
+    {
+      "_key": "gFaultP1",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gFaultP1s1",
+          "_type": "span",
+          "marks": [],
+          "text": "The Loch Gruinart Fault, connected to the larger Great Glen Fault system, runs north-south through Islay, separating the Rhinns to the west from the main body of the island to the east. The fault isn't just geological - it's visible. Loch Gruinart is a long, narrow sea inlet cutting into the island from the north; Loch Indaal does the same from the south, almost meeting in the middle. Between them, the island narrows dramatically. That pinch point is where the two geological worlds meet."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "gFaultP2",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "gFaultP2s1",
+          "_type": "span",
+          "marks": [],
+          "text": "This matters for visitors not just as an abstract fact but as something you can see and orient yourself by. The landscape on the Rhinns feels different from the main island - lower, more exposed, the rock closer to the surface. The eastern part of Islay rises more steeply, with the quartzites and more rugged terrain of the Dalradian geology."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from islay-geology extendedEditorial"
+}

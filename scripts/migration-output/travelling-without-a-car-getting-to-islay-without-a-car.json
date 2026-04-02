@@ -1,0 +1,291 @@
+{
+  "_id": "editorial-block-travelling-without-a-car-getting-to-islay-without-a-car",
+  "_type": "canonicalBlock",
+  "blockId": {
+    "_type": "slug",
+    "current": "travelling-without-a-car-getting-to-islay-without-a-car"
+  },
+  "title": "Getting to Islay Without a Car",
+  "canonicalHome": "/islay-travel/travelling-without-a-car",
+  "fullContent": [
+    {
+      "_key": "af829e6185",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c3fab8a8ca",
+          "_type": "span",
+          "marks": [],
+          "text": "Foot passengers are welcome on every CalMac sailing to Islay. The island is walkable and cyclable from most accommodation, and once you're here, taxis and local buses cover the rest. This guide covers getting from Glasgow to Islay without a car — and arriving with everything you need."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "VFJHZwSqSrYJ",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "mlJ-Wc3mPBNS",
+          "_type": "span",
+          "text": "By Bus: Glasgow to Kennacraig"
+        }
+      ]
+    },
+    {
+      "_key": "b7486c7e81",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "bb33070b51",
+          "_type": "span",
+          "marks": [],
+          "text": "Citylink runs a daily service from Glasgow Buchanan Street and Glasgow Airport to Kennacraig, connecting with CalMac sailings to Islay. The journey takes around 2.5 hours. Bus times are designed to connect with ferry departures — confirm your connection before booking, as timings can shift seasonally."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "0a619d2344",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "2e900c2e53",
+          "_type": "span",
+          "marks": [],
+          "text": "Important — dogs: Citylink does not allow dogs on this service (assistance dogs only). If you're travelling to Islay with a dog, you'll need to travel by car or arrange private transport to Kennacraig."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "fc5624ac30",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "ae54f02dcd",
+          "_type": "span",
+          "marks": [
+            "325ec5f05f"
+          ],
+          "text": "Full guide to travelling to Islay with your dog →"
+        }
+      ],
+      "markDefs": [
+        {
+          "_key": "325ec5f05f",
+          "_type": "link",
+          "href": "/islay-travel/travelling-to-islay-with-your-dog"
+        }
+      ],
+      "style": "normal"
+    },
+    {
+      "_key": "LBZ0RtOYJMWg",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "KE-VtvPNrJbS",
+          "_type": "span",
+          "text": "By Bike: Glasgow to Islay via Arran (The Adventure Route)"
+        }
+      ]
+    },
+    {
+      "_key": "2db6c21116",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "a19ff92c95",
+          "_type": "span",
+          "marks": [],
+          "text": "This is one of the most memorable ways to arrive on Islay. The route uses three CalMac ferries and takes two days minimum."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "ff58edbd02",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "b7b7aedcd7",
+          "_type": "span",
+          "marks": [],
+          "text": "Glasgow to Ardrossan — National Cycle Network Route 753, a largely traffic-free coastal route. Approximately 35 miles."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "de3ac28c5b",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "8fd810fd06",
+          "_type": "span",
+          "marks": [],
+          "text": "CalMac ferry: Ardrossan to Brodick, Isle of Arran."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "ec4335205e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0c8ef1f110",
+          "_type": "span",
+          "marks": [],
+          "text": "Cycle across Arran to Lochranza in the north. Around 14 miles. The Goat Fell ridge is to your right for most of the ride."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "a6ee1e1c0a",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "094fc0c551",
+          "_type": "span",
+          "marks": [],
+          "text": "CalMac ferry: Lochranza to Claonaig on the Kintyre peninsula. A short crossing."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "e2398c5f6a",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "2a68e609f4",
+          "_type": "span",
+          "marks": [],
+          "text": "Cycle Claonaig to Kennacraig via the B8001. Around 10.5 miles on a quiet road."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "b209b0a202",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "ed5f998f7e",
+          "_type": "span",
+          "marks": [],
+          "text": "CalMac ferry: Kennacraig to Islay."
+        }
+      ],
+      "level": 1,
+      "listItem": "bullet",
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "4a8feadb76",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "d6a66b7ea2",
+          "_type": "span",
+          "marks": [],
+          "text": "Critical note: The Lochranza to Claonaig ferry operates from around April to late October only — confirm current dates with CalMac before planning. This route is not possible in winter. Do not cycle the main A83 Glasgow to Campbeltown road — it carries heavy lorry traffic and is not suitable for cyclists."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "0b0f54315e",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "c9acb21bf1",
+          "_type": "span",
+          "marks": [],
+          "text": "Plan 2 days minimum: Glasgow to Arran on day one, Arran to Islay on day two. The NCN 753 to Ardrossan is well-signposted and documented."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "L_odJvbQ9eLD",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "TaAmD0Ygh5Mx",
+          "_type": "span",
+          "text": "By Bike: Year-Round Alternative via NCN Route 75"
+        }
+      ]
+    },
+    {
+      "_key": "4786384eb0",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "0dd239aba7",
+          "_type": "span",
+          "marks": [],
+          "text": "For a year-round cycling option, NCN Route 75 runs from Glasgow through Greenock and Gourock, with ferry connections to Cowal, then Portavadie, then Tarbert — finishing at Kennacraig for the Islay crossing. More complex than the Arran route, but available in all seasons."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    },
+    {
+      "_key": "GgmfiNt7IKk_",
+      "_type": "block",
+      "style": "h3",
+      "children": [
+        {
+          "_key": "IWv8Cu3Xrr_W",
+          "_type": "span",
+          "text": "Bikes on CalMac Ferries"
+        }
+      ]
+    },
+    {
+      "_key": "d9397280af",
+      "_type": "block",
+      "children": [
+        {
+          "_key": "2560a25e98",
+          "_type": "span",
+          "marks": [],
+          "text": "Bikes travel free on all CalMac ferries. Secure your bike on the vehicle deck for the crossing. The Kennacraig to Islay crossing is long enough to head up to the café — bikes on the vehicle deck are safe."
+        }
+      ],
+      "markDefs": [],
+      "style": "normal"
+    }
+  ],
+  "notes": "Migrated from travelling-without-a-car extendedEditorial"
+}
