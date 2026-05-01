@@ -3,6 +3,7 @@ import SchemaMarkup from "@/components/SchemaMarkup";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
+import "./mobile-nav-safe-area.css";
 
 // Only index on the production domain. Vercel preview deployments (*.vercel.app) stay
 // noindex to avoid competing with the live site at portbahnislay.co.uk.
