@@ -1,0 +1,23 @@
+/* Mobile browsers can expose the page under the status/notch safe area.
+   Keep the fixed header and slide-down mobile menu visible on iOS. */
+:root {
+  --pbi-nav-height: 60px;
+  --pbi-safe-area-top: env(safe-area-inset-top, 0px);
+  --pbi-fixed-header-height: calc(var(--pbi-nav-height) + var(--pbi-safe-area-top));
+}
+
+body > header.fixed {
+  height: var(--pbi-fixed-header-height);
+  padding-top: var(--pbi-safe-area-top);
+}
+
+body > div.fixed.top-\[60px\] {
+  top: var(--pbi-fixed-header-height);
+}
+
+@media (max-width: 767px) {
+  body > header.fixed {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

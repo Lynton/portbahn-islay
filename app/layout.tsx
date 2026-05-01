@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import SchemaMarkup from "@/components/SchemaMarkup";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import "./globals.css";
+import "./mobile-nav-safe-area.css";
 
 // Only index on the production domain. Vercel preview deployments (*.vercel.app) stay
 // noindex to avoid competing with the live site at portbahnislay.co.uk.
@@ -11,6 +12,13 @@ import "./globals.css";
 const isProduction =
   process.env.NEXT_PUBLIC_SITE_URL === 'https://portbahnislay.co.uk' &&
   process.env.VERCEL_ENV === 'production';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#008060',
+};
 
 export const metadata: Metadata = {
   title: "Portbahn Islay",
@@ -39,7 +47,7 @@ export default async function RootLayout({
       </head>
       <body className="antialiased font-mono flex flex-col min-h-screen bg-sea-spray">
         <Header />
-        <div className="flex-grow pt-[60px]">
+        <div className="flex-grow" style={{ paddingTop: 'calc(60px + env(safe-area-inset-top, 0px))' }}>
           {children}
         </div>
         <Footer />
